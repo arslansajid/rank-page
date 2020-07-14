@@ -8,15 +8,18 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './App.scss';
 
 // routes
-import routes from './routes';
+import Routes from './routes';
 
 // header and footer
 import Header from './containers/Header'
-import Footer from './containers/Footer'
+import { Grid, Container } from '@material-ui/core';
 
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import { theme } from './utils/MuiTheme';
 
+//sidebars
+import LeftSidebar from './components/LeftSidebar';
+import RightSidebar from './components/RightSidebar';
 class App extends Component {
 
   render() {
@@ -25,13 +28,20 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <MuiThemeProvider theme={theme}>
             <StylesProvider injectFirst>
-              <div className="App">
-                <Header />
-                <div className="wrap">
-                  {routes}
-                </div>
-                <Footer />
-              </div>
+                <Container maxWidth="xl">
+                <Grid container spacing={1}>
+                  <Grid item lg={2} md={2} sm={false} xs={false}>
+                    <LeftSidebar />
+                  </Grid>
+                  <Grid item lg={8} md={8} sm={12} xs={12}>
+                    <Header />
+                    <Routes />
+                  </Grid>
+                  <Grid item lg={2} md={2} sm={false} xs={false}>
+                    <RightSidebar />
+                  </Grid>
+                  </Grid>
+                </Container>
             </StylesProvider>
           </MuiThemeProvider>
         </ConnectedRouter>

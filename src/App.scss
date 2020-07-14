@@ -19,13 +19,12 @@ a {
   color: unset;
 }
 
-footer {
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	background: #efefef;
-	padding: 5px 0;
-}
 .AppLoader {
 	text-align: center;
+}
+
+:focus,
+:active {
+  outline: none !important;
+  box-shadow: unset !important;
 }

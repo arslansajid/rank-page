@@ -10,8 +10,9 @@ class Home extends React.Component {
   }
 	render() {
 		return (
-			<div id="home">
-				<Form onSubmit={this.handleSubmit}/>
+			<div>
+				{/* <Form onSubmit={this.handleSubmit}/> */}
+				Home
 			</div>
 		);
 	}

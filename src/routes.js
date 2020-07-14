@@ -10,9 +10,9 @@ const Routes = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/about" component={About} />
-        <Route exact path='*' component={PageNotFound} />
+        <Route exact path="/" render={() => <Home />} />
+        <Route exact path="/about" render={() => <About />} />
+        <Route exact path='*' render={() => <PageNotFound />} />
       </Switch>
     </Suspense>
   )

@@ -14,19 +14,26 @@ import routes from './routes';
 import Header from './containers/Header'
 import Footer from './containers/Footer'
 
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
+import { theme } from './utils/MuiTheme';
+
 class App extends Component {
 
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <Header />
-            <div className="wrap">
-              {routes}
-            </div>
-            <Footer />
-          </div>
+          <MuiThemeProvider theme={theme}>
+            <StylesProvider injectFirst>
+              <div className="App">
+                <Header />
+                <div className="wrap">
+                  {routes}
+                </div>
+                <Footer />
+              </div>
+            </StylesProvider>
+          </MuiThemeProvider>
         </ConnectedRouter>
       </Provider>
     );

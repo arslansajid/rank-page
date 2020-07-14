@@ -4,6 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import TextField from "../Common/TextField";
 import { useForm } from 'react-hook-form';
+import { signIn } from "./action";
 
 const SignIn = (props) => {
     const [isLoading, setIsLoading] = React.useState(false);
@@ -12,6 +13,16 @@ const SignIn = (props) => {
     const onSubmit = async (data) => {
         setIsLoading(true);
         console.log(data)
+        
+        signIn(data)
+        .then((res) => {
+            console.log("res ###", res)
+            setIsLoading(false);
+        })
+        .catch((err) => {
+            console.log("err ###", err)
+            setIsLoading(false);
+        })
     }
 
     const classes = useStyles();

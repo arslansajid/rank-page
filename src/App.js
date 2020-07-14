@@ -4,7 +4,6 @@ import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './configureStore';
 
 // Styles
-import 'bootstrap/dist/css/bootstrap.css';
 import './App.scss';
 
 // routes

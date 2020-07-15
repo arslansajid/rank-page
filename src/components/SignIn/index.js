@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { signIn } from "./action";
 
 const SignIn = (props) => {
+    const {showSignUp} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
 
@@ -73,7 +74,7 @@ const SignIn = (props) => {
                 </Typography>
                 </div>
                 <div className={`${classes.center} space-4`}>
-                <Button  variant="outlined" color="primary" className={classes.submitButton}>
+                <Button onClick={showSignUp} variant="outlined" color="primary" className={classes.submitButton}>
                     <Typography className={classes.submitButtonText}>
                         Register
                     </Typography>

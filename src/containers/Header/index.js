@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import nav from '../../static/_nav';
 import Colors from '../../static/_colors';
 
@@ -92,9 +92,12 @@ const Header = (props) => {
                         aria-label='menu'>
                         <MenuIcon />
                     </IconButton>
-                    <Link className={classes.logoContainer} to='/'>
+                    {/* <Link className={classes.logoContainer} to='/'>
                         Rank App
-                    </Link>
+                    </Link> */}
+                    <Typography className={classes.routeTitle}>
+                        {props.location.pathname.split("/")[1]}
+                    </Typography>
                 </Toolbar>
             </AppBar>
         </ElevationScroll>
@@ -183,6 +186,9 @@ const useStyles = makeStyles((theme) => ({
         width: "31px",
         height: "31px",
         objectFit: "contain"
+    },
+    routeTitle: {
+        textTransform: 'capitalize'
     }
 }));
 

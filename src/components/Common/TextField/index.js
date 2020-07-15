@@ -37,6 +37,12 @@ const ZTextField = ({
                 name={name}
                 control={control}
                 defaultValue={defaultValue}
+                // InputProps={{
+                //     style: {
+                //         height : "50px",
+                //         backgroundColor : '#fff',
+                //     }
+                // }}
             />
         </div>
     );

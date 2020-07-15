@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Colors from '../../../static/_colors';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseIcon from '@material-ui/icons/Close';
 
 const DialogForm = ({
     title,
@@ -32,9 +33,9 @@ const DialogForm = ({
                             } */}
                             {
                                 cancelForm && (
-                                    <Button onClick={cancelForm} color='secondary' type='submit'>
-                                        Close
-                                    </Button>
+                                    <IconButton onClick={applyForm} aria-label="delete">
+                                        <CloseIcon />
+                                    </IconButton>
                                 )
                             }
                         </DialogActions>
@@ -83,7 +84,6 @@ const useStyles = makeStyles((theme) =>
         },
         buttonClose : {
             position : 'absolute',
-            top : '10px',
         }
     })
 );

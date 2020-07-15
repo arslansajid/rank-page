@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { Link  } from 'react-router-dom';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
+import Avatar from '@material-ui/core/Avatar';
 
 const SidebarCard = (props) => {
     const classes = useStyles();
@@ -16,7 +17,18 @@ const SidebarCard = (props) => {
                         {title}
                     </Typography>
                 </Grid>
-                <CardContent className={classes.cardContent}>
+                <Grid className={classes.cardContent}>
+                    {
+                        title === "Profile" && (
+                            <Grid container className={classes.profileContainer}>
+                                <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
+                                <div>
+                                    <Typography variant='body1' >Arslan Sajid</Typography>
+                                    <Typography variant='body2' component='h6'>@arslansajid</Typography>
+                                </div>
+                            </Grid>
+                        )
+                    }
                     {
                         !!items && items.length && items.map((item, index) => {
                             return (
@@ -31,7 +43,7 @@ const SidebarCard = (props) => {
                             )
                         })
                     }
-                </CardContent>
+                </Grid>
             </Card>
         </>
     )
@@ -50,10 +62,18 @@ const useStyles = makeStyles((theme) => ({
           borderBottom: `1px solid ${Colors.border}`
       },
       cardContent: {
-          padding: '0 1em 1em 1em',
+          padding: theme.spacing(1, 0, 1, 0),
       },
       sideIcon: {
           minWidth: 35,
+      },
+      profileContainer: {
+          padding: theme.spacing(1, 2),
+      },
+      avatar: {
+          marginRight: 15,
+          width: theme.spacing(6),
+        height: theme.spacing(6),
       }
 }))
 

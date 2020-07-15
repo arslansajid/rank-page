@@ -31,6 +31,7 @@ const SignIn = (props) => {
             <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
                 <div className= 'space-2'>
                     <TextField
+                        id='user-email'
                         type='email'
                         name='email'
                         rules={{ required: 'This field is required' }}
@@ -45,6 +46,7 @@ const SignIn = (props) => {
                 </div>
                 <div className= 'space-2'>
                     <TextField
+                        id='user-password'
                         type='password'
                         name='password'
                         rules={{ required: 'This field is required' }}

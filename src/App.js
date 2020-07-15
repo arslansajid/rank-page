@@ -30,14 +30,14 @@ const App = () => {
           <MuiThemeProvider theme={theme}>
             <StylesProvider injectFirst>
                 <Grid className={classes.main} container>
-                  <Grid item lg={2} md={2} sm={false} xs={false}>
+                  <Grid className={classes.leftSidebar} item lg={2} md={2} sm={false} xs={false}>
                     <LeftSidebar />
                   </Grid>
                   <Grid className={classes.routeContainer} item lg={8} md={8} sm={12} xs={12}>
                     <Header />
                     <Routes />
                   </Grid>
-                  <Grid item lg={2} md={2} sm={false} xs={false}>
+                  <Grid className={classes.rightSidebar} item lg={2} md={2} sm={false} xs={false}>
                     <RightSidebar />
                   </Grid>
                   </Grid>
@@ -54,6 +54,16 @@ const useStyles = makeStyles((theme) => ({
   },
   routeContainer: {
     padding: '0 1em',
+  },
+  leftSidebar: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    }
+  },
+  rightSidebar: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    }
   }
 }))
 

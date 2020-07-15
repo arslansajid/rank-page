@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import SidebarCard from "../SidebarCard";
+import SearchInput from "../Common/SearchInput";
 import Colors from '../../static/_colors';
 
 const RightSidebar = (props) => {
@@ -9,6 +10,7 @@ const RightSidebar = (props) => {
     return (
         <>
             <div className={classes.main}>
+                <SearchInput />
                 <SidebarCard />
                 <SidebarCard />
                 <SidebarCard />

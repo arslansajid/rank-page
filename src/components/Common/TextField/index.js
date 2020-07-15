@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, InputLabel } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 
 
 const ZTextField = ({
+    id,
     label,
     defaultValue,
     className,
@@ -18,6 +19,18 @@ const ZTextField = ({
 }) => {
     return (
         <div key={name} className={className}>
+            {!!label && label.length && (
+                <div
+                    // className={classes.labelContainer}
+                    >
+                    <InputLabel
+                        htmlFor={id}
+                        // className={classes.textFieldLabel}
+                    >
+                    {label}
+                    </InputLabel>
+                </div>
+            )}
             <Controller
                 key={name}
                 as={
@@ -32,7 +45,7 @@ const ZTextField = ({
                 }
                 rules={rules}
                 autoComplete='false'
-                label={label}
+                // label={label}
                 margin='dense'
                 variant='outlined'
                 fullWidth

@@ -5,6 +5,7 @@ import store, { history } from './configureStore';
 
 // Styles
 import './App.scss';
+import './common.scss'
 
 // routes
 import Routes from './routes';

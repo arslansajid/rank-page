@@ -22,7 +22,7 @@ const SidebarCard = (props) => {
                             return (
                                 <Link key={index} to={item.route}>
                                     <ListItem onClick={() => console.log(item.name)} button>
-                                        <ListItemIcon>
+                                        <ListItemIcon className={classes.sideIcon}>
                                             <NotificationIcon />
                                         </ListItemIcon>
                                         <ListItemText primary={item.name} />
@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
       },
       cardContent: {
           padding: '0 1em 1em 1em',
+      },
+      sideIcon: {
+          minWidth: 35,
       }
 }))
 

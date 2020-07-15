@@ -26,7 +26,6 @@ export const theme = createMuiTheme({
             disableUnderline: true,
             fontSize: 22
         },
-        // Name of the component ⚛️
         MuiButtonBase: {
             // The default props to change
             disableRipple: true // No more ripple, on the whole application 💣!

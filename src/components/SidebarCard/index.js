@@ -39,7 +39,7 @@ const SidebarCard = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minHeight: 200,
+        minHeight: 100,
         background: Colors.background,
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 8,

@@ -17,7 +17,7 @@ const LeftSidebar = (props) => {
                     message={<SignIn />}
                     applyForm={() => setShowSignIn(false)}
                     cancelForm={() => setShowSignIn(false)}
-                    hideActions={false}
+                    hideActions={true}
                 />
             )
         }

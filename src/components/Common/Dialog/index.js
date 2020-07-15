@@ -1,5 +1,5 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Colors from '../../../static/_colors';
 import Dialog from '@material-ui/core/Dialog';
@@ -21,31 +21,22 @@ const DialogForm = ({
     return (
         <div>
             <Dialog open={open} onClose={cancelForm} fullWidth={true} maxWidth={'sm'} disableBackdropClick>
-                 {hideActions ? null : (
-                    <>
-                        <DialogActions className = {classes.buttonClose}>
-                            {/* {
-                                applyForm && (
-                                    <Button onClick={applyForm} color='primary' type='submit'>
-                                        Save
-                                    </Button>
-                                )
-                            } */}
-                            {
-                                cancelForm && (
-                                    <IconButton onClick={applyForm} aria-label="delete">
-                                        <CloseIcon />
-                                    </IconButton>
-                                )
-                            }
-                        </DialogActions>
-                    </>
-                )}
-                <DialogTitle className = {classes.title} id='form-dialog-title'>{title}</DialogTitle>
-                <DialogContent className = {classes.content}>
+                <>
+                    <DialogActions className={classes.buttonClose}>
+                        {
+                            cancelForm && (
+                                <IconButton onClick={applyForm} aria-label="delete">
+                                    <CloseIcon />
+                                </IconButton>
+                            )
+                        }
+                    </DialogActions>
+                </>
+                <DialogTitle className={classes.title} id='form-dialog-title'>{title}</DialogTitle>
+                <DialogContent className={classes.content}>
                     <DialogContentText component={'div'}>{message}</DialogContentText>
                 </DialogContent>
-                {/* {hideActions ? null : (
+                {hideActions ? null : (
                     <>
                         <DialogActions>
                             {
@@ -64,7 +55,7 @@ const DialogForm = ({
                             }
                         </DialogActions>
                     </>
-                )} */}
+                )}
             </Dialog>
         </div>
     );
@@ -77,13 +68,13 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         title: {
             textAlign: 'center',
-            borderBottom : '1px solid #ddd'
+            borderBottom: '1px solid #ddd'
         },
         content: {
-            padding : '35px',
+            padding: '35px',
         },
-        buttonClose : {
-            position : 'absolute',
+        buttonClose: {
+            position: 'absolute',
         }
     })
 );

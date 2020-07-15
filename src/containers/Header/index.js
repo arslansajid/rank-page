@@ -62,7 +62,7 @@ const Header = (props) => {
                     }}
                 >
                     <div className={classes.drawerHeader}>
-                        <Typography>Davys Chess</Typography>
+                        <Typography>Rank-App</Typography>
                         <IconButton onClick={toggleDrawer}>
 
                             <CloseIcon />
@@ -83,21 +83,19 @@ const Header = (props) => {
                         }
                     </List>
                 </Drawer>
-                <Container maxWidth='xl'>
-                    <Toolbar className={classes.container}>
-                        <IconButton
-                            edge='start'
-                            onClick={() => toggleDrawer()}
-                            className={classes.menuButton}
-                            color='inherit'
-                            aria-label='menu'>
-                            <MenuIcon />
-                        </IconButton>
-                        <Link className={classes.logoContainer} to='/'>
-                            Rank App
-                        </Link>
-                    </Toolbar>
-                </Container>
+                <Toolbar className={classes.container}>
+                    <IconButton
+                        edge='start'
+                        onClick={() => toggleDrawer()}
+                        className={classes.menuButton}
+                        color='inherit'
+                        aria-label='menu'>
+                        <MenuIcon />
+                    </IconButton>
+                    <Link className={classes.logoContainer} to='/'>
+                        Rank App
+                    </Link>
+                </Toolbar>
             </AppBar>
         </ElevationScroll>
     );
@@ -115,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     logoContainer: {
-        flexGrow: 0.5,
+        flexGrow: 1,
         [theme.breakpoints.down('sm')]: {
             marginTop: 5,
         },
@@ -130,7 +128,12 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: Colors.white,
         color: Colors.black,
         boxShadow: '#fff',
-        minHeight: 64
+        minHeight: 64,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        border: '1px solid rgba(38, 38, 38, 0.12)',
+        borderRadius: '8px',
     },
     navButton: {
         fontSize: 20,

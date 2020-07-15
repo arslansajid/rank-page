@@ -66,14 +66,24 @@ const SignIn = (props) => {
                     </Typography>
                 </Button>
                 </div>
-
+                
+                <div className={`${classes.center} space-2`}>
                 <Typography className={classes.registerText}>
-                        Unable to Sign In?
+                        Don't have an account!
                 </Typography>
-
-                <Typography className={classes.registerText}>
+                </div>
+                <div className={`${classes.center} space-4`}>
+                <Button  variant="outlined" color="primary" className={classes.submitButton}>
+                    <Typography className={classes.submitButtonText}>
                         Register
+                    </Typography>
+                </Button>
+                </div>
+                <div className={`${classes.center} space-2`}>
+                <Typography>
+                    Unable to signIn?
                 </Typography>
+                </div>
             </form>
         </div>
     )
@@ -85,7 +95,6 @@ const useStyles = makeStyles((theme) =>
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            // alignItems: "center",
             width: "100%",
         },
         heading: {
@@ -105,6 +114,9 @@ const useStyles = makeStyles((theme) =>
             fontWeight: 600,
             lineHeight: "19px",
             textTransform: "capitalize",
+        },
+        center : {
+            textAlign: "center",
         },
         registerText : {
             textAlign: "center",

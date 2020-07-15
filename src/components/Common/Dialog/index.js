@@ -68,10 +68,10 @@ const useStyles = makeStyles((theme) =>
     createStyles({
         title: {
             textAlign: 'center',
-            borderBottom: '1px solid #ddd'
+            borderBottom: '1px solid #ddd',
         },
         content: {
-            padding: '35px',
+            padding: '3rem',
         },
         buttonClose: {
             position: 'absolute',

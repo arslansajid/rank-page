@@ -5,6 +5,7 @@ import SidebarCard from "../SidebarCard";
 import Dialog from "../Common/Dialog";
 import SignIn from "../SignIn";
 import Colors from '../../static/_colors';
+import {Menu} from "../../static/_leftsidebar";
 
 const LeftSidebar = (props) => {
     const classes = useStyles();
@@ -30,10 +31,10 @@ const LeftSidebar = (props) => {
                     variant="contained" color="primary">
                     Sign in
                 </Button>
-                <SidebarCard />
-                <SidebarCard />
-                <SidebarCard />
-                <SidebarCard />
+                <SidebarCard title={"Profile"} />
+                <SidebarCard title={"Create"} />
+                <SidebarCard title={"Menu"} items={Menu} />
+                <SidebarCard title={"Account"} />
             </div>
         </>
     )

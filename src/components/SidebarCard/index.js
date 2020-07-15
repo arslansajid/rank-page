@@ -54,4 +54,9 @@ const useStyles = makeStyles((theme) => ({
       }
 }))
 
+SidebarCard.defaultProps = {
+    title: 'Title',
+    menu: [],
+};
+
 export default SidebarCard;

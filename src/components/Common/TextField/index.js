@@ -14,6 +14,7 @@ const ZTextField = ({
     rules,
     rows,
     type,
+    placeholder
 }) => {
     return (
         <div key={name} className={className}>
@@ -26,6 +27,7 @@ const ZTextField = ({
                         multiline={type ? false : true}
                         rows={type ? undefined : rows}
                         type={type}
+                        placeholder={placeholder}
                     />
                 }
                 rules={rules}

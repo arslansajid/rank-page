@@ -1,7 +1,7 @@
 
 
 const Config = {
-  BASE_APP_URL: 'https://BASE_URL_GOES_HERE.com/api/',
+  BASE_APP_URL: 'http://54.91.221.44/api/',
   API_VERSION: 'v1',
 };
 

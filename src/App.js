@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     background: Colors.background,
   },
   routeContainer: {
-    padding: '0 1em',
+    padding: '0 2em',
   },
   leftSidebar: {
     [theme.breakpoints.down('sm')]: {

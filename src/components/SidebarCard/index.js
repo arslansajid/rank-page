@@ -23,8 +23,8 @@ const SidebarCard = (props) => {
                             <Grid container className={classes.profileContainer}>
                                 <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
                                 <div>
-                                    <Typography variant='body1' >Arslan Sajid</Typography>
-                                    <Typography variant='body2' component='h6'>@arslansajid</Typography>
+                                    <Typography variant='body1'>Arslan Sajid</Typography>
+                                    <Typography variant='body2'>@arslansajid</Typography>
                                 </div>
                             </Grid>
                         )

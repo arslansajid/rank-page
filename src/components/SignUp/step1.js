@@ -48,7 +48,7 @@ const Step1 = props => {
             name="email"
             rules={{required: 'This field is required'}}
             control={control}
-            error={errors.password ? true : false}
+            error={errors.email ? true : false}
             placeholder="Enter email address"
             defaultValue={''}
             label='Email Address'
@@ -61,7 +61,7 @@ const Step1 = props => {
             type="date"
             name="date_of_birth"
             rules={{required: 'This field is required'}}
-            error={errors.date ? true : false}
+            error={errors.date_of_birth ? true : false}
             control={control}
             placeholder="Date"
             defaultValue={''}
@@ -75,7 +75,7 @@ const Step1 = props => {
             rules={{required: 'This field is required'}}
             control={control}
             error={errors.password ? true : false}
-            placeholder="Password"
+            placeholder="password"
             defaultValue={''}
             className="text-field"
             label='Password'
@@ -87,8 +87,8 @@ const Step1 = props => {
             name="password_confirmation"
             rules={{required: 'This field is required'}}
             control={control}
-            error={errors.password ? true : false}
-            placeholder="Password"
+            error={errors.password_confirmation ? true : false}
+            placeholder="Confirm Password"
             defaultValue={''}
             className="text-field"
             label='Confirm Password'

@@ -10,6 +10,7 @@ const SignIn = (props) => {
     const {showSignUp} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
+    const {registerData , setRegisterData} = useState();
 
     const onSubmit = async (data) => {
         setIsLoading(true);

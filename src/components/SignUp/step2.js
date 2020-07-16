@@ -11,10 +11,16 @@ const Step2 = props => {
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
 
+  const onSubmit = async (data) => {
+    console.log('onSubmit called',data)
+    // moveToNext()
+  }
+  console.log('erros here' , errors)
+
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <form key={'form'}>
+      <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
         <div className="space-4">
           <InputLabel className='space-2'>Username</InputLabel>
@@ -23,7 +29,7 @@ const Step2 = props => {
             name="username"
             rules={{required: 'This field is required'}}
             control={control}
-            error={errors.email ? true : false}
+            error={errors.username ? true : false}
             placeholder="Username or Email"
             defaultValue={''}
             className="text-field space-2"

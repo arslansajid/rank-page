@@ -12,16 +12,35 @@ import { CountryDropdown } from 'react-country-region-selector';
 
 
 const Step1 = props => {
+  const {moveToNext} = props;
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [country , setCountry] = useState('');
+
+  const onSubmit = async (data) => {
+    // console.log('onSubmit called',data)
+    moveToNext()
+  }
 
 
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <form key={'form'}>
+      <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="body1" className ='space-4'>Please fill in the details to continue registration</Typography>
+        <div className="space-2">
+          <InputLabel>Full Name</InputLabel>
+          <TextField
+            type="text"
+            name="name"
+            rules={{required: 'This field is required'}}
+            control={control}
+            error={errors.name ? true : false}
+            placeholder=""
+            defaultValue={''}
+            className="text-field"
+          />
+        </div>       
         <div className="space-2">
           <InputLabel>Full Name</InputLabel>
           <TextField
@@ -49,11 +68,25 @@ const Step1 = props => {
           />
         </div>
         <div className="space-2">
+          <InputLabel>Email Address</InputLabel>
+          <TextField
+            type="password"
+            name="password_confirmation"
+            rules={{required: 'This field is required'}}
+            control={control}
+            error={errors.password ? true : false}
+            placeholder="Password"
+            defaultValue={''}
+            className="text-field"
+          />
+        </div>
+        <div className="space-2">
           <InputLabel>Date of birth</InputLabel>
           <TextField
             type="date"
-            name="date"
+            name="date_of_birth"
             rules={{required: 'This field is required'}}
+            error={errors.date ? true : false}
             control={control}
             placeholder="Date"
             defaultValue={''}
@@ -64,7 +97,9 @@ const Step1 = props => {
           <InputLabel className='space-2'>Gender</InputLabel>
           <Select
             control={control}
+            name = 'gender'
             rules={{required: 'This field is required'}}
+            error={errors.gender ? true : false}
             margin="dense"
             variant="outlined"
             fullWidth
@@ -78,6 +113,9 @@ const Step1 = props => {
           <InputLabel className='space-2'>Country</InputLabel>
            <CountryDropdown
            className = {classes.select}
+           name = 'country'
+           rules={{required: 'This field is required'}}
+           error={errors.country ? true : false}
            value = {country}
            onChange = {(value) => setCountry(value)}
             />

@@ -16,6 +16,8 @@ const Step2 = props => {
   const onSubmit = async (data) => {
     let submitdata = {...registerData}
     submitdata.username = data.username;
+    submitdata.gender = 1 //for api testing
+    submitdata.country = 'pakistan' // for testing
     console.log('onSubmit called', submitdata)
     signUp(submitdata)
     .then((response) => {

@@ -5,6 +5,7 @@ import SidebarCard from "../SidebarCard";
 import Dialog from "../Common/Dialog";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp/index";
+import RecoverAccount from "../RecoverAccount";
 import Colors from '../../static/_colors';
 import { Profile, Create, Menu, Account } from "../../static/_leftsidebar";
 
@@ -12,10 +13,15 @@ const LeftSidebar = (props) => {
     const classes = useStyles();
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
+    const [showRecoveryModal, setShowRecoveryModal] = useState(false);
 
     const switchToSignUp = () => {
         setShowSignIn(false);
         setShowSignUp(true);
+    }
+    const switchToSignIn = () => {
+        setShowSignIn(true);
+        setShowSignUp(false);
     }
 
     return (
@@ -25,7 +31,7 @@ const LeftSidebar = (props) => {
                     <Dialog
                         title={"Sign In"}
                         open={showSignIn}
-                        message={<SignIn showSignUp={() => switchToSignUp()} />}
+                        message={<SignIn showSignUp={() => switchToSignUp()} recoveryModal={() => {setShowRecoveryModal(true) ; setShowSignIn(false)}}/>}
                         applyForm={() => setShowSignIn(false)}
                         cancelForm={() => setShowSignIn(false)}
                         hideActions={true}
@@ -34,12 +40,26 @@ const LeftSidebar = (props) => {
             }
             {
                 showSignUp && (
+                    // <Dialog
+                    //     title={"Sign Up"}
+                    //     open={showSignUp}
+                    //     message={<SignUp />}
+                    //     applyForm={() => setShowSignUp(false)}
+                    //     cancelForm={() => setShowSignUp(false)}
+                    //     hideActions={true}
+                    // />
+                    <SignUp show = {true} showSignIp={() => switchToSignIn()} />
+                )
+            }
+             {
+                showRecoveryModal && (
                     <Dialog
                         title={"Sign Up"}
-                        open={showSignUp}
-                        message={<SignUp />}
-                        applyForm={() => setShowSignUp(false)}
-                        cancelForm={() => setShowSignUp(false)}
+                        open={showRecoveryModal}
+                        message={<RecoverAccount />}
+                        applyForm={() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
+                        // cancelForm={() => setShowSignUp(false)}
+                        backAction = {() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
                         hideActions={true}
                     />
                 )

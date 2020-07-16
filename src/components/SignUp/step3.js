@@ -17,7 +17,7 @@ const Step3 = props => {
   return (
     <div className={classes.container}>
         <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
-        {/* <div className="space-4">
+        <div className="space-4">
           <InputLabel className='space-2'>Username</InputLabel>
           <TextField
             type="email"
@@ -30,7 +30,7 @@ const Step3 = props => {
             className="text-field space-2"
           />
           <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
-        </div> */}
+        </div>
 
         <div className={`${classes.center} space-4`}>
           <Button

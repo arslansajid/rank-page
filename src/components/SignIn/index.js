@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { userLogin } from "../../actions/LoginActions";
 
 const SignIn = (props) => {
-    const { showSignUp } = props;
+    const {showSignUp , recoveryModal} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
 
@@ -87,9 +87,11 @@ const SignIn = (props) => {
                     </Button>
                 </div>
                 <div className={`${classes.center} space-2`}>
-                    <Typography>
-                        Unable to signIn?
-                </Typography>
+                <Button onClick={recoveryModal}>
+                    <Typography className={classes.submitButtonText}>
+                        Unable to Sign In?
+                    </Typography>
+                </Button>
                 </div>
             </form>
         </div>

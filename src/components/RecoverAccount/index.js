@@ -5,19 +5,35 @@ import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
 import InputLabel from '@material-ui/core/InputLabel';
+import {forgotPassword} from './action'
 
 
 const RecoverAccount = props => {
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
+  const [value , setValue] = useState(null);
+  console.log('set data here' , value)
+
+  
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    forgotPassword(data)
+    .then((response) => {
+      setIsLoading(false);
+      setValue(response.data)
+    }) 
+    .catch((error) =>{
+      setIsLoading(false);
+      console.log('error' , error)
+    })
+  }
 
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <form key={'form'}>
+      <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="body1" className ='space-4'>Recover your account via your email</Typography>
         <div className="space-4">
-          <InputLabel className=''>Email</InputLabel>
           <TextField
             type="email"
             name="email"
@@ -27,6 +43,7 @@ const RecoverAccount = props => {
             placeholder="Enter email address"
             defaultValue={''}
             className="text-field space-2"
+            label='Email'
           />
         </div>
 
@@ -44,6 +61,14 @@ const RecoverAccount = props => {
           </Button>
         </div>
       </form>
+      {value && value.success == false ? 
+        <div className = {classes.center}>
+        <Typography className={classes.submitButtonText}>
+          {value.message}
+        </Typography>
+        </div>
+          :
+        null}
     </div>
   );
 };

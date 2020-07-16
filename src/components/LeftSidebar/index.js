@@ -31,7 +31,16 @@ const LeftSidebar = (props) => {
                     <Dialog
                         title={"Sign In"}
                         open={showSignIn}
-                        message={<SignIn showSignUp={() => switchToSignUp()} recoveryModal={() => {setShowRecoveryModal(true) ; setShowSignIn(false)}}/>}
+                        message={
+                            <SignIn
+                                showSignUp={() => switchToSignUp()}
+                                showRecoveryModal={() => {
+                                    setShowRecoveryModal(true);
+                                    setShowSignIn(false)
+                                }}
+                                closeSignIn={() => setShowSignIn(false)}
+                            />
+                        }
                         applyForm={() => setShowSignIn(false)}
                         cancelForm={() => setShowSignIn(false)}
                         hideActions={true}

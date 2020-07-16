@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { userLogin } from "../../actions/LoginActions";
 
 const SignIn = (props) => {
-    const {showSignUp , recoveryModal} = props;
+    const {showSignUp , showRecoveryModal, closeSignIn} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
 
@@ -25,6 +25,7 @@ const SignIn = (props) => {
                 Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
                 props.dispatch(userLogin(res.data.data.user));
                 setIsLoading(false);
+                closeSignIn();
             })
             .catch((err) => {
                 console.log("err ###", err)
@@ -87,7 +88,7 @@ const SignIn = (props) => {
                     </Button>
                 </div>
                 <div className={`${classes.center} space-2`}>
-                <Button onClick={recoveryModal}>
+                <Button onClick={showRecoveryModal}>
                     <Typography className={classes.submitButtonText}>
                         Unable to Sign In?
                     </Typography>

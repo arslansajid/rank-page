@@ -15,7 +15,7 @@ const FooterLinks = () => {
             <Typography className={classes.textLink} variant='body1'>About us</Typography>
             <Typography className={classes.textLink} variant='body1'>Contact us</Typography>
         </Grid>
-        <Typography className={classes.textLink} variant='body1'>2020 RankPage</Typography>
+        <Typography className={classes.textLink} variant='body1'>© 2020 RankPage</Typography>
         </>
     )
 

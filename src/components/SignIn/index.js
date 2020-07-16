@@ -5,33 +5,38 @@ import Colors from '../../static/_colors';
 import TextField from "../Common/TextField";
 import { useForm } from 'react-hook-form';
 import { signIn } from "./action";
+import Cookie from 'js-cookie';
+import { connect } from 'react-redux';
+import { userLogin } from "../../actions/LoginActions";
 
 const SignIn = (props) => {
     const {showSignUp , recoveryModal} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
-    const {registerData , setRegisterData} = useState();
 
     const onSubmit = async (data) => {
         setIsLoading(true);
         console.log(data)
-        
+
         signIn(data)
-        .then((res) => {
-            console.log("res ###", res)
-            setIsLoading(false);
-        })
-        .catch((err) => {
-            console.log("err ###", err)
-            setIsLoading(false);
-        })
+            .then((res) => {
+                console.log("res ###", res.data.data.user.auth_token)
+                let token = res.data.data.user.auth_token;
+                Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
+                props.dispatch(userLogin(res.data.data.user));
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log("err ###", err)
+                setIsLoading(false);
+            })
     }
 
     const classes = useStyles();
     return (
         <div className={classes.container}>
             <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
-                <div className= 'space-2'>
+                <div className='space-2'>
                     <TextField
                         id='user-email'
                         type='email'
@@ -41,12 +46,12 @@ const SignIn = (props) => {
                         error={errors.email ? true : false}
                         // helperText={errors.email?.message}
                         // label='Email'
-                        placeholder = 'Username or Email'
+                        placeholder='Username or Email'
                         defaultValue={''}
-                        className= 'text-field'
+                        className='text-field'
                     />
                 </div>
-                <div className= 'space-2'>
+                <div className='space-2'>
                     <TextField
                         id='user-password'
                         type='password'
@@ -56,30 +61,30 @@ const SignIn = (props) => {
                         error={errors.password ? true : false}
                         // helperText={errors.password?.message}
                         // label='Password'
-                        placeholder = 'Password'
+                        placeholder='Password'
                         defaultValue={''}
                         className='text-field'
                     />
                 </div>
                 <div className='space-4'>
-                <Button type="submit" disabled={isLoading} className={classes.submitButton} variant="contained" color="primary">
-                    <Typography className={classes.submitButtonText}>
-                        Sign In
+                    <Button type="submit" disabled={isLoading} className={classes.submitButton} variant="contained" color="primary">
+                        <Typography className={classes.submitButtonText}>
+                            Sign In
                     </Typography>
-                </Button>
+                    </Button>
                 </div>
-                
+
                 <div className={`${classes.center} space-2`}>
-                <Typography className={classes.registerText}>
+                    <Typography className={classes.registerText}>
                         Don't have an account!
                 </Typography>
                 </div>
                 <div className={`${classes.center} space-4`}>
-                <Button onClick={showSignUp} variant="outlined" color="primary" className={classes.submitButton}>
-                    <Typography className={classes.submitButtonText}>
-                        Register
+                    <Button onClick={showSignUp} variant="outlined" color="primary" className={classes.submitButton}>
+                        <Typography className={classes.submitButtonText}>
+                            Register
                     </Typography>
-                </Button>
+                    </Button>
                 </div>
                 <div className={`${classes.center} space-2`}>
                 <Button onClick={recoveryModal}>
@@ -111,7 +116,7 @@ const useStyles = makeStyles((theme) =>
             minWidth: "100px",
             height: "40px",
             background: Colors.themeBlue,
-            width : '100%',
+            width: '100%',
         },
         submitButtonText: {
             fontSize: "16px",
@@ -119,17 +124,17 @@ const useStyles = makeStyles((theme) =>
             lineHeight: "19px",
             textTransform: "capitalize",
         },
-        center : {
+        center: {
             textAlign: "center",
         },
-        registerText : {
+        registerText: {
             textAlign: "center",
-            fontWeight : '600',
-            color : '#333',
+            fontWeight: '600',
+            color: '#333',
         }
     })
 );
 
 SignIn.defaultProps = {};
 
-export default SignIn;
+export default connect(null)(SignIn);

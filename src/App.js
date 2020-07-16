@@ -30,14 +30,14 @@ const App = () => {
         <MuiThemeProvider theme={theme}>
           <StylesProvider injectFirst>
             <Grid className={classes.main} container>
-              <Grid className={classes.leftSidebar} item lg={2} md={2} sm={false} xs={false}>
+              <Grid className={classes.leftSidebar} item lg={3} md={3} sm={false} xs={false}>
                 <LeftSidebar />
               </Grid>
-              <Grid className={classes.routeContainer} item lg={8} md={8} sm={12} xs={12}>
+              <Grid className={classes.routeContainer} item lg={6} md={6} sm={12} xs={12}>
                 <Header />
                 <Routes />
               </Grid>
-              <Grid className={classes.rightSidebar} item lg={2} md={2} sm={false} xs={false}>
+              <Grid className={classes.rightSidebar} item lg={3} md={3} sm={false} xs={false}>
                 <RightSidebar />
               </Grid>
             </Grid>

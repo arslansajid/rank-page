@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { Link  } from 'react-router-dom';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
@@ -11,7 +11,7 @@ const SidebarCard = (props) => {
     const {items, title} = props;
     return (
         <>
-            <Grid className={classes.root} variant="outlined">
+            <Card className={classes.root} variant="outlined">
                 <Grid className={classes.title}>
                     <Typography gutterBottom>
                         {title}
@@ -44,7 +44,7 @@ const SidebarCard = (props) => {
                         })
                     }
                 </Grid>
-            </Grid>
+            </Card>
         </>
     )
 }

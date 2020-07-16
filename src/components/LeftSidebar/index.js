@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     main: {
         background: Colors.white,
         height: '100%',
-        padding: '1em 1em 0 3em'
+        padding: '2em 2em 0 4em'
     }
 }))
 

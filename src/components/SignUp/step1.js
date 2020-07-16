@@ -4,12 +4,10 @@ import {Button, Typography} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { CountryDropdown } from 'react-country-region-selector';
-
-
+import { GenderItems } from '../../static/_selectOptions';
 
 const Step1 = props => {
   const {moveToNext} = props;
@@ -96,20 +94,17 @@ const Step1 = props => {
         </div>
 
         <div className="space-2">
-          <InputLabel className='space-2'>Gender</InputLabel>
           <Select
+            name="gender"
+            rules={{required: 'This field is required'}}
             control={control}
-            name = 'gender'
-            // rules={{required: 'This field is required'}}
-            // error={errors.gender ? true : false}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-          >
-            <MenuItem value={1}>Male</MenuItem>
-            <MenuItem value={2}>Female</MenuItem>
-            <MenuItem value={3}>Other</MenuItem>
-          </Select>
+            error={errors.gender ? true : false}
+            placeholder="Select Gender"
+            label='Gender'
+            items={GenderItems}
+            defaultValue={''}
+            className="text-field"
+          />
         </div>
 
         <div className="space-4">

@@ -106,8 +106,9 @@ const Step1 = props => {
             variant="outlined"
             fullWidth
           >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value={1}>Male</MenuItem>
+            <MenuItem value={2}>Female</MenuItem>
+            <MenuItem value={3}>Other</MenuItem>
           </Select>
         </div>
 

@@ -13,9 +13,11 @@ const SignUp = (props) => {
     const [showStep3, setShowStep3] = useState(false);
     const [recoverAccount, setRecoverAccount] = useState(false);
     const [categories, setCategories] = useState(false);
+    const [value, setValue] = useState();
 
-    const switchToNext = props => {
-
+    const registerData = (data) => {
+      // console.log('data in register function here' , data)
+      setValue(data)
     }
 
     return (
@@ -24,10 +26,8 @@ const SignUp = (props) => {
           <Dialog
             title={"Register"}
             open={showStep1}
-            message={<Step1  moveToNext = {() => {setShowStep1(false) ; setShowStep2(true)}} />}
+            message={<Step1  moveToNext = {() => {setShowStep1(false) ; setShowStep2(true)}}  getData = {(value) => {registerData(value)}} />}
             applyForm={() => setShowStep1(false)}
-            // cancelForm={() => setShowStep1(false)}
-           
             backAction = {() => setShowStep1(false)}
             hideActions={true}
           />
@@ -36,7 +36,10 @@ const SignUp = (props) => {
         <Dialog
           title={"Register"}
           open={showStep2}
-          message={<Step2  moveToNext = {() => {setShowStep2(false) ; setShowStep3(true)}} />}
+          message={<Step2  moveToNext = {() => {setShowStep2(false) ; setShowStep3(true)}} 
+          // getData = {(value) => {registerData(value)}}
+          registerData = {value}
+           />}
           applyForm={() => setShowStep1(true)}
           // cancelForm={() => setShowStep1(false)}
           backAction = {() => setShowStep2(false)}

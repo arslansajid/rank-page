@@ -5,17 +5,21 @@ import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
 import InputLabel from '@material-ui/core/InputLabel';
+import {signUp} from './action.js'
 
 
 const Step2 = props => {
+  const {registerData} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
 
   const onSubmit = async (data) => {
-    console.log('onSubmit called',data)
+    let submitdata = Object.assign( {} , registerData )
+    submitdata.username = data.username;
+    console.log('onSubmit called', submitdata)
+    signUp(submitdata)
     // moveToNext()
   }
-  console.log('erros here' , errors)
 
   const classes = useStyles ();
   return (
@@ -23,7 +27,6 @@ const Step2 = props => {
       <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
         <div className="space-4">
-          <InputLabel className='space-2'>Username</InputLabel>
           <TextField
             type="text"
             name="username"
@@ -33,6 +36,7 @@ const Step2 = props => {
             placeholder="Username or Email"
             defaultValue={''}
             className="text-field space-2"
+            label='Username'
           />
           <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
         </div>

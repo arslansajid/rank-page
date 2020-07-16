@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 import InputLabel from '@material-ui/core/InputLabel';
 
 
-const Step2 = props => {
+const RecoverAccount = props => {
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
 
@@ -15,20 +15,19 @@ const Step2 = props => {
   return (
     <div className={classes.container}>
       <form key={'form'}>
-        <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
+        <Typography variant="body1" className ='space-4'>Recover your account via your email</Typography>
         <div className="space-4">
-          <InputLabel className='space-2'>Username</InputLabel>
+          <InputLabel className=''>Email</InputLabel>
           <TextField
-            type="text"
-            name="username"
+            type="email"
+            name="email"
             rules={{required: 'This field is required'}}
             control={control}
             error={errors.email ? true : false}
-            placeholder="Username or Email"
+            placeholder="Enter email address"
             defaultValue={''}
             className="text-field space-2"
           />
-          <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
         </div>
 
         <div className={`${classes.center} space-4`}>
@@ -40,7 +39,7 @@ const Step2 = props => {
             color="primary"
           >
             <Typography className={classes.submitButtonText}>
-              Register
+              Recover
             </Typography>
           </Button>
         </div>
@@ -86,6 +85,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Step2.defaultProps = {};
+RecoverAccount.defaultProps = {};
 
-export default Step2;
+export default RecoverAccount;

@@ -12,31 +12,63 @@ import { CountryDropdown } from 'react-country-region-selector';
 
 
 const Step1 = props => {
+  const {moveToNext} = props;
+  const {getData} = props;
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [country , setCountry] = useState('');
+
+  const onSubmit = async (data) => {
+    moveToNext()
+    getData(data)
+  }
 
 
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <form key={'form'}>
-        <Typography variant="body1" className ='space-4'>Please fill in the details to continue registration</Typography>
+      <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
+        <Typography variant="body1" className ='space-4'>Please fill in the details to continue registration</Typography>      
         <div className="space-2">
-          <InputLabel>Full Name</InputLabel>
+          <TextField
+            type="text"
+            name="name"
+            rules={{required: 'This field is required'}}
+            control={control}
+            error={errors.name ? true : false}
+            placeholder="Enter full name"
+            defaultValue={''}
+            label='Full Name'
+            className="text-field"
+          />
+        </div>
+        <div className="space-2">
           <TextField
             type="email"
             name="email"
             rules={{required: 'This field is required'}}
             control={control}
-            error={errors.email ? true : false}
-            placeholder="Username or Email"
+            error={errors.password ? true : false}
+            placeholder="Enter email address"
+            defaultValue={''}
+            label='Email Address'
+            className="text-field"
+          />
+        </div>
+        <div className="space-2">
+          <InputLabel>Date of birth</InputLabel>
+          <TextField
+            type="date"
+            name="date_of_birth"
+            rules={{required: 'This field is required'}}
+            error={errors.date ? true : false}
+            control={control}
+            placeholder="Date"
             defaultValue={''}
             className="text-field"
           />
         </div>
         <div className="space-2">
-          <InputLabel>Email Address</InputLabel>
           <TextField
             type="password"
             name="password"
@@ -46,25 +78,30 @@ const Step1 = props => {
             placeholder="Password"
             defaultValue={''}
             className="text-field"
+            label='Password'
           />
         </div>
         <div className="space-2">
-          <InputLabel>Date of birth</InputLabel>
           <TextField
-            type="date"
-            name="date"
+            type="password"
+            name="password_confirmation"
             rules={{required: 'This field is required'}}
             control={control}
-            placeholder="Date"
+            error={errors.password ? true : false}
+            placeholder="Password"
             defaultValue={''}
             className="text-field"
+            label='Confirm Password'
           />
         </div>
+
         <div className="space-2">
           <InputLabel className='space-2'>Gender</InputLabel>
           <Select
             control={control}
+            name = 'gender'
             rules={{required: 'This field is required'}}
+            error={errors.gender ? true : false}
             margin="dense"
             variant="outlined"
             fullWidth
@@ -76,10 +113,14 @@ const Step1 = props => {
 
         <div className="space-4">
           <InputLabel className='space-2'>Country</InputLabel>
-           <CountryDropdown
+          <CountryDropdown
            className = {classes.select}
+           name = 'country'
+           rules={{required: 'This field is required'}}
+           error={errors.country ? true : false}
            value = {country}
            onChange = {(value) => setCountry(value)}
+           label='Country'
             />
         </div>
 

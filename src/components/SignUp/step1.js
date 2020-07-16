@@ -100,8 +100,8 @@ const Step1 = props => {
           <Select
             control={control}
             name = 'gender'
-            rules={{required: 'This field is required'}}
-            error={errors.gender ? true : false}
+            // rules={{required: 'This field is required'}}
+            // error={errors.gender ? true : false}
             margin="dense"
             variant="outlined"
             fullWidth
@@ -116,8 +116,8 @@ const Step1 = props => {
           <CountryDropdown
            className = {classes.select}
            name = 'country'
-           rules={{required: 'This field is required'}}
-           error={errors.country ? true : false}
+          //  rules={{required: 'This field is required'}}
+          //  error={errors.country ? true : false}
            value = {country}
            onChange = {(value) => setCountry(value)}
            label='Country'

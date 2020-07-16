@@ -14,10 +14,16 @@ const Step2 = props => {
   const {errors, handleSubmit, control} = useForm ();
 
   const onSubmit = async (data) => {
-    let submitdata = Object.assign( {} , registerData )
+    let submitdata = {...registerData}
     submitdata.username = data.username;
     console.log('onSubmit called', submitdata)
     signUp(submitdata)
+    .then((response) => {
+      console.log('sfasfafafa')
+    })
+    .catch((error) => {
+      console.log('errro' , error)
+    })
     // moveToNext()
   }
 

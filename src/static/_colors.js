@@ -9,7 +9,7 @@ const Colors = {
     newsLetterBg: "#FFECEE",
     textGrey: "#8E8E8E",
     placeHolderText: "#B4B4B4",
-    inputBg: "#F6F8FC",
+    inputBg: "#FAFAFA",
     background: "#FBFBFB",
   };
   

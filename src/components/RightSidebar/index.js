@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import SidebarCard from "../SidebarCard";
 import SearchInput from "../Common/SearchInput";
+import FooterLinks from "../FooterLinks";
 import Colors from '../../static/_colors';
 
 const RightSidebar = (props) => {
@@ -14,7 +15,7 @@ const RightSidebar = (props) => {
                 <SidebarCard />
                 <SidebarCard />
                 <SidebarCard />
-                <SidebarCard />
+                <FooterLinks />
             </div>
         </>
     )

@@ -7,13 +7,15 @@ import {useForm} from 'react-hook-form';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
+import { CountryDropdown } from 'react-country-region-selector';
 
 
 
 const Step1 = props => {
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
+  const [country , setCountry] = useState('');
+
 
   const classes = useStyles ();
   return (
@@ -74,20 +76,10 @@ const Step1 = props => {
 
         <div className="space-4">
           <InputLabel className='space-2'>Country</InputLabel>
-          {/* <Select
-            control={control}
-            rules={{required: 'This field is required'}}
-            margin="dense"
-            variant="outlined"
-            fullWidth
-          >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-          </Select> */}
            <CountryDropdown
            className = {classes.select}
-            // value={country}
-            // onChange={(val) => this.selectCountry(val)} 
+           value = {country}
+           onChange = {(value) => setCountry(value)}
             />
         </div>
 

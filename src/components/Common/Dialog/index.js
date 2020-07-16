@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const DialogForm = ({
     title,
@@ -16,6 +17,7 @@ const DialogForm = ({
     applyForm,
     cancelForm,
     hideActions,
+    backAction,
 }) => {
     const classes = useStyles();
     return (
@@ -30,6 +32,14 @@ const DialogForm = ({
                                 </IconButton>
                             )
                         }
+                        {
+                            backAction && (
+                                <IconButton onClick={applyForm} aria-label="delete">
+                                    <ArrowBackIcon/>
+                                </IconButton>
+                            )
+                        }
+
                     </DialogActions>
                 </>
                 <DialogTitle className={classes.title} id='form-dialog-title'>{title}</DialogTitle>

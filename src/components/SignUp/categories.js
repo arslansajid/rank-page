@@ -2,34 +2,17 @@ import React, {useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {Button, Typography} from '@material-ui/core';
 import Colors from '../../static/_colors';
-import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
-import InputLabel from '@material-ui/core/InputLabel';
 
 
-const Step2 = props => {
+const Categories = props => {
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
 
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <form key={'form'}>
-        <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
-        <div className="space-4">
-          <InputLabel className='space-2'>Username</InputLabel>
-          <TextField
-            type="text"
-            name="username"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.email ? true : false}
-            placeholder="Username or Email"
-            defaultValue={''}
-            className="text-field space-2"
-          />
-          <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
-        </div>
+        <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
 
         <div className={`${classes.center} space-4`}>
           <Button
@@ -40,11 +23,10 @@ const Step2 = props => {
             color="primary"
           >
             <Typography className={classes.submitButtonText}>
-              Register
+              Save
             </Typography>
           </Button>
         </div>
-      </form>
     </div>
   );
 };
@@ -86,6 +68,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Step2.defaultProps = {};
+Categories.defaultProps = {};
 
-export default Step2;
+export default Categories;

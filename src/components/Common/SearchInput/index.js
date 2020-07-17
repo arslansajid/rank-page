@@ -4,8 +4,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 
-const SearchInput = () => {
+const SearchInput = (props) => {
     const classes = useStyles();
+    const { handleSearch } = props;
 
     return (
         <TextField
@@ -14,6 +15,11 @@ const SearchInput = () => {
             variant='outlined'
             placeholder="Search Rankpage ..."
             fullWidth
+            onKeyPress={(event) => {
+                if(event.key === 'Enter') {
+                    handleSearch(event.target.value);
+                }
+              }}
             InputProps={{
                 startAdornment: (
                     <InputAdornment>

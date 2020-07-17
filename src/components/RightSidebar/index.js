@@ -11,7 +11,9 @@ const RightSidebar = (props) => {
     return (
         <>
             <div className={classes.main}>
-                <SearchInput />
+                <SearchInput
+                    handleSearch={(value) => window.alert(`send reequest for searching with ${value}`)}
+                />
                 <SidebarCard showSeeMoreLink={true} />
                 <SidebarCard showSeeMoreLink={true} />
                 <SidebarCard showSeeMoreLink={true} />

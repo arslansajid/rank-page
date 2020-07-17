@@ -61,6 +61,6 @@ export const Account = [
     {
         name: 'Sign Out',
         icon: 'sign-out',
-        route: '/notifications'
+        route: '/'
     },
 ]

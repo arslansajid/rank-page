@@ -8,25 +8,24 @@ import InputLabel from '@material-ui/core/InputLabel';
 import {signUp} from './action.js'
 
 
-const Step2 = props => {
-  const {registerData} = props;
+const SignUpStep2 = props => {
+  const {registerData , closeSignUp} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
+  const [value , setValue] = useState (null)
 
   const onSubmit = async (data) => {
+    setIsLoading(true)
     let submitdata = {...registerData}
     submitdata.username = data.username;
-    submitdata.gender = 1 //for api testing
-    submitdata.country = 'pakistan' // for testing
-    console.log('onSubmit called', submitdata)
     signUp(submitdata)
     .then((response) => {
-      console.log('sfasfafafa')
+      setIsLoading(false)
+      setValue(response.data)
     })
     .catch((error) => {
-      console.log('errro' , error)
+      setIsLoading(false)
     })
-    // moveToNext()
   }
 
   const classes = useStyles ();
@@ -62,6 +61,14 @@ const Step2 = props => {
             </Typography>
           </Button>
         </div>
+        {value && !value.success ?
+        <Typography variant='body2'>
+            {value.message}
+        </Typography>
+        :
+        null
+        }
+
       </form>
     </div>
   );
@@ -104,6 +111,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Step2.defaultProps = {};
+SignUpStep2.defaultProps = {};
 
-export default Step2;
+export default SignUpStep2;

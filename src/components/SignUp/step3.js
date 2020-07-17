@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 
-const Step3 = props => {
+const EmailSent = props => {
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
 
@@ -86,6 +86,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Step3.defaultProps = {};
+EmailSent.defaultProps = {};
 
-export default Step3;
+export default EmailSent;

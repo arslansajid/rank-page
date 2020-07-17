@@ -15,10 +15,17 @@ const SignUp = props => {
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [country , setCountry] = useState('');
+  const [passwordError , setPasswordError] = useState(null);
 
   const onSubmit = async (data) => {
-    moveToNext()
-    getData(data)
+    if(data.password === data.password_confirmation){
+      moveToNext()
+      getData(data)
+    }
+    else{
+      setPasswordError(true)
+    }
+   
   }
 
 
@@ -92,6 +99,15 @@ const SignUp = props => {
             label='Confirm Password'
           />
         </div>
+        { passwordError ?
+          <div className={classes.center}>
+            <Typography variant="body2" className = {classes.error}>
+              Password does not match
+            </Typography>
+          </div>
+          :
+          null
+        }
 
         <div className="space-2">
           <Select
@@ -160,6 +176,9 @@ const useStyles = makeStyles (theme =>
     },
     center: {
         textAlign : 'center'
+    },
+    error : {
+      color : Colors.red,
     },
     submitButtonText: {
       fontSize: '16px',

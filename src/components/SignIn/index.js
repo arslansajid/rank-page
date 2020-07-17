@@ -13,6 +13,7 @@ const SignIn = (props) => {
     const {showSignUp , showRecoveryModal, closeSignIn} = props;
     const [isLoading, setIsLoading] = React.useState(false);
     const { errors, handleSubmit, control } = useForm();
+    const [value , setValue] = useState(null)
 
     const onSubmit = async (data) => {
         setIsLoading(true);
@@ -30,6 +31,7 @@ const SignIn = (props) => {
             .catch((err) => {
                 console.log("err ###", err)
                 setIsLoading(false);
+                setValue(err)
             })
     }
 
@@ -71,9 +73,18 @@ const SignIn = (props) => {
                     <Button type="submit" disabled={isLoading} className={classes.submitButton} variant="contained" color="primary">
                         <Typography className={classes.submitButtonText}>
                             Sign In
-                    </Typography>
+                        </Typography>
                     </Button>
                 </div>
+                {value && value.data && value.data.error && value.data.error.user_authentication ? 
+                    <div className={`${classes.center} space-2`}>
+                        <Typography variant = 'body2' className = {classes.error}>
+                            {value.data.error.user_authentication}
+                        </Typography>
+                    </div>
+                    :
+                    null
+                }
 
                 <div className={`${classes.center} space-2`}>
                     <Typography className={classes.registerText}>
@@ -132,6 +143,9 @@ const useStyles = makeStyles((theme) =>
             textAlign: "center",
             fontWeight: '600',
             color: '#333',
+        },
+        error : {
+            color : Colors.red,
         }
     })
 );

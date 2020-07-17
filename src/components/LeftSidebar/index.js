@@ -6,6 +6,7 @@ import Dialog from "../Common/Dialog";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp/step1.js";
 import SignUpStep2 from "../SignUp/step2.js";
+import Success from "../RecoverAccount/sucees";
 import RecoverAccount from "../RecoverAccount";
 import Colors from '../../static/_colors';
 import { Profile, Create, Menu, Account } from "../../static/_leftsidebar";
@@ -15,9 +16,8 @@ const LeftSidebar = (props) => {
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
-    const [showStep1, setShowStep1] = useState(true);
-    const [showStep2, setShowStep2] = useState(false);
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
+    const [showRecoverySuccess , setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();
     
     
@@ -68,8 +68,8 @@ const LeftSidebar = (props) => {
                                 getData = {(value) => registerData(value)}
                             />
                         }
-                        applyForm={() => { setShowStep1(false) ; setShowSignIn(true)}}
-                        backAction = {() => { setShowStep1(false) ; setShowSignIn(true)}}
+                        applyForm={() => { setShowSignUp(false) ; setShowSignIn(true)}}
+                        backAction = {() => { setShowSignUp(false) ; setShowSignIn(true)}}
                     />
                 )
             }
@@ -80,10 +80,9 @@ const LeftSidebar = (props) => {
                         open={showSignUpStep2}
                         message={<SignUpStep2 
                         registerData = {value}
-                        // moveToNext = {() => {setShowStep2(false) ; setShowStep3(true)}}
                          />}
-                        applyForm={() => setShowSignUp(true)}
-                        backAction = {() => setShowSignUpStep2(false)}
+                        applyForm={() => {setShowSignUp(true) ; setShowSignUpStep2(false)}}
+                        backAction = {() => {setShowSignUp(true) ; setShowSignUpStep2(false)}}
                         hideActions={true}
                     />
                 )
@@ -93,10 +92,23 @@ const LeftSidebar = (props) => {
                     <Dialog
                         title={"Sign Up"}
                         open={showRecoveryModal}
-                        message={<RecoverAccount />}
+                        message={<RecoverAccount 
+                        showSuccess = {() => {setShowRecoveryModal(false) ; setShowRecoverySuccess(true)}}
+                        />}
                         applyForm={() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
-                        // cancelForm={() => setShowSignUp(false)}
                         backAction = {() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
+                        hideActions={true}
+                    />
+                )
+            }
+                 {
+                showRecoverySuccess && (
+                    <Dialog
+                        title={"Email Sent"}
+                        open={showRecoverySuccess}
+                        message={<Success />}
+                        applyForm={() => setShowRecoverySuccess(false)}
+                        cancelForm={() => setShowRecoverySuccess(false)}
                         hideActions={true}
                     />
                 )

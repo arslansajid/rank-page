@@ -61,8 +61,8 @@ const SignUpStep2 = props => {
             </Typography>
           </Button>
         </div>
-        {value && value.message ?
-        <Typography variant='body2'>
+        {value && !value.success ?
+        <Typography variant='body2' className = {classes.error}>
             {value.message}
         </Typography>
         :
@@ -96,6 +96,9 @@ const useStyles = makeStyles (theme =>
     },
     center: {
         textAlign : 'center'
+    },
+    error : {
+      color : Colors.red,
     },
     submitButtonText: {
       fontSize: '16px',

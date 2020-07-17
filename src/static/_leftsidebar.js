@@ -1,12 +1,12 @@
 export const Profile = [
     {
         name: 'Challenges',
-        icon: 'settings',
+        icon: 'challenge',
         route: '/challenges'
     },
     {
         name: 'Categories',
-        icon: 'sign-out',
+        icon: 'categories',
         route: '/categories'
     },
 ]
@@ -14,12 +14,12 @@ export const Profile = [
 export const Create = [
     {
         name: 'List',
-        icon: 'settings',
+        icon: 'plus',
         route: '/list'
     },
     {
         name: 'Challenge',
-        icon: 'sign-out',
+        icon: 'plus',
         route: '/challenge'
     },
 ]
@@ -32,22 +32,22 @@ export const Menu = [
     },
     {
         name: 'Notifications',
-        icon: 'home',
+        icon: 'bell',
         route: '/notifications'
     },
     {
         name: 'Categories',
-        icon: 'home',
+        icon: 'categories',
         route: '/categories'
     },
     {
         name: 'Messages',
-        icon: 'home',
+        icon: 'message-circle',
         route: '/messages'
     },
     {
         name: 'Competitions',
-        icon: 'home',
+        icon: 'competetion',
         route: '/competitions'
     },
 ]

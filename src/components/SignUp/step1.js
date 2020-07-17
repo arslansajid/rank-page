@@ -9,7 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { CountryDropdown } from 'react-country-region-selector';
 import { GenderItems } from '../../static/_selectOptions';
 
-const Step1 = props => {
+const SignUp = props => {
   const {moveToNext} = props;
   const {getData} = props;
   const [isLoading, setIsLoading] = React.useState (false);
@@ -181,6 +181,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Step1.defaultProps = {};
+SignUp.defaultProps = {};
 
-export default Step1;
+export default SignUp;

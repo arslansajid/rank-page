@@ -61,7 +61,7 @@ const RecoverAccount = props => {
           </Button>
         </div>
       </form>
-      {value && value.success == false ? 
+      {value && value.success ? 
         <div className = {classes.center}>
         <Typography className={classes.submitButtonText}>
           {value.message}

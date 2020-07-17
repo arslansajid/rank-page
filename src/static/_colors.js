@@ -3,6 +3,7 @@ const Colors = {
     black: "#333333",
     blue: "#6574FB",
     brandColor: '#19A5D3',
+    red : '#ff4148',
     appRed: "#2e8b57",
     border: "#E9EBEE",
     headingBlue: "#102B5C",

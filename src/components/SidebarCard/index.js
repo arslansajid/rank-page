@@ -45,7 +45,8 @@ const SidebarCard = (props) => {
                                 <Link key={index} to={item.route}>
                                     <ListItem onClick={() => console.log(item.name)} button>
                                         <ListItemIcon className={classes.sideIcon}>
-                                            <NotificationIcon />
+                                            {/* <NotificationIcon /> */}
+                                            <img src = {require(`../../assets/icons/${item.icon}.png`)}/>
                                         </ListItemIcon>
                                         <ListItemText primary={item.name} />
                                     </ListItem>

@@ -9,10 +9,10 @@ import {forgotPassword} from './action'
 
 
 const RecoverAccount = props => {
+  const {showSuccess} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [value , setValue] = useState(null);
-  console.log('set data here' , value)
 
   
   const onSubmit = async (data) => {
@@ -21,6 +21,9 @@ const RecoverAccount = props => {
     .then((response) => {
       setIsLoading(false);
       setValue(response.data)
+      if(response.data && response.data.success){
+        showSuccess()
+      }
     }) 
     .catch((error) =>{
       setIsLoading(false);
@@ -61,7 +64,7 @@ const RecoverAccount = props => {
           </Button>
         </div>
       </form>
-      {value && value.success ? 
+      {value && !value.success ? 
         <div className = {classes.center}>
         <Typography className={classes.submitButtonText}>
           {value.message}

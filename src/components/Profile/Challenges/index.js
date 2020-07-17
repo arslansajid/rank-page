@@ -10,7 +10,9 @@ const Challenges = () => {
         <>
             {[...Array(3)].map((list, index) => {
                 return (
-                    <PostCard />
+                    <Grid key={index}>
+                        <PostCard />
+                    </Grid>
                 )
             })}
         </>

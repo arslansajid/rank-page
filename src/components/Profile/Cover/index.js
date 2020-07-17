@@ -27,13 +27,13 @@ const ProfileCover = () => {
                     </div>
                     
                 </Grid>
-                <Grid container justify="space-between" className={classes.rightside}>
-                    <Grid item lg={6}>
+                <Grid container justify="space-between">
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Typography>
                         Staring at the world, roaming the wilds, I am in my favorite world, keep living!
                     </Typography>
                     </Grid>
-                    <Grid item lg={6}>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
                             <Typography>200</Typography>
@@ -79,22 +79,14 @@ const useStyles = makeStyles((theme) => ({
     },
     leftside: {
         display: 'flex',
-        // flexDirection: 'column'
-    },
-    rightside: {
-        // minHeight: 200,
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'flex-end'
     },
     button: {
         marginLeft: 15,
-        borderRadius: 25,
-        // width: 50,
-        height: 50
+        borderRadius: 20,
+        height: 40
     },
     textContainer: {
-        marginLeft: 15,
+        marginLeft: 20,
         textAlign: 'center'
     }
     })

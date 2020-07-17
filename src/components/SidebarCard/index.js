@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 import Colors from '../../static/_colors';
-import { Link  } from 'react-router-dom';
-import NotificationIcon from '@material-ui/icons/NotificationsNone';
-import UserProfile from "../UserProfile"
+import { Link } from 'react-router-dom';
+import UserProfile from "../UserProfile";
+import { userLogout } from "../../actions/LoginActions"
+import Cookie from "js-cookie"
 
 const SidebarCard = (props) => {
     const classes = useStyles();
-    const {items, title, showSeeMoreLink, user} = props;
+    const { items, title, showSeeMoreLink, user } = props;
+
+    const handleSignOut = (value) => {
+        if (value === "Sign Out") {
+            Cookie.remove("rankpage_access_token");
+            props.dispatch(userLogout());
+        }
+    }
+
     return (
         <>
             <Card className={classes.root} variant="outlined">
@@ -34,15 +44,13 @@ const SidebarCard = (props) => {
                         !!items && items.length && items.map((item, index) => {
                             return (
                                 <Link key={index} to={item.route}>
-                                    <ListItem onClick={() => console.log(item.name)} button>
+                                    <ListItem onClick={() => handleSignOut(item.name)} button>
                                         <ListItemIcon className={classes.sideIcon}>
-                                            {/* <NotificationIcon /> */}
-                                            <img src = {require(`../../assets/icons/${item.icon}.png`)}/>
+                                            <img src={require(`../../assets/icons/${item.icon}.png`)} />
                                         </ListItemIcon>
-                                        {/* <ListItemText  className = {classes.text}>{item.name}</ListItemText> */}
-                                        <ListItemText 
-                                        classes={{ primary: classes.text}}
-                                        primary={item.name}
+                                        <ListItemText
+                                            classes={{ primary: classes.text }}
+                                            primary={item.name}
                                         />
                                     </ListItem>
                                 </Link>
@@ -62,36 +70,36 @@ const useStyles = makeStyles((theme) => ({
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 8,
         marginTop: 8,
-      },
-      title: {
-          padding: '0.5em 1em',
-          borderBottom: `1px solid ${Colors.border}`,
-      },
-      seeMoreLinks: {
+    },
+    title: {
+        padding: '0.5em 1em',
+        borderBottom: `1px solid ${Colors.border}`,
+    },
+    seeMoreLinks: {
         cursor: "pointer"
-      },
-      cardContent: {
-          padding: theme.spacing(1, 0, 1, 0),
-      },
-      sideIcon: {
-          minWidth: 35,
-      },
-      profileContainer: {
-          padding: theme.spacing(1, 2),
-          cursor: "pointer",
-      },
-      avatar: {
-          marginRight: 15,
-          width: theme.spacing(6),
+    },
+    cardContent: {
+        padding: theme.spacing(1, 0, 1, 0),
+    },
+    sideIcon: {
+        minWidth: 35,
+    },
+    profileContainer: {
+        padding: theme.spacing(1, 2),
+        cursor: "pointer",
+    },
+    avatar: {
+        marginRight: 15,
+        width: theme.spacing(6),
         height: theme.spacing(6),
-      },
-      text : {
+    },
+    text: {
         fontStyle: 'normal',
-        fontWeight: '600',
+        fontWeight: '500',
         fontSize: '1rem',
         lineHeight: '1.3rem',
-        color: '#333333'
-      }
+        color: Colors.black
+    }
 }))
 
 SidebarCard.defaultProps = {
@@ -100,4 +108,4 @@ SidebarCard.defaultProps = {
     showSeeMoreLink: false,
 };
 
-export default SidebarCard;
+export default connect()(SidebarCard);

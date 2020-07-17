@@ -4,8 +4,7 @@ import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@m
 import Colors from '../../static/_colors';
 import { Link  } from 'react-router-dom';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
-import Avatar from '@material-ui/core/Avatar';
-import { connect } from 'react-redux';
+import UserProfile from "../UserProfile"
 
 const SidebarCard = (props) => {
     const classes = useStyles();
@@ -29,13 +28,7 @@ const SidebarCard = (props) => {
                     {
                         title === "Profile" && (
                             <Link to="/profile">
-                                <Grid container className={classes.profileContainer}>
-                                    <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
-                                    <Grid className={classes.center}>
-                                        <Typography variant='body1'>{!!user ? user.name : "Sign In / Register"}</Typography>
-                                        <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
-                                    </Grid>
-                                </Grid>
+                                <UserProfile />
                             </Link>
                         )
                     }
@@ -67,11 +60,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 8,
         marginTop: 8,
       },
-      center: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: 'center',
-      },
       title: {
           padding: '0.5em 1em',
           borderBottom: `1px solid ${Colors.border}`,
@@ -85,15 +73,6 @@ const useStyles = makeStyles((theme) => ({
       sideIcon: {
           minWidth: 35,
       },
-      profileContainer: {
-          padding: theme.spacing(1, 2),
-          cursor: "pointer",
-      },
-      avatar: {
-          marginRight: 15,
-          width: theme.spacing(6),
-        height: theme.spacing(6),
-      }
 }))
 
 SidebarCard.defaultProps = {
@@ -102,10 +81,4 @@ SidebarCard.defaultProps = {
     showSeeMoreLink: false,
 };
 
-function mapStateToProps(state) {
-    return {
-      user: state.user,
-    };
-  }
-
-export default connect(mapStateToProps)(SidebarCard);
+export default SidebarCard;

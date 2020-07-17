@@ -5,10 +5,11 @@ import Colors from '../../static/_colors';
 import { Link  } from 'react-router-dom';
 import NotificationIcon from '@material-ui/icons/NotificationsNone';
 import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
 
 const SidebarCard = (props) => {
     const classes = useStyles();
-    const {items, title, showSeeMoreLink} = props;
+    const {items, title, showSeeMoreLink, user} = props;
     return (
         <>
             <Card className={classes.root} variant="outlined">
@@ -30,10 +31,10 @@ const SidebarCard = (props) => {
                             <Link to="/profile">
                                 <Grid container className={classes.profileContainer}>
                                     <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
-                                    <div>
-                                        <Typography variant='body1'>Arslan Sajid</Typography>
-                                        <Typography variant='body2'>@arslansajid</Typography>
-                                    </div>
+                                    <Grid className={classes.center}>
+                                        <Typography variant='body1'>{!!user ? user.name : "Sign In / Register"}</Typography>
+                                        <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
+                                    </Grid>
                                 </Grid>
                             </Link>
                         )
@@ -66,6 +67,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 8,
         marginTop: 8,
       },
+      center: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: 'center',
+      },
       title: {
           padding: '0.5em 1em',
           borderBottom: `1px solid ${Colors.border}`,
@@ -93,7 +99,13 @@ const useStyles = makeStyles((theme) => ({
 SidebarCard.defaultProps = {
     title: 'Title',
     menu: [],
-    showSeeMoreLink: false
+    showSeeMoreLink: false,
 };
 
-export default SidebarCard;
+function mapStateToProps(state) {
+    return {
+      user: state.user,
+    };
+  }
+
+export default connect(mapStateToProps)(SidebarCard);

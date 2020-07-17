@@ -7,6 +7,7 @@ import SignIn from "../SignIn";
 import SignUp from "../SignUp/step1.js";
 import SignUpStep2 from "../SignUp/step2.js";
 import RecoverAccount from "../RecoverAccount";
+import Success from "../RecoverAccount/sucees";
 import Colors from '../../static/_colors';
 import { Link } from 'react-router-dom';
 

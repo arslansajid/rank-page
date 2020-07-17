@@ -12,10 +12,10 @@ const RightSidebar = (props) => {
         <>
             <div className={classes.main}>
                 <SearchInput />
-                <SidebarCard />
-                <SidebarCard />
-                <SidebarCard />
-                <FooterLinks />
+                <SidebarCard showSeeMoreLink={true} />
+                <SidebarCard showSeeMoreLink={true} />
+                <SidebarCard showSeeMoreLink={true} />
+                <FooterLinks showSeeMoreLink={true} />
             </div>
         </>
     )

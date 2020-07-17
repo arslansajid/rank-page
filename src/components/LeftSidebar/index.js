@@ -29,10 +29,6 @@ const LeftSidebar = (props) => {
         setShowSignIn(false);
         setShowSignUp(true);
     }
-    const switchToSignIn = () => {
-        setShowSignIn(true);
-        setShowSignUp(false);
-    }
 
     return (
         <>
@@ -63,7 +59,15 @@ const LeftSidebar = (props) => {
                         title={"Sign Up"}
                         open={showSignUp}
                         hideActions={true}
-                        message={<SignUp  moveToNext = {() => {setShowSignUp(false) ; setShowSignUpStep2(true)}}  getData = {(value) => {registerData(value)}} />}
+                        message={
+                            <SignUp
+                                moveToNext = {() => {
+                                    setShowSignUp(false);
+                                    setShowSignUpStep2(true)
+                                }}
+                                getData = {(value) => registerData(value)}
+                            />
+                        }
                         applyForm={() => { setShowStep1(false) ; setShowSignIn(true)}}
                         backAction = {() => { setShowStep1(false) ; setShowSignIn(true)}}
                     />

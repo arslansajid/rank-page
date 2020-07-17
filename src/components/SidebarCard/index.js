@@ -8,14 +8,21 @@ import Avatar from '@material-ui/core/Avatar';
 
 const SidebarCard = (props) => {
     const classes = useStyles();
-    const {items, title} = props;
+    const {items, title, showSeeMoreLink} = props;
     return (
         <>
             <Card className={classes.root} variant="outlined">
-                <Grid className={classes.title}>
+                <Grid container justify="space-between" className={classes.title}>
                     <Typography gutterBottom>
                         {title}
                     </Typography>
+                    {
+                        showSeeMoreLink && (
+                            <Typography gutterBottom className={classes.seeMoreLinks}>
+                                See More
+                            </Typography>
+                        )
+                    }
                 </Grid>
                 <Grid className={classes.cardContent}>
                     {
@@ -59,7 +66,10 @@ const useStyles = makeStyles((theme) => ({
       },
       title: {
           padding: '0.5em 1em',
-          borderBottom: `1px solid ${Colors.border}`
+          borderBottom: `1px solid ${Colors.border}`,
+      },
+      seeMoreLinks: {
+        cursor: "pointer"
       },
       cardContent: {
           padding: theme.spacing(1, 0, 1, 0),
@@ -80,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 SidebarCard.defaultProps = {
     title: 'Title',
     menu: [],
+    showSeeMoreLink: false
 };
 
 export default SidebarCard;

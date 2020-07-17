@@ -12,7 +12,7 @@ const SearchInput = () => {
             className={classes.container}
             margin='dense'
             variant='outlined'
-            placeholder="Search ..."
+            placeholder="Search Rankpage ..."
             fullWidth
             InputProps={{
                 startAdornment: (

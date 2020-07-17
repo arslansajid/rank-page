@@ -27,13 +27,15 @@ const SidebarCard = (props) => {
                 <Grid className={classes.cardContent}>
                     {
                         title === "Profile" && (
-                            <Grid container className={classes.profileContainer}>
-                                <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
-                                <div>
-                                    <Typography variant='body1'>Arslan Sajid</Typography>
-                                    <Typography variant='body2'>@arslansajid</Typography>
-                                </div>
-                            </Grid>
+                            <Link to="/profile">
+                                <Grid container className={classes.profileContainer}>
+                                    <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
+                                    <div>
+                                        <Typography variant='body1'>Arslan Sajid</Typography>
+                                        <Typography variant='body2'>@arslansajid</Typography>
+                                    </div>
+                                </Grid>
+                            </Link>
                         )
                     }
                     {
@@ -79,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
       },
       profileContainer: {
           padding: theme.spacing(1, 2),
+          cursor: "pointer",
       },
       avatar: {
           marginRight: 15,

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { ButtonGroup, Button } from '@material-ui/core';
+import ProfileCover from "../../components/Profile/Cover";
 
 const Profile = () => {
 
 		return (
 			<div>
-				<ButtonGroup fullWidth color="primary" size="large">
+                <ProfileCover />
+				<ButtonGroup fullWidth size="large">
                     <Button>Lists</Button>
                     <Button>Challenges</Button>
                     <Button>Categories</Button>

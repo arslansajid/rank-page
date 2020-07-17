@@ -132,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
         color: Colors.black,
         boxShadow: '#fff',
         minHeight: 64,
+        marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
 

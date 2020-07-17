@@ -31,4 +31,17 @@ export const theme = createMuiTheme({
             disableRipple: true // No more ripple, on the whole application 💣!
         }
     },
+    overrides: {
+        MuiBackdrop: {
+            root: {
+                backgroundColor: "rgba(255, 255, 255, .7)"
+            }
+        },
+        MuiButton: {
+            root: {
+                // padding: "5px 20px",
+                textTransform: "capitalize"
+            }
+        },
+    }
 });

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import LoadingSpinner from './components/Common/LoadingSpinner';
 
 // Configure routes
 const Home = React.lazy(() => import('./containers/Home'));
@@ -11,7 +12,13 @@ const PageNotFound = React.lazy(() => import('./containers/PageNotFound'));
 
 const Routes = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <LoadingSpinner
+        loading={true}
+        text="Loading..."
+        size="large"
+      />
+    }>
       <Switch>
         <Route exact path="/" render={() => <Home />} />
         <Route exact path="/about" render={() => <About />} />

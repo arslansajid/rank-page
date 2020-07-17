@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/ExpandMore';
+import PoolIcon from '@material-ui/icons/Pool';
 
 const CategoryCard = () => {
   const classes = useStyles();
@@ -14,13 +13,10 @@ const CategoryCard = () => {
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
-        </Typography>
+        <Grid className={classes.verticalCenter}>
+          <PoolIcon fontSize={"large"} />
+        </Grid>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
       <Grid container justify="space-between" alignItems="center" className={classes.actionContainer}>
         <Typography>Pro</Typography>
         <MoreIcon className={classes.moreIcon} />
@@ -52,6 +48,13 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
       fontSize: 14,
+    },
+    verticalCenter: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: 'center',
+      justifyContent: "center",
+      minHeight: '5em',
     },
   }));
 

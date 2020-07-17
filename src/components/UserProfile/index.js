@@ -68,8 +68,8 @@ const UserProfile = (props) => {
                                 getData={(value) => registerData(value)}
                             />
                         }
-                        applyForm={() => { setShowSignUp(false); setShowSignIn(true) }}
-                        backAction={() => { setShowSignUp(false); setShowSignIn(true) }}
+                        applyForm={() => setShowSignUp(false)}
+                        cancelForm={() => setShowSignUp(false)}
                     />
                 )
             }

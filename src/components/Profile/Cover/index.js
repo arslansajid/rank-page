@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     coverContainer: {
         color: Colors.white,
         padding: '1em',
-        marginBottom: 5,
+        marginBottom: 8,
         backgroundColor: Colors.brandColor,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',
         borderRadius: 8,

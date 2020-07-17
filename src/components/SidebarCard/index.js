@@ -39,7 +39,11 @@ const SidebarCard = (props) => {
                                             {/* <NotificationIcon /> */}
                                             <img src = {require(`../../assets/icons/${item.icon}.png`)}/>
                                         </ListItemIcon>
-                                        <ListItemText primary={item.name} />
+                                        {/* <ListItemText  className = {classes.text}>{item.name}</ListItemText> */}
+                                        <ListItemText 
+                                        classes={{ primary: classes.text}}
+                                        primary={item.name}
+                                        />
                                     </ListItem>
                                 </Link>
                             )
@@ -72,6 +76,22 @@ const useStyles = makeStyles((theme) => ({
       sideIcon: {
           minWidth: 35,
       },
+      profileContainer: {
+          padding: theme.spacing(1, 2),
+          cursor: "pointer",
+      },
+      avatar: {
+          marginRight: 15,
+          width: theme.spacing(6),
+        height: theme.spacing(6),
+      },
+      text : {
+        fontStyle: 'normal',
+        fontWeight: '600',
+        fontSize: '1rem',
+        lineHeight: '1.3rem',
+        color: '#333333'
+      }
 }))
 
 SidebarCard.defaultProps = {

@@ -17,7 +17,7 @@ const SignUpStep2 = props => {
   const onSubmit = async (data) => {
     setIsLoading(true)
     let submitdata = {...registerData}
-    submitdata.username = data.username;
+    submitdata.user_name = data.user_name;
     signUp(submitdata)
     .then((response) => {
       setIsLoading(false)
@@ -36,10 +36,10 @@ const SignUpStep2 = props => {
         <div className="space-4">
           <TextField
             type="text"
-            name="username"
+            name="user_name"
             rules={{required: 'This field is required'}}
             control={control}
-            error={errors.username ? true : false}
+            error={errors.user_name ? true : false}
             placeholder="Username or Email"
             defaultValue={''}
             className="text-field space-2"
@@ -61,7 +61,7 @@ const SignUpStep2 = props => {
             </Typography>
           </Button>
         </div>
-        {value && !value.success ?
+        {value && value.message ?
         <Typography variant='body2'>
             {value.message}
         </Typography>

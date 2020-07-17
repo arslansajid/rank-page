@@ -56,8 +56,8 @@ const Chat = () => {
                     </ListItem>
                 </List>
                 <Divider />
-                <Grid item xs={12} style={{padding: '10px'}}>
-                    <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
+                <Grid item xs={12} style={{padding: '8px'}}>
+                    <TextField id="outlined-basic-email" placeholder="Search" variant="outlined" fullWidth />
                 </Grid>
                 <Divider />
                 <List>
@@ -66,7 +66,6 @@ const Chat = () => {
                             <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                         </ListItemIcon>
                         <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-                        <ListItemText secondary="online" align="right"></ListItemText>
                     </ListItem>
                     <ListItem button key="Alice">
                         <ListItemIcon>
@@ -116,9 +115,9 @@ const Chat = () => {
                     </ListItem>
                 </List>
                 <Divider />
-                <Grid container style={{ padding: "10px 20px" }}>
+                <Grid container style={{ padding: "10px 20px" }} alignItems="center">
                     <Grid item xs={11}>
-                        <TextField  id="outlined-basic-email" placeholder="Type Something" fullWidth />
+                        <TextField id="outlined-basic-email" placeholder="Type Something" fullWidth />
                     </Grid>
                     <Grid item xs={1} align="right">
                         <Fab color="primary" aria-label="add"><SendIcon /></Fab>

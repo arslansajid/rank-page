@@ -8,6 +8,7 @@ import SignUp from "../SignUp/step1.js";
 import SignUpStep2 from "../SignUp/step2.js";
 import RecoverAccount from "../RecoverAccount";
 import Colors from '../../static/_colors';
+import { Link } from 'react-router-dom';
 
 const UserProfile = (props) => {
     const classes = useStyles();
@@ -105,7 +106,10 @@ const UserProfile = (props) => {
                 <Grid className={classes.verticalCenter}>
                     <Grid>
                         {!!user ? (
-                            <Typography>{user.name}</Typography>
+                            <Link to="/profile">
+                                <Typography>{user.name}</Typography>
+                                <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
+                            </Link>
                         )
                         : (
                         <>
@@ -116,7 +120,6 @@ const UserProfile = (props) => {
                         </>
                         )}
                     </Grid>
-                    <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
                 </Grid>
             </Grid>
         </>

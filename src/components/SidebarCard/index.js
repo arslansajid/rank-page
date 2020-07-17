@@ -27,9 +27,7 @@ const SidebarCard = (props) => {
                 <Grid className={classes.cardContent}>
                     {
                         title === "Profile" && (
-                            <Link to="/profile">
-                                <UserProfile />
-                            </Link>
+                            <UserProfile />
                         )
                     }
                     {

@@ -15,15 +15,14 @@ const UserProfile = (props) => {
     const {user} = props;
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
-    const [showStep1, setShowStep1] = useState(true);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
+    const [showRecoverySuccess, setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();
-    
-    
+
     const registerData = (data) => {
         setValue(data)
-      }
+    }
 
     const switchToSignUp = () => {
         setShowSignIn(false);
@@ -61,42 +60,54 @@ const UserProfile = (props) => {
                         hideActions={true}
                         message={
                             <SignUp
-                                moveToNext = {() => {
+                                moveToNext={() => {
                                     setShowSignUp(false);
                                     setShowSignUpStep2(true)
                                 }}
-                                getData = {(value) => registerData(value)}
+                                getData={(value) => registerData(value)}
                             />
                         }
-                        applyForm={() => { setShowStep1(false) ; setShowSignIn(true)}}
-                        backAction = {() => { setShowStep1(false) ; setShowSignIn(true)}}
+                        applyForm={() => { setShowSignUp(false); setShowSignIn(true) }}
+                        backAction={() => { setShowSignUp(false); setShowSignIn(true) }}
                     />
                 )
             }
-               {
+            {
                 showSignUpStep2 && (
                     <Dialog
                         title={"Sign Up"}
                         open={showSignUpStep2}
-                        message={<SignUpStep2 
-                        registerData = {value}
-                        // moveToNext = {() => {setShowStep2(false) ; setShowStep3(true)}}
-                         />}
-                        applyForm={() => setShowSignUp(true)}
-                        backAction = {() => setShowSignUpStep2(false)}
+                        message={<SignUpStep2
+                            registerData={value}
+                        />}
+                        applyForm={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
+                        backAction={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
                         hideActions={true}
                     />
                 )
             }
-             {
+            {
                 showRecoveryModal && (
                     <Dialog
                         title={"Sign Up"}
                         open={showRecoveryModal}
-                        message={<RecoverAccount />}
-                        applyForm={() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
-                        // cancelForm={() => setShowSignUp(false)}
-                        backAction = {() => {setShowRecoveryModal(false) ; setShowSignIn(true)}}
+                        message={<RecoverAccount
+                            showSuccess={() => { setShowRecoveryModal(false); setShowRecoverySuccess(true) }}
+                        />}
+                        applyForm={() => { setShowRecoveryModal(false); setShowSignIn(true) }}
+                        backAction={() => { setShowRecoveryModal(false); setShowSignIn(true) }}
+                        hideActions={true}
+                    />
+                )
+            }
+            {
+                showRecoverySuccess && (
+                    <Dialog
+                        title={"Email Sent"}
+                        open={showRecoverySuccess}
+                        message={<Success />}
+                        applyForm={() => setShowRecoverySuccess(false)}
+                        cancelForm={() => setShowRecoverySuccess(false)}
                         hideActions={true}
                     />
                 )
@@ -111,14 +122,14 @@ const UserProfile = (props) => {
                                 <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
                             </Link>
                         )
-                        : (
-                        <>
-                        <Grid container>
-                            <Typography onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
-                            <Typography  onClick={() => setShowSignUp(true)}>Register</Typography>
-                        </Grid>
-                        </>
-                        )}
+                            : (
+                                <>
+                                    <Grid container>
+                                        <Typography onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
+                            <Typography onClick={() => setShowSignUp(true)}>Register</Typography>
+                                    </Grid>
+                                </>
+                            )}
                     </Grid>
                 </Grid>
             </Grid>
@@ -139,14 +150,14 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         marginRight: 15,
         width: theme.spacing(6),
-      height: theme.spacing(6),
+        height: theme.spacing(6),
     }
 }))
 
 function mapStateToProps(state) {
     return {
-      user: state.user,
+        user: state.user,
     };
-  }
+}
 
 export default connect(mapStateToProps)(UserProfile);

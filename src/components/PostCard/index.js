@@ -42,7 +42,7 @@ const PostCard = () => {
         <Card elevation={0} className={classes.root}>
             <Grid container alignItems="center" justify="space-between" className={classes.cardSection}>
                 <Typography>
-                    Title
+                    Tom Holland Challenged you
                 </Typography>
                 <IconButton onClick={handleClick}>
                     <MoreIcon />
@@ -63,7 +63,7 @@ const PostCard = () => {
 
             </Grid>
                 {/* <CardContent> */}
-                    <Grid container justify="space-between" className={classes.cardProfileSection}>
+                    <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
                         <Typography variant='body1'>Arslan sajid and 23 others</Typography>
                         <Typography variant='body2'>16 Comments • 2 Shares</Typography>
                     </Grid>

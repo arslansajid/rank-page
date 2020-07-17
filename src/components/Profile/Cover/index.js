@@ -12,24 +12,28 @@ const ProfileCover = () => {
     return (
         <>
         <Paper elevation={0} className={classes.coverContainer}>
-            <Grid container justify="space-between">
-                <Grid className={classes.leftside} item lg={6} container justify="space-between">
+            <Grid className={classes.mainContainer}>
+                <Grid container justify="space-between">
                     <div>
                         <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../../assets/images/Arslan.jpg")} />
                         <Typography variant='body1'>Arslan Sajid</Typography>
                         <Typography variant='body2'>@arslansajid</Typography>
                     </div>
-                    <Typography>
-                        Staring at the world, roaming the wilds, I am in my favorite world, keep living!
-                    </Typography>
-                </Grid>
-                <Grid item lg={6} container justify="space-between" className={classes.rightside}>
                     <div>
                         <Button className={classes.button} color="inherit" variant="outlined">
                             <SettingsIcon />
                         </Button>
                         <Button className={classes.button} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
                     </div>
+                    
+                </Grid>
+                <Grid container justify="space-between" className={classes.rightside}>
+                    <Grid item lg={6}>
+                    <Typography>
+                        Staring at the world, roaming the wilds, I am in my favorite world, keep living!
+                    </Typography>
+                    </Grid>
+                    <Grid item lg={6}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
                             <Typography>200</Typography>
@@ -44,6 +48,7 @@ const ProfileCover = () => {
                             <Typography>Lists</Typography>
                         </Grid>
                     </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Paper>
@@ -55,12 +60,17 @@ const ProfileCover = () => {
 const useStyles = makeStyles((theme) => ({
     coverContainer: {
         color: Colors.white,
-        minHeight: 200,
         padding: '1em',
         marginBottom: 5,
         backgroundColor: Colors.brandColor,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',
         borderRadius: 8,
+    },
+    mainContainer: {
+        minHeight: 200,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     avatar: {
         marginBottom: 8,
@@ -68,15 +78,14 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(8),
     },
     leftside: {
-        minHeight: 200,
         display: 'flex',
-        flexDirection: 'column'
+        // flexDirection: 'column'
     },
     rightside: {
-        minHeight: 200,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-end'
+        // minHeight: 200,
+        // display: 'flex',
+        // flexDirection: 'column',
+        // alignItems: 'flex-end'
     },
     button: {
         marginLeft: 15,

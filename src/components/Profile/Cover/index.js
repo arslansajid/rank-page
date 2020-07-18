@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import {Typography, TextField, IconButton, Grid, Paper, Button} from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,7 +24,9 @@ const ProfileCover = () => {
                         <Button className={classes.button} color="inherit" variant="outlined">
                             <SettingsIcon />
                         </Button>
-                        <Button className={classes.button} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
+                        <Link to="/edit-profile">
+                            <Button className={classes.button} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
+                        </Link>
                     </div>
                     
                 </Grid>

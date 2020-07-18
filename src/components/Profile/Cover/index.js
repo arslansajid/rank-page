@@ -17,38 +17,38 @@ const ProfileCover = () => {
                 <Grid container justify="space-between">
                     <div>
                         <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../../assets/images/Arslan.jpg")} />
-                        <Typography variant='body1'>Arslan Sajid</Typography>
-                        <Typography variant='body2'>@arslansajid</Typography>
+                        <Typography variant='body1' className = {classes.bold}>Arslan Sajid</Typography>
+                        <Typography variant='body2' className = {classes.font}>@arslansajid</Typography>
                     </div>
                     <div>
-                        <Button className={classes.button} color="inherit" variant="outlined">
+                        <Button className={classes.buttonSettings} color="inherit">
                             <SettingsIcon />
                         </Button>
                         <Link to="/edit-profile">
-                            <Button className={classes.button} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
+                            <Button className={classes.buttonEdit} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
                         </Link>
                     </div>
                     
                 </Grid>
                 <Grid container justify="space-between">
                     <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <Typography>
+                    <Typography className = {classes.introText}>
                         Staring at the world, roaming the wilds, I am in my favorite world, keep living!
                     </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
-                            <Typography>200</Typography>
-                            <Typography>Following</Typography>
+                            <Typography className = {classes.font}>200</Typography>
+                            <Typography className = {classes.font}>Following</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography>4k</Typography>
-                            <Typography>Fans</Typography>
+                            <Typography className = {classes.font}>4k</Typography>
+                            <Typography className = {classes.font}>Fans</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography>32</Typography>
-                            <Typography>Lists</Typography>
+                            <Typography className = {classes.font}>32</Typography>
+                            <Typography className = {classes.font}>Lists</Typography>
                         </Grid>
                     </Grid>
                     </Grid>
@@ -83,15 +83,34 @@ const useStyles = makeStyles((theme) => ({
     leftside: {
         display: 'flex',
     },
-    button: {
+    buttonSettings: {
+        border : '2px solid',
+        borderRadius: '50%',
+        height: 40,
+        width : 40,
+        borderRadius : 50,
+    },
+    buttonEdit : {
         marginLeft: 15,
-        borderRadius: 20,
-        height: 40
+        border : '2px solid',
+        borderRadius : 20,
+
     },
     textContainer: {
         marginLeft: 20,
-        textAlign: 'center'
-    }
+        textAlign: 'center',
+        fontSize: '0.75rem',
+    },
+    bold : {
+        fontWeight: 'bold',
+    },
+    font : {
+        fontSize: '0.75rem'
+    },
+    introText : {
+        opacity: 0.8,
+        fontSize: '0.75rem'
+    },
     })
 )
 

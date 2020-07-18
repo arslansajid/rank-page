@@ -12,6 +12,8 @@ const Colors = {
     placeHolderText: "#B4B4B4",
     inputBg: "#FAFAFA",
     background: "#FBFBFB",
+    fillGray : '#cccccc',
+    iconBackGround : '#EDF8FB',
   };
   
   export default Colors;

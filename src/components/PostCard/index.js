@@ -5,6 +5,7 @@ import {Grid, IconButton, Menu, MenuItem, Avatar, Button} from '@material-ui/cor
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Colors from '../../static/_colors';
 import Typography from '@material-ui/core/Typography';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import LikeIcon from '@material-ui/icons/ThumbUp';
@@ -42,7 +43,7 @@ const PostCard = () => {
 
         <Card elevation={0} className={classes.root}>
             <Grid container alignItems="center" justify="space-between" className={classes.cardSection}>
-                <Typography>
+                <Typography className = 'smallFont'>
                     Tom Holland Challenged you
                 </Typography>
                 <IconButton onClick={handleClick}>
@@ -52,28 +53,28 @@ const PostCard = () => {
             <Grid container className={classes.cardProfileSection}>
                 <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
                 <div>
-                    <Typography variant='body1'>Arslan Sajid</Typography>
-                    <Typography variant='body2'>@arslansajid</Typography>
+                    <Typography variant='body1' className ='mediumFont'>Arslan Sajid</Typography>
+                    <Typography variant='body2' className = 'smallFont'>@arslansajid</Typography>
                 </div>
             </Grid>
             <Grid className={classes.cardProfileSection}>
-                <Typography variant='body1'>Who Is the Coolest Actor in the World Right Now? </Typography>
-                <Typography variant='body2'>• 9 July 2020 at 12:30 AM</Typography>
+                <Typography variant='h6' className = {`${classes.heading} space-2`}>Who Is the Coolest Actor in the World Right Now? </Typography>
+                <Typography variant='body2' className = 'smallFont'>• 9 July 2020 at 12:30 AM</Typography>
             </Grid>
             <Grid className={classes.cardProfileSection} style={{minHeight:  200}}>
             <DragandDrop />
             </Grid>
                 {/* <CardContent> */}
                     <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
-                        <Typography variant='body1'>Arslan sajid and 23 others</Typography>
-                        <Typography variant='body2'>16 Comments • 2 Shares</Typography>
+                        <Typography variant='body1' className ='smallFont'><span className={classes.likeMain}><LikeIcon color = 'primary' className ={classes.likeIcon}/></span>Arslan sajid and 23 others</Typography>
+                        <Typography variant='body2' className = 'smallFont'>16 Comments • 2 Shares</Typography>
                     </Grid>
                 {/* </CardContent> */}
                 <CardActions>
                     <Grid container justify="space-between">
-                        <Button startIcon={<LikeIcon />}>Like</Button>
-                        <Button startIcon={<CommentIcon />}>Comment</Button>
-                        <Button startIcon={<ShareIcon />}>Share</Button>
+                        <Button className = {classes.weight} startIcon={<LikeIcon />}>Like</Button>
+                        <Button className = {classes.weight} startIcon={<CommentIcon />}>Comment</Button>
+                        <Button className = {classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>
                 </CardActions>
             </Card>
@@ -100,7 +101,27 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 15,
         width: theme.spacing(6),
         height: theme.spacing(6),
-    }
+    },
+    heading : {
+        fontSize : '1.125rem',
+        fontWeight : 600,
+        lineHeight : '1.167rem'
+    },
+    likeIcon : {
+        height : '0.85rem',
+        width : '0.85rem',
+        margin : 0,
+        padding : 0,
+    },
+    likeMain : {
+        background : Colors.iconBackGround,
+        borderRadius : 15,
+        padding : '9px 7px 7px 9px',
+        marginRight : 5,
+    },
+    weight : {
+        fontWeight : 600,
+    },
     })
 )
 

@@ -36,7 +36,7 @@ const Box = ({ name, type, isDropped, number }) => {
                         <Typography className={classes.text}>{name}</Typography>
                     }
                 </Grid>
-                <RightIcon fontSize="large" />
+                <RightIcon fontSize="large" className = {classes.iconColor}/>
                 </Grid>
             </Grid>
         </Grid>
@@ -87,12 +87,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     avatar: {
-        marginRight: 15,
+        marginRight: 10,
         width: theme.spacing(4),
         height: theme.spacing(4),
     },
     text: {
         fontSize: 18,
+    },
+    iconColor: {
+        fill : Colors.fillGray,
     }
 })
 )

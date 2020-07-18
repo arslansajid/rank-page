@@ -12,7 +12,9 @@ const FooterLinks = () => {
                 {[...Array(5)].map((category, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
-                            <CategoryCard />
+                            <CategoryCard
+                                isSelected={true}
+                            />
                         </Grid>
                     )
                 })}

@@ -7,11 +7,12 @@ import { Grid } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/ExpandMore';
 import PoolIcon from '@material-ui/icons/Pool';
 
-const CategoryCard = () => {
+const CategoryCard = (props) => {
+  const { isSelected } = props;
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} variant="outlined">
+    <Card className={isSelected ? classes.root : classes.rootFade} variant="outlined">
       <CardContent>
         <Grid className={classes.verticalCenter}>
           <PoolIcon fontSize={"large"} />
@@ -28,6 +29,17 @@ const CategoryCard = () => {
 
 const useStyles = makeStyles(theme => ({
     root: {
+      border: '1px solid rgba(38, 38, 38, 0.12)',
+      borderRadius: 8,
+      margin: theme.spacing(1, 0, 0, 0),
+
+      [theme.breakpoints.down('sm')]: {
+        margin: theme.spacing(1, 0, 0, 0),
+      },
+    },
+    rootFade: {
+      opacity: 0.6,
+      filter: 'brightness(0.8)',
       border: '1px solid rgba(38, 38, 38, 0.12)',
       borderRadius: 8,
       margin: theme.spacing(1, 0, 0, 0),

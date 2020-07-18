@@ -52,7 +52,7 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number }) => {
                     ? 'Release to drop'
                     : `Accepts: ${accept.join(', ')}`}
                 </Grid>
-                <RightIcon fontSize="large" />
+                <RightIcon fontSize="large" className = {classes.iconColor} />
                 </Grid>
             </Grid>
         </Grid>
@@ -95,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(4),
     },
     text: {
+    },
+    iconColor: {
+        fill : Colors.fillGray,
     }
 }))
 

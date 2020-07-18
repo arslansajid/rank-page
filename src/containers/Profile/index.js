@@ -17,8 +17,8 @@ const Profile = () => {
 		return (
 			<div>
                 <ProfileCover />
-				<ButtonGroup fullWidth size="large">
-                    <Button onClick={() => handleTabChange(1)}>
+				<ButtonGroup fullWidth size ='large'>
+                    <Button  className ={classes.buttons} onClick={() => handleTabChange(1)}>
                         <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>
                     </Button>
                     <Button onClick={() => handleTabChange(2)}>
@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     },
     tabselected: {
         fontWeight: 600
+    },
+    buttons: {
+        padding: '12px 21px',
+        fontSize: '1rem'
     },
     })
 )

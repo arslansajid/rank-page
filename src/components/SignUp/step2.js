@@ -16,6 +16,7 @@ const SignUpStep2 = props => {
 
   const onSubmit = async (data) => {
     setIsLoading(true)
+    registerData.country = registerData.country[0];
     let submitdata = {...registerData}
     submitdata.user_name = data.user_name;
     signUp(submitdata)

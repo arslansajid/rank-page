@@ -7,6 +7,7 @@ import {useForm} from 'react-hook-form';
 import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import { CountryDropdown } from 'react-country-region-selector';
+import CountrySelect from '../Common/CountrySelect'
 import { GenderItems } from '../../static/_selectOptions';
 
 const SignUp = props => {
@@ -27,6 +28,8 @@ const SignUp = props => {
     }
    
   }
+
+  console.log(errors)
 
 
   const classes = useStyles ();
@@ -124,8 +127,18 @@ const SignUp = props => {
         </div>
 
         <div className="space-4">
-          <InputLabel className='space-2'>Country</InputLabel>
-          <CountryDropdown
+          <CountrySelect
+            type="text"
+            name="country"
+            rules={{required: 'This field is required'}}
+            error={errors.country ? true : false}
+            control={control}
+            placeholder="Country"
+            label='Country'
+            defaultValue={''}
+            className="text-field"
+          />
+          {/* <CountryDropdown
            className = {classes.select}
            name = 'country'
           //  rules={{required: 'This field is required'}}
@@ -133,7 +146,7 @@ const SignUp = props => {
            value = {country}
            onChange = {(value) => setCountry(value)}
            label='Country'
-            />
+            /> */}
         </div>
 
         <div className={`${classes.center} space-4`}>

@@ -10,6 +10,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import CommentIcon from '@material-ui/icons/ChatBubbleOutline';
 import ShareIcon from '@material-ui/icons/Share';
+import DragandDrop from '../DragandDrop';
 
 const PostCard = () => {
     const classes = useStyles();
@@ -60,7 +61,7 @@ const PostCard = () => {
                 <Typography variant='body2'>• 9 July 2020 at 12:30 AM</Typography>
             </Grid>
             <Grid className={classes.cardProfileSection} style={{minHeight:  200}}>
-
+            <DragandDrop />
             </Grid>
                 {/* <CardContent> */}
                     <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>

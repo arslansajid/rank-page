@@ -1,7 +1,7 @@
 
 
 const Config = {
-  BASE_APP_URL: 'http://54.91.221.44/api/',
+  BASE_APP_URL: 'https://rankpage.com/api/',
   API_VERSION: 'v1',
 };
 

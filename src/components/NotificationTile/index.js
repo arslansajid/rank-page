@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     profileContainer: {
-        padding: theme.spacing(2, 2),
+        padding: theme.spacing(2, 0),
         cursor: "pointer",
         borderBottom: '1px solid rgba(38, 38, 38, 0.12)',
     },

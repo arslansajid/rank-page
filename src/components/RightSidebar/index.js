@@ -13,6 +13,7 @@ const RightSidebar = (props) => {
             <div className={classes.main}>
                 <SearchInput
                     handleSearch={(value) => window.alert(`send reequest for searching with ${value}`)}
+                    onFocusRoute={'/search'}
                 />
                 <SidebarCard showSeeMoreLink={true} />
                 <SidebarCard showSeeMoreLink={true} />

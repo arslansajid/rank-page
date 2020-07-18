@@ -3,11 +3,12 @@ import {InputAdornment, TextField, IconButton} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
+import {Redirect} from "react-router-dom"
 
 const SearchInput = (props) => {
     const classes = useStyles();
-    const { handleSearch } = props;
-
+    const { handleSearch, onFocusRoute } = props;
+    console.log(props)
     return (
         <TextField
             className={classes.container}
@@ -15,6 +16,7 @@ const SearchInput = (props) => {
             variant='outlined'
             placeholder="Search Rankpage ..."
             fullWidth
+            onFocus={() => !!onFocusRoute && window.location.replace(onFocusRoute)}
             onKeyPress={(event) => {
                 if(event.key === 'Enter') {
                     handleSearch(event.target.value);

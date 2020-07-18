@@ -6,6 +6,7 @@ import LoadingSpinner from './components/Common/LoadingSpinner';
 const Home = React.lazy(() => import('./containers/Home'));
 const About = React.lazy(() => import('./containers/About'));
 const SignUp = React.lazy(() => import('./components/SignUp'));
+const Search = React.lazy(() => import('./containers/Search'));
 const Profile = React.lazy(() => import('./containers/Profile'));
 const Newsfeed = React.lazy(() => import('./containers/Newsfeed'));
 const Notifications = React.lazy(() => import('./containers/Notifications'));
@@ -27,6 +28,7 @@ const Routes = () => {
         <Route exact path="/" render={() => <Home />} />
         <Route exact path="/about" render={() => <About />} />
         <Route exact path="/SignUp" render={() => <SignUp />} />
+        <Route exact path="/search" render={() => <Search />} />
         <Route exact path="/profile" render={() => <Profile />} />
         <Route exact path="/newsfeed" render={() => <Newsfeed />} />
         <Route exact path="/notifications" render={() => <Notifications />} />

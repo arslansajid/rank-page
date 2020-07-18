@@ -14,6 +14,7 @@ const RightSidebar = (props) => {
                 <SearchInput
                     handleSearch={(value) => window.alert(`send reequest for searching with ${value}`)}
                     onFocusRoute={'/search'}
+                    {...props}
                 />
                 <SidebarCard showSeeMoreLink={true} />
                 <SidebarCard showSeeMoreLink={true} />

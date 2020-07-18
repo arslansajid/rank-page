@@ -38,7 +38,7 @@ const App = () => {
                 <Routes />
               </Grid>
               <Grid className={classes.rightSidebar} item lg={3} md={3} sm={false} xs={false}>
-                <RightSidebar />
+                <RightSidebar history={history} />
               </Grid>
             </Grid>
           </StylesProvider>

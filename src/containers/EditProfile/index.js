@@ -16,20 +16,20 @@ const EditProfile = (props) => {
 	const {user} = props;
 	const [country, setCountry] = useState('')
 
-	console.log(country)
+	// console.log(country)
 
 	return (
 		<>
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Picture</Typography>
 			{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
-			<ImagePicker image={[]} setImage={(value) => console.log(value)} />
+			<ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} />
 		</Paper>
 		
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Cover</Typography>
 			<Grid className={classes.coverContainer}>
-
+				<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
 			</Grid>
 		</Paper>
 
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 	},
     coverContainer: {
         color: Colors.white,
-        padding: '1em',
+        padding: '0.75em',
         marginBottom: 8,
         backgroundColor: Colors.brandColor,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',

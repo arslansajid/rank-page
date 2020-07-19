@@ -5,6 +5,7 @@ import {useDropzone} from 'react-dropzone';
 import Colors from '../../../static/_colors';
 
 const ImagePicker = (props) => {
+  const {type} = props;
   const [files, setFiles] = useState(props.image);
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/*',
@@ -27,10 +28,10 @@ const ImagePicker = (props) => {
 
   const renderThumbs = files.map(file => (
     <div key={file.name} style={{position: 'relative'}} >
-      <div className = {classes.thumb }>
-        <div className = {classes.thumbInner}>
+      <div className = 'thumb'>
+        <div className = 'thumbInner'>
           <img
-            className = {classes.image}
+            className = 'image'
             src={file.preview}
           />
         </div>
@@ -38,16 +39,15 @@ const ImagePicker = (props) => {
     </div>
   ));
 
-  
 
   return (
     <>
-      <div {...getRootProps({className: classes.dropZone})} className = {classes.dropZone}>
+      <div {...getRootProps({className: type === 'image' ?  classes.dropZoneImage : classes.dropZoneCover})} className = {type === 'image' ?  classes.dropZoneImage : classes.dropZoneCover}>
       {renderThumbs}
-        <div className = {classes.imageContainer}>
+        <div className = 'imageContainer'>
           <input {...getInputProps()} />
-          <div className = {classes.picker}>
-            <div className ={classes.pickerText}>
+          <div className = 'picker'>
+            <div className ='pickerText'>
               PHOTO
             </div>
           </div>
@@ -57,98 +57,14 @@ const ImagePicker = (props) => {
   );
 }
 
-// const Thumb = styled.div`
-//   cursor: pointer;
-//   display: inline-flex;
-//   border-radius: 2;
-//   width: 78px;
-//   height: 78px;
-//   box-sizing: border-box;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   border-radius: 3px;
-
-//   @media (max-width: 425px) {
-//     width: 64px;
-//     height: 64px;
-//   }
-// `;
-
-// const ThumbInner = styled.div`
-//   min-width: 0;
-//   overflow: hidden;
-//   border-radius: 3px;
-// `;
-
-// const Image = styled.img`
-//   display: block;
-//   width: auto;
-//   height: 100%;
-//   overflow: hidden;
-
-//   @media (max-width: 425px) {
-//     width: 64px;
-//     height: 64px;
-//   }
-// `;
-
-
-// const DropZone = styled.div`
-// 	width: 78px;
-// 	height: 78px;
-//   background-color: transparent;
-//   z-index: 100;
-
-//   @media (max-width: 425px) {
-//     width: 64px;
-//     height: 64px;
-//   }
-// `;
-
-// const ImageContainer = styled.div`
-// 	width: 78px;
-// 	height: 78px;
-// 	background-color: #484B5C;
-// 	display: flex;
-// 	justify-content: center;
-//   align-items: center;
-//   border-radius: 3px;
-//   cursor: pointer;
-
-//   @media (max-width: 425px) {
-//     width: 64px;
-//     height: 64px;
-//   }
-// `;
-
-// const Picker = styled.div`
-// 	width: 64px;
-// 	height: 64px;
-// 	border: 1px dashed white;
-// 	display: flex;
-// 	justify-content: center;
-//   align-items: center;
-  
-//   @media (max-width: 425px) {
-//     width: 52px;
-//     height: 52px;
-//   }
-// `;
-
-// const PickerText = styled.div`
-//   color: #fff;
-//   font-family: Montserrat;
-//   font-size: 11px;
-// `;
-
 const useStyles = makeStyles((theme) =>
     createStyles({
-
-
-
-
-        thumb: {
+      dropZoneImage : {
+          width: '5rem',
+          height: '5rem',
+          backgroundColor: 'transparent',
+          zIndex: 100,
+        '& .thumb': {
           cursor: 'pointer',
           display: 'inline-flex',
           borderRadius: 2,
@@ -160,24 +76,18 @@ const useStyles = makeStyles((theme) =>
           left: 0,
           borderRadius: '3px'
 				},
-				thumbInner: {
+				'& .thumbInner': {
           minWidth: 0,
           overflow: 'hidden',
           borderRadius: '50%',
 				},
-        image: {
+        '& .image': {
           display: 'block',
-          width: 'auto',
+          width: '100%',
           height: '100%',
           overflow: 'hidden'
         },
-        dropZone: {
-          width: '5rem',
-          height: '5rem',
-          backgroundColor: 'transparent',
-          zIndex: 100
-				},
-				imageContainer :{
+				'& .imageContainer' :{
           width: '5rem',
           height: '5rem',
           backgroundColor: '#484B5C',
@@ -189,20 +99,77 @@ const useStyles = makeStyles((theme) =>
           border : '1px solid #333',
           borderRadius : '50%',
 				},
-				picker :{
+				'& .picker' :{
           width: '5rem',
           height: '5rem',
-          // border: '1px dashed white',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: '50%',
 
 				},
-        pickerText: {
+        '& .pickerText': {
           color: Colors.white,
           fontSize: '11px',
         }
+      },
+
+
+
+      ////// cover
+
+
+      dropZoneCover : {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'transparent',
+        zIndex: 100,
+      '& .thumb': {
+        cursor: 'pointer',
+        display: 'inline-flex',
+        borderRadius: 2,
+        width: '100%',
+        minHeight: '150px',
+        boxSizing: 'border-box',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        borderRadius: '3px'
+      },
+      '& .thumbInner': {
+        minWidth: 0,
+        overflow: 'hidden',
+      },
+      '& .image': {
+        display: 'block',
+        width: '100%',
+        height: '150px',
+        overflow: 'hidden'
+      },
+      '& .imageContainer' :{
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#484B5C',
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: '3px',
+        cursor: 'pointer',
+        border : '1px solid #333',
+      },
+      '& .picker' :{
+        width: '100%',
+        height: '150px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+      },
+      '& .pickerText': {
+        color: Colors.white,
+        fontSize: '2rem',
+      }
+    },
     })
 );
 

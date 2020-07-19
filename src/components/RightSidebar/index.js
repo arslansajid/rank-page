@@ -8,13 +8,17 @@ import Colors from '../../static/_colors';
 
 const RightSidebar = (props) => {
     const classes = useStyles();
+
+    const searchHandler = (value) => {
+        window.alert(`send reequest for searching with ${value}`);
+        props.history.push('/search')
+    }
+
     return (
         <>
             <div className={classes.main}>
                 <SearchInput
-                    handleSearch={(value) => window.alert(`send reequest for searching with ${value}`)}
-                    onFocusRoute={'/search'}
-                    {...props}
+                    handleSearch={(value) => searchHandler(value)}
                 />
                 <SidebarCard showSeeMoreLink={true} />
                 <SidebarCard showSeeMoreLink={true} />

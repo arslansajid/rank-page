@@ -22,9 +22,11 @@ const ProfileCover = () => {
                         <Typography variant='body2' className = {classes.font}>@arslansajid</Typography>
                     </div>
                     <div>
-                        <Button className={classes.buttonSettings} color="inherit">
-                            <SettingsIcon />
-                        </Button>
+                        <Link to="/settings">
+                            <Button className={classes.buttonSettings} color="inherit">
+                                <SettingsIcon />
+                            </Button>
+                        </Link>
                         <Link to="/edit-profile">
                             <Button className={classes.buttonEdit} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
                         </Link>

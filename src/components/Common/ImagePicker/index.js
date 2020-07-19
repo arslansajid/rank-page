@@ -15,8 +15,13 @@ const ImagePicker = (props) => {
       }
     }
   });
-  
-  const thumbs = files.map(file => (
+
+  useEffect(() => () => {
+    // Make sure to revoke the data uris to avoid memory leaks
+    // files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, [files]);
+
+  const renderThumbs = files.map(file => (
     <div key={file.name} style={{position: 'relative'}}>
       <Thumb>
         <ThumbInner>
@@ -28,15 +33,10 @@ const ImagePicker = (props) => {
     </div>
   ));
 
-  useEffect(() => () => {
-    // Make sure to revoke the data uris to avoid memory leaks
-    // files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [files]);
-
   return (
     <>
       <DropZone {...getRootProps({className: 'dropzone'})}>
-      {thumbs}
+      {renderThumbs}
         <ImageContainer>
           <input {...getInputProps()} />
           <Picker>

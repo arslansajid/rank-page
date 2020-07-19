@@ -12,7 +12,7 @@ const Settings = () => {
 	const [activeTab, setActiveTab] = useState(1);
 	const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
 	const [activeTabFollowingPrivacy, setActiveTabFollowingPrivacy] = useState(1);
-	const [activeDisable, setActiveDisable] = useState(null);
+	const [activeDisable, setActiveDisable] = useState(false);
 
 
 
@@ -136,12 +136,12 @@ const Settings = () => {
 					</Typography>
 
 				<span className='space-4'>
-					<Button className={activeTab === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button className={activeTab === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={()=>setActiveTab(1)}>
 							<Typography>
 									yes
 							</Typography>
 					</Button>
-					<Button  className={activeTab === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button  className={activeTab === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() =>setActiveTab(2)}>
 							<Typography>
 									no
 							</Typography>
@@ -156,17 +156,17 @@ const Settings = () => {
 					</Typography>
 
 				<span className='space-4'>
-					<Button className={activeTabAccountPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button className={activeTabAccountPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
 							<Typography>
 								Public
 							</Typography>
 					</Button>
-					<Button  className={activeTabAccountPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button  className={activeTabAccountPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
 							<Typography>
 								Private
 							</Typography>
 					</Button>
-					<Button  className={activeTabAccountPrivacy === 3 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button  className={activeTabAccountPrivacy === 3 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(3)}>
 							<Typography>
 								Hidden
 							</Typography>
@@ -181,17 +181,17 @@ const Settings = () => {
 					</Typography>
 
 				<span className='space-4'>
-					<Button className={activeTabFollowingPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button className={activeTabFollowingPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(1)}>
 							<Typography>
 								Public
 							</Typography>
 					</Button>
-					<Button  className={activeTabFollowingPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button  className={activeTabFollowingPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(2)}>
 							<Typography>
 								Mutual
 							</Typography>
 					</Button>
-					<Button  className={activeTabFollowingPrivacy === 3 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button  className={activeTabFollowingPrivacy === 3 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(3)}>
 							<Typography>
 								Hidden
 							</Typography>
@@ -206,7 +206,7 @@ const Settings = () => {
 					</Typography>
 
 				<span className='space-4'>
-					<Button className={activeDisable === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained">
+					<Button className={activeDisable ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveDisable(!activeDisable)}>
 							<Typography>
 								Disable
 							</Typography>
@@ -259,6 +259,9 @@ const useStyles = makeStyles((theme) =>
 					background: Colors.brandColor,
 					marginRight : 10,
 					color : Colors.white,
+					"&:hover": {
+						background : Colors.brandColor,
+				}
 				},
         error : {
             color : Colors.red,

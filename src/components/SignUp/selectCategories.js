@@ -1,23 +1,38 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {Button, Typography} from '@material-ui/core';
+import {Button, Typography , Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import {useForm} from 'react-hook-form';
+import CategoryCard from "../Profile/CategoryCard";
 
 
-const Categories = props => {
-  const [isLoading, setIsLoading] = useState (false);
+const SelectCategories = props => {
+  const {close} = props;
+  const [isLoading, setIsLoading] = useState(false);
   const {errors, handleSubmit, control} = useForm ();
 
-  const classes = useStyles ();
+  const classes = useStyles();
   return (
     <div className={classes.container}>
         <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
 
+        <Grid container spacing={2} className = 'space-4'>
+          {[...Array(4)].map((category, index) => {
+            return (
+                <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
+                    <CategoryCard
+                        isSelected={true}
+                    />
+                </Grid>
+              )
+          })}
+      </Grid>
+
         <div className={`${classes.center} space-4`}>
           <Button
-            type="submit"
-            disabled={isLoading}
+            // type="submit"
+            // disabled={isLoading}
+            onClick={()=>close()}
             className={classes.submitButton}
             variant="contained"
             color="primary"
@@ -68,6 +83,6 @@ const useStyles = makeStyles (theme =>
   })
 );
 
-Categories.defaultProps = {};
+SelectCategories.defaultProps = {};
 
-export default Categories;
+export default SelectCategories;

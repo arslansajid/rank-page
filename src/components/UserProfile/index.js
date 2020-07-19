@@ -133,7 +133,8 @@ const UserProfile = (props) => {
                 )
             }
             <Grid container className={classes.profileContainer}>
-                <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
+                {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
+                <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                 <Grid className={classes.verticalCenter}>
                     <Grid>
                         {!!user ? (

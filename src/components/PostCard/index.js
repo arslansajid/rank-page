@@ -52,7 +52,8 @@ const PostCard = () => {
                     </IconButton>
                 </Grid>
                 <Grid container className={classes.cardProfileSection}>
-                    <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
+                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                    {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
                     <div>
                         <Typography variant='body1' className='mediumFont'>Arslan Sajid</Typography>
                         <Typography variant='body2' className='smallFont'>@arslansajid</Typography>

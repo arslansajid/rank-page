@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Paper, Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import NotificationTile from "../../components/NotificationTile"

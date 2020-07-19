@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 import SidebarCard from "../SidebarCard";
 import SearchInput from "../Common/SearchInput";
 import FooterLinks from "../FooterLinks";
@@ -10,7 +9,7 @@ const RightSidebar = (props) => {
     const classes = useStyles();
 
     const searchHandler = (value) => {
-        window.alert(`send reequest for searching with ${value}`);
+        window.alert(`send request for searching with ${value}`);
         props.history.push('/search')
     }
 

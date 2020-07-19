@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
@@ -10,7 +10,7 @@ import Cookie from "js-cookie"
 
 const SidebarCard = (props) => {
     const classes = useStyles();
-    const { items, title, showSeeMoreLink, user } = props;
+    const { items, title, showSeeMoreLink } = props;
 
     const handleSignOut = (value) => {
         if (value === "Sign Out") {
@@ -46,7 +46,7 @@ const SidebarCard = (props) => {
                                 <Link key={index} to={item.route}>
                                     <ListItem onClick={() => handleSignOut(item.name)} button>
                                         <ListItemIcon className={classes.sideIcon}>
-                                            <img src={require(`../../assets/icons/${item.icon}.png`)} />
+                                            <img alt={`${item.icon}_icon`} src={require(`../../assets/icons/${item.icon}.png`)} />
                                         </ListItemIcon>
                                         <ListItemText
                                             classes={{ primary: classes.text }}

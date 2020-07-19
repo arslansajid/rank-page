@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Typography } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ const Settings = () => {
 
 	const onSubmit = data => {
 		console.log('function called')
+		setIsLoading(true);
 	}
 
 	const classes = useStyles();
@@ -218,7 +219,7 @@ const Settings = () => {
 	);
 }
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         container: {
             display: "flex",

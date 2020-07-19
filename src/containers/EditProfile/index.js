@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CountrySelect from "../../components/Common/CountrySelect";
 import { CountryRegionData } from "react-country-region-selector";
 import MenuItem from "@material-ui/core/MenuItem";
+import ImagePicker from "../../components/Common/ImagePicker"
 
 const EditProfile = (props) => {
 	const classes = useStyles();
@@ -21,7 +22,8 @@ const EditProfile = (props) => {
 		<>
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Picture</Typography>
-			<Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+			{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
+			<ImagePicker image={[]} setImage={(value) => console.log(value)} />
 		</Paper>
 		
 		<Paper elevation={0} className={classes.container}>

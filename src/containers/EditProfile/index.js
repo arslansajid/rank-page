@@ -36,6 +36,7 @@ const EditProfile = (props) => {
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Full Name</Typography>
 			<TextField
+				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
 				fullWidth
@@ -45,6 +46,7 @@ const EditProfile = (props) => {
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Bio (140 Characters)</Typography>
 			<TextField
+				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
 				multiline={true}
@@ -56,6 +58,7 @@ const EditProfile = (props) => {
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Date of birth</Typography>
 			<TextField
+				className={classes.greyInput}
 				type="date"
 				name="date_of_birth"
 				placeholder="Date"
@@ -71,6 +74,7 @@ const EditProfile = (props) => {
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Gender</Typography>
 			<TextField
+				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
 				// value=""
@@ -88,6 +92,7 @@ const EditProfile = (props) => {
 			<Typography variant="h6" gutterBottom>Country</Typography>
 			{/* <CSelect handleChange={(value) => console.log(value)} /> */}
 			<TextField
+				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
 				value={country}
@@ -133,7 +138,11 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
         width: theme.spacing(8),
         height: theme.spacing(8),
-    },
+	},
+	greyInput: {
+		borderRadius: 8,
+		background: Colors.inputBg,
+	}
 }))
 
 export default connect()(EditProfile);

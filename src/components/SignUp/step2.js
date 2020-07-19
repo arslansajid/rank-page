@@ -9,7 +9,7 @@ import {signUp} from './action.js'
 
 
 const SignUpStep2 = props => {
-  const {registerData , closeSignUp} = props;
+  const {registerData , closeSignUp , showCatergories} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [value , setValue] = useState (null)
@@ -23,9 +23,13 @@ const SignUpStep2 = props => {
     .then((response) => {
       setIsLoading(false)
       setValue(response.data)
+      if(response.data && response.data.success){
+        showCatergories()
+      }
     })
     .catch((error) => {
       setIsLoading(false)
+      setValue({message : 'Something went wrong'})
     })
   }
 
@@ -62,7 +66,7 @@ const SignUpStep2 = props => {
             </Typography>
           </Button>
         </div>
-        {value && !value.success ?
+        {value && value.message ?
         <Typography variant='body2' className = {classes.error}>
             {value.message}
         </Typography>
@@ -100,6 +104,7 @@ const useStyles = makeStyles (theme =>
     },
     error : {
       color : Colors.red,
+      textAlign : 'center'
     },
     submitButtonText: {
       fontSize: '16px',

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     messageBar : {
          margin : 0 ,
          borderBottom : '1px solid #ddd' ,
-         padding : '0px 15px'
+        //  padding : '0px 15px'
     },
     newMessageGrid : {
         padding : 15 ,
@@ -62,6 +62,11 @@ sendIcon : {
     height : '0.95rem',
     width : '0.95rem'
 },
+activeItem : {
+    "&:hover": {
+        borderRight : '2px solid #19A5D3'
+    }
+},
 });
 
 const Chat = () => {
@@ -98,7 +103,7 @@ const Chat = () => {
  
             <Grid item xs={4} className={classes.borderRight500}>
                 <List>
-                    <ListItem button key="RemySharp">
+                    <ListItem button key="RemySharp" className = {classes.activeItem}>
                         <ListItemIcon>
                         <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                         </ListItemIcon>
@@ -110,7 +115,7 @@ const Chat = () => {
                 </List>
 
                 <List>
-                    <ListItem button key="RemySharp">
+                    <ListItem button key="RemySharp" className = {classes.activeItem}>
                         <ListItemIcon>
                             <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                         </ListItemIcon>
@@ -119,7 +124,7 @@ const Chat = () => {
                             <Typography variant = 'body2' className ='smallFont'>@RemySharp</Typography>
                         </ListItemText>
                     </ListItem>
-                    <ListItem button key="Alice">
+                    <ListItem button key="Alice" className = {classes.activeItem}>
                         <ListItemIcon>
                             <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                         </ListItemIcon>
@@ -128,7 +133,7 @@ const Chat = () => {
                             <Typography variant = 'body2' className ='smallFont'>@Alice</Typography>
                         </ListItemText>
                     </ListItem>
-                    <ListItem button key="CindyBaker">
+                    <ListItem button key="CindyBaker" className = {classes.activeItem}>
                         <ListItemIcon>
                             <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
                         </ListItemIcon>

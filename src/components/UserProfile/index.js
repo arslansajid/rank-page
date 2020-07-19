@@ -6,6 +6,7 @@ import Dialog from "../Common/Dialog";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp/step1.js";
 import SignUpStep2 from "../SignUp/step2.js";
+import SelectCategories from "../SignUp/selectCategories";
 import RecoverAccount from "../RecoverAccount";
 import Success from "../RecoverAccount/sucees";
 import Colors from '../../static/_colors';
@@ -17,6 +18,7 @@ const UserProfile = (props) => {
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
+    const [showSelectCategories, setShowSelectCategories] = useState(false);
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
     const [showRecoverySuccess, setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();
@@ -80,9 +82,26 @@ const UserProfile = (props) => {
                         open={showSignUpStep2}
                         message={<SignUpStep2
                             registerData={value}
+                            showCatergories = {() =>  {setShowSignUpStep2(false) ; setShowSelectCategories(true)}}
+                            
                         />}
                         applyForm={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
                         backAction={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
+                        hideActions={true}
+                    />
+                )
+            }
+                        {
+                showSelectCategories && (
+                    <Dialog
+                        title={"Select Categories"}
+                        open={showSelectCategories}
+                        message={<SelectCategories
+                        close = {()=> setShowSelectCategories(false)}
+                        />}
+                        applyForm={() => setShowSelectCategories(false)}
+                        skipAction={() => setShowSelectCategories(false)}
+                        
                         hideActions={true}
                     />
                 )

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {useDropzone} from 'react-dropzone';
+import Colors from '../../../static/_colors';
 
 const ImagePicker = (props) => {
   const [files, setFiles] = useState(props.image);
@@ -21,118 +23,187 @@ const ImagePicker = (props) => {
     // files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [files]);
 
+  const classes = useStyles();
+
   const renderThumbs = files.map(file => (
-    <div key={file.name} style={{position: 'relative'}}>
-      <Thumb>
-        <ThumbInner>
-          <Image
+    <div key={file.name} style={{position: 'relative'}} >
+      <div className = {classes.thumb }>
+        <div className = {classes.thumbInner}>
+          <img
+            className = {classes.image}
             src={file.preview}
           />
-        </ThumbInner>
-      </Thumb>
+        </div>
+      </div>
     </div>
   ));
 
+  
+
   return (
     <>
-      <DropZone {...getRootProps({className: 'dropzone'})}>
+      <div {...getRootProps({className: classes.dropZone})} className = {classes.dropZone}>
       {renderThumbs}
-        <ImageContainer>
+        <div className = {classes.imageContainer}>
           <input {...getInputProps()} />
-          <Picker>
-            <PickerText>
+          <div className = {classes.picker}>
+            <div className ={classes.pickerText}>
               PHOTO
-            </PickerText>
-          </Picker>
-        </ImageContainer>
-      </DropZone>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
 
-const Thumb = styled.div`
-  cursor: pointer;
-  display: inline-flex;
-  border-radius: 2;
-  width: 78px;
-  height: 78px;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 3px;
+// const Thumb = styled.div`
+//   cursor: pointer;
+//   display: inline-flex;
+//   border-radius: 2;
+//   width: 78px;
+//   height: 78px;
+//   box-sizing: border-box;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   border-radius: 3px;
 
-  @media (max-width: 425px) {
-    width: 64px;
-    height: 64px;
-  }
-`;
+//   @media (max-width: 425px) {
+//     width: 64px;
+//     height: 64px;
+//   }
+// `;
 
-const ThumbInner = styled.div`
-  min-width: 0;
-  overflow: hidden;
-  border-radius: 3px;
-`;
+// const ThumbInner = styled.div`
+//   min-width: 0;
+//   overflow: hidden;
+//   border-radius: 3px;
+// `;
 
-const Image = styled.img`
-  display: block;
-  width: auto;
-  height: 100%;
-  overflow: hidden;
+// const Image = styled.img`
+//   display: block;
+//   width: auto;
+//   height: 100%;
+//   overflow: hidden;
 
-  @media (max-width: 425px) {
-    width: 64px;
-    height: 64px;
-  }
-`;
+//   @media (max-width: 425px) {
+//     width: 64px;
+//     height: 64px;
+//   }
+// `;
 
 
-const DropZone = styled.div`
-	width: 78px;
-	height: 78px;
-  background-color: transparent;
-  z-index: 100;
+// const DropZone = styled.div`
+// 	width: 78px;
+// 	height: 78px;
+//   background-color: transparent;
+//   z-index: 100;
 
-  @media (max-width: 425px) {
-    width: 64px;
-    height: 64px;
-  }
-`;
+//   @media (max-width: 425px) {
+//     width: 64px;
+//     height: 64px;
+//   }
+// `;
 
-const ImageContainer = styled.div`
-	width: 78px;
-	height: 78px;
-	background-color: #484B5C;
-	display: flex;
-	justify-content: center;
-  align-items: center;
-  border-radius: 3px;
-  cursor: pointer;
+// const ImageContainer = styled.div`
+// 	width: 78px;
+// 	height: 78px;
+// 	background-color: #484B5C;
+// 	display: flex;
+// 	justify-content: center;
+//   align-items: center;
+//   border-radius: 3px;
+//   cursor: pointer;
 
-  @media (max-width: 425px) {
-    width: 64px;
-    height: 64px;
-  }
-`;
+//   @media (max-width: 425px) {
+//     width: 64px;
+//     height: 64px;
+//   }
+// `;
 
-const Picker = styled.div`
-	width: 64px;
-	height: 64px;
-	border: 1px dashed white;
-	display: flex;
-	justify-content: center;
-  align-items: center;
+// const Picker = styled.div`
+// 	width: 64px;
+// 	height: 64px;
+// 	border: 1px dashed white;
+// 	display: flex;
+// 	justify-content: center;
+//   align-items: center;
   
-  @media (max-width: 425px) {
-    width: 52px;
-    height: 52px;
-  }
-`;
+//   @media (max-width: 425px) {
+//     width: 52px;
+//     height: 52px;
+//   }
+// `;
 
-const PickerText = styled.div`
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 11px;
-`;
+// const PickerText = styled.div`
+//   color: #fff;
+//   font-family: Montserrat;
+//   font-size: 11px;
+// `;
+
+const useStyles = makeStyles((theme) =>
+    createStyles({
+
+
+
+
+        thumb: {
+          cursor: 'pointer',
+          display: 'inline-flex',
+          borderRadius: 2,
+          width: '5rem',
+          height: '5rem',
+          boxSizing: 'border-box',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          borderRadius: '3px'
+				},
+				thumbInner: {
+          minWidth: 0,
+          overflow: 'hidden',
+          borderRadius: '50%',
+				},
+        image: {
+          display: 'block',
+          width: 'auto',
+          height: '100%',
+          overflow: 'hidden'
+        },
+        dropZone: {
+          width: '5rem',
+          height: '5rem',
+          backgroundColor: 'transparent',
+          zIndex: 100
+				},
+				imageContainer :{
+          width: '5rem',
+          height: '5rem',
+          backgroundColor: '#484B5C',
+          display:'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '3px',
+          cursor: 'pointer',
+          border : '1px solid #333',
+          borderRadius : '50%',
+				},
+				picker :{
+          width: '5rem',
+          height: '5rem',
+          // border: '1px dashed white',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '50%',
+
+				},
+        pickerText: {
+          color: Colors.white,
+          fontSize: '11px',
+        }
+    })
+);
 
 export default ImagePicker;

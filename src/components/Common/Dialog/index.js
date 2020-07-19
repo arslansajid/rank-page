@@ -18,13 +18,14 @@ const DialogForm = ({
     cancelForm,
     hideActions,
     backAction,
+    skipAction,
 }) => {
     const classes = useStyles();
     return (
         <div>
             <Dialog open={open} onClose={cancelForm} fullWidth={true} maxWidth={'sm'} disableBackdropClick>
                 <>
-                    <DialogActions className={classes.buttonClose}>
+                    <DialogActions className={ skipAction ?  classes.buttonSkip  : classes.buttonClose}>
                         {
                             cancelForm && (
                                 <IconButton onClick={applyForm} aria-label="delete">
@@ -36,6 +37,13 @@ const DialogForm = ({
                             backAction && (
                                 <IconButton onClick={applyForm} aria-label="delete">
                                     <ArrowBackIcon/>
+                                </IconButton>
+                            )
+                        }
+                         {
+                            skipAction && (
+                                <IconButton onClick={applyForm} aria-label="delete" className = {classes.skipText}>
+                                    Skip
                                 </IconButton>
                             )
                         }
@@ -85,6 +93,14 @@ const useStyles = makeStyles((theme) =>
         },
         buttonClose: {
             position: 'absolute',
+        },
+        buttonSkip : {
+            position: 'absolute',
+            right : 0,
+        },
+        skipText: {
+            fontWeight : 600,
+            fontSize : '1rem',
         }
     })
 );

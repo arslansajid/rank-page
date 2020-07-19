@@ -99,8 +99,8 @@ const SignIn = (props) => {
                     </Button>
                 </div>
                 <div className={`${classes.center} space-2`}>
-                <Button onClick={showRecoveryModal}>
-                    <Typography className={classes.submitButtonText}>
+                <Button onClick={showRecoveryModal} className={classes.recoveryButton}>
+                    <Typography className={classes.recoveryText}>
                         Unable to Sign In?
                     </Typography>
                 </Button>
@@ -135,6 +135,21 @@ const useStyles = makeStyles((theme) =>
             fontWeight: 600,
             lineHeight: "19px",
             textTransform: "capitalize",
+        },
+        recoveryButton : {
+            fontSize: "16px",
+            fontWeight: 600,
+            "&:hover": {
+                backgroundColor: 'none',
+                background : 'none',
+            }
+        },
+        recoveryText : {
+            fontSize: "16px",
+            fontWeight: 600,
+            "&:hover": {
+                color : Colors.brandColor,
+            }
         },
         center: {
             textAlign: "center",

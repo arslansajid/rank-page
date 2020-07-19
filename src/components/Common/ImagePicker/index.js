@@ -48,7 +48,12 @@ const ImagePicker = (props) => {
           <input {...getInputProps()} />
           <div className = 'picker'>
             <div className ='pickerText'>
-              PHOTO
+              {
+                type === 'image' ?
+                'PROFILE'
+                :
+                'COVER PHOTO'
+              }
             </div>
           </div>
         </div>
@@ -96,7 +101,7 @@ const useStyles = makeStyles((theme) =>
           alignItems: 'center',
           borderRadius: '3px',
           cursor: 'pointer',
-          border : '1px solid #333',
+          // border : '1px solid #333',
           borderRadius : '50%',
 				},
 				'& .picker' :{
@@ -149,13 +154,13 @@ const useStyles = makeStyles((theme) =>
       '& .imageContainer' :{
         width: '100%',
         height: '100%',
-        backgroundColor: '#484B5C',
+        // backgroundColor: '#484B5C',
         display:'flex',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: '3px',
         cursor: 'pointer',
-        border : '1px solid #333',
+        // border : '1px solid #333',
       },
       '& .picker' :{
         width: '100%',
@@ -167,7 +172,7 @@ const useStyles = makeStyles((theme) =>
       },
       '& .pickerText': {
         color: Colors.white,
-        fontSize: '2rem',
+        fontSize: '1rem',
       }
     },
     })

@@ -90,7 +90,7 @@ const UserProfile = (props) => {
             {
                 showRecoveryModal && (
                     <Dialog
-                        title={"Sign Up"}
+                        title={"Sign In"}
                         open={showRecoveryModal}
                         message={<RecoverAccount
                             showSuccess={() => { setShowRecoveryModal(false); setShowRecoverySuccess(true) }}

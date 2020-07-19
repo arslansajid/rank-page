@@ -14,6 +14,7 @@ const Colors = {
     background: "#FBFBFB",
     fillGray : '#cccccc',
     iconBackGround : '#EDF8FB',
+    border : '#ddd'
   };
   
   export default Colors;

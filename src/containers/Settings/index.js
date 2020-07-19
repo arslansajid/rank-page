@@ -227,7 +227,7 @@ const useStyles = makeStyles((theme) =>
             width: "100%",
 				},
 				main : {
-					background: '#FFFFFF',
+					background: Colors.white,
 					border: '1px solid rgba(38, 38, 38, 0.12)',
 					boxSizing: 'border-box',
 					borderRadius: 8,

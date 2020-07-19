@@ -113,13 +113,14 @@ const SignUp = props => {
         }
 
         <div className="space-2">
+          <InputLabel className='space-2'>Gender</InputLabel>
           <Select
             name="gender"
             rules={{required: 'This field is required'}}
             control={control}
             error={errors.gender ? true : false}
             placeholder="Select Gender"
-            label='Gender'
+            // label='Gender'
             items={GenderItems}
             defaultValue={''}
             className="text-field"

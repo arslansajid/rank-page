@@ -29,7 +29,7 @@ const Routes = () => {
         <Route exact path="/about" render={() => <About />} />
         <Route exact path="/SignUp" render={() => <SignUp />} />
         <Route exact path="/search" render={() => <Search />} />
-        <Route exact path="/profile" render={() => <Profile />} />
+        <Route exact path="/profile/:tab" render={() => <Profile />} />
         <Route exact path="/newsfeed" render={() => <Newsfeed />} />
         <Route exact path="/notifications" render={() => <Notifications />} />
         <Route exact path="/messages" render={() => <Messages />} />

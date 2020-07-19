@@ -118,7 +118,7 @@ const UserProfile = (props) => {
                 <Grid className={classes.verticalCenter}>
                     <Grid>
                         {!!user ? (
-                            <Link to="/profile">
+                            <Link to="/profile/lists">
                                 <Typography>{user.name}</Typography>
                                 <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
                             </Link>

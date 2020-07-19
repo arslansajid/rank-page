@@ -31,7 +31,7 @@ const Box = ({ name, type, isDropped, number }) => {
                 <Grid className={classes.row}>
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                     {isDropped ?
-                        <Typography className={classes.text}><s>{name}</s></Typography>
+                        <Typography className={classes.text}>{name}</Typography>
                         :
                         <Typography className={classes.text}>{name}</Typography>
                     }

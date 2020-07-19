@@ -2,12 +2,12 @@ export const Profile = [
     {
         name: 'Challenges',
         icon: 'challenge',
-        route: '/challenges'
+        route: '/profile/challenges'
     },
     {
         name: 'Categories',
         icon: 'categories',
-        route: '/categories'
+        route: '/profile/categories'
     },
 ]
 

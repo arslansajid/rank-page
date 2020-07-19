@@ -5,14 +5,26 @@ import ProfileCover from "../../components/Profile/Cover";
 import Lists from "../../components/Profile/Lists";
 import Challenges from "../../components/Profile/Challenges";
 import Categories from "../../components/Profile/Categories";
+import {withRouter} from "react-router-dom"
 
-const Profile = () => {
+const Profile = (props) => {
     const classes = useStyles();
-    const [activeTab, setActiveTab] = useState(1);
+    const [activeTab, setActiveTab] = useState(null);
 
     const handleTabChange = (value) => {
         setActiveTab(value)
     }
+
+    useEffect(() => {
+        console.log('withRouter', props);
+        if(props.match.params.tab === "lists") {
+            setActiveTab(1)
+        } else if (props.match.params.tab === "challenges") {
+            setActiveTab(2)
+        } else if(props.match.params.tab === "categories") {
+            setActiveTab(3)
+        }
+    }, [])
 
 		return (
 			<div>
@@ -63,4 +75,4 @@ const useStyles = makeStyles((theme) => ({
     })
 )
 
-export default Profile;
+export default withRouter(Profile);

@@ -52,11 +52,12 @@ const PostCard = () => {
                     </IconButton>
                 </Grid>
                 <Grid container className={classes.cardProfileSection}>
-                    <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
-                    <div>
+                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                    {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
+                    <Grid className={classes.verticalCenter}>
                         <Typography variant='body1' className='mediumFont'>Arslan Sajid</Typography>
                         <Typography variant='body2' className='smallFont'>@arslansajid</Typography>
-                    </div>
+                    </Grid>
                 </Grid>
                 <Grid className={classes.cardProfileSection}>
                     <Typography variant='h6' className={`${classes.heading} space-2`}>Who Is the Coolest Actor in the World Right Now? </Typography>
@@ -144,7 +145,12 @@ const useStyles = makeStyles((theme) => ({
             //you want this to be the same as the backgroundColor above
             backgroundColor: "transparent"
         }
-    }
+    },
+    verticalCenter: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: 'center',
+    },
 })
 )
 

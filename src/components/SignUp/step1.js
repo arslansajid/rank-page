@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {Button, Typography} from '@material-ui/core';
+import {Button, Typography, Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
 import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import { CountryDropdown } from 'react-country-region-selector';
 import CountrySelect from '../Common/CountrySelect'
 import { GenderItems } from '../../static/_selectOptions';
 
@@ -33,8 +32,9 @@ const SignUp = props => {
 
   const classes = useStyles ();
   return (
+    <>
     <div className={classes.container}>
-      <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
+      <form id={'signup-form'} key={'form'} onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="body1" className ='space-4'>Please fill in the details to continue registration</Typography>      
         <div className="space-2">
           <TextField
@@ -145,22 +145,23 @@ const SignUp = props => {
             className="text-field"
           />
         </div>
-
-        <div className={`${classes.center} space-4`}>
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className={classes.submitButton}
-            variant="outlined"
-            color="primary"
-          >
-            <Typography className={classes.submitButtonText}>
-              Continue
-            </Typography>
-          </Button>
-        </div>
       </form>
     </div>
+    <Grid className={classes.fixedBottom}>
+    <Button
+      form={'signup-form'}
+      type="submit"
+      disabled={isLoading}
+      className={classes.submitButton}
+      variant="outlined"
+      color="primary"
+    >
+      <Typography className={classes.submitButtonText}>
+        Continue
+      </Typography>
+    </Button>
+  </Grid>
+  </>
   );
 };
 
@@ -171,6 +172,7 @@ const useStyles = makeStyles (theme =>
       flexDirection: 'column',
       justifyContent: 'center',
       width: '100%',
+      marginBottom: 50
     },
     heading: {
       alignSelf: 'left',
@@ -182,7 +184,7 @@ const useStyles = makeStyles (theme =>
       minWidth: '100px',
       height: '40px',
       background: Colors.themeBlue,
-      width: '80%',
+      width: '100%'
     },
     center: {
         textAlign : 'center'
@@ -206,6 +208,16 @@ const useStyles = makeStyles (theme =>
         height: '40px',
         border: '1px solid #ddd',
         padding : '5px',
+    },
+    fixedBottom: {
+      background: Colors.white,
+      padding: '1.3em 3em',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: 'calc(100% - 6em)',
+      boxShadow: "0px -4px 3px rgba(0, 0, 0, 0.12)",
+      borderTop: '1px solid rgba(38, 38, 38, 0.12)',
     }
   })
 );

@@ -7,7 +7,7 @@ import {Redirect} from "react-router-dom"
 
 const SearchInput = (props) => {
     const classes = useStyles();
-    const { handleSearch, onFocusRoute, history } = props;
+    const { handleSearch, onFocusRoute } = props;
     return (
         <TextField
             className={classes.container}
@@ -15,7 +15,6 @@ const SearchInput = (props) => {
             variant='outlined'
             placeholder="Search Rankpage ..."
             fullWidth
-            onFocus={() => !!onFocusRoute && history.push(onFocusRoute)}
             onKeyPress={(event) => {
                 if(event.key === 'Enter') {
                     handleSearch(event.target.value);

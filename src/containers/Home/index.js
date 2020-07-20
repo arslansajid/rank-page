@@ -1,7 +1,5 @@
 import React from 'react';
 import './style.scss';
-import Form from './Form'
-
 
 class Home extends React.Component {
   handleSubmit = (model) => {
@@ -11,7 +9,6 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div>
-				{/* <Form onSubmit={this.handleSubmit}/> */}
 				Home
 			</div>
 		);

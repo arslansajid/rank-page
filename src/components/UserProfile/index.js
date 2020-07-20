@@ -134,7 +134,8 @@ const UserProfile = (props) => {
                 )
             }
             <Grid container className={classes.profileContainer}>
-                <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} />
+                {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
+                <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                 <Grid className={classes.verticalCenter}>
                     <Grid>
                         {!!user ? (
@@ -146,8 +147,8 @@ const UserProfile = (props) => {
                             : (
                                 <>
                                     <Grid container>
-                                        <Typography onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
-                            <Typography onClick={() => setShowSignUp(true)}>Register</Typography>
+                                        <Typography className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
+                                        <Typography className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
                                     </Grid>
                                 </>
                             )}
@@ -172,6 +173,11 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 15,
         width: theme.spacing(6),
         height: theme.spacing(6),
+    },
+    textButton: {
+        "&:hover" : {
+            color: Colors.brandColor,
+        }
     }
 }))
 

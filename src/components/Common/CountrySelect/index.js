@@ -3,6 +3,8 @@ import { CountryRegionData } from "react-country-region-selector";
 import MenuItem from "@material-ui/core/MenuItem";
 import { TextField, InputLabel } from "@material-ui/core";
 import { Controller } from 'react-hook-form';
+import Colors from "../../../static/_colors"
+import { makeStyles } from '@material-ui/core/styles';
 
 const getRegions = country => {
     if (!country) {
@@ -29,6 +31,7 @@ function CountryRegionMUISelectors(props) {
         type,
         placeholder
     } = props;
+    const classes = useStyles();
 
     return (
         <>
@@ -52,6 +55,7 @@ function CountryRegionMUISelectors(props) {
                         error={error}
                         helperText={helperText}
                         placeholder={placeholder}
+                        className={classes.greyInput}
                     >
                         {CountryRegionData.map((option, index) => (
                             <MenuItem key={option[0]} value={option}>
@@ -93,5 +97,12 @@ function CountryRegionMUISelectors(props) {
         </>
     )
 }
+
+const useStyles = makeStyles((theme) => ({
+	greyInput: {
+        borderRadius: 8,
+		background: Colors.inputBg,
+    }
+}))
 
 export default CountryRegionMUISelectors;

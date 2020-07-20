@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Select, InputLabel, MenuItem } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
-
+import Colors from "../../../static/_colors"
+import { makeStyles } from '@material-ui/core/styles';
 
 const SelectField = ({
     id,
@@ -16,6 +17,8 @@ const SelectField = ({
     placeholder,
     items
 }) => {
+    const classes = useStyles();
+
     return (
         <div key={name} className={className}>
             {!!label && label.length && (
@@ -34,6 +37,7 @@ const SelectField = ({
                 key={name}
                 as={
                     <Select
+                        className={classes.greyInput}
                         error={error}
                         placeholder={placeholder}
                     >
@@ -57,6 +61,13 @@ const SelectField = ({
         </div>
     );
 };
+
+const useStyles = makeStyles((theme) => ({
+	greyInput: {
+        // borderRadius: 8,
+		background: Colors.inputBg,
+    }
+}))
 
 SelectField.defaultProps = {};
 

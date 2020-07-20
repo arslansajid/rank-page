@@ -216,7 +216,7 @@ const useStyles = makeStyles (theme =>
       bottom: 0,
       left: 0,
       width: 'calc(100% - 6em)',
-      boxShadow: "0px -4px 3px rgba(0, 0, 0, 0.12)",
+      boxShadow: "0px -4px 3px rgba(0, 0, 0, 0.08)",
       borderTop: '1px solid rgba(38, 38, 38, 0.12)',
     }
   })

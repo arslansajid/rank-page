@@ -11,15 +11,17 @@ import CountrySelect from '../Common/CountrySelect'
 import { GenderItems } from '../../static/_selectOptions';
 
 const SignUp = props => {
-  const {moveToNext} = props;
+  const {moveToNext , values} = props;
   const {getData} = props;
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [country , setCountry] = useState('');
   const [passwordError , setPasswordError] = useState(null);
+  const [userData , setUserData] = useState(values ? values : null);
 
   const onSubmit = async (data) => {
     if(data.password === data.password_confirmation){
+      setUserData(data)
       moveToNext()
       getData(data)
     }
@@ -28,9 +30,6 @@ const SignUp = props => {
     }
    
   }
-
-  console.log(errors)
-
 
   const classes = useStyles ();
   return (
@@ -45,7 +44,7 @@ const SignUp = props => {
             control={control}
             error={errors.name ? true : false}
             placeholder="Enter full name"
-            defaultValue={''}
+            defaultValue={userData && userData.name ? userData.name : ''}
             label='Full Name'
             className="text-field"
           />
@@ -58,7 +57,7 @@ const SignUp = props => {
             control={control}
             error={errors.email ? true : false}
             placeholder="Enter email address"
-            defaultValue={''}
+            defaultValue={userData && userData.email ? userData.email : ''}
             label='Email Address'
             className="text-field"
           />
@@ -72,7 +71,8 @@ const SignUp = props => {
             error={errors.date_of_birth ? true : false}
             control={control}
             placeholder="Date"
-            defaultValue={''}
+            // defaultValue={''}
+            defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
             className="text-field"
           />
         </div>
@@ -84,9 +84,11 @@ const SignUp = props => {
             control={control}
             error={errors.password ? true : false}
             placeholder="password"
-            defaultValue={''}
+            // defaultValue={''}
+            defaultValue={userData && userData.password ? userData.password : ''}
             className="text-field"
             label='Password'
+            // getValues = {(value) => console.log('values here' , value )}
           />
         </div>
         <div className="space-2">
@@ -97,7 +99,8 @@ const SignUp = props => {
             control={control}
             error={errors.password_confirmation ? true : false}
             placeholder="Confirm Password"
-            defaultValue={''}
+            // defaultValue={''}
+            defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
             className="text-field"
             label='Confirm Password'
           />
@@ -122,7 +125,8 @@ const SignUp = props => {
             placeholder="Select Gender"
             // label='Gender'
             items={GenderItems}
-            defaultValue={''}
+            // defaultValue={''}
+            defaultValue={userData && userData.gender ? userData.gender : null}
             className="text-field"
           />
         </div>
@@ -136,18 +140,10 @@ const SignUp = props => {
             control={control}
             placeholder="Country"
             label='Country'
-            defaultValue={''}
+            // defaultValue={''}
+            defaultValue={userData && userData.country ? userData.country : ''}
             className="text-field"
           />
-          {/* <CountryDropdown
-           className = {classes.select}
-           name = 'country'
-          //  rules={{required: 'This field is required'}}
-          //  error={errors.country ? true : false}
-           value = {country}
-           onChange = {(value) => setCountry(value)}
-           label='Country'
-            /> */}
         </div>
 
         <div className={`${classes.center} space-4`}>

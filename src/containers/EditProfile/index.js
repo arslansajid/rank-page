@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
 	},
     coverContainer: {
         color: Colors.white,
-        padding: '0.75em',
+        // padding: '0.75em',
         marginBottom: 8,
         backgroundColor: Colors.brandColor,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',

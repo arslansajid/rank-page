@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {Button, Typography , Grid} from '@material-ui/core';
+import {Button, Typography , Grid, ButtonBase} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import {useForm} from 'react-hook-form';
 import CategoryCard from "../Profile/CategoryCard";
@@ -28,20 +28,19 @@ const SelectCategories = props => {
           })}
       </Grid>
 
-        <div className={`${classes.center} space-4`}>
-          <Button
-            // type="submit"
-            // disabled={isLoading}
-            onClick={()=>close()}
-            className={classes.submitButton}
-            variant="contained"
-            color="primary"
-          >
-            <Typography className={classes.submitButtonText}>
-              Save
-            </Typography>
-          </Button>
-        </div>
+
+      <Grid className={classes.fixedBottom}>
+        <Button
+          onClick={()=>close()}
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+        >
+          <Typography className={classes.submitButtonText}>
+            Save
+          </Typography>
+        </Button>
+      </Grid>
     </div>
   );
 };
@@ -80,6 +79,16 @@ const useStyles = makeStyles (theme =>
       fontWeight: '600',
       color: '#333',
     },
+    fixedBottom: {
+      background: Colors.white,
+      padding: '1.3em 3em',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: 'calc(100% - 6em)',
+      borderTop: '1px solid rgba(38, 38, 38, 0.12)',
+      textAlign : 'center',
+    }
   })
 );
 

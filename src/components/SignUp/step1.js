@@ -148,19 +148,19 @@ const SignUp = props => {
       </form>
     </div>
     <Grid className={classes.fixedBottom}>
-    <Button
-      form={'signup-form'}
-      type="submit"
-      disabled={isLoading}
-      className={classes.submitButton}
-      variant="outlined"
-      color="primary"
-    >
-      <Typography className={classes.submitButtonText}>
-        Continue
-      </Typography>
-    </Button>
-  </Grid>
+      <Button
+        form={'signup-form'}
+        type="submit"
+        disabled={isLoading}
+        className={classes.submitButton}
+        variant="outlined"
+        color="primary"
+      >
+        <Typography className={classes.submitButtonText}>
+          Continue
+        </Typography>
+      </Button>
+    </Grid>
   </>
   );
 };

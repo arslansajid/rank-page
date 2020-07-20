@@ -37,7 +37,6 @@ const ZTextField = ({
             )}
             <Controller
                 key={name}
-                onChange={(data) => console.log(data)}
                 as={
                     <TextField
                         className={classes.greyInput}
@@ -49,7 +48,6 @@ const ZTextField = ({
                         placeholder={placeholder}
                     />
                 }
-                getValues = {(value) => console.log('values here' , value )}
                 rules={rules}
                 autoComplete='false'
                 // label={label}

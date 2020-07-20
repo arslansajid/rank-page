@@ -126,7 +126,7 @@ const SignUp = props => {
             // label='Gender'
             items={GenderItems}
             // defaultValue={''}
-            defaultValue={userData && userData.gender ? userData.gender : null}
+            defaultValue={userData && userData.gender ? userData.gender : ''}
             className="text-field"
           />
         </div>

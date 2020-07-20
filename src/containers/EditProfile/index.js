@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {Typography, TextField, IconButton, Grid, Paper, Button} from "@material-ui/core";
+import {Typography, TextField, InputLabel, Grid, Paper, Button} from "@material-ui/core";
 import Colors from "../../static/_colors";
 import {GenderItems} from "../../static/_selectOptions";
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,20 +21,23 @@ const EditProfile = (props) => {
 	return (
 		<>
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Picture</Typography>
+			{/* <Typography variant="h6" gutterBottom></Typography> */}
+			<InputLabel className='space-2'>Picture</InputLabel>
 			{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
 			<ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} />
 		</Paper>
 		
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Cover</Typography>
+			{/* <Typography variant="h6" gutterBottom>Cover</Typography> */}
+			<InputLabel className='space-2'>Cover</InputLabel>
 			<Grid className={classes.coverContainer}>
 				<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
 			</Grid>
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Full Name</Typography>
+			{/* <Typography variant="h6" gutterBottom>Full Name</Typography> */}
+			<InputLabel className='space-2'>Full Name</InputLabel>
 			<TextField
 				className={classes.greyInput}
 				margin='dense'
@@ -45,7 +48,8 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Bio (140 Characters)</Typography>
+			{/* <Typography variant="h6" gutterBottom>Bio (140 Characters)</Typography> */}
+			<InputLabel className='space-2'>Bio (140 Characters)</InputLabel>
 			<TextField
 				className={classes.greyInput}
 				margin='dense'
@@ -58,7 +62,8 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Date of birth</Typography>
+			{/* <Typography variant="h6" gutterBottom>Date of birth</Typography> */}
+			<InputLabel className='space-2'>Date of Birth</InputLabel>
 			<TextField
 				className={classes.greyInput}
 				type="date"
@@ -73,7 +78,8 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Gender</Typography>
+			{/* <Typography variant="h6" gutterBottom>Gender</Typography> */}
+			<InputLabel className='space-2'>Gender</InputLabel>
 			<TextField
 				className={classes.greyInput}
 				margin='dense'
@@ -89,7 +95,8 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>Country</Typography>
+			{/* <Typography variant="h6" gutterBottom>Country</Typography> */}
+			<InputLabel className='space-2'>Country</InputLabel>
 			<TextField
 				className={classes.greyInput}
 				margin='dense'
@@ -118,7 +125,7 @@ const EditProfile = (props) => {
 
 const useStyles = makeStyles((theme) => ({
 	container: {
-		minHeight: 100,
+		minHeight: 80,
         background: Colors.white,
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 8,

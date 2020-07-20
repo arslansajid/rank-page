@@ -67,6 +67,7 @@ const UserProfile = (props) => {
                                     setShowSignUp(false);
                                     setShowSignUpStep2(true)
                                 }}
+                                values = {value}
                                 getData={(value) => registerData(value)}
                             />
                         }

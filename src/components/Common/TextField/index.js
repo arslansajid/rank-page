@@ -16,7 +16,8 @@ const ZTextField = ({
     rules,
     rows,
     type,
-    placeholder
+    placeholder,
+
 }) => {
     const classes = useStyles();
     
@@ -36,6 +37,7 @@ const ZTextField = ({
             )}
             <Controller
                 key={name}
+                onChange={(data) => console.log(data)}
                 as={
                     <TextField
                         className={classes.greyInput}
@@ -47,6 +49,7 @@ const ZTextField = ({
                         placeholder={placeholder}
                     />
                 }
+                getValues = {(value) => console.log('values here' , value )}
                 rules={rules}
                 autoComplete='false'
                 // label={label}
@@ -56,12 +59,7 @@ const ZTextField = ({
                 name={name}
                 control={control}
                 defaultValue={defaultValue}
-                // InputProps={{
-                //     style: {
-                //         height : "50px",
-                //         backgroundColor : '#fff',
-                //     }
-                // }}
+
             />
         </div>
     );

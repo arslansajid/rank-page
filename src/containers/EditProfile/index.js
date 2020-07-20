@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Typography, TextField, IconButton, Grid, Paper, Button} from "@material-ui/core";
 import Colors from "../../static/_colors";
 import {GenderItems} from "../../static/_selectOptions";
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import CountrySelect from "../../components/Common/CountrySelect";
 import { CountryRegionData } from "react-country-region-selector";
 import MenuItem from "@material-ui/core/MenuItem";
 import ImagePicker from "../../components/Common/ImagePicker"
@@ -16,7 +14,9 @@ const EditProfile = (props) => {
 	const {user} = props;
 	const [country, setCountry] = useState('')
 
-	// console.log(country)
+	useEffect(() => {
+		//re-rendering when the user data changes
+	}, [props.user])
 
 	return (
 		<>
@@ -40,6 +40,7 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				fullWidth
+				value={!!user ? user.name : ''}
 			/>
 		</Paper>
 
@@ -52,6 +53,7 @@ const EditProfile = (props) => {
 				multiline={true}
                 rows={3}
 				fullWidth
+				value={!!user && user.bio ? user.bio : ''}
 			/>
 		</Paper>
 
@@ -62,8 +64,7 @@ const EditProfile = (props) => {
 				type="date"
 				name="date_of_birth"
 				placeholder="Date"
-				// value={''}
-				// defaultValue={!!user && user.date_of_birth}
+				value={!!user ? user.date_of_birth : ''}
 				className="text-field"
 				margin='dense'
 				variant='outlined'
@@ -77,8 +78,7 @@ const EditProfile = (props) => {
 				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
-				// value=""
-				// defaultValue={!!user && user.gender}
+				value={!!user ? user.gender : ''}
 				select
 				fullWidth
 			>
@@ -90,7 +90,6 @@ const EditProfile = (props) => {
 
 		<Paper elevation={0} className={classes.container}>
 			<Typography variant="h6" gutterBottom>Country</Typography>
-			{/* <CSelect handleChange={(value) => console.log(value)} /> */}
 			<TextField
 				className={classes.greyInput}
 				margin='dense'
@@ -145,4 +144,11 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-export default connect()(EditProfile);
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
+
+
+export default connect(mapStateToProps)(EditProfile);

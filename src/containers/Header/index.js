@@ -59,48 +59,7 @@ const Header = (props) => {
     return (
         <ElevationScroll {...props}>
             <AppBar position="static" classes={{ root: classes.headerBar }}>
-                <Drawer
-                    open={sideCartOpen}
-                    onClose={() => toggleDrawer()}
-                    className={classes.sideDrawer}
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <div className={classes.drawerHeader}>
-                        <Typography>Rank-App</Typography>
-                        <IconButton onClick={toggleDrawer}>
-
-                            <CloseIcon />
-                        </IconButton>
-                    </div>
-                    <Divider />
-                    <List>
-                        {
-                            nav.items.map((item, index) => {
-                                return (
-                                    <Link key={index} to={item.url}>
-                                        <ListItem onClick={() => onDrawerItemPress()} button>
-                                            <ListItemText primary={item.name} />
-                                        </ListItem>
-                                    </Link>
-                                )
-                            })
-                        }
-                    </List>
-                </Drawer>
                 <Toolbar className={classes.container}>
-                    <IconButton
-                        edge='start'
-                        onClick={() => toggleDrawer()}
-                        className={classes.menuButton}
-                        color='inherit'
-                        aria-label='menu'>
-                        <MenuIcon />
-                    </IconButton>
-                    {/* <Link className={classes.logoContainer} to='/'>
-                        Rank App
-                    </Link> */}
                     {
                         showBackButton && (
                             <IconButton onClick={() => history.goBack()}>
@@ -150,10 +109,6 @@ const useStyles = makeStyles((theme) => ({
 
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: '8px',
-
-        [theme.breakpoints.down('sm')]: {
-            padding: "0 10px",
-        },
     },
     navButton: {
         fontSize: 20,

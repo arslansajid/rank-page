@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
     main: {
         background: Colors.white,
         height: '100%',
-        padding: '2em'
+        padding: '2em',
+        position: 'fixed',
     }
 }))
 

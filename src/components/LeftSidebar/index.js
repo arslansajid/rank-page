@@ -22,8 +22,13 @@ const LeftSidebar = (props) => {
 const useStyles = makeStyles((theme) => ({
     main: {
         background: Colors.white,
-        height: '100%',
-        padding: '2em 2em 0 4em'
+        padding: '2em 2em 0 4em',
+        position: 'fixed',
+        top: 0,
+        bottom: 0,
+        overflow: 'hidden scroll',
+        paddingBottom: 20,
+        width: 'calc(100% - 81%)'
     }
 }))
 

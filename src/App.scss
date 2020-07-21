@@ -29,3 +29,7 @@ a {
   outline: none !important;
   box-shadow: unset !important;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}

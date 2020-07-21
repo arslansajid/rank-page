@@ -33,7 +33,7 @@ const App = () => {
               <Grid className={classes.leftSidebar} item lg={3} md={3} sm={false} xs={false}>
                 <LeftSidebar />
               </Grid>
-              <Grid className={classes.routeContainer} item lg={6} md={6} sm={12} xs={12}>
+              <Grid className={classes.routeContainer} item lg={6} md={12} sm={12} xs={12}>
                 <Header />
                 <Routes />
               </Grid>

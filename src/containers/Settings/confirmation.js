@@ -12,7 +12,7 @@ const ConformationDialog = props => {
   const classes = useStyles ();
   return (
     <div className={classes.container}>
-      <Typography variant="body2" className = 'space-4'>are you sure, you want to disable your account?</Typography>
+      <Typography variant="body2" className = 'space-4'>Are you sure, you want to disable your account?</Typography>
       
       <span className='space-4'>
         <Button className={activeTab === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={()=> { setActiveTab(1) ; cancelForm()}}>

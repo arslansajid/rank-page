@@ -21,8 +21,7 @@ const SignUp = props => {
   const [userData , setUserData] = useState(values ? values : null);
   const [region , setRegion] = useState(null);
   const [dateError , setDateError] = useState(null);
- 
-  
+
 
   const ageValidation = (data) => {
     let today = new Date();

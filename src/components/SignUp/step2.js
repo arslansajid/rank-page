@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {Button, Typography , Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
@@ -15,28 +15,56 @@ const SignUpStep2 = props => {
   const {registerData , closeSignUp , showCatergories} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
-  const [value , setValue] = useState (null)
+  const [value , setValue] = useState (null);
+  const [showError, setShowError] = useState (null)
 
+  // useEffect(() => {
+  //   console.log(validate('zeeshan@#'))
+  // })
+
+
+
+  const validate = (data) => {
+    let regex = /^[a-zA-Z0-9_]*$/
+    if(data.match(regex)){
+      console.log('sending true')
+      return true
+    }
+    else {
+      return false
+    }
+  }
   const onSubmit = async (data) => {
-    setIsLoading(true)
-    registerData.country = registerData.country[0];
-    let submitdata = {...registerData}
-    submitdata.user_name = data.user_name;
-    signUp(submitdata)
-    .then((res) => {
-      setIsLoading(false)
-      setValue(res.data)
-      if(res.data && res.data.success){
-        let token = res.data.data.user.auth_token;
-        Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
-        props.dispatch(userLogin(res.data.data.user));
-        showCatergories();
-      }
-    })
-    .catch((error) => {
-      setIsLoading(false)
-      setValue({message : 'Something went wrong'})
-    })
+    if(data.user_name && data.user_name.length > 4 && validate(data.user_name) == true){
+      setShowError(false)
+      setIsLoading(true)
+      registerData.country = registerData.country[0];
+      let submitdata = {...registerData}
+      submitdata.user_name = data.user_name;
+      signUp(submitdata)
+      .then((res) => {
+        setIsLoading(false)
+        setValue(res.data)
+        if(res.data && res.data.success){
+          let token = res.data.data.user.auth_token;
+          Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
+          props.dispatch(userLogin(res.data.data.user));
+          showCatergories();
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        setValue({message : 'Something went wrong'})
+      })
+    }
+    else if(data.user_name && data.user_name.length < 5){
+      setShowError('Username should be at least 4 characters')
+    }
+
+    else if(validate(data.user_name) == false){
+      setShowError('Username can contain underscores, alphbets, numbers only!')
+    }
+
   }
 
   const classes = useStyles ();
@@ -58,6 +86,16 @@ const SignUpStep2 = props => {
           />
           <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
         </div>
+
+        { showError ?
+          <div className={classes.center}>
+            <Typography variant="body2" className = {classes.error}>
+              {showError}
+            </Typography>
+          </div>
+          :
+          null
+        }
 
         {/* <div className={`${classes.center} space-4`}>
           <Button

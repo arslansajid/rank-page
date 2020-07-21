@@ -6,20 +6,20 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
+import { connect } from "react-redux"
 
-const ProfileCover = () => {
+const ProfileCover = (props) => {
     const classes = useStyles();
-
+    const { user } = props;
     return (
         <>
         <Paper elevation={0} className={classes.coverContainer}>
             <Grid className={classes.mainContainer}>
                 <Grid container justify="space-between">
                     <div>
-                        {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../../assets/images/Arslan.jpg")} /> */}
                         <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                        <Typography variant='body1' className = {classes.bold}>Arslan Sajid</Typography>
-                        <Typography variant='body2' className = {classes.font}>@arslansajid</Typography>
+                        <Typography variant='body1' className = {classes.bold}>{!!user && user.name ? user.name : ''}</Typography>
+                        <Typography variant='body2' className = {classes.font}>{!!user && user.user_name ? `@ ${user.user_name}` : ''}</Typography>
                     </div>
                     <div>
                         <Link to="/settings">
@@ -36,7 +36,7 @@ const ProfileCover = () => {
                 <Grid container justify="space-between">
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Typography className = {classes.introText}>
-                        Staring at the world, roaming the wilds, I am in my favorite world, keep living!
+                        {!!user && user.bio ? user.bio : 'No Bio Added'}
                     </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -117,5 +117,10 @@ const useStyles = makeStyles((theme) => ({
     })
 )
 
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
 
-export default ProfileCover;
+export default connect(mapStateToProps)(ProfileCover);

@@ -3,6 +3,9 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from './configureStore';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import { theme } from './utils/MuiTheme';
+import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import Colors from './static/_colors';
 
 // Styles
@@ -13,15 +16,13 @@ import './common.scss'
 import Routes from './routes';
 
 // header and footer
-import Header from './containers/Header'
-import { Grid } from '@material-ui/core';
-
-import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
-import { theme } from './utils/MuiTheme';
+import Header from './containers/Header';
+import BottomNavigation from './components/BottomNavigation';
 
 //sidebars
 import LeftSidebar from './components/LeftSidebar';
 import RightSidebar from './components/RightSidebar';
+
 const App = () => {
   const classes = useStyles();
   return (
@@ -41,6 +42,7 @@ const App = () => {
                 <RightSidebar history={history} />
               </Grid>
             </Grid>
+            <BottomNavigation history={history} />
           </StylesProvider>
         </MuiThemeProvider>
       </ConnectedRouter>

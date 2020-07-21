@@ -17,7 +17,7 @@ const ProfileCover = (props) => {
             <Grid className={classes.mainContainer}>
                 <Grid container justify="space-between">
                     <div>
-                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={!!user && user.profile_image ? user.profile_image : require("../../../assets/images/user.png")} />
                         <Typography variant='body1' className = {classes.bold}>{!!user && user.name ? user.name : ''}</Typography>
                         <Typography variant='body2' className = {classes.font}>{!!user && user.user_name ? `@ ${user.user_name}` : ''}</Typography>
                     </div>

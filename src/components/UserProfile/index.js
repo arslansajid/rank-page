@@ -134,25 +134,30 @@ const UserProfile = (props) => {
                 )
             }
             <Grid container className={classes.profileContainer}>
-                <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                <Grid className={classes.verticalCenter}>
-                    <Grid>
-                        {!!user ? (
-                            <Link to="/profile/lists">
-                                <Typography>{user.name}</Typography>
-                                <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
-                            </Link>
-                        )
-                            : (
-                                <>
-                                    <Grid container>
-                                        <Typography className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
-                                        <Typography className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
+                    {!!user ? (
+                        <Link to="/profile/lists">
+                            <Grid container>
+                                <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? user.profile_image : require("../../assets/images/user.png")} />
+                                <Grid className={classes.verticalCenter}>
+                                    <Typography>{user.name}</Typography>
+                                    <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
+                                </Grid>
+                            </Grid>
+                        </Link>
+                    )
+                        : (
+                            <>
+                                <Grid container>
+                                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={require("../../assets/images/user.png")} />
+                                    <Grid className={classes.verticalCenter}>
+                                        <Grid container alignItems="center">
+                                            <Typography variant="body1" className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
+                                            <Typography variant="body1" className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
+                                        </Grid>
                                     </Grid>
-                                </>
-                            )}
-                    </Grid>
-                </Grid>
+                                </Grid>
+                            </>
+                        )}
             </Grid>
         </>
     )
@@ -174,6 +179,8 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(6),
     },
     textButton: {
+        cursor: "pointer",
+
         "&:hover": {
             color: Colors.brandColor,
         }

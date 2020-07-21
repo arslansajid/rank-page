@@ -1,7 +1,7 @@
 import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import BackIcon from '@material-ui/icons/ArrowBack';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer'
@@ -36,7 +36,17 @@ function ElevationScroll(props) {
 
 const Header = (props) => {
     const classes = useStyles();
+    const { location, history } = props;
     const [sideCartOpen, setSideCartOpen] = React.useState(false);
+    const [showBackButton, setShowBackButton] = React.useState(false);
+
+    React.useEffect(() => {
+        if (location.pathname.split("/").length > 2) {
+            setShowBackButton(true);
+        } else {
+            setShowBackButton(false);
+        }
+    }, [props.location])
 
     const toggleDrawer = () => {
         setSideCartOpen(!sideCartOpen)
@@ -45,10 +55,6 @@ const Header = (props) => {
     const onDrawerItemPress = () => {
         setSideCartOpen(false);
     }
-
-    React.useEffect(() => {
-		console.log(props.location.pathname)
-    }, []);
 
     return (
         <ElevationScroll {...props}>
@@ -95,7 +101,14 @@ const Header = (props) => {
                     {/* <Link className={classes.logoContainer} to='/'>
                         Rank App
                     </Link> */}
-                    <Typography className={classes.routeTitle}>
+                    {
+                        showBackButton && (
+                            <IconButton onClick={() => history.goBack()}>
+                                <BackIcon />
+                            </IconButton>
+                        )
+                    }
+                    <Typography variant="h6" className={classes.routeTitle}>
                         {props.location.pathname.split("/")[1]}
                     </Typography>
                 </Toolbar>
@@ -133,11 +146,14 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '#fff',
         minHeight: 64,
         marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
+        padding: "0 5px",
 
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: '8px',
+
+        [theme.breakpoints.down('sm')]: {
+            padding: "0 10px",
+        },
     },
     navButton: {
         fontSize: 20,
@@ -189,7 +205,13 @@ const useStyles = makeStyles((theme) => ({
         objectFit: "contain"
     },
     routeTitle: {
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        position: "absolute",
+        left: 'calc(50% - 15px)',
+
+        [theme.breakpoints.down('sm')]: {
+            left: 'calc(50% - 30px)',
+        },
     }
 }));
 

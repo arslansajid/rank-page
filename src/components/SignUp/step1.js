@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {Button, Typography, Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
@@ -20,25 +20,46 @@ const SignUp = props => {
   const [message , setMessage] = useState('')
   const [userData , setUserData] = useState(values ? values : null);
   const [region , setRegion] = useState(null);
-  // const [country , setCountry] = useState(null)
+  const [dateError , setDateError] = useState(null);
+ 
+  
 
-  console.log('country here' , country)
+  const ageValidation = (data) => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    const date1 = new Date(data.date_of_birth);
+    const date2 = new Date(date);
+    const diffTime = Math.abs(date2 - date1);
+    const diffYears = (Math.ceil(diffTime / (1000 * 60 * 60 * 24)))/365; 
+    if(diffYears < 16){
+      return false;
+    }
+    else return true;
+  }
 
   const onSubmit = async (data) => {
-    if(data.password === data.password_confirmation && data.password.length > 6){
+    if(data.password === data.password_confirmation && data.password.length > 6 && ageValidation(data)){
       setPasswordError(false)
+      setDateError(null)
       setUserData(data)
       moveToNext()
       getData(data)
     }
- else if(data.password !== data.password_confirmation){
+  else if(data.password !== data.password_confirmation){
+      setPasswordError(true)
+      setMessage('Password does not match')
+  }
+  else if(data.password.length < 6){
     setPasswordError(true)
-    setMessage('Password does not match')
- }
- else if(data.password.length < 6){
-  setPasswordError(true)
-  setMessage('Password should be greater than 6 characters')
- }
+    setMessage('Password should be greater than 6 characters')
+  }
+  else if(!ageValidation(data)){
+    if(data.password !== data.password_confirmation){
+      setPasswordError(false)
+    }
+    setDateError('Only 16+ are allowed')
+  
+  }
    
   }
 
@@ -88,6 +109,15 @@ const SignUp = props => {
             className="text-field"
           />
         </div>
+        { dateError ?
+          <div className={classes.center}>
+            <Typography variant="body2" className = {classes.error}>
+              {dateError}
+            </Typography>
+          </div>
+          :
+          null
+        }
         <div className="space-2">
           <TextField
             type="password"

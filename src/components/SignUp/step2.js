@@ -26,13 +26,11 @@ const SignUpStep2 = props => {
     .then((res) => {
       setIsLoading(false)
       setValue(res.data)
-      if(res.data && res.data.data.success){
-        // let token = res.data.data.user.auth_token;
-        // Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
-        // props.dispatch(userLogin(res.data.data.user));
-        // console.log(props.dispatch)
-        // console.log('data' , res.data.user)
-        showCatergories()
+      if(res.data && res.data.success){
+        let token = res.data.data.user.auth_token;
+        Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
+        props.dispatch(userLogin(res.data.data.user));
+        showCatergories();
       }
     })
     .catch((error) => {

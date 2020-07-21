@@ -12,8 +12,9 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import CommentIcon from '@material-ui/icons/ChatBubbleOutline';
 import ShareIcon from '@material-ui/icons/Share';
 import DragandDrop from '../DragandDrop';
+import { connect } from "react-redux"
 
-const PostCard = () => {
+const PostCard = (props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
 
@@ -27,7 +28,7 @@ const PostCard = () => {
         setAnchorEl(null);
     };
 
-
+    const { user } = props;
     return (
         <>
             <Menu
@@ -53,10 +54,9 @@ const PostCard = () => {
                 </Grid>
                 <Grid container className={classes.cardProfileSection}>
                     <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
                     <Grid className={classes.verticalCenter}>
-                        <Typography variant='body1' className='mediumFont'>Arslan Sajid</Typography>
-                        <Typography variant='body2' className='smallFont'>@arslansajid</Typography>
+                        <Typography variant='body1' className='mediumFont'>{!!user ? user.name : ''}</Typography>
+                        <Typography variant='body2' className='smallFont'>{!!user ? `@ ${user.user_name}` : ''}</Typography>
                     </Grid>
                 </Grid>
                 <Grid className={classes.cardProfileSection}>
@@ -70,7 +70,7 @@ const PostCard = () => {
                         <Button onClick={() => setExpanded(!expanded)} variant="text" className={classes.showMoreText}>{expanded ? "Collapse" : "Click to Expand"}</Button>
                     </Grid>
                 </Grid>
-                
+
                 {/* <CardContent> */}
                 <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
                     <Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>Arslan sajid and 23 others</Typography>
@@ -154,5 +154,10 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
 
-export default PostCard;
+export default connect(mapStateToProps)(PostCard);

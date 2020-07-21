@@ -7,6 +7,7 @@ import {useForm} from 'react-hook-form';
 import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import CountrySelect from '../Common/CountrySelect'
+import StateSelect from '../Common/StateSelect'
 import { GenderItems } from '../../static/_selectOptions';
 
 const SignUp = props => {
@@ -16,17 +17,28 @@ const SignUp = props => {
   const {errors, handleSubmit, control} = useForm ();
   const [country , setCountry] = useState('');
   const [passwordError , setPasswordError] = useState(null);
+  const [message , setMessage] = useState('')
   const [userData , setUserData] = useState(values ? values : null);
+  const [region , setRegion] = useState(null);
+  // const [country , setCountry] = useState(null)
+
+  console.log('country here' , country)
 
   const onSubmit = async (data) => {
-    if(data.password === data.password_confirmation){
+    if(data.password === data.password_confirmation && data.password.length > 6){
+      setPasswordError(false)
       setUserData(data)
       moveToNext()
       getData(data)
     }
-    else{
-      setPasswordError(true)
-    }
+ else if(data.password !== data.password_confirmation){
+    setPasswordError(true)
+    setMessage('Password does not match')
+ }
+ else if(data.password.length < 6){
+  setPasswordError(true)
+  setMessage('Password should be greater than 6 characters')
+ }
    
   }
 
@@ -70,7 +82,7 @@ const SignUp = props => {
             rules={{required: 'This field is required'}}
             error={errors.date_of_birth ? true : false}
             control={control}
-            placeholder="Date"
+            placeholder="Age"
             // defaultValue={''}
             defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
             className="text-field"
@@ -108,7 +120,7 @@ const SignUp = props => {
         { passwordError ?
           <div className={classes.center}>
             <Typography variant="body2" className = {classes.error}>
-              Password does not match
+              {message}
             </Typography>
           </div>
           :
@@ -140,11 +152,30 @@ const SignUp = props => {
             control={control}
             placeholder="Country"
             label='Country'
+            // handleChange = {(value) => setCountry(value)}
             // defaultValue={''}
             defaultValue={userData && userData.country ? userData.country : ''}
             className="text-field"
           />
         </div>
+
+        {/* <div className="space-4">
+          <StateSelect
+            type="text"
+            name="state"
+            rules={{required: 'This field is required'}}
+            error={errors.state ? true : false}
+            control={control}
+            placeholder="State"
+            label='State'
+            region = {region}
+            handleChange = {(value) => setRegion(value)}
+            country = {country}
+            // defaultValue={''}
+            defaultValue={''}
+            className="text-field"
+          />
+        </div> */}
       </form>
     </div>
     <Grid className={classes.fixedBottom}>

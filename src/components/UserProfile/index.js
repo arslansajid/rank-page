@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const UserProfile = (props) => {
     const classes = useStyles();
-    const {user} = props;
+    const { user } = props;
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
@@ -67,7 +67,7 @@ const UserProfile = (props) => {
                                     setShowSignUp(false);
                                     setShowSignUpStep2(true)
                                 }}
-                                values = {value}
+                                values={value}
                                 getData={(value) => registerData(value)}
                             />
                         }
@@ -83,8 +83,8 @@ const UserProfile = (props) => {
                         open={showSignUpStep2}
                         message={<SignUpStep2
                             registerData={value}
-                            showCatergories = {() =>  {setShowSignUpStep2(false) ; setShowSelectCategories(true)}}
-                            
+                            showCatergories={() => { setShowSignUpStep2(false); setShowSelectCategories(true) }}
+
                         />}
                         applyForm={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
                         backAction={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
@@ -92,17 +92,17 @@ const UserProfile = (props) => {
                     />
                 )
             }
-                        {
+            {
                 showSelectCategories && (
                     <Dialog
                         title={"Select Categories"}
                         open={showSelectCategories}
                         message={<SelectCategories
-                        close = {()=> setShowSelectCategories(false)}
+                            close={() => setShowSelectCategories(false)}
                         />}
                         applyForm={() => setShowSelectCategories(false)}
                         skipAction={() => setShowSelectCategories(false)}
-                        
+
                         hideActions={true}
                     />
                 )
@@ -134,7 +134,6 @@ const UserProfile = (props) => {
                 )
             }
             <Grid container className={classes.profileContainer}>
-                {/* <Avatar className={classes.avatar} alt="Arslan Sajid" src={require("../../assets/images/Arslan.jpg")} /> */}
                 <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                 <Grid className={classes.verticalCenter}>
                     <Grid>
@@ -175,7 +174,7 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(6),
     },
     textButton: {
-        "&:hover" : {
+        "&:hover": {
             color: Colors.brandColor,
         }
     }

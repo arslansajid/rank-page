@@ -37,7 +37,6 @@ function ElevationScroll(props) {
 const Header = (props) => {
     const classes = useStyles();
     const { location, history } = props;
-    const [sideCartOpen, setSideCartOpen] = React.useState(false);
     const [showBackButton, setShowBackButton] = React.useState(false);
 
     React.useEffect(() => {
@@ -47,14 +46,6 @@ const Header = (props) => {
             setShowBackButton(false);
         }
     }, [props.location])
-
-    const toggleDrawer = () => {
-        setSideCartOpen(!sideCartOpen)
-    }
-
-    const onDrawerItemPress = () => {
-        setSideCartOpen(false);
-    }
 
     return (
         <ElevationScroll {...props}>
@@ -68,7 +59,7 @@ const Header = (props) => {
                         )
                     }
                     <Typography variant="h6" className={classes.routeTitle}>
-                        {props.location.pathname.split("/")[1]}
+                        {location.pathname.split("/").length > 2 ? location.pathname.split("/")[1] : "Rank Page"}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -126,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         padding: '0px !important',
+        position: 'relative'
     },
     blackContainer: {
         [theme.breakpoints.down('sm')]: {
@@ -162,11 +154,11 @@ const useStyles = makeStyles((theme) => ({
     routeTitle: {
         textTransform: 'capitalize',
         position: "absolute",
-        left: 'calc(50% - 15px)',
+        left: 'calc(50% - 1.875em)',
 
-        [theme.breakpoints.down('sm')]: {
-            left: 'calc(50% - 30px)',
-        },
+        // [theme.breakpoints.down('sm')]: {
+        //     left: 'calc(50% - 30px)',
+        // },
     }
 }));
 

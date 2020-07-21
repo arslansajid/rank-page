@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -9,18 +9,24 @@ import ListIcon from '@material-ui/icons/List';
 
 const BottomNavigationBar = (props) => {
   const classes = useStyles();
+  const { history } = props;
   const [value, setValue] = React.useState('/');
 
+  useEffect(() => {
+        setValue(history.location.pathname);
+  }, [history.location])
+
   const handleChange = (event, newValue) => {
+    console.log(props);
     setValue(newValue);
-    props.history.push(newValue)
+    history.push(newValue)
   };
 
   return (
     <BottomNavigation value={value} onChange={handleChange} className={classes.root}>
       <BottomNavigationAction label="Home" value="/" icon={<HomeIcon />} />
-      <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Menu" value="menu" icon={<ListIcon />} />
+      <BottomNavigationAction label="Favorites" value="/favorites" icon={<FavoriteIcon />} />
+      <BottomNavigationAction label="Menu" value="/menu" icon={<ListIcon />} />
         <BottomNavigationAction label="Profile" value="/profile/lists" icon={<AccountIcon />} />
     </BottomNavigation>
   );

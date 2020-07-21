@@ -4,7 +4,10 @@ import {Button, Typography , Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
 import {useForm} from 'react-hook-form';
+import Cookie from 'js-cookie';
+import { connect } from 'react-redux';
 import InputLabel from '@material-ui/core/InputLabel';
+import { userLogin } from "../../actions/LoginActions";
 import {signUp} from './action.js'
 
 
@@ -20,10 +23,15 @@ const SignUpStep2 = props => {
     let submitdata = {...registerData}
     submitdata.user_name = data.user_name;
     signUp(submitdata)
-    .then((response) => {
+    .then((res) => {
       setIsLoading(false)
-      setValue(response.data)
-      if(response.data && response.data.success){
+      setValue(res.data)
+      if(res.data && res.data.data.success){
+        let token = res.data.data.user.auth_token;
+        Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
+        props.dispatch(userLogin(res.data.data.user));
+        // console.log(props.dispatch)
+        // console.log('data' , res.data.user)
         showCatergories()
       }
     })
@@ -138,4 +146,5 @@ const useStyles = makeStyles (theme =>
 
 SignUpStep2.defaultProps = {};
 
-export default SignUpStep2;
+// export default SignUpStep2;
+export default connect(null)(SignUpStep2);

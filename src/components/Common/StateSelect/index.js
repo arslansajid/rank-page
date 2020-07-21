@@ -33,6 +33,8 @@ function CountryRegionMUISelectors(props) {
     } = props;
     const classes = useStyles();
 
+    console.log('props here in state select' , props)
+
     return (
         <>
             {!!label && label.length && (
@@ -50,20 +52,21 @@ function CountryRegionMUISelectors(props) {
             <Controller
                 key={name}
                 as={
-                    <TextField
-                        select
-                        error={error}
-                        helperText={helperText}
-                        placeholder={placeholder}
-                        className={classes.greyInput}
-                        onChange = {() => console.log('onchange function called country select')}
-                    >
-                        {CountryRegionData.map((option, index) => (
-                            <MenuItem key={option[0]} value={option}>
-                                {option[0]}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                  <TextField
+                  id="region"
+                  label="Region"
+                  value={props.region}
+                  select
+                  onChange={(value) => props.handleChange(value)}
+                >
+                  {getRegions(props.country).map(
+                    (option, index) => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    )
+                  )}
+                </TextField>
                 }
                 rules={rules}
                 autoComplete='false'
@@ -74,14 +77,10 @@ function CountryRegionMUISelectors(props) {
                 name={name}
                 control={control}
                 defaultValue={defaultValue}
-                // onChange={([selected]) => {
-                //     // React Select return object instead of value for selection
-                //     props.handleChange(selected)
-                //     // console.log('onChange caleed country sleect /  / / / / //')
-				// 	return selected;
-                //   }}
-                  
-                  onChange = {() => console.log('onchange function called country select')}
+                onChange={([selected]) => {
+                    // React Select return object instead of value for selection
+					      return selected;
+				  }}
             />
             {/* <br />
       <TextField

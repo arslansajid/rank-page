@@ -1,23 +1,34 @@
-import React, { useState } from 'react';
+
+import React, {useEffect, useState } from 'react';
+import { withRouter } from "react-router";
+import { connect } from 'react-redux'
 import { Button, Typography } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
-import TextField from "../../components/Common/TextField"
+import TextField from "../../components/Common/TextField";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
+import Dialog from "../../components/Common/Dialog"
+import ConformationDialog from './confirmation'
 
-const Settings = () => {
+const Settings = (props) => {
+	// const [user , setUser] = useState(props.user ? props.user : null);
 	const [isLoading, setIsLoading] = React.useState(false);
 	const { errors, handleSubmit, control } = useForm();
 	const [activeTab, setActiveTab] = useState(1);
 	const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
 	const [activeTabFollowingPrivacy, setActiveTabFollowingPrivacy] = useState(1);
 	const [activeDisable, setActiveDisable] = useState(false);
+	const [ showConfirmationDiallog , setShowConfirmationDiallog] = useState(false)
 
-
+	// useEffect(() => {
+	// 	console.log('user here' , props.user)
+	// 	if(props.user && props.user != user){
+	// 		setUser(props.user)
+	// 	}
+  // });
 
 	const onSubmit = data => {
-		console.log('function called')
 		setIsLoading(true);
 	}
 
@@ -28,7 +39,7 @@ const Settings = () => {
 			<div className = {classes.main}>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className='space-4'>
-						<InputLabel className='space-2'>Username</InputLabel>
+						<InputLabel className = {`${classes.heading}`}>Username</InputLabel>
 						<TextField
 								id='user-name'
 								type='text'
@@ -54,7 +65,7 @@ const Settings = () => {
 			<div className = {classes.main}>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className='space-1'>
-						<InputLabel className='space-2'>Password</InputLabel>
+						<InputLabel className = {`${classes.heading}`}>Password</InputLabel>
 						<TextField
 								id='new_password'
 								type='password'
@@ -75,7 +86,7 @@ const Settings = () => {
 								rules={{ required: 'This field is required' }}
 								control={control}
 								error={errors.new_password ? true : false}
-								placeholder='old password'
+								placeholder='new password'
 								defaultValue={''}
 								className='text-field'
 						/>
@@ -105,7 +116,7 @@ const Settings = () => {
 
 			<div className = {classes.main}>
 				<form onSubmit={handleSubmit(onSubmit)}>
-					<InputLabel className='space-2'>Email Address</InputLabel>
+					<InputLabel className = {`${classes.heading}`}>Email Address</InputLabel>
 					<div className='space-4'>
 						<TextField
 								id='user-email'
@@ -116,6 +127,8 @@ const Settings = () => {
 								error={errors.email ? true : false}
 								placeholder='Enter your email'
 								defaultValue={''}
+								// value={!!props.user && props.user.email ? props.user.email : ''}
+								// value = {!!user ? user.date_of_birth : ''}
 								className='text-field'
 						/>
 				</div>
@@ -131,8 +144,8 @@ const Settings = () => {
 
 
 			<div className = {classes.main}>
-					<InputLabel className='space-2'>Email Activity</InputLabel>
-					<Typography className ='body2 space-2'>
+					<InputLabel className = {`${classes.heading}`}>Email Activity</InputLabel>
+					<Typography className ='body2 space-2 mediumFont'>
 						Recieve activity emails
 					</Typography>
 
@@ -151,8 +164,8 @@ const Settings = () => {
 			</div>
 
 			<div className = {classes.main}>
-					<InputLabel className='space-2'>Account Privacy</InputLabel>
-					<Typography className ='body2 space-2'>
+					<InputLabel className = {`${classes.heading}`}>Account Privacy</InputLabel>
+					<Typography className ='body2 space-2 mediumFont'>
 					Set your profile’s visbility
 					</Typography>
 
@@ -176,8 +189,8 @@ const Settings = () => {
 			</div>
 
 			<div className = {classes.main}>
-					<InputLabel className='space-2'>Following Privacy</InputLabel>
-					<Typography className ='body2 space-2'>
+					<InputLabel className = {`${classes.heading}`}>Following Privacy</InputLabel>
+					<Typography className ='body2 space-2 mediumFont'>
 						Set your following visbility
 					</Typography>
 
@@ -201,13 +214,13 @@ const Settings = () => {
 			</div>
 
 			<div className = {classes.main}>
-					<InputLabel className='space-2'>Following Privacy</InputLabel>
-					<Typography className ='body2 space-2'>
-						Set your following visbility
+					<InputLabel className = {`${classes.heading}`}>Disable Account</InputLabel>
+					<Typography className ='body2 space-2 mediumFont'>
+					 	Disballing your account will hide your profile from public, and you can’t use rankpage untill you enable it
 					</Typography>
 
 				<span className='space-4'>
-					<Button className={activeDisable ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveDisable(!activeDisable)}>
+					<Button className={activeDisable ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveDisable(!activeDisable) ; setShowConfirmationDiallog(true)}}>
 							<Typography>
 								Disable
 							</Typography>
@@ -215,6 +228,17 @@ const Settings = () => {
 				</span>
 			</div>
 
+				{showConfirmationDiallog && 
+			    <Dialog
+						title={"Confirmation"}
+						open={showConfirmationDiallog}
+						message={<ConformationDialog  
+						cancelForm={() => setShowConfirmationDiallog(false)}/>}
+						applyForm={() => setShowConfirmationDiallog(false) }
+						hideActions={true}
+						cancelForm={() => setShowConfirmationDiallog(false)}
+						// cancelForm={() => setShowConfirmationDiallog(false)}
+					/>}
 		</div>
 	);
 }
@@ -253,6 +277,8 @@ const useStyles = makeStyles(() =>
 					background: Colors.inputBg,
 					marginRight : 10,
 					color : Colors.black,
+					boxShadow : 'none',
+					border : '1px solid rgba(38, 38, 38, 0.12)',
 				},
 				choiceButtonActive :{
 					minWidth: "20px",
@@ -260,15 +286,27 @@ const useStyles = makeStyles(() =>
 					background: Colors.brandColor,
 					marginRight : 10,
 					color : Colors.white,
+					border: '1px solid rgba(38, 38, 38, 0.12)',
 					"&:hover": {
 						background : Colors.brandColor,
 				}
 				},
         error : {
             color : Colors.red,
-        }
+				},
+				heading : {
+					fontWeight: 'normal',
+					fontSize: '1rem',
+					lineHeight: '1.2rem',
+					color: Colors.black,
+
+				},
     })
 );
 
 
-export default Settings;
+export default connect(store => {
+  return{
+		user : store.user,
+  }
+})(Settings)

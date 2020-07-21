@@ -10,7 +10,7 @@ export const GenderItems = [
       value: 2
     },
     {
-      label: "Other",
+      label: "Prefer not to answer",
       value: 3
     },
   ]

@@ -1,8 +1,10 @@
-import * as React from 'react';
-import { TextField, InputLabel } from '@material-ui/core';
+import React, { useState } from 'react';
+import { TextField, InputLabel, InputAdornment, IconButton } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 import Colors from "../../../static/_colors"
 import { makeStyles } from '@material-ui/core/styles';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 const ZTextField = ({
     id,
@@ -20,6 +22,9 @@ const ZTextField = ({
 
 }) => {
     const classes = useStyles();
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
     
     return (
         <div key={name} className={className}>
@@ -44,8 +49,22 @@ const ZTextField = ({
                         helperText={helperText}
                         multiline={type ? false : true}
                         rows={type ? undefined : rows}
-                        type={type}
+                        // type={type}
+                        type={type === "password" ? showPassword ? "text" : "password" : type}
                         placeholder={placeholder}
+                        InputProps={(type === "password") ? { // <-- This is where the toggle button is added.
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                >
+                                  {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }: {}}
                     />
                 }
                 rules={rules}

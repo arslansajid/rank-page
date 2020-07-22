@@ -137,7 +137,7 @@ const UserProfile = (props) => {
                     {!!user ? (
                         <Link to="/profile/lists">
                             <Grid container>
-                                <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? user.profile_image : require("../../assets/images/user.png")} />
+                                <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? user.profile_image : require("../../assets/images/user.jpg")} />
                                 <Grid className={classes.verticalCenter}>
                                     <Typography>{user.name}</Typography>
                                     <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>
@@ -147,15 +147,15 @@ const UserProfile = (props) => {
                     )
                         : (
                             <>
-                                <Grid container>
-                                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={require("../../assets/images/user.png")} />
-                                    <Grid className={classes.verticalCenter}>
-                                        <Grid container alignItems="center">
-                                            <Typography variant="body1" className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
-                                            <Typography variant="body1" className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
+                                {/* <Grid container>
+                                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={require("../../assets/images/user.jpg")} />
+                                    <Grid className={classes.verticalCenter}> */}
+                                        <Grid container alignItems="center" className={classes.unRegContainer}>
+                                            <Typography  className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
+                                            <Typography  className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
                                         </Grid>
-                                    </Grid>
-                                </Grid>
+                                    {/* </Grid>
+                                </Grid> */}
                             </>
                         )}
             </Grid>
@@ -178,8 +178,13 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(6),
         height: theme.spacing(6),
     },
+    unRegContainer: {
+        fontSize: "1.25em",
+        marginBottom: 5
+    },
     textButton: {
         cursor: "pointer",
+        fontSize: '1em',
 
         "&:hover": {
             color: Colors.brandColor,

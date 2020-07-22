@@ -7,20 +7,25 @@ import {useForm} from 'react-hook-form';
 import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import CountrySelect from '../Common/CountrySelect'
-import StateSelect from '../Common/StateSelect'
+import StateSelect from '../Common/StateSelect';
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import { GenderItems } from '../../static/_selectOptions';
-
+import ReactFlagsSelect from 'react-flags-select';
+import 'react-flags-select/scss/react-flags-select.scss';
 const SignUp = props => {
   const {moveToNext , values} = props;
   const {getData} = props;
   const [isLoading, setIsLoading] = React.useState (false);
   const {errors, handleSubmit, control} = useForm ();
-  const [country , setCountry] = useState('');
   const [passwordError , setPasswordError] = useState(null);
   const [message , setMessage] = useState('')
   const [userData , setUserData] = useState(values ? values : null);
-  const [region , setRegion] = useState(null);
+  const [country , setCountry] = useState(userData && userData.country ? userData.country : null);
+  const [region , setRegion] = useState(userData && userData.region ? userData.region : null);
   const [dateError , setDateError] = useState(null);
+
+
+  console.log('country state' , country)
 
 
   const ageValidation = (data) => {
@@ -38,6 +43,8 @@ const SignUp = props => {
 
   const onSubmit = async (data) => {
     if(data.password === data.password_confirmation && data.password.length > 6 && ageValidation(data)){
+      data.country = country;
+      data.region = region;
       setPasswordError(false)
       setDateError(null)
       setUserData(data)
@@ -129,7 +136,6 @@ const SignUp = props => {
             defaultValue={userData && userData.password ? userData.password : ''}
             className="text-field"
             label='Password'
-            // getValues = {(value) => console.log('values here' , value )}
           />
         </div>
         <div className="space-2">
@@ -172,7 +178,7 @@ const SignUp = props => {
           />
         </div>
 
-        <div className="space-4">
+        {/* <div className="space-4">
           <CountrySelect
             type="text"
             name="country"
@@ -181,11 +187,40 @@ const SignUp = props => {
             control={control}
             placeholder="Country"
             label='Country'
+            getCountry = {console.log('country here , ' , country)}
             // handleChange = {(value) => setCountry(value)}
             // defaultValue={''}
             defaultValue={userData && userData.country ? userData.country : ''}
             className="text-field"
           />
+        </div> */}
+
+        <div className="space-4">
+
+        {/* <ReactFlagsSelect 
+          onSelect={(label) => console.log(label)}
+          showSelectedLabel={true}
+          showOptionLabel={true}
+          // selectedSize={18}
+          selectLabel = {(label) => console.log(label)}
+          className="menu-flags" /> */}
+
+          <InputLabel className='space-2'>Country</InputLabel>
+          <CountryDropdown
+            className = {classes.selectBox}
+            value={country}
+            placeholder="Select Country"
+            onChange={(country) => setCountry(country)} />
+        </div>
+
+        <div className="space-4">
+          <InputLabel className='space-2'>State</InputLabel>
+          <RegionDropdown
+            className = {classes.selectBox}
+            country={country}
+            value={region}
+            placeholder="Select Region"
+            onChange={(region) => setRegion(region)} />
         </div>
 
         {/* <div className="space-4">
@@ -279,6 +314,16 @@ const useStyles = makeStyles (theme =>
       boxShadow: "0px -4px 3px rgba(0, 0, 0, 0.08)",
       borderTop: '1px solid rgba(38, 38, 38, 0.12)',
     }
+    ,
+    selectBox : {
+      width: '100%',
+      border: '1px solid #ddd',
+      border: '1px solid rgba(0, 0, 0, 0.23)',
+      height : '42px',
+      padding: '10px',
+      borderRadius: '5px',
+      '-webkit-appearance': 'none'
+    },
   })
 );
 

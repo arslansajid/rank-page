@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { checkIfLoggedIn } from "../../api/actions";
+import { checkIfLoggedIn } from "./actions";
 import { userLogin } from "../../actions/LoginActions";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
 

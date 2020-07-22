@@ -1,5 +1,5 @@
-import Config from './config';
-import axiosInstance from './api.config';
+import Config from '../../api/config';
+import axiosInstance from '../../api/api.config';
 import Cookie from "js-cookie";
 
 export const checkIfLoggedIn = async () => {

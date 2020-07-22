@@ -7,15 +7,24 @@ import {GenderItems} from "../../static/_selectOptions";
 import { makeStyles } from '@material-ui/core/styles';
 import { CountryRegionData } from "react-country-region-selector";
 import MenuItem from "@material-ui/core/MenuItem";
-import ImagePicker from "../../components/Common/ImagePicker"
+import ImagePicker from "../../components/Common/ImagePicker";
+import { Capitalize } from "../../utils/Functions";
+import moment from "moment"
 
 const EditProfile = (props) => {
 	const classes = useStyles();
 	const {user} = props;
 	const [country, setCountry] = useState('')
+	const [gender, setGender] = useState('')
+	const [userDOB, setUserDOB] = useState('')
 
 	useEffect(() => {
 		//re-rendering when the user data changes
+		if(!!user) {
+			setCountry(user.country);
+			setGender(Capitalize(user.gender));
+			setUserDOB(moment(user.date_of_birth).format("YYYY-MM-DD"));
+		}
 	}, [props.user])
 
 	return (
@@ -69,11 +78,13 @@ const EditProfile = (props) => {
 				type="date"
 				name="date_of_birth"
 				placeholder="Date"
-				value={!!user ? user.date_of_birth : ''}
+				value={userDOB}
+				// defaultValue={!!user ? user.date_of_birth : ''}
 				className="text-field"
 				margin='dense'
 				variant='outlined'
 				fullWidth
+				onChange={(e) => console.log(e.target.value)}
 			/>
 		</Paper>
 
@@ -84,12 +95,14 @@ const EditProfile = (props) => {
 				className={classes.greyInput}
 				margin='dense'
 				variant='outlined'
-				value={!!user ? user.gender : ''}
+				value={gender}
+				// defaultValue={!!user ? user.gender : ''}
 				select
 				fullWidth
+				onChange={(e) => setGender(e.target.value)}
 			>
 				{GenderItems.map((item, index) => (
-					<MenuItem key={index} value={item.value}>{item.label}</MenuItem>
+					<MenuItem key={index} value={item.label}>{item.label}</MenuItem>
 				))}
 			</TextField>
 		</Paper>
@@ -102,10 +115,10 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				value={country}
-				defaultValue={!!user ? user.country : ''}
+				// defaultValue={!!user ? user.country : ''}
 				select
 				fullWidth
-				onChange={(e) => setCountry(e.target.value[0])}
+				onChange={(e) => setCountry(e.target.value)}
 			>
 				{CountryRegionData.map((option, index) => (
 					<MenuItem key={option[0]} value={option[0]}>

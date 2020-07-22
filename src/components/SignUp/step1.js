@@ -1,9 +1,9 @@
-import React, {useState , useEffect} from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import {Button, Typography, Grid} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Button, Typography, Grid } from '@material-ui/core';
 import Colors from '../../static/_colors';
 import TextField from '../Common/TextField';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Select from '../Common/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import CountrySelect from '../Common/CountrySelect'
@@ -13,36 +13,36 @@ import { GenderItems } from '../../static/_selectOptions';
 import ReactFlagsSelect from 'react-flags-select';
 import 'react-flags-select/scss/react-flags-select.scss';
 const SignUp = props => {
-  const {moveToNext , values} = props;
-  const {getData} = props;
-  const [isLoading, setIsLoading] = React.useState (false);
-  const {errors, handleSubmit, control} = useForm ();
-  const [passwordError , setPasswordError] = useState(null);
-  const [message , setMessage] = useState('')
-  const [userData , setUserData] = useState(values ? values : null);
-  const [country , setCountry] = useState(userData && userData.country ? userData.country : null);
-  const [region , setRegion] = useState(userData && userData.region ? userData.region : null);
-  const [dateError , setDateError] = useState(null);
+  const { moveToNext, values } = props;
+  const { getData } = props;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const { errors, handleSubmit, control } = useForm();
+  const [passwordError, setPasswordError] = useState(null);
+  const [message, setMessage] = useState('')
+  const [userData, setUserData] = useState(values ? values : null);
+  const [country, setCountry] = useState(userData && userData.country ? userData.country : null);
+  const [region, setRegion] = useState(userData && userData.region ? userData.region : null);
+  const [dateError, setDateError] = useState(null);
 
 
-  console.log('country state' , country)
+  console.log('country state', country)
 
 
   const ageValidation = (data) => {
     let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const date1 = new Date(data.date_of_birth);
     const date2 = new Date(date);
     const diffTime = Math.abs(date2 - date1);
-    const diffYears = (Math.ceil(diffTime / (1000 * 60 * 60 * 24)))/365; 
-    if(diffYears < 16){
+    const diffYears = (Math.ceil(diffTime / (1000 * 60 * 60 * 24))) / 365;
+    if (diffYears < 16) {
       return false;
     }
     else return true;
   }
 
   const onSubmit = async (data) => {
-    if(data.password === data.password_confirmation && data.password.length > 6 && ageValidation(data)){
+    if (data.password === data.password_confirmation && data.password.length > 6 && ageValidation(data)) {
       data.country = country;
       data.region = region;
       setPasswordError(false)
@@ -51,134 +51,134 @@ const SignUp = props => {
       moveToNext()
       getData(data)
     }
-  else if(data.password !== data.password_confirmation){
+    else if (data.password !== data.password_confirmation) {
       setPasswordError(true)
       setMessage('Password does not match')
-  }
-  else if(data.password.length < 6){
-    setPasswordError(true)
-    setMessage('Password should be greater than 6 characters')
-  }
-  else if(!ageValidation(data)){
-    if(data.password !== data.password_confirmation){
-      setPasswordError(false)
     }
-    setDateError('Only 16+ are allowed')
-  
-  }
-   
+    else if (data.password.length < 6) {
+      setPasswordError(true)
+      setMessage('Password should be greater than 6 characters')
+    }
+    else if (!ageValidation(data)) {
+      if (data.password !== data.password_confirmation) {
+        setPasswordError(false)
+      }
+      setDateError('Only 16+ are allowed')
+
+    }
+
   }
 
-  const classes = useStyles ();
+  const classes = useStyles();
   return (
     <>
-    <div className={classes.container}>
-      <form id={'signup-form'} key={'form'} onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="body1" className ='space-4'>Please fill in the details to continue registration</Typography>      
-        <div className="space-2">
-          <TextField
-            type="text"
-            name="name"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.name ? true : false}
-            placeholder="Enter full name"
-            defaultValue={userData && userData.name ? userData.name : ''}
-            label='Full Name'
-            className="text-field"
-          />
-        </div>
-        <div className="space-2">
-          <TextField
-            type="email"
-            name="email"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.email ? true : false}
-            placeholder="Enter email address"
-            defaultValue={userData && userData.email ? userData.email : ''}
-            label='Email Address'
-            className="text-field"
-          />
-        </div>
-        <div className="space-2">
-          <InputLabel>Date of birth</InputLabel>
-          <TextField
-            type="date"
-            name="date_of_birth"
-            rules={{required: 'This field is required'}}
-            error={errors.date_of_birth ? true : false}
-            control={control}
-            placeholder="Age"
-            // defaultValue={''}
-            defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
-            className="text-field"
-          />
-        </div>
-        { dateError ?
-          <div className={classes.center}>
-            <Typography variant="body2" className = {classes.error}>
-              {dateError}
-            </Typography>
+      <div className={classes.container}>
+        <form id={'signup-form'} key={'form'} onSubmit={handleSubmit(onSubmit)}>
+          <Typography variant="body1" className='space-4'>Please fill in the details to continue registration</Typography>
+          <div className="space-2">
+            <TextField
+              type="text"
+              name="name"
+              rules={{ required: 'This field is required' }}
+              control={control}
+              error={errors.name ? true : false}
+              placeholder="Enter full name"
+              defaultValue={userData && userData.name ? userData.name : ''}
+              label='Full Name'
+              className="text-field"
+            />
           </div>
-          :
-          null
-        }
-        <div className="space-2">
-          <TextField
-            type="password"
-            name="password"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.password ? true : false}
-            placeholder="password"
-            // defaultValue={''}
-            defaultValue={userData && userData.password ? userData.password : ''}
-            className="text-field"
-            label='Password'
-          />
-        </div>
-        <div className="space-2">
-          <TextField
-            type="password"
-            name="password_confirmation"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.password_confirmation ? true : false}
-            placeholder="Confirm Password"
-            // defaultValue={''}
-            defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
-            className="text-field"
-            label='Confirm Password'
-          />
-        </div>
-        { passwordError ?
-          <div className={classes.center}>
-            <Typography variant="body2" className = {classes.error}>
-              {message}
-            </Typography>
+          <div className="space-2">
+            <TextField
+              type="email"
+              name="email"
+              rules={{ required: 'This field is required' }}
+              control={control}
+              error={errors.email ? true : false}
+              placeholder="Enter email address"
+              defaultValue={userData && userData.email ? userData.email : ''}
+              label='Email Address'
+              className="text-field"
+            />
           </div>
-          :
-          null
-        }
+          <div className="space-2">
+            <InputLabel>Date of birth</InputLabel>
+            <TextField
+              type="date"
+              name="date_of_birth"
+              rules={{ required: 'This field is required' }}
+              error={errors.date_of_birth ? true : false}
+              control={control}
+              placeholder="Age"
+              // defaultValue={''}
+              defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
+              className="text-field"
+            />
+          </div>
+          {dateError ?
+            <div className={classes.center}>
+              <Typography variant="body2" className={classes.error}>
+                {dateError}
+              </Typography>
+            </div>
+            :
+            null
+          }
+          <div className="space-2">
+            <TextField
+              type="password"
+              name="password"
+              rules={{ required: 'This field is required' }}
+              control={control}
+              error={errors.password ? true : false}
+              placeholder="password"
+              // defaultValue={''}
+              defaultValue={userData && userData.password ? userData.password : ''}
+              className="text-field"
+              label='Password'
+            />
+          </div>
+          <div className="space-2">
+            <TextField
+              type="password"
+              name="password_confirmation"
+              rules={{ required: 'This field is required' }}
+              control={control}
+              error={errors.password_confirmation ? true : false}
+              placeholder="Confirm Password"
+              // defaultValue={''}
+              defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
+              className="text-field"
+              label='Confirm Password'
+            />
+          </div>
+          {passwordError ?
+            <div className={classes.center}>
+              <Typography variant="body2" className={classes.error}>
+                {message}
+              </Typography>
+            </div>
+            :
+            null
+          }
 
-        <div className="space-2">
-          <InputLabel className='space-2'>Gender</InputLabel>
-          <Select
-            name="gender"
-            rules={{required: 'This field is required'}}
-            control={control}
-            error={errors.gender ? true : false}
-            placeholder="Select Gender"
-            // label='Gender'
-            items={GenderItems}
-            // defaultValue={''}
-            defaultValue={userData && userData.gender ? userData.gender : ''}
-            className="text-field"
-          />
-        </div>
+          <div className="space-2">
+            <InputLabel className='space-2'>Gender</InputLabel>
+            <Select
+              name="gender"
+              rules={{ required: 'This field is required' }}
+              control={control}
+              error={errors.gender ? true : false}
+              placeholder="Select Gender"
+              // label='Gender'
+              items={GenderItems}
+              // defaultValue={''}
+              defaultValue={userData && userData.gender ? userData.gender : ''}
+              className="text-field"
+            />
+          </div>
 
-        {/* <div className="space-4">
+          {/* <div className="space-4">
           <CountrySelect
             type="text"
             name="country"
@@ -195,9 +195,9 @@ const SignUp = props => {
           />
         </div> */}
 
-        <div className="space-4">
+          <div className="space-4">
 
-        {/* <ReactFlagsSelect 
+            {/* <ReactFlagsSelect 
           onSelect={(label) => console.log(label)}
           showSelectedLabel={true}
           showOptionLabel={true}
@@ -205,25 +205,29 @@ const SignUp = props => {
           selectLabel = {(label) => console.log(label)}
           className="menu-flags" /> */}
 
-          <InputLabel className='space-2'>Country</InputLabel>
-          <CountryDropdown
-            className = {classes.selectBox}
-            value={country}
-            placeholder="Select Country"
-            onChange={(country) => setCountry(country)} />
-        </div>
+            <InputLabel className='space-2'>Country</InputLabel>
+            <CountryDropdown
+              className={classes.selectBox}
+              value={country}
+              placeholder="Select Country"
+              onChange={(country) => setCountry(country)} />
+          </div>
 
-        <div className="space-4">
-          <InputLabel className='space-2'>State</InputLabel>
-          <RegionDropdown
-            className = {classes.selectBox}
-            country={country}
-            value={region}
-            placeholder="Select Region"
-            onChange={(region) => setRegion(region)} />
-        </div>
+          {!!country && (
+            <div className="space-4">
+              <InputLabel className='space-2'>State</InputLabel>
+              <RegionDropdown
+                className={classes.selectBox}
+                country={country}
+                value={region}
+                placeholder="Select Region"
+                onChange={(region) => setRegion(region)} />
+            </div>
+          )}
 
-        {/* <div className="space-4">
+
+
+          {/* <div className="space-4">
           <StateSelect
             type="text"
             name="state"
@@ -240,28 +244,28 @@ const SignUp = props => {
             className="text-field"
           />
         </div> */}
-      </form>
-    </div>
-    <Grid className={classes.fixedBottom}>
-      <Button
-        form={'signup-form'}
-        type="submit"
-        disabled={isLoading}
-        className={classes.submitButton}
-        variant="outlined"
-        color="primary"
-      >
-        <Typography className={classes.submitButtonText}>
-          Continue
+        </form>
+      </div>
+      <Grid className={classes.fixedBottom}>
+        <Button
+          form={'signup-form'}
+          type="submit"
+          disabled={isLoading}
+          className={classes.submitButton}
+          variant="outlined"
+          color="primary"
+        >
+          <Typography className={classes.submitButtonText}>
+            Continue
         </Typography>
-      </Button>
-    </Grid>
-  </>
+        </Button>
+      </Grid>
+    </>
   );
 };
 
-const useStyles = makeStyles (theme =>
-  createStyles ({
+const useStyles = makeStyles(theme =>
+  createStyles({
     container: {
       display: 'flex',
       flexDirection: 'column',
@@ -282,10 +286,10 @@ const useStyles = makeStyles (theme =>
       width: '100%'
     },
     center: {
-        textAlign : 'center'
+      textAlign: 'center'
     },
-    error : {
-      color : Colors.red,
+    error: {
+      color: Colors.red,
     },
     submitButtonText: {
       fontSize: '16px',
@@ -298,11 +302,11 @@ const useStyles = makeStyles (theme =>
       fontWeight: '600',
       color: '#333',
     },
-    select : {
-        width: '100%',
-        height: '40px',
-        border: '1px solid #ddd',
-        padding : '5px',
+    select: {
+      width: '100%',
+      height: '40px',
+      border: '1px solid #ddd',
+      padding: '5px',
     },
     fixedBottom: {
       background: Colors.white,
@@ -315,11 +319,11 @@ const useStyles = makeStyles (theme =>
       borderTop: '1px solid rgba(38, 38, 38, 0.12)',
     }
     ,
-    selectBox : {
+    selectBox: {
       width: '100%',
       border: '1px solid #ddd',
       border: '1px solid rgba(0, 0, 0, 0.23)',
-      height : '42px',
+      height: '42px',
       padding: '10px',
       borderRadius: '5px',
       '-webkit-appearance': 'none'

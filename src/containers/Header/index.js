@@ -59,7 +59,7 @@ const Header = (props) => {
                         )
                     }
                     <Typography variant="h6" className={classes.routeTitle}>
-                        {location.pathname.split("/").length > 2 ? location.pathname.split("/")[1] : "Rank Page"}
+                        {location.pathname === "/" ? "Rank Page" : location.pathname.split("/")[1]}
                     </Typography>
                 </Toolbar>
             </AppBar>

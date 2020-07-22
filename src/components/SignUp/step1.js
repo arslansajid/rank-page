@@ -20,8 +20,8 @@ const SignUp = props => {
   const [passwordError, setPasswordError] = useState(null);
   const [message, setMessage] = useState('')
   const [userData, setUserData] = useState(values ? values : null);
-  const [country, setCountry] = useState(userData && userData.country ? userData.country : null);
-  const [region, setRegion] = useState(userData && userData.region ? userData.region : null);
+  const [country, setCountry] = useState(userData && userData.country ? userData.country : '');
+  const [region, setRegion] = useState(userData && userData.region ? userData.region : '');
   const [dateError, setDateError] = useState(null);
 
 

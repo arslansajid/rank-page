@@ -27,7 +27,7 @@ const Profile = (props) => {
     }, [])
 
 		return (
-			<div>
+			<div className={classes.main}>
                 <ProfileCover />
 				<ButtonGroup fullWidth size ='large'>
                     <Button  className ={classes.buttons} onClick={() => handleTabChange(1)}>
@@ -62,6 +62,13 @@ const Profile = (props) => {
     }
     
 const useStyles = makeStyles((theme) => ({
+    main: {
+		marginBottom: 20,
+
+		[theme.breakpoints.down('sm')]: {
+			marginBottom: 70,
+        },
+	},
     tabSelected: {
         fontWeight: 400
     },

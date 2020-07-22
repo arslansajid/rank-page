@@ -29,6 +29,7 @@ const EditProfile = (props) => {
 
 	return (
 		<>
+		<Grid className={classes.main}>
 		<Paper elevation={0} className={classes.container}>
 			{/* <Typography variant="h6" gutterBottom></Typography> */}
 			<InputLabel className='space-2'>Picture</InputLabel>
@@ -132,18 +133,26 @@ const EditProfile = (props) => {
 			<Typography variant="h6" gutterBottom>State</Typography>
 			
 		</Paper> */}
+		</Grid>
 		</>
 	);
 }
 
 const useStyles = makeStyles((theme) => ({
+	main: {
+		marginBottom: 20,
+
+		[theme.breakpoints.down('sm')]: {
+			marginBottom: 70,
+        },
+	},	
 	container: {
 		minHeight: 80,
         background: Colors.white,
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 8,
 		marginTop: 8,
-		padding: "1em"
+		padding: "1em",
 	},
     coverContainer: {
         color: Colors.white,

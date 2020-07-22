@@ -4,7 +4,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { withRouter, useHistory } from 'react-router-dom';
 import Colors from '../../static/_colors';
 
@@ -18,7 +17,7 @@ const Header = (props) => {
     const [showBackButton, setShowBackButton] = React.useState(false);
 
     React.useEffect(() => {
-        if (location.pathname.split("/").length > 2) {
+        if (location.pathname !== "/") {
             setShowBackButton(true);
         } else {
             setShowBackButton(false);

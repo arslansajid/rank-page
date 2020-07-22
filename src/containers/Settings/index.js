@@ -29,7 +29,7 @@ const Settings = (props) => {
 
 	if (!!props.user) {
 		return (
-			<div>
+			<div className={classes.pageContainer}>
 				<div className={classes.main}>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-4'>
@@ -241,8 +241,15 @@ const Settings = (props) => {
 	}
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
 	createStyles({
+		pageContainer: {
+			marginBottom: 20,
+	
+			[theme.breakpoints.down('sm')]: {
+				marginBottom: 70,
+			},
+		},
 		container: {
 			display: "flex",
 			flexDirection: "column",

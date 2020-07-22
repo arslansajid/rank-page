@@ -7,6 +7,7 @@ import { Grid } from '@material-ui/core';
 import { theme } from './utils/MuiTheme';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import Colors from './static/_colors';
+import AppMain from "./containers/AppMain"
 
 // Styles
 import './App.scss';
@@ -30,6 +31,7 @@ const App = () => {
       <ConnectedRouter history={history}>
         <MuiThemeProvider theme={theme}>
           <StylesProvider injectFirst>
+            <AppMain />
             <Grid className={classes.main} container>
               <Grid className={classes.leftSidebar} item lg={3} md={3} sm={false} xs={false}>
                 <LeftSidebar />

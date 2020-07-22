@@ -19,6 +19,7 @@ const DialogForm = ({
     hideActions,
     backAction,
     skipAction,
+    continueNext
 }) => {
     const classes = useStyles();
     return (
@@ -44,6 +45,13 @@ const DialogForm = ({
                             skipAction && (
                                 <IconButton onClick={applyForm} aria-label="delete" className = {classes.skipText}>
                                     Skip
+                                </IconButton>
+                            )
+                        }
+                        {
+                            continueNext && (
+                                <IconButton onClick={applyForm} aria-label="delete" className = {classes.skipText}>
+                                    Continue
                                 </IconButton>
                             )
                         }

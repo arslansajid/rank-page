@@ -17,7 +17,7 @@ const SelectCategories = props => {
         <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
 
         <Grid container spacing={2} className = 'space-4'>
-          {[...Array(4)].map((category, index) => {
+          {[...Array(7)].map((category, index) => {
             return (
                 <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
                     <CategoryCard

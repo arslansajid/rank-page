@@ -7,7 +7,7 @@ import { reducer as formReducer } from 'redux-form'
 export default (history) => combineReducers({
   user,
   signIn,
-  form: formReducer,
-  router: connectRouter(history),
+  // form: formReducer,
+  // router: connectRouter(history),
 });
 

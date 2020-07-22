@@ -16,6 +16,8 @@ const getRegions = country => {
     });
 };
 
+
+
 function CountryRegionMUISelectors(props) {
     const {
         id,
@@ -33,7 +35,10 @@ function CountryRegionMUISelectors(props) {
     } = props;
     const classes = useStyles();
 
+  
+
     return (
+        
         <>
             {!!label && label.length && (
                 <div
@@ -56,7 +61,7 @@ function CountryRegionMUISelectors(props) {
                         helperText={helperText}
                         placeholder={placeholder}
                         className={classes.greyInput}
-                        onChange = {() => console.log('onchange function called country select')}
+                        
                     >
                         {CountryRegionData.map((option, index) => (
                             <MenuItem key={option[0]} value={option}>

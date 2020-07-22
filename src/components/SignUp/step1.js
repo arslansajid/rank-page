@@ -55,7 +55,7 @@ const SignUp = props => {
       setPasswordError(true)
       setMessage('Password does not match')
     }
-    else if (data.password.length < 6) {
+    else if (data.password.length < 7) {
       setPasswordError(true)
       setMessage('Password should be greater than 6 characters')
     }

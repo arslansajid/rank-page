@@ -4,14 +4,50 @@ import { Button, Typography, Grid } from '@material-ui/core';
 import Colors from '../../../static/_colors';
 import TextField from '../../Common/TextField';
 import PostCard from "../../PostCard";
+import ListTile  from './listTile';
+import Avatar from '@material-ui/core/Avatar';
+import Divider from '@material-ui/core/Divider';
 
+
+
+const data = [
+  {name : 'Zeeshan Sarwar'},
+  {name : 'Arslan Sajid'},
+  // {name : 'Leonardo DiCaprio'},
+  // {name : 'Johnny Depp'},
+]
 
 const CreateList = () => {
     const classes = useStyles();
 
     return (
         <>
-          <Typography>Hello</Typography>
+        <div>
+          {data && data.length > 0 ?  data.map((item , index) => {
+            return(
+              <ListTile name = {item.name} number = {index}/>
+            )
+          })
+          : null }
+          <div className = {classes.optionsMain}>
+            <Grid container alignItems="center" justify="space-between">
+                {[...Array(3)].map((item, index) => {return(
+                <Grid className={classes.row} item xs = {12}>
+                  <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                  <Typography className={classes.text}>Zeeshan Sarwar</Typography>
+                </Grid>
+                )})}
+                <Grid item xs = {12} className={classes.row}>
+                  <img src = {require('../../../assets/icons/plus-circle-black.png')}/>
+                  <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
+                </Grid>
+            </Grid>
+          </div>
+
+
+        </div>
+
+
 
         </>
     )
@@ -21,7 +57,32 @@ const CreateList = () => {
 const useStyles = makeStyles((theme) => ({
     container : {
 
-    }
+    },
+    optionsMain : {
+      // border: '1px solid #ddd',
+      border: '1px solid rgba(38, 38, 38, 0.12)',
+      boxSizing: 'border-box',
+      boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
+      borderRadius : 10,
+      padding: '0.4em',
+    },
+    row: {
+      display: "flex",
+      alignItems: 'center',
+      padding : '10px 5px',
+      borderBottom: '1px solid #ddd',
+  },
+    avatar: {
+      marginRight: 10,
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+  },
+    text: {
+      fontSize: 18,
+  },
+  marginL : {
+    marginLeft: theme.spacing(1),
+  }
 })
 )
 

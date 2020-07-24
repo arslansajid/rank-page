@@ -11,7 +11,7 @@ import CreateListStep3 from "./createListStep3";
 
 
 const Lists = () => {
-    const [showCreateList , setShowCreateList] = useState(false)
+    const [showCreateList , setShowCreateList] = useState(true)
     const [showCreateListStep2 , setShowCreateListStep2] = useState(true)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(true)
     const classes = useStyles();
@@ -55,7 +55,7 @@ const Lists = () => {
         )
             } */}
 
-            {showCreateListStep3 && (
+            {/* {showCreateListStep3 && (
             <Dialog
                 title={"Create List"}
                 open={showCreateListStep3}
@@ -68,7 +68,7 @@ const Lists = () => {
                 hideActions={true}
             />
         )
-            }
+            } */}
         </>
     )
 

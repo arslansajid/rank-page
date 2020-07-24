@@ -33,7 +33,7 @@ const ListTile = ({ name, type, number }) => {
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                       <Typography className={classes.text}>{name}</Typography>
                 </Grid>
-                <DeleteIcon fontSize="large"/>
+                <DeleteIcon fontSize="medium"/>
                 </Grid>
             </Grid>
         </Grid>

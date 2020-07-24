@@ -1,9 +1,6 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Grid } from '@material-ui/core';
-import Colors from '../../../static/_colors';
-import TextField from '../../Common/TextField';
-import PostCard from "../../PostCard";
 import ListTile  from './listTile';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
@@ -59,17 +56,15 @@ const useStyles = makeStyles((theme) => ({
 
     },
     optionsMain : {
-      // border: '1px solid #ddd',
       border: '1px solid rgba(38, 38, 38, 0.12)',
       boxSizing: 'border-box',
       boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
       borderRadius : 10,
-      padding: '0.4em',
     },
     row: {
       display: "flex",
       alignItems: 'center',
-      padding : '10px 5px',
+      padding : '10px 15px',
       borderBottom: '1px solid #ddd',
   },
     avatar: {

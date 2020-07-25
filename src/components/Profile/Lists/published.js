@@ -37,8 +37,8 @@ const Published = (props) => {
           className = {classes.button}
         >
           <Typography className={classes.submitButtonText}>
-            Continue
-        </Typography>
+            Create new list
+          </Typography>
         </Button>
         </Grid>
         <Grid item xs = {6} className={classes.buttonMain}>

@@ -12,11 +12,13 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import CommentIcon from '@material-ui/icons/ChatBubbleOutline';
 import ShareIcon from '@material-ui/icons/Share';
 import DragandDrop from '../DragandDrop';
+import CommentSection from '../CommentSection';
 import { connect } from "react-redux"
 
 const PostCard = (props) => {
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
+    const [showComments, setShowComments] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -80,10 +82,15 @@ const PostCard = (props) => {
                 <CardActions>
                     <Grid container justify="space-between">
                         <Button className={classes.weight} startIcon={<LikeIcon />}>Like</Button>
-                        <Button className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
+                        <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
                         <Button className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>
                 </CardActions>
+                {
+                showComments && (
+                    <CommentSection />
+                )
+            }
             </Card>
         </>
     )

@@ -12,13 +12,14 @@ const style = {
 }
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'movies', label: 'Movies' }
 ]
 
 const CreateListStep3 = (props) => {
     const classes = useStyles();
+    const {continueNext } = props;
     const { errors, handleSubmit, control } = useForm();
     const [activeTabShare , setActiveTabShare] = useState(1);
     const [activeTabRearangement , setActiveTabRearangement] = useState(1);
@@ -85,6 +86,13 @@ const CreateListStep3 = (props) => {
               </Button>
             </div>
           </div>
+          
+          <Button
+            onClick={continueNext}
+            className = {classes.buttonPosition}
+          >
+            <Typography> Continue </Typography>
+          </Button>
             
           </div>
     </div>
@@ -113,6 +121,12 @@ const useStyles = makeStyles((theme) => ({
 			"&:hover": {
 				background: Colors.brandColor,
 			}
+    },
+    buttonPosition : {
+      position : 'absolute',
+      top : 13,
+      right : 13,
+
     },
     label : {
       color: Colors.black,

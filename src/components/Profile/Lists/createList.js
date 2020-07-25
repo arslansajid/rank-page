@@ -14,8 +14,10 @@ const data = [
   // {name : 'Johnny Depp'},
 ]
 
-const CreateList = () => {
+const CreateList = (props) => {
+    const { createNew } = props;
     const classes = useStyles();
+
 
     return (
         <>
@@ -34,7 +36,7 @@ const CreateList = () => {
                   <Typography className={classes.text}>Zeeshan Sarwar</Typography>
                 </Grid>
                 )})}
-                <Grid item xs = {12} className={classes.row}>
+                <Grid item xs = {12} className={classes.row} onClick={createNew}>
                   <img src = {require('../../../assets/icons/plus-circle-black.png')}/>
                   <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
                 </Grid>

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Typography, Grid, colors  , TextField} from "@material-ui/core";
+import React , {useState , useEffect} from 'react'
+import { Typography, Grid, colors  , TextField , Button } from "@material-ui/core";
 import InputLabel from '@material-ui/core/InputLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
@@ -11,34 +11,75 @@ const style = {
   
 }
 
+
+
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
+  { value: 'entertainment', label: 'Entertainment' },
+  { value: 'sports', label: 'Sports' },
+  { value: 'movies', label: 'Movies' }
 ]
 
 const CreateListStep2 = (props) => {
     const classes = useStyles();
-    const { errors, handleSubmit, control } = useForm();
+    // const { errors, handleSubmit, control } = useForm();
+    const {continueNext} = props;
+    const [ title , setTitle ] = useState(null);
+    const [ titleError , setTitleError ] = useState(false);
+    const [ categories , setCategories ] = useState(null);
+    const [ categoriesError , setCategoriesError ] = useState(false);
+    const [ description , setDescription ] = useState('');
+    const [multiValue , setMultiValue ] = useState(null);
+ 
+    const onSubmit = async (data) => {  
+      console.log('handle submit called')
+    }
+    const onContinue = () => {
+      if(title && categories){
+        continueNext()
+        console.log('bhaiaya all is well')
+      }
+      else if(!title){
+        setTitleError(true)
+      }
+      else if (!categories){
+        setCategoriesError(true)
+      }
+      else{
+        console.log('something went wrong')
+      }
+    }
+    const handleCategoryChange = (value) => {
+      let categortyList = [];
+      value && value.length && value.map((item) => {
+        categortyList.push(item.value)
+      })
+      setCategories(categortyList)
+    }
+    // const customStyles = {
+    //   control: () => ({
+    //     borderColor : categoriesError ? '#ff4148' : 'hsl(0,0%,80%)' 
+    //   })
+    // }
+
 
   return (
     <div className={classes.container}>
       <Typography className='space-4'>Please add the details of the list</Typography>
-        {/* <Grid container> */}
           <div className = 'space-4'>
             <InputLabel className ={`${classes.label} space-2`}>Title*</InputLabel> 
             <TextField
                 type="text"
                 name="title"
-                rules={{ required: 'This field is required' }}
-                control={control}
-                error={errors.title ? true : false}
                 placeholder="Enter title"
                 defaultValue={''}
                 fullWidth
-                className="text-field space-4"
+                // className="text-field space-4"
                 margin='dense'
-				        variant='outlined'
+                variant='outlined'
+                onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
+                className={'text-field space-4'}
+                // className={classes.error}
+                error = {titleError ? 'Title is required' : ''}
               />
             <Divider/>
             </div>
@@ -51,7 +92,14 @@ const CreateListStep2 = (props) => {
                 options={options}
                 className='space-4'
                 placeholder = "Search Category"
+                onChange={handleCategoryChange}
+                // className={`${categoriesError ? classes.error : ''}`}
+                // styles={ customStyles }
+                // error = {titleError ? 'Title is required' : ''}
+                // errorText={titleError ? 'Title is required' : ''}
+                
               />
+              {categoriesError && <Typography className={classes.error}>Please fill in categories first</Typography>}
               <Divider/>
             </div>
             <div className = 'space-4'>
@@ -61,11 +109,18 @@ const CreateListStep2 = (props) => {
                 margin='dense'
                 variant='outlined'
                 multiline={true}
-                        rows={3}
+                rows={3}
                 fullWidth
-                value={''}
+                // value={''}
+                onChange={(e)=> {setDescription(e.target.value)}}
               />
               </div>
+              <Button
+                onClick={onContinue}
+                className = {classes.buttonPosition}
+              >
+                <Typography> Continue </Typography>
+              </Button>
     </div>
   )
 }
@@ -79,6 +134,17 @@ const useStyles = makeStyles((theme) => ({
     },
     label : {
       color : Colors.black,
+    },
+    buttonPosition : {
+      position : 'absolute',
+      top : 13,
+      right : 13,
+
+    },
+    error : {
+      color : Colors.red,
+      textAlign: 'center',
+      margin : '10px 0px'
     }
 })
 )

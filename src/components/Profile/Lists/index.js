@@ -12,10 +12,10 @@ import Published from "./published";
 
 
 const Lists = () => {
-    const [showCreateList , setShowCreateList] = useState(false)
+    const [showCreateList , setShowCreateList] = useState(true)
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
-    const [showPublished, setShowPublished] = useState(true)
+    const [showPublished, setShowPublished] = useState(false)
     const classes = useStyles();
 
     return (
@@ -33,11 +33,11 @@ const Lists = () => {
                 title={"Create List"}
                 open={showCreateList}
                 message={
-                    <CreateList/>
+                    <CreateList createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}/>
                 }
-                applyForm={() => {setShowCreateList(false) ; setShowCreateListStep2(true)}}
-                // cancelForm={() => setShowCreateList(false)}
-                continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
+                applyForm={() => setShowCreateList(false)}
+                cancelForm={() => setShowCreateList(false)}
+                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
                 hideActions={true}
             />
         )
@@ -47,11 +47,13 @@ const Lists = () => {
                 title={"Create List"}
                 open={showCreateListStep2}
                 message={
-                    <CreateListStep2/>
+                    <CreateListStep2 continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
                 }
-                applyForm={() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
+                applyForm={() => {setShowCreateList(true) ; setShowCreateListStep2(false) }}
                 // cancelForm={() => setShowCreateListStep2(false)}
-                continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep3(true) }}
+                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep3(true) }}
+
+                backAction={() => {setShowCreateList(true) ; setShowCreateListStep2(false) }}
                 hideActions={true}
             />
         )
@@ -62,11 +64,12 @@ const Lists = () => {
                 title={"Create List"}
                 open={showCreateListStep3}
                 message={
-                    <CreateListStep3/>
+                    <CreateListStep3 continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}/>
                 }
-                applyForm={() => {setShowCreateListStep3(false) ; setShowPublished(true) }}
+                applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
                 // cancelForm={() => setShowCreateListStep3(false)}
-                continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}
+                // continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}
+                backAction = {() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
                 hideActions={true}
             />
         )
@@ -78,9 +81,9 @@ const Lists = () => {
                 message={
                     <Published/>
                 }
-                applyForm={() => setShowCreateListStep3(false)}
-                // cancelForm={() => setShowCreateListStep3(false)}
-                continueNext = {() => setShowCreateList(false)}
+                applyForm={() => setShowPublished(false)}
+                cancelForm={() => setShowPublished(false)}
+                // continueNext = {() => setShowCreateList(false)}
                 hideActions={true}
             />
         )

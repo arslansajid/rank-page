@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import axios from "axios";
+import Cookie from "js-cookie";
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { checkIfLoggedIn } from "./actions";
@@ -13,7 +15,10 @@ const AppContainer = (props) => {
     useEffect(() => {
         checkIfLoggedIn()
         .then((res) => {
-            console.log("res ###", res.data.data.user)
+            // console.log("res ###", res.data.data.user)
+            const token = Cookie.get('rankpage_access_token')
+            // console.log("token ###", token)
+            axios.defaults.headers.common['Authorization'] = `${token}`;
             props.dispatch(userLogin(res.data.data.user));
             setIsLoading(false);
         })

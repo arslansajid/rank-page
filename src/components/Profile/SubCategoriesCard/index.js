@@ -7,23 +7,20 @@ import { Grid } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/ExpandMore';
 import PoolIcon from '@material-ui/icons/Pool';
 
-const CategoryCard = (props) => {
-  const { isSelected , category , showSubCategory } = props;
+const SubCategoryCard = (props) => {
+  const { isSelected , subCategory } = props;
   const classes = useStyles();
-  console.log('selected' , isSelected)
 
   return (
     <Card className={isSelected ? classes.root : classes.rootFade} variant="outlined">
-      <CardContent>
+      <CardContent className={classes.content}>
         <Grid className={classes.verticalCenter}>
-          <PoolIcon fontSize={"large"} />
-          <Typography>{category.name}</Typography>
-        </Grid>
+          <img src = {require('../../../assets/icons/categories/basketball.svg')} style = {{ width: '100%'}}/>
+         </Grid>
       </CardContent>
-      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer} onClick={()=> showSubCategory(category.sub_categories)}>
-        <Typography>Pro</Typography>
-        <MoreIcon className={classes.moreIcon} />
-        <Typography>{category.count} Lists</Typography>
+      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer}>
+        <Typography>Noivce</Typography>
+        <Typography>{subCategory.count} Lists</Typography>
       </Grid>
     </Card>
   );
@@ -70,6 +67,9 @@ const useStyles = makeStyles(theme => ({
       justifyContent: "center",
       minHeight: '5em',
     },
+    content : {
+      padding : '0px',
+    },
   }));
 
-export default CategoryCard;
+export default SubCategoryCard;

@@ -1,24 +1,110 @@
-import React from "react";
+import React , {useState , useEffect} from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryCard from "../CategoryCard";
+import SubCategoryCard from '../SubCategoriesCard'
+import {getCategoriesWithSubCategories} from './actions'
+
+const Categories = [ 
+{
+    name : 'Sports',
+    count : 10,
+    subcategories : [{name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Basket Ball' , imageUrl : '' , count : 10} , {name : 'Foot Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10}],
+}, 
+{
+    name : 'Art',
+    count : 20,
+    subcategories : [{name : 'Music' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10}],
+}, 
+{
+    name : 'Photography',
+    count : 15,
+    subcategories : [{name : 'EventShoots' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10}],
+}, 
+{
+    name : 'Fitnes',
+    count : 30,
+    subcategories : [{name : 'Gym' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10} , {name : 'Volley Ball' , imageUrl : '' , count : 10}],
+}, 
+
+]
 
 const FooterLinks = () => {
     const classes = useStyles();
+    const [isLoading, setIsLoading] = useState()
+    const [categories , setCategories] = useState()
+    const [subCategories , setSubCategories] = useState(null)
+
+    useEffect(() =>{
+        setIsLoading(true);
+        getCategoriesWithSubCategories()
+        .then((res) => {
+            setIsLoading(false);
+            setCategories(res.data.data.all_categories)
+        })
+        .catch((err) =>{ 
+            setIsLoading(false);
+            console.log(err)
+        })
+    } , [])
+
+    const handleShowSubCategory = (value) => {
+        console.log('it worked' , value);
+        setSubCategories(value)
+    }
 
     return (
         <>
-            <Grid container spacing={2}>
-                {[...Array(5)].map((category, index) => {
+            <Grid container spacing={2} className='space-4'>
+                {categories && categories.length > 0 ? categories.map((category, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <CategoryCard
                                 isSelected={true}
+                                category = {category}
+                                showSubCategory = {(value) => handleShowSubCategory(value)}
+                            />
+                        </Grid>
+                    )
+                })
+                : 
+            (isLoading ? 
+            <Grid container spacing={2} className={classes.row}>
+                <Typography>..loading</Typography>
+            </Grid>
+             :
+            <Grid container spacing={2} className={classes.subCategoryMain}>
+                <Typography className={classes.center}>No sub category availible </Typography>
+            </Grid>
+            )
+            }
+            </Grid>
+            {   subCategories && subCategories.length > 0 ?
+                <Grid container spacing={2} className={classes.subCategoryMain}>
+                {subCategories.map((subCategory, index) => {
+                    return (
+                        <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
+                            <SubCategoryCard
+                                isSelected={true}
+                                subCategory = {subCategory}
+                                // category = {category}
                             />
                         </Grid>
                     )
                 })}
-            </Grid>
+            </Grid> :
+            // (subCategories && isLoading ? 
+            // <Grid container spacing={2} className={classes.center}>
+            //     <Typography>..loading</Typography>
+            // </Grid>
+            //  :
+            // <Grid container spacing={2} className={classes.subCategoryMain}>
+            //     <Typography className={classes.center}>No sub category availible </Typography>
+            // </Grid>
+            // )
+            null
+            }
+
             <Grid className={classes.moreText}>
                 <Typography variant="h5" gutterBottom>More Lists!</Typography>
                 <Typography variant="body1" gutterBottom>Create Lists, Challenges and share your opnion on existing lists to add more categories</Typography>
@@ -32,7 +118,24 @@ const useStyles = makeStyles((theme) => ({
     moreText: {
         margin: theme.spacing(6, 0, 6, 0),
         textAlign: 'center'
-    }
+    },
+    subCategoryMain : {
+        border : '1px solid rgba(38, 38, 38, 0.12)',
+        padding: '1rem',
+        borderRadius: '10px',
+    },
+    center : {
+        textAlign : 'center',
+    },
+    row : {
+        display : 'flex',
+        textAlign : 'center',
+        justifyContent: 'middle',
+        padding : '2rem',
+        fontSize : '1rem',
+        fontWeight : '600',
+        
+    },
 })
 )
 

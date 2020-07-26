@@ -17,7 +17,7 @@ const AppContainer = (props) => {
         .then((res) => {
             // console.log("res ###", res.data.data.user)
             const token = Cookie.get('rankpage_access_token')
-            // console.log("token ###", token)
+            console.log("token ###", token)
             axios.defaults.headers.common['Authorization'] = `${token}`;
             props.dispatch(userLogin(res.data.data.user));
             setIsLoading(false);

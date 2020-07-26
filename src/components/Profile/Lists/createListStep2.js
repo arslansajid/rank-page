@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Colors from '../../../static/_colors';
 import Divider from '@material-ui/core/Divider';
 import Select from 'react-select'
+import {PostListItem} from './actions'
 
 const style = {
   
@@ -35,7 +36,16 @@ const CreateListStep2 = (props) => {
     }
     const onContinue = () => {
       if(title && categories){
-        continueNext()
+        let list_item = {};
+        list_item.title = title;
+        list_item.categories = categories
+        PostListItem(list_item)
+        .then((res)=> {
+          console.log('resuest sumbitted succesfully' , res.data)
+          continueNext()
+        })
+        .catch((err)=> { console.log(err , 'error here')})
+        
         console.log('bhaiaya all is well')
       }
       else if(!title){

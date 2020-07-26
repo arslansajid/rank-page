@@ -1,9 +1,10 @@
-import React from "react";
+import React , {useState , useEffect}from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Grid } from '@material-ui/core';
 import ListTile  from './listTile';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import {GetListItems }from './actions'
 
 
 
@@ -14,9 +15,18 @@ const data = [
   // {name : 'Johnny Depp'},
 ]
 
+
+
 const CreateList = (props) => {
     const { createNew } = props;
     const classes = useStyles();
+
+    useEffect(() =>{
+      GetListItems()
+      .then(res => { console.log('list data', res.data)})
+      .catch((err) => { console.log('errro api ', err)})
+
+    })
 
 
     return (

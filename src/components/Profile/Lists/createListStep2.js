@@ -55,11 +55,29 @@ const CreateListStep2 = (props) => {
       })
       setCategories(categortyList)
     }
-    // const customStyles = {
-    //   control: () => ({
-    //     borderColor : categoriesError ? '#ff4148' : 'hsl(0,0%,80%)' 
-    //   })
-    // }
+
+    const colourStyles = {
+      control: styles => ({ ...styles, backgroundColor: 'white' }),
+      multiValue: (styles) => {
+        return {
+          ...styles,
+          backgroundColor: Colors.brandColor,
+          color: Colors.white,
+        };
+      },
+      multiValueLabel: (styles) => ({
+        ...styles,
+        color: Colors.white,
+      }),
+      multiValueRemove: (styles) => ({
+        ...styles,
+        color: Colors.white,
+        ':hover': {
+          backgroundColor: Colors.brandColor,
+          color: 'white',
+        },
+      }),
+    };
 
 
   return (
@@ -93,10 +111,7 @@ const CreateListStep2 = (props) => {
                 className='space-4'
                 placeholder = "Search Category"
                 onChange={handleCategoryChange}
-                // className={`${categoriesError ? classes.error : ''}`}
-                // styles={ customStyles }
-                // error = {titleError ? 'Title is required' : ''}
-                // errorText={titleError ? 'Title is required' : ''}
+                styles={colourStyles}
                 
               />
               {categoriesError && <Typography className={classes.error}>Please fill in categories first</Typography>}

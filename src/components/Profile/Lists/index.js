@@ -11,7 +11,7 @@ import Published from "./published";
 
 
 
-const Lists = () => {
+const Lists = (props) => {
     const [showCreateList , setShowCreateList] = useState(true)
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)

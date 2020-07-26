@@ -24,6 +24,29 @@ const CreateListStep3 = (props) => {
     const [activeTabShare , setActiveTabShare] = useState(1);
     const [activeTabRearangement , setActiveTabRearangement] = useState(1);
     const [activeTabDisplayImages , setActiveTabDisplayImages] = useState(1);
+
+    const colourStyles = {
+      control: styles => ({ ...styles, backgroundColor: 'white' }),
+      multiValue: (styles) => {
+        return {
+          ...styles,
+          backgroundColor: Colors.brandColor,
+          color: Colors.white,
+        };
+      },
+      multiValueLabel: (styles) => ({
+        ...styles,
+        color: Colors.white,
+      }),
+      multiValueRemove: (styles) => ({
+        ...styles,
+        color: Colors.white,
+        ':hover': {
+          backgroundColor: Colors.brandColor,
+          color: 'white',
+        },
+      }),
+    };
     
 
   return (
@@ -51,6 +74,7 @@ const CreateListStep3 = (props) => {
             options={options}
             className='space-4'
             placeholder = "Search Category"
+            styles={colourStyles}
           />
           <Divider className='space-4'/>
 

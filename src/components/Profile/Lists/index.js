@@ -33,7 +33,10 @@ const Lists = (props) => {
                 title={"Create List"}
                 open={showCreateList}
                 message={
-                    <CreateList createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}/>
+                    <CreateList 
+                    createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
+                    // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
+                    />
                 }
                 applyForm={() => setShowCreateList(false)}
                 cancelForm={() => setShowCreateList(false)}

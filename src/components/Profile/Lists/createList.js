@@ -34,14 +34,14 @@ const CreateList = (props) => {
         <div>
           {data && data.length > 0 ?  data.map((item , index) => {
             return(
-              <ListTile name = {item.name} number = {index}/>
+              <ListTile key={index} name = {item.name} number = {index}/>
             )
           })
           : null }
           <div className = {classes.optionsMain}>
             <Grid container alignItems="center" justify="space-between">
                 {[...Array(3)].map((item, index) => {return(
-                <Grid className={classes.row} item xs = {12}>
+                <Grid key={index} className={classes.row} item xs = {12}>
                   <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                   <Typography className={classes.text}>Zeeshan Sarwar</Typography>
                 </Grid>

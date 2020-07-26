@@ -33,7 +33,7 @@ const ListTile = ({ name, type, number }) => {
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                       <Typography className={classes.text}>{name}</Typography>
                 </Grid>
-                <DeleteIcon fontSize="medium"/>
+                <DeleteIcon fontSize="default" />
                 </Grid>
             </Grid>
         </Grid>
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     container: {
         // marginRight: '1rem',
         marginBottom: '1rem',
-        cursor: 'move',
+        cursor: 'pointer',
 
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',

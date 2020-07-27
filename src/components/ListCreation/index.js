@@ -68,7 +68,12 @@ const Lists = (props) => {
                 title={"Create List"}
                 open={showCreateListStep3}
                 message={
-                    <CreateListStep3 continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}/>
+                    <CreateListStep3 
+                    listItems = {listItems}
+                    getListData = {(value) => {setListItems(value)}}
+                    continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true)}}
+                    publish = {() => {setShowCreateListStep3(false) ; setShowPublished(true)}}
+                    />
                 }
                 applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
                 // cancelForm={() => setShowCreateListStep3(false)}
@@ -87,7 +92,7 @@ const Lists = (props) => {
                 }
                 applyForm={() => setShowPublished(false)}
                 cancelForm={() => setShowPublished(false)}
-                // continueNext = {() => setShowCreateList(false)}
+                // continueNext = {() => {setShowPublished(false) ;  }}
                 hideActions={true}
             />
         )

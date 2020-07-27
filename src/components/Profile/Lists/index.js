@@ -30,7 +30,7 @@ const Lists = (props) => {
                     </Grid>
                 )
             })}
-        {
+        {/* {
             showCreateList && (
             <Dialog
                 title={"Create List"}
@@ -100,7 +100,7 @@ const Lists = (props) => {
                 hideActions={true}
             />
         )
-            }
+            } */}
         </>
     )
 

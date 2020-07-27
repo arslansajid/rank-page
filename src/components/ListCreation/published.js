@@ -19,7 +19,6 @@ const Published = (props) => {
           <img src = {require('../../assets/icons/checked 1.png')}  className='space-4'/>
           <Typography className={classes.label}>Your List Published!</Typography>
         </Grid>
-        <Divider/>
         <Grid item xs = {12} className={`${classes.textCenter} space-4`}>
           <Typography className={`${classes.label} space-4`}>Share to other social networks</Typography>
           <img src = {require('../../assets/icons/socialMedia/facebook1.svg')} className = {classes.marginR}/>
@@ -27,7 +26,6 @@ const Published = (props) => {
           <img src = {require('../../assets/icons/socialMedia/instagram1.svg')} className = {classes.marginR}/>
           <img src = {require('../../assets/icons/socialMedia/email.svg')} className = {classes.marginR}/>
         </Grid>
-        <Divider/>
 
         <Grid item xs = {6} className={classes.textCenter}>
         <Button

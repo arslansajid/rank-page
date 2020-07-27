@@ -16,7 +16,8 @@ const Lists = (props) => {
     // const [showCreateList , setShowCreateList] = useState(true)
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
-    const [showPublished, setShowPublished] = useState(false)
+    const [showPublished, setShowPublished] = useState(false);
+    const [ listItems , setListItems] = useState(null)
     const classes = useStyles();
 
     return (
@@ -28,7 +29,8 @@ const Lists = (props) => {
                 open={listCreateDialog}
                 message={
                     <CreateList 
-                    createNew = {() => { dispatch(hideListDialog()) ; setShowCreateListStep2(true)}}
+                    continueNext = {() => { dispatch(hideListDialog()) ; setShowCreateListStep2(true)}}
+                    getData = {(value) =>  setListItems(value)}
                     // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
                     />
                 }
@@ -41,18 +43,21 @@ const Lists = (props) => {
             />
         )
             }
-             {showCreateListStep2 && (
+        {showCreateListStep2 && (
             <Dialog
                 title={"Create List"}
                 open={showCreateListStep2}
                 message={
-                    <CreateListStep2 continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
+                    <CreateListStep2 
+                    listItems = {listItems}
+                    getListData = {(value) => {setListItems(value)}}
+                    continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
                 }
-                applyForm={() => { dispatch(hideListDialog()) ; setShowCreateListStep2(false) }}
+                applyForm={() => {dispatch(showListDialog()) ; setShowCreateListStep2(false) }}
                 // cancelForm={() => setShowCreateListStep2(false)}
                 // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep3(true) }}
 
-                backAction={() => {dispatch(showListDialog())  ; setShowCreateListStep2(false) }}
+                backAction={() => {dispatch(showListDialog()) ; setShowCreateListStep2(false) }}
                 hideActions={true}
             />
         )

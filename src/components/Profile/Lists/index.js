@@ -16,7 +16,10 @@ const Lists = (props) => {
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
     const [showPublished, setShowPublished] = useState(false)
+    const [ listItems , setListItems] = useState(null)
     const classes = useStyles();
+
+    console.log('list items data here' , listItems)
 
     return (
         <>
@@ -34,7 +37,9 @@ const Lists = (props) => {
                 open={showCreateList}
                 message={
                     <CreateList 
-                    createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
+                    // createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
+                    continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
+                    getData = {(value) =>  setListItems(value)}
                     // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
                     />
                 }
@@ -50,7 +55,10 @@ const Lists = (props) => {
                 title={"Create List"}
                 open={showCreateListStep2}
                 message={
-                    <CreateListStep2 continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
+                    <CreateListStep2 
+                    listItems = {listItems}
+                    getListData = {(value) => {setListItems(value)}}
+                    continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
                 }
                 applyForm={() => {setShowCreateList(true) ; setShowCreateListStep2(false) }}
                 // cancelForm={() => setShowCreateListStep2(false)}
@@ -67,7 +75,9 @@ const Lists = (props) => {
                 title={"Create List"}
                 open={showCreateListStep3}
                 message={
-                    <CreateListStep3 continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}/>
+                    <CreateListStep3 
+                    listItems = {listItems}
+                    publish = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}/>
                 }
                 applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
                 // cancelForm={() => setShowCreateListStep3(false)}

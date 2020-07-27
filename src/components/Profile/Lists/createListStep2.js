@@ -6,11 +6,9 @@ import { useForm } from 'react-hook-form';
 import Colors from '../../../static/_colors';
 import Divider from '@material-ui/core/Divider';
 import Select from 'react-select'
-import {PostListItem} from './actions'
+import {getAllCategories} from './actions'
 
-const style = {
-  
-}
+
 
 
 
@@ -23,9 +21,10 @@ const options = [
 const CreateListStep2 = (props) => {
     const classes = useStyles();
     // const { errors, handleSubmit, control } = useForm();
-    const {continueNext} = props;
+    const {continueNext , getListData , listItems} = props;
     const [ title , setTitle ] = useState(null);
     const [ titleError , setTitleError ] = useState(false);
+    const [allCategories , setAllCategories ] = useState(null);
     const [ categories , setCategories ] = useState(null);
     const [ categoriesError , setCategoriesError ] = useState(false);
     const [ description , setDescription ] = useState('');
@@ -34,19 +33,31 @@ const CreateListStep2 = (props) => {
     const onSubmit = async (data) => {  
       console.log('handle submit called')
     }
+    console.log('data in second comp' , listItems)
+
+    useEffect(() =>{
+      getAllCategories()
+      .then((res)=>{setAllCategories(res.data.data.all_categories)})
+      .catch((err) => console.log(err , 'categories error'))
+    }, [])
+    console.log(categories)
+
+
     const onContinue = () => {
       if(title && categories){
-        let list_item = {};
+        let list_item = listItems
         list_item.title = title;
-        list_item.categories = categories
-        PostListItem(list_item)
-        .then((res)=> {
-          console.log('resuest sumbitted succesfully' , res.data)
-          continueNext()
-        })
-        .catch((err)=> { console.log(err , 'error here')})
+        list_item.categories = categories;
+        list_item.description = description;
+        continueNext()
+        getListData(list_item)
+        // PostListItem(list_item)
+        // .then((res)=> {
+        //   console.log('resuest sumbitted succesfully' , res.data)
+        //   continueNext()
+        // })
+        // .catch((err)=> { console.log(err , 'error here')})
         
-        console.log('bhaiaya all is well')
       }
       else if(!title){
         setTitleError(true)
@@ -59,11 +70,13 @@ const CreateListStep2 = (props) => {
       }
     }
     const handleCategoryChange = (value) => {
-      let categortyList = [];
+      console.log('handle categories' , value)
+      setCategoriesError(false)
+      let categoryList = [];
       value && value.length && value.map((item) => {
-        categortyList.push(item.value)
+        categoryList.push(item.id)
       })
-      setCategories(categortyList)
+      setCategories(categoryList)
     }
 
     const colourStyles = {
@@ -101,12 +114,10 @@ const CreateListStep2 = (props) => {
                 placeholder="Enter title"
                 defaultValue={''}
                 fullWidth
-                // className="text-field space-4"
                 margin='dense'
                 variant='outlined'
                 onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
                 className={'text-field space-4'}
-                // className={classes.error}
                 error = {titleError ? 'Title is required' : ''}
               />
             <Divider/>
@@ -117,7 +128,10 @@ const CreateListStep2 = (props) => {
               <Select
                 closeMenuOnSelect={false}
                 isMulti
-                options={options}
+                // options={options}
+                options={allCategories ? allCategories : null}
+                getOptionLabel={option => option.name}
+                getOptionValue={option => option.id}
                 className='space-4'
                 placeholder = "Search Category"
                 onChange={handleCategoryChange}
@@ -136,7 +150,6 @@ const CreateListStep2 = (props) => {
                 multiline={true}
                 rows={3}
                 fullWidth
-                // value={''}
                 onChange={(e)=> {setDescription(e.target.value)}}
               />
               </div>

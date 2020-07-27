@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         bottom: 0,
         display: 'none',
+        borderTop: '1px solid rgba(38, 38, 38, 0.12)',
       
         [theme.breakpoints.down('sm')]: {
             display: 'flex',

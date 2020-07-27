@@ -13,3 +13,7 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const SHOW_SIGNIN = 'SHOW_SIGNIN';
 export const HIDE_SIGNIN = 'HIDE_SIGNIN';
 
+///list creation dialog
+export const SHOW_LIST_DIALOG = 'SHOW_LIST_DIALOG';
+export const HIDE_LIST_DIALOG = 'HIDE_LIST_DIALOG';
+

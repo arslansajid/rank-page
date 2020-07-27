@@ -15,12 +15,12 @@ export const Create = [
     {
         name: 'List',
         icon: 'plus',
-        route: '/list'
+        route: null
     },
     {
         name: 'Challenge',
         icon: 'plus',
-        route: '/challenge'
+        route: null
     },
 ]
 

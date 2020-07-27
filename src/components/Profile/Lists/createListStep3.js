@@ -12,18 +12,19 @@ const style = {
 }
 
 const options = [
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'sports', label: 'Sports' },
-  { value: 'movies', label: 'Movies' }
+  { value: '1', label: 'Alizeh shah' },
+  { value: '2', label: 'User 2' },
+  { value: '3', label: 'Test user' }
 ]
 
 const CreateListStep3 = (props) => {
     const classes = useStyles();
-    const {continueNext } = props;
+    const {publish , listItems} = props;
     const { errors, handleSubmit, control } = useForm();
     const [activeTabShare , setActiveTabShare] = useState(1);
     const [activeTabRearangement , setActiveTabRearangement] = useState(1);
     const [activeTabDisplayImages , setActiveTabDisplayImages] = useState(1);
+    const [selectedUser , setSelectedUser] = useState(null);
 
     const colourStyles = {
       control: styles => ({ ...styles, backgroundColor: 'white' }),
@@ -47,6 +48,27 @@ const CreateListStep3 = (props) => {
         },
       }),
     };
+
+    const handlePublish = () => {
+      let params = {...listItems};
+      params.share_type = activeTabShare;
+      params.allow_raarrangement = activeTabRearangement;
+      params.display_images = activeTabDisplayImages;
+      params.user_ids = selectedUser;
+      console.log('published data' , params);
+
+
+      // publish()
+    }
+
+    const handleSelectd = (value) => {
+        let userList = [];
+        value && value.length && value.map((item) => {
+          userList.push(item.value)
+        })
+        setSelectedUser(userList)
+
+    }
     
 
   return (
@@ -73,8 +95,11 @@ const CreateListStep3 = (props) => {
             isMulti
             options={options}
             className='space-4'
-            placeholder = "Search Category"
+            placeholder = "Search Users"
             styles={colourStyles}
+            getOptionLabel={option => option.label}
+            getOptionValue={option => option.value}
+            onChange={handleSelectd}
           />
           <Divider className='space-4'/>
 
@@ -95,7 +120,6 @@ const CreateListStep3 = (props) => {
           </div>
 
           <div className='space-2'>
-            {/* <Typography className='space-2'>Display Page Images</Typography> */}
             <InputLabel className ={`${classes.label} space-2`}>Display Page Images</InputLabel>
             <div className='space-4'>
               <Button className={activeTabDisplayImages === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabDisplayImages(1)}>
@@ -112,10 +136,10 @@ const CreateListStep3 = (props) => {
           </div>
           
           <Button
-            onClick={continueNext}
+            onClick={()=> handlePublish()}
             className = {classes.buttonPosition}
           >
-            <Typography> Continue </Typography>
+            <Typography> Publish </Typography>
           </Button>
             
           </div>

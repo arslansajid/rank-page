@@ -12,21 +12,16 @@ import {GetListItems }from './actions'
 const data = [
   {name : 'Zeeshan Sarwar'},
   {name : 'Arslan Sajid'},
-  // {name : 'Leonardo DiCaprio'},
-  // {name : 'Johnny Depp'},
 ]
 
-const dataOption = [
-  {label : 'zeeshan' , value : 'zeeshan'},
-  {label : 'zeeshan' , value : 'zeeshan'},
-  {label : 'zeeshan' , value : 'zeeshan'},
-  {label : 'zeeshan' , value : 'zeeshan'},
-  {label : 'zeeshan' , value : 'zeeshan'},
-]
-const options = [
-  { value: "England", label: "England", icon: "https://img.icons8.com/color/search/96" },
-  { value: "Germany", label: "Germany", icon: "https://img.icons8.com/color/search/96" }
-];
+
+const customStyles = {
+  control: base => ({
+    ...base,
+    height: 44,
+    minHeight: 42,
+  })
+};
 
 
 const CreateList = (props) => {
@@ -50,7 +45,7 @@ const CreateList = (props) => {
       <Option {...props}>
         <img
           src={'https://img.icons8.com/color/search/96'}
-          style={{ width: 20 , marginRight : 10 , alignItems : 'center' }}
+          style={{ width: 20 , marginRight : 10 , alignItems : 'center', }}
           alt={props.data.title}
         />
         {props.data.title}
@@ -74,7 +69,7 @@ const CreateList = (props) => {
                 <Typography className={classes.text}>{item.title}</Typography>
                 </Grid>
                 )})}
-                <Grid item xs = {12} className={classes.row} onClick={createNew}>
+                <Grid item xs = {12} className={`${classes.row} space-2`} onClick={createNew}>
                   <img src = {require('../../../assets/icons/plus-circle-black.png')}/>
                   <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
                 </Grid>
@@ -86,9 +81,10 @@ const CreateList = (props) => {
               isMulti = {true}
               placeholder = "Enter your new page"
               options={listItems}
-              components={{ Option: IconOption }}
+              components={{ Option: IconOption ,  DropdownIndicator:() => null, IndicatorSeparator:() => null}}
               getOptionLabel={option => option.title}
               getOptionValue={option => option.id}
+              styles={customStyles}
             />
           </div>
           <Button
@@ -135,6 +131,9 @@ const useStyles = makeStyles((theme) => ({
     top : 13,
     right : 13,
 
+  },
+  selectInput : {
+    height: '42px',
   },
 })
 )

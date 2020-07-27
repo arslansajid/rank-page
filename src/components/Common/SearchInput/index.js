@@ -7,10 +7,10 @@ import {Redirect} from "react-router-dom"
 
 const SearchInput = (props) => {
     const classes = useStyles();
-    const { handleSearch, onFocusRoute } = props;
+    const { handleSearch, onFocusRoute, whiteInput } = props;
     return (
         <TextField
-            className={classes.container}
+            className={whiteInput ? classes.whiteInput : classes.container}
             margin='dense'
             variant='outlined'
             placeholder="Search Rankpage ..."
@@ -40,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
             background: Colors.inputBg,
             height: 40,
             // border: '1px solid rgba(38, 38, 38, 0.12)',
+        },
+        whiteInput: {
+            borderRadius: 8,
+            background: Colors.white,
+            height: 40,
         },
         searchIcon: {
             padding: '12px 12px 12px 0px'

@@ -13,6 +13,7 @@ const Notifications = React.lazy(() => import('./containers/Notifications'));
 const Messages = React.lazy(() => import('./containers/Chat'));
 const Settings = React.lazy(() => import('./containers/Settings'));
 const EditProfile = React.lazy(() => import('./containers/EditProfile'));
+const Explore = React.lazy(() => import('./containers/Explore'));
 const PageNotFound = React.lazy(() => import('./containers/PageNotFound'));
 
 const Routes = () => {
@@ -35,7 +36,7 @@ const Routes = () => {
         <Route exact path="/messages" render={() => <Messages />} />
         <Route exact path="/settings" render={() => <Settings />} />
         <Route exact path="/edit-profile" render={() => <EditProfile />} />
-        {/* <Route exact path="/about" render={() => <About />} /> */}
+        <Route exact path="/explore" render={() => <Explore />} />
         <Route exact path='*' render={() => <PageNotFound />} />
       </Switch>
     </Suspense>

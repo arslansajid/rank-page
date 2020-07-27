@@ -33,6 +33,7 @@ const FooterLinks = () => {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState()
     const [categories , setCategories] = useState()
+    const [selectedCategory , setSelectedCategory] = useState(null)
     const [subCategories , setSubCategories] = useState(null)
 
     useEffect(() =>{
@@ -49,7 +50,7 @@ const FooterLinks = () => {
     } , [])
 
     const handleShowSubCategory = (value) => {
-        console.log('it worked' , value);
+        console.log('SubCategory value' , value);
         setSubCategories(value)
     }
 
@@ -60,9 +61,10 @@ const FooterLinks = () => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <CategoryCard
-                                isSelected={true}
+                                isSelected={selectedCategory === null ? true : selectedCategory === category.name ? true :  false}
                                 category = {category}
                                 showSubCategory = {(value) => handleShowSubCategory(value)}
+                                selectedCategoryCallback={(value) => setSelectedCategory(value)}
                             />
                         </Grid>
                     )
@@ -80,14 +82,13 @@ const FooterLinks = () => {
             }
             </Grid>
             {   subCategories && subCategories.length > 0 ?
-                <Grid container spacing={2} className={classes.subCategoryMain}>
+                <Grid container className={classes.subCategoryMain}>
                 {subCategories.map((subCategory, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <SubCategoryCard
                                 isSelected={true}
                                 subCategory = {subCategory}
-                                // category = {category}
                             />
                         </Grid>
                     )
@@ -121,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
     subCategoryMain : {
         border : '1px solid rgba(38, 38, 38, 0.12)',
-        padding: '1rem',
+        padding: 10,
         borderRadius: '10px',
     },
     center : {

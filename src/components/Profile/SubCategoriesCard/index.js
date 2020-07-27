@@ -2,46 +2,29 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
-import MoreIcon from '@material-ui/icons/ExpandMore';
-import PoolIcon from '@material-ui/icons/Pool';
 
 const SubCategoryCard = (props) => {
   const { isSelected , subCategory } = props;
   const classes = useStyles();
 
   return (
-    <Card className={isSelected ? classes.root : classes.rootFade} variant="outlined">
-      <CardContent className={classes.content}>
-        <Grid className={classes.verticalCenter}>
-          <img src = {require('../../../assets/icons/categories/basketball.svg')} style = {{ width: '100%'}}/>
-         </Grid>
-      </CardContent>
-      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer}>
-        <Typography>Noivce</Typography>
-        <Typography>{subCategory.count} Lists</Typography>
-      </Grid>
+    <Card className={classes.root} variant="outlined">
+      <CardMedia
+        className={classes.img}
+        image={require('../../../assets/icons/categories/basketball.svg')}
+      />
     </Card>
   );
 }
 
 const useStyles = makeStyles(theme => ({
     root: {
+      height: 120,
       border: '1px solid rgba(38, 38, 38, 0.12)',
       borderRadius: 8,
-      margin: theme.spacing(1, 0, 0, 0),
-
-      [theme.breakpoints.down('sm')]: {
-        margin: theme.spacing(1, 0, 0, 0),
-      },
-    },
-    rootFade: {
-      opacity: 0.6,
-      filter: 'brightness(0.8)',
-      border: '1px solid rgba(38, 38, 38, 0.12)',
-      borderRadius: 8,
-      margin: theme.spacing(1, 0, 0, 0),
 
       [theme.breakpoints.down('sm')]: {
         margin: theme.spacing(1, 0, 0, 0),
@@ -69,7 +52,13 @@ const useStyles = makeStyles(theme => ({
     },
     content : {
       padding : '0px',
+      height: 110
     },
+    img: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+  },
   }));
 
 export default SubCategoryCard;

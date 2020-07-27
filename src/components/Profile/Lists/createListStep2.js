@@ -6,11 +6,9 @@ import { useForm } from 'react-hook-form';
 import Colors from '../../../static/_colors';
 import Divider from '@material-ui/core/Divider';
 import Select from 'react-select'
-import {PostListItem , getAllCategories} from './actions'
+import {getAllCategories} from './actions'
 
-const style = {
-  
-}
+
 
 
 
@@ -23,7 +21,7 @@ const options = [
 const CreateListStep2 = (props) => {
     const classes = useStyles();
     // const { errors, handleSubmit, control } = useForm();
-    const {continueNext , getListData} = props;
+    const {continueNext , getListData , listItems} = props;
     const [ title , setTitle ] = useState(null);
     const [ titleError , setTitleError ] = useState(false);
     const [allCategories , setAllCategories ] = useState(null);
@@ -35,6 +33,7 @@ const CreateListStep2 = (props) => {
     const onSubmit = async (data) => {  
       console.log('handle submit called')
     }
+    console.log('data in second comp' , listItems)
 
     useEffect(() =>{
       getAllCategories()
@@ -46,7 +45,7 @@ const CreateListStep2 = (props) => {
 
     const onContinue = () => {
       if(title && categories){
-        let list_item = {};
+        let list_item = listItems
         list_item.title = title;
         list_item.categories = categories;
         list_item.description = description;

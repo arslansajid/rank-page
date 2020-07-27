@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import Colors from '../../../static/_colors';
 import Divider from '@material-ui/core/Divider';
-import Select from 'react-select'
+import Select from 'react-select';
+import {PostListItem} from './actions'
 
 const style = {
   
@@ -25,6 +26,8 @@ const CreateListStep3 = (props) => {
     const [activeTabRearangement , setActiveTabRearangement] = useState(1);
     const [activeTabDisplayImages , setActiveTabDisplayImages] = useState(1);
     const [selectedUser , setSelectedUser] = useState(null);
+    const [ userError , setUserError] = useState(false);
+    const [message , setErrorMessage] = useState(null);
 
     const colourStyles = {
       control: styles => ({ ...styles, backgroundColor: 'white' }),
@@ -50,15 +53,36 @@ const CreateListStep3 = (props) => {
     };
 
     const handlePublish = () => {
-      let params = {...listItems};
-      params.share_type = activeTabShare;
-      params.allow_raarrangement = activeTabRearangement;
-      params.display_images = activeTabDisplayImages;
-      params.user_ids = selectedUser;
-      console.log('published data' , params);
+      if(activeTabShare === 2 && (!selectedUser || selectedUser.length < 1)){
+        setUserError(true);
+      }
+      else {
+        setUserError(false);
+        let params = {...listItems};
+        if(params.list_items && params.list_items.length > 0) {
+          let ids = params.list_items.map((item, index) => {return(item.id)})
+          params.list_item_ids  = ids.join();
+        }
+        params.share_type = activeTabShare;
+        params.allow_rearrangement = activeTabRearangement;
+        params.display_images = activeTabDisplayImages;
+        params.user_ids = selectedUser ? selectedUser.join() : null;
+        params.categories = params.categories.join();
 
+        console.log('published data' , params);  
+        PostListItem(params)
+        .then((res)=>{
+          console.log('success' , res.data)
+          if(res.data.success){
+            publish()
+          }
+          else if (!res.data.success){
+            setErrorMessage(res.data.message)
+          }
+        })
+        .catch((err) => { console.log('error in publishing' , err)})
 
-      // publish()
+      }
     }
 
     const handleSelectd = (value) => {
@@ -73,12 +97,13 @@ const CreateListStep3 = (props) => {
 
   return (
     <div className={classes.container}>
+      {/* {message && <Typography>{message}</Typography>} */}
       <Typography className ='space-2' variant="body1">Confirm list settings</Typography>
           <div className ='space-4'>
           <InputLabel className ={`${classes.label} space-2`}>Share to</InputLabel>
 
           <div className='space-4'>
-						<Button className={activeTabShare === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabShare(1)}>
+						<Button className={activeTabShare === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabShare(1) ; setUserError(false)}}>
 							<Typography>
 								Public
 							</Typography>
@@ -101,6 +126,7 @@ const CreateListStep3 = (props) => {
             getOptionValue={option => option.value}
             onChange={handleSelectd}
           />
+          {userError && <Typography className={classes.error}>Select user first</Typography>}
           <Divider className='space-4'/>
 
           <div className='space-2'>
@@ -136,7 +162,7 @@ const CreateListStep3 = (props) => {
           </div>
           
           <Button
-            onClick={()=> handlePublish()}
+            onClick={handlePublish}
             className = {classes.buttonPosition}
           >
             <Typography> Publish </Typography>
@@ -179,6 +205,11 @@ const useStyles = makeStyles((theme) => ({
     label : {
       color: Colors.black,
     },
+    error : {
+      color : Colors.red,
+      textAlign: 'center',
+      margin : '10px 0px'
+    }
 })
 )
 

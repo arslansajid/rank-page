@@ -37,7 +37,9 @@ const Lists = (props) => {
                 open={showCreateList}
                 message={
                     <CreateList 
-                    createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
+                    // createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
+                    continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
+                    getData = {(value) =>  setListItems(value)}
                     // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
                     />
                 }
@@ -54,6 +56,7 @@ const Lists = (props) => {
                 open={showCreateListStep2}
                 message={
                     <CreateListStep2 
+                    listItems = {listItems}
                     getListData = {(value) => {setListItems(value)}}
                     continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
                 }

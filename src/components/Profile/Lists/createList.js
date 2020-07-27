@@ -5,7 +5,7 @@ import ListTile  from './listTile';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Select , { components }  from 'react-select'
-import {GetListItems }from './actions'
+import {GetListItems}from './actions'
 
 
 
@@ -25,18 +25,30 @@ const customStyles = {
 
 
 const CreateList = (props) => {
-    const { createNew } = props;
+    const { createNew  , continueNext , getData} = props;
     const classes = useStyles();
     const [listItems , setListItems] = useState(null)
+    const [selectedList  , setSelectedList] = useState(null)
 
     useEffect(() =>{
       GetListItems()
       .then(res => {setListItems(res.data.data.list_items)})
-      .catch((err) => { console.log('errro api ', err)})
+      .catch((err) => { console.log('error api ', err)})
     } , [])
 
     const handleUpdateList = () => {
-      console.log('so far so good')
+      let listItemsObject = {}
+      listItemsObject.list_items = selectedList
+      getData(listItemsObject)
+      continueNext()
+
+    }
+    const handleSelectd = (value) => {
+      let List = [];
+      value && value.length && value.map((item) => {
+        List.push(item)
+      })
+      setSelectedList(List)
 
     }
 
@@ -61,7 +73,7 @@ const CreateList = (props) => {
             )
           })
           : null }
-          <div className = {classes.optionsMain}>
+          {/* <div className = {classes.optionsMain}>
             <Grid container alignItems="center" justify="space-between">
                 {listItems && listItems.length>0 && listItems.map((item, index) => {return(
                 <Grid key={index} className={classes.row} item xs = {12}>
@@ -74,7 +86,7 @@ const CreateList = (props) => {
                   <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
                 </Grid>
             </Grid>
-          </div>
+          </div> */}
           <div>
              <Select
               closeMenuOnSelect={false}
@@ -85,6 +97,7 @@ const CreateList = (props) => {
               getOptionLabel={option => option.title}
               getOptionValue={option => option.id}
               styles={customStyles}
+              onChange={handleSelectd}
             />
           </div>
           <Button

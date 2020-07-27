@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Select , { components }  from 'react-select'
 import {GetListItems}from './actions'
-
+import { colourStyles } from "../../styles/ReactSelect";
 
 
 const data = [
@@ -99,6 +99,8 @@ const CreateList = (props) => {
               getOptionValue={option => option.id}
               styles={customStyles}
               onChange={handleSelectd}
+              styles={colourStyles}
+              // menuPlacement="top"
             />
           </div>
           <Button

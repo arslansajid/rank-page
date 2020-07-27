@@ -25,7 +25,7 @@ const Explore = () => {
             </Link>
 
             <Grid container justify="space-between">
-                <Grid xs={6}>
+                <Grid item xs={6}>
                     <Link to="trending">
                         <Card variant="outlined" className={`${classes.card} ${classes.left}`}>
                             <LikeIcon fontSize="large" className={classes.icon} />
@@ -33,7 +33,7 @@ const Explore = () => {
                         </Card>
                     </Link>
                 </Grid>
-                <Grid xs={6}>
+                <Grid item xs={6}>
                     <Link to="/recommended">
                         <Card variant="outlined" className={`${classes.card} ${classes.right}`}>
                             <RecommendedIcon fontSize="large" className={classes.icon} />

@@ -86,9 +86,9 @@ const Lists = (props) => {
         {showPublished && (
             <Dialog
                 title={"Published"}
-                open={setShowPublished}
+                open={showPublished}
                 message={
-                    <Published/>
+                    <Published createNewList={() => {dispatch(showListDialog()) ; setShowPublished(false)}} />
                 }
                 applyForm={() => setShowPublished(false)}
                 cancelForm={() => setShowPublished(false)}

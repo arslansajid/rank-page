@@ -7,10 +7,7 @@ import Colors from '../../static/_colors';
 import Divider from '@material-ui/core/Divider';
 import Select from 'react-select'
 import {getAllCategories} from './actions'
-
-
-
-
+import { colourStyles } from "../../styles/ReactSelect";
 
 const options = [
   { value: 'entertainment', label: 'Entertainment' },
@@ -66,29 +63,6 @@ const CreateListStep2 = (props) => {
       setCategories(categoryList)
     }
 
-    const colourStyles = {
-      control: styles => ({ ...styles, backgroundColor: 'white' }),
-      multiValue: (styles) => {
-        return {
-          ...styles,
-          backgroundColor: Colors.brandColor,
-          color: Colors.white,
-        };
-      },
-      multiValueLabel: (styles) => ({
-        ...styles,
-        color: Colors.white,
-      }),
-      multiValueRemove: (styles) => ({
-        ...styles,
-        color: Colors.white,
-        ':hover': {
-          backgroundColor: Colors.brandColor,
-          color: 'white',
-        },
-      }),
-    };
-
     const getSelectedCategories = () => {
         let selectedCategories = []
         categories && categories.length > 0 && categories.map((item , index)=>{
@@ -113,7 +87,6 @@ const CreateListStep2 = (props) => {
                 variant='outlined'
                 onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
                 className={'text-field space-4'}
-                error = {titleError ? 'Title is required' : ''}
               />
             <Divider/>
             </div>

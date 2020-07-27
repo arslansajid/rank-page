@@ -66,7 +66,7 @@ const SidebarCard = (props) => {
                             )
                             } else {
                                 return (
-                                    <ListItem onClick={() => handleDialogs(item.name)} button>
+                                    <ListItem key={index} onClick={() => handleDialogs(item.name)} button>
                                         <ListItemIcon className={classes.sideIcon}>
                                             <img alt={`${item.icon}_icon`} src={require(`../../assets/icons/${item.icon}.png`)} />
                                         </ListItemIcon>

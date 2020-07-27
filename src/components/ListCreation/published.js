@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 
 const Published = (props) => {
     const classes = useStyles();
+    const { createNewList } = props;
     const { errors, handleSubmit, control } = useForm();
     
 
@@ -33,6 +34,7 @@ const Published = (props) => {
           variant="outlined"
           color="primary"
           className = {classes.button}
+          onClick={() => createNewList()}
         >
           <Typography className={classes.submitButtonText}>
             Create new list

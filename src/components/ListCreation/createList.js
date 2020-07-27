@@ -33,7 +33,6 @@ const CreateList = (props) => {
     const [listItems , setListItems] = useState(null)
 
     useEffect(() =>{
-      console.log("##########################################################")
       GetListItems()
       .then(res => {setListItems(res.data.data.list_items)})
       .catch((err) => { console.log('errro api ', err)})

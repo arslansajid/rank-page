@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { checkIfLoggedIn } from "./actions";
 import { userLogin } from "../../actions/LoginActions";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
+import ListCreation from "../../components/ListCreation";
 
 const AppContainer = (props) => {
     const classes = useStyles();
@@ -37,7 +38,9 @@ const AppContainer = (props) => {
             />
         )
     } else {
-        return null;
+        return (
+            <ListCreation />
+        )
     }
     }
     

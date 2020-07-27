@@ -14,10 +14,6 @@ const SidebarCard = (props) => {
     const classes = useStyles();
     const { items, title, showSeeMoreLink, listCreateDialog, dispatch } = props;
 
-    useEffect(() => {
-
-    }, [listCreateDialog])
-
     const handleSignOut = (value) => {
         if (value === "Sign Out") {
             Cookie.remove("rankpage_access_token");
@@ -33,9 +29,6 @@ const SidebarCard = (props) => {
 
     return (
         <>
-        {/* {listCreateDialog && ( */}
-            <ListCreation />
-        {/* )} */}
             <Card className={classes.root} variant="outlined">
                 <Grid container justify="space-between" className={classes.title}>
                     <Typography gutterBottom>
@@ -137,10 +130,4 @@ SidebarCard.defaultProps = {
     showSeeMoreLink: false,
 };
 
-function mapStateToProps(state) {
-    return {
-        listCreateDialog: state.listCreateDialog,
-    };
-}
-
-export default connect(mapStateToProps)(SidebarCard);
+export default connect(null)(SidebarCard);

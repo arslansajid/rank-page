@@ -24,7 +24,7 @@ export const GetListItems = async () => {
   export const PostListItem = async (params) => {
     try {
       const res = await axiosInstance.post(
-        `${Config.API_END_POINT}/create_list` , {params});
+        `${Config.API_END_POINT}/create_list` , params);
       return res;
     } catch (err) {
       throw err.response;

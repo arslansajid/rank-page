@@ -1,3 +1,4 @@
+
 import React , {useState , useEffect}from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, colors  , TextField , Button } from "@material-ui/core";
@@ -66,10 +67,10 @@ const CreateList = (props) => {
 
     return (
         <>
-        <div>
-          {data && data.length > 0 ?  data.map((item , index) => {
+        <div style = {{ minHeight: '10vh'}}>
+          {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
-              <ListTile key={index} name = {item.name} number = {index}/>
+              <ListTile key={index} name = {item.title} number = {index}/>
             )
           })
           : null }

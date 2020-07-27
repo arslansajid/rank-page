@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CategoryCard from "../CategoryCard";
 import SubCategoryCard from '../SubCategoriesCard'
 import {getCategoriesWithSubCategories} from './actions'
+import LoadingSpinner from "../../Common/LoadingSpinner"
 
 const Categories = [ 
 {
@@ -56,8 +57,18 @@ const FooterLinks = () => {
 
     return (
         <>
+        {
+            isLoading && (
+                <LoadingSpinner
+                    loading={isLoading}
+                    text="Fetching Categories..."
+                    size="large"
+                />
+            )
+        }
             <Grid container spacing={2} className='space-4'>
-                {categories && categories.length > 0 ? categories.map((category, index) => {
+                {!!categories && categories.length > 0 && (
+                    categories.map((category, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <CategoryCard
@@ -69,17 +80,7 @@ const FooterLinks = () => {
                         </Grid>
                     )
                 })
-                : 
-            (isLoading ? 
-            <Grid container spacing={2} className={classes.row}>
-                <Typography>..loading</Typography>
-            </Grid>
-             :
-            <Grid container spacing={2} className={classes.subCategoryMain}>
-                <Typography className={classes.center}>No sub category availible </Typography>
-            </Grid>
-            )
-            }
+            )}
             </Grid>
             {   subCategories && subCategories.length > 0 ?
                 <Grid container className={classes.subCategoryMain}>
@@ -94,15 +95,11 @@ const FooterLinks = () => {
                     )
                 })}
             </Grid> :
-            // (subCategories && isLoading ? 
-            // <Grid container spacing={2} className={classes.center}>
-            //     <Typography>..loading</Typography>
-            // </Grid>
-            //  :
-            // <Grid container spacing={2} className={classes.subCategoryMain}>
-            //     <Typography className={classes.center}>No sub category availible </Typography>
-            // </Grid>
-            // )
+            !!subCategories ?
+            <Grid container spacing={2} className={classes.subCategoryMain}>
+                <Typography className={classes.center}>No sub categories availible </Typography>
+            </Grid>
+            :
             null
             }
 

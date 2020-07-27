@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CategoryCard from "../CategoryCard";
 import SubCategoryCard from '../SubCategoriesCard'
 import {getCategoriesWithSubCategories} from './actions'
+import LoadingSpinner from "../../Common/LoadingSpinner"
 
 const Categories = [ 
 {
@@ -33,6 +34,7 @@ const FooterLinks = () => {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState()
     const [categories , setCategories] = useState()
+    const [selectedCategory , setSelectedCategory] = useState(null)
     const [subCategories , setSubCategories] = useState(null)
 
     useEffect(() =>{
@@ -49,59 +51,55 @@ const FooterLinks = () => {
     } , [])
 
     const handleShowSubCategory = (value) => {
-        console.log('it worked' , value);
+        console.log('SubCategory value' , value);
         setSubCategories(value)
     }
 
     return (
         <>
+        {
+            isLoading && (
+                <LoadingSpinner
+                    loading={isLoading}
+                    text="Fetching Categories..."
+                    size="large"
+                />
+            )
+        }
             <Grid container spacing={2} className='space-4'>
-                {categories && categories.length > 0 ? categories.map((category, index) => {
+                {!!categories && categories.length > 0 && (
+                    categories.map((category, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <CategoryCard
-                                isSelected={true}
+                                isSelected={selectedCategory === null ? true : selectedCategory === category.name ? true :  false}
                                 category = {category}
                                 showSubCategory = {(value) => handleShowSubCategory(value)}
+                                selectedCategoryCallback={(value) => setSelectedCategory(value)}
                             />
                         </Grid>
                     )
                 })
-                : 
-            (isLoading ? 
-            <Grid container spacing={2} className={classes.row}>
-                <Typography>..loading</Typography>
-            </Grid>
-             :
-            <Grid container spacing={2} className={classes.subCategoryMain}>
-                <Typography className={classes.center}>No sub category availible </Typography>
-            </Grid>
-            )
-            }
+            )}
             </Grid>
             {   subCategories && subCategories.length > 0 ?
-                <Grid container spacing={2} className={classes.subCategoryMain}>
+                <Grid container className={classes.subCategoryMain}>
                 {subCategories.map((subCategory, index) => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <SubCategoryCard
                                 isSelected={true}
                                 subCategory = {subCategory}
-                                // category = {category}
                             />
                         </Grid>
                     )
                 })}
             </Grid> :
-            // (subCategories && isLoading ? 
-            // <Grid container spacing={2} className={classes.center}>
-            //     <Typography>..loading</Typography>
-            // </Grid>
-            //  :
-            // <Grid container spacing={2} className={classes.subCategoryMain}>
-            //     <Typography className={classes.center}>No sub category availible </Typography>
-            // </Grid>
-            // )
+            !!subCategories ?
+            <Grid container spacing={2} className={classes.subCategoryMain}>
+                <Typography className={classes.center}>No sub categories availible </Typography>
+            </Grid>
+            :
             null
             }
 
@@ -121,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     },
     subCategoryMain : {
         border : '1px solid rgba(38, 38, 38, 0.12)',
-        padding: '1rem',
+        padding: 10,
         borderRadius: '10px',
     },
     center : {

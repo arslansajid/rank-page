@@ -11,9 +11,6 @@ import Select from 'react-select';
 import { PostListItem } from './actions';
 import { colourStyles } from "../../styles/ReactSelect";
 
-const style = {
-
-}
 
 const options = [
   { value: '1', label: 'Alizeh shah' },

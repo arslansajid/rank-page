@@ -9,11 +9,6 @@ import Select from 'react-select'
 import {getAllCategories} from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
 
-const options = [
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'sports', label: 'Sports' },
-  { value: 'movies', label: 'Movies' }
-]
 
 const CreateListStep2 = (props) => {
     const classes = useStyles();

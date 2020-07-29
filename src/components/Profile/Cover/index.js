@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState , useEffect}from "react";
 import { Link } from 'react-router-dom';
 import {Typography, TextField, IconButton, Grid, Paper, Button} from "@material-ui/core";
 import Colors from "../../../static/_colors";
@@ -9,8 +9,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import { connect } from "react-redux"
 
 const ProfileCover = (props) => {
+
     const classes = useStyles();
-    const { user } = props;
+    const { user , info} = props;
+    console.log('user info in profile cover' , info)
     return (
         <>
         <Paper elevation={0} className={classes.coverContainer}>
@@ -36,21 +38,21 @@ const ProfileCover = (props) => {
                 <Grid container justify="space-between">
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Typography className = {classes.introText}>
-                        {!!user && user.bio ? user.bio : 'No Bio Added'}
+                        {!!info && info.bio ? info.bio : 'No Bio Added'}
                     </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>200</Typography>
+                            <Typography className = {classes.font}>{!!info && info.followings ? info.followings : ''}</Typography>
                             <Typography className = {classes.font}>Following</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>4k</Typography>
+                            <Typography className = {classes.font}>{!!info && info.followers ? info.followers : ''}</Typography>
                             <Typography className = {classes.font}>Fans</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>32</Typography>
+                            <Typography className = {classes.font}>{!!info && info.total_lists ? info.total_lists : ''}</Typography>
                             <Typography className = {classes.font}>Lists</Typography>
                         </Grid>
                     </Grid>

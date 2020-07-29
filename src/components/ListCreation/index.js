@@ -1,5 +1,4 @@
 import React , {useEffect, useState} from "react";
-import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import CreateList from "./createList";
 import Dialog from "../Common/Dialog";
@@ -13,7 +12,6 @@ import { showListDialog, hideListDialog } from "../../actions/ListCreateDialogAc
 
 const Lists = (props) => {
     const { dispatch, listCreateDialog } = props;
-    // const [showCreateList , setShowCreateList] = useState(true)
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
     const [showPublished, setShowPublished] = useState(false);
@@ -31,14 +29,10 @@ const Lists = (props) => {
                     <CreateList 
                     continueNext = {() => { dispatch(hideListDialog()) ; setShowCreateListStep2(true)}}
                     getData = {(value) =>  setListItems(value)}
-                    // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
                     />
                 }
-                // applyForm={() => setShowCreateList(false)}
-                // cancelForm={() => setShowCreateList(false)}
                 applyForm={() => dispatch(hideListDialog())}
                 cancelForm={() => dispatch(hideListDialog())}
-                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
                 hideActions={true}
             />
         )
@@ -54,9 +48,6 @@ const Lists = (props) => {
                     continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
                 }
                 applyForm={() => {dispatch(showListDialog()) ; setShowCreateListStep2(false) }}
-                // cancelForm={() => setShowCreateListStep2(false)}
-                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep3(true) }}
-
                 backAction={() => {dispatch(showListDialog()) ; setShowCreateListStep2(false) }}
                 hideActions={true}
             />
@@ -76,8 +67,6 @@ const Lists = (props) => {
                     />
                 }
                 applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
-                // cancelForm={() => setShowCreateListStep3(false)}
-                // continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}
                 backAction = {() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
                 hideActions={true}
             />
@@ -92,7 +81,6 @@ const Lists = (props) => {
                 }
                 applyForm={() => setShowPublished(false)}
                 cancelForm={() => setShowPublished(false)}
-                // continueNext = {() => {setShowPublished(false) ;  }}
                 hideActions={true}
             />
         )

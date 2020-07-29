@@ -3,17 +3,9 @@ import React , {useState , useEffect}from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, colors  , TextField , Button } from "@material-ui/core";
 import ListTile  from './listTile';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
 import Select , { components }  from 'react-select'
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
-
-
-const data = [
-  {name : 'Zeeshan Sarwar'},
-  {name : 'Arslan Sajid'},
-]
 
 
 const customStyles = {

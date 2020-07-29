@@ -1,25 +1,12 @@
 import React from 'react'
-import { useDrag } from 'react-dnd';
 import { Typography, Grid, colors } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from '../../static/_colors';
-// import RightIcon from '@material-ui/icons/ChevronRight';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Avatar from '@material-ui/core/Avatar';
 
-const style = {
-  
-}
 
 const ListTile = ({ name, type, number }) => {
     const classes = useStyles();
-
-    // const [{ opacity }, drag] = useDrag({
-    //     item: { name, type },
-    //     collect: (monitor) => ({
-    //     opacity: monitor.isDragging() ? 0.4 : 1,
-    //     }),
-    // })
 
   return (
     <div className={classes.container}>
@@ -33,7 +20,6 @@ const ListTile = ({ name, type, number }) => {
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                       <Typography className={classes.text}>{name}</Typography>
                 </Grid>
-                {/* <DeleteIcon fontSize="default" /> */}
                 </Grid>
             </Grid>
         </Grid>
@@ -43,7 +29,6 @@ const ListTile = ({ name, type, number }) => {
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        // marginRight: '1rem',
         marginBottom: '1rem',
         cursor: 'pointer',
 

@@ -46,8 +46,7 @@ const Box = ({ name, type, isDropped, number }) => {
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        marginRight: '1rem',
-        marginBottom: '1rem',
+        margin: '0 0.5em 0.5em 0',
         cursor: 'move',
 
         background: '#FAFAFA',
@@ -55,8 +54,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 4,
     },
     disabled: {
-        marginRight: '1rem',
-        marginBottom: '1rem',
+        margin: '0 0.5em 0.5em 0',
         cursor: 'move',
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',
@@ -67,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         cursor: 'not-allowed'
     },
     blueSection: {
-        padding: '0.6em',
+        padding: '0.5em',
         borderTopLeftRadius: 4,
         borderBottomLeftRadius: 4,
         background: Colors.brandColor,
@@ -80,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textSection: {
         textAlign: 'center',
-        padding: '0.6em',
+        padding: '0.5em',
     },
     row: {
         display: "flex",

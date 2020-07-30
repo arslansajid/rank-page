@@ -46,11 +46,8 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number }) => {
                 <Grid className={classes.row}>
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                     {lastDroppedItem && (
-                        <p>Last dropped: {lastDroppedItem.name}</p>
+                        `Last dropped: ${lastDroppedItem.name}`
                     )}
-                    {isActive
-                    ? 'Release to drop'
-                    : `Accepts: ${accept.join(', ')}`}
                 </Grid>
                 <RightIcon fontSize="large" className = {classes.iconColor} />
                 </Grid>
@@ -62,15 +59,13 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number }) => {
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        minHeight: 54,
-        marginRight: '1rem',
-        marginBottom: '1rem',
+        margin: '0 0.5em 0.5em 0',
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 4,
     },
     blueSection: {
-        padding: '0.6em',
+        padding: '0.5em',
         borderTopLeftRadius: 4,
         borderBottomLeftRadius: 4,
         background: Colors.brandColor,
@@ -83,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textSection: {
         textAlign: 'center',
-        padding: '0.6em',
+        padding: '0.5em',
     },
     row: {
         display: "flex",

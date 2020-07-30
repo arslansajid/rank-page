@@ -65,7 +65,7 @@ const PostCard = (props) => {
                     <Typography variant='h6' className={`${classes.heading} space-2`}>Who Is the Coolest Actor in the World Right Now? </Typography>
                     <Typography variant='body2' className='smallFont'>• 9 July 2020 at 12:30 AM</Typography>
                 </Grid>
-                <Grid className={classes.cardProfileSection} style={{ minHeight: 200 }}>
+                <Grid className={classes.cardProfileSection} style={!expanded ? { maxHeight: '71vh', overflow: 'hidden' } : { height: '100%' }}>
                     <DragandDrop />
 
                     <Grid container alignItems="center" justify="center" className={classes.showMoreContainer}>
@@ -139,8 +139,8 @@ const useStyles = makeStyles((theme) => ({
     },
     showMoreContainer: {
         position: 'absolute',
-        width: 'calc(100% - 48px)',
-        bottom: 30,
+        width: 'calc(100% - 40px)',
+        bottom: 0,
         minHeight: 40,
         color: Colors.white,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%)',

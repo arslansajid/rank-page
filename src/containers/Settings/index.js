@@ -31,7 +31,7 @@ const Settings = (props) => {
 		return (
 			<div className={classes.pageContainer}>
 				<div className={classes.main}>
-					<form onSubmit={handleSubmit(onSubmit)}>
+					<form form={'user_name'} onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-4'>
 							<InputLabel className={`${classes.heading}`}>Username</InputLabel>
 							<TextField
@@ -47,7 +47,7 @@ const Settings = (props) => {
 							/>
 						</div>
 						<div className='space-4'>
-							<Button type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button form={'user_name'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
@@ -57,7 +57,7 @@ const Settings = (props) => {
 				</div>
 
 				<div className={classes.main}>
-					<form onSubmit={handleSubmit(onSubmit)}>
+					<form  form={'password'} onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-1'>
 							<InputLabel className={`${classes.heading}`}>Password</InputLabel>
 							<TextField
@@ -99,7 +99,7 @@ const Settings = (props) => {
 							/>
 						</div>
 						<div className='space-4'>
-							<Button type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button form={'password'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
@@ -109,7 +109,7 @@ const Settings = (props) => {
 				</div>
 
 				<div className={classes.main}>
-					<form onSubmit={handleSubmit(onSubmit)}>
+					<form  form={'email'} onSubmit={handleSubmit(onSubmit)}>
 						<InputLabel className={`${classes.heading}`}>Email Address</InputLabel>
 						<div className='space-4'>
 							<TextField
@@ -128,7 +128,7 @@ const Settings = (props) => {
 							/>
 						</div>
 						<div className='space-4'>
-							<Button type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button  form={'email'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>

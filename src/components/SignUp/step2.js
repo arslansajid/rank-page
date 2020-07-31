@@ -12,7 +12,7 @@ import {signUp} from './action.js'
 
 
 const SignUpStep2 = props => {
-  const {registerData , closeSignUp , showCatergories} = props;
+  const {registerData , closeSignUp , showCatergories , openLogin} = props;
   const [isLoading, setIsLoading] = useState (false);
   const {errors, handleSubmit, control} = useForm ();
   const [value , setValue] = useState (null);
@@ -51,14 +51,17 @@ const SignUpStep2 = props => {
           props.dispatch(userLogin(res.data.data.user));
           showCatergories();
         }
+        else if(res.data && !res.data.success && res.data.message === 'Email has already been taken'){
+          openLogin()
+        }
       })
       .catch((error) => {
         setIsLoading(false)
         setValue({message : 'Something went wrong'})
       })
     }
-    else if(data.user_name && data.user_name.length < 5){
-      setShowError('Username should be at least 4 characters')
+    else if(data.user_name && data.user_name.length < 7){
+      setShowError('Username should be at least 6 characters')
     }
 
     else if(validate(data.user_name) == false){

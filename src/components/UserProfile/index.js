@@ -82,6 +82,7 @@ const UserProfile = (props) => {
                         title={"Sign Up"}
                         open={showSignUpStep2}
                         message={<SignUpStep2
+                            openLogin = {() => {setShowSignUpStep2(false) ; setShowSignIn(true)}}
                             registerData={value}
                             showCatergories={() => { setShowSignUpStep2(false); setShowSelectCategories(true) }}
 

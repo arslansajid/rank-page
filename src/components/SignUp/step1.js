@@ -102,7 +102,7 @@ const SignUp = props => {
             />
           </div>
           <div className="space-2">
-            <InputLabel>Date of birth</InputLabel>
+            <InputLabel>Age</InputLabel>
             <TextField
               type="date"
               name="date_of_birth"

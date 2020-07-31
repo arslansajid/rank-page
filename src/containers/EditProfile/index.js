@@ -10,23 +10,75 @@ import MenuItem from "@material-ui/core/MenuItem";
 import ImagePicker from "../../components/Common/ImagePicker";
 import { Capitalize } from "../../utils/Functions";
 import moment from "moment"
+import {UpdateProfile} from './action'
 
 const EditProfile = (props) => {
 	const classes = useStyles();
 	const {user} = props;
+	const [ userName , setUserName] = useState('')
 	const [country, setCountry] = useState('')
 	const [gender, setGender] = useState('')
 	const [userDOB, setUserDOB] = useState('')
-
+	const [bio , setBio] = useState('')
+	const [ isLoading, setIsLoading] = useState(false);
+	const [message , setMessage] = useState('');
+	let countryData = CountryRegionData.map((item , index) => { return {value : item[0] , label : item[0]}})
+	
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!user) {
-			setCountry(user.country);
+			setUserName(user.name)
+			setCountry(Capitalize(user.country));
 			setGender(Capitalize(user.gender));
 			setUserDOB(moment(user.date_of_birth).format("YYYY-MM-DD"));
+			setBio(user.bio ? user.bio : '')
 		}
 	}, [props.user])
 
+	const handleChange = (event) => {
+    setCountry(event.target.value);
+	};
+
+	const translateGender = (gender) =>{
+		let value = gender.toLowerCase();
+
+		if(value == 'male' ){
+			return 1;
+		}
+		else if(value == 'female' ){
+			return 2;
+		}
+		else if (value == 'prefer not to answer'){
+			return 3;
+		}
+		else return null;
+	}
+
+	const updateProfile = () => {
+		setIsLoading(true);
+		let user = {};
+		user.gender = translateGender(gender);
+		user.name = userName;
+		user.country = country;
+		user.bio = bio;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoading(false);
+				setMessage(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoading(false);
+			console.log(err)
+			// setMessage(err.data.message)
+		})
+
+		// user.user_name = 
+
+	}
+
+
+
+	if (!!props.user) {
 	return (
 		<>
 		<Grid className={classes.main}>
@@ -53,7 +105,8 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				fullWidth
-				value={!!user ? user.name : ''}
+				value={userName}
+				onChange={(e) => setUserName(e.target.value)}
 			/>
 		</Paper>
 
@@ -65,9 +118,10 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				multiline={true}
-                rows={3}
+        rows={3}
 				fullWidth
-				value={!!user && user.bio ? user.bio : ''}
+				value={bio}
+				onChange={(e) => {setBio(e.target.value)}}
 			/>
 		</Paper>
 
@@ -85,7 +139,7 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				fullWidth
-				onChange={(e) => console.log(e.target.value)}
+				onChange={(e) => setUserDOB(e.target.value)}
 			/>
 		</Paper>
 
@@ -116,17 +170,25 @@ const EditProfile = (props) => {
 				margin='dense'
 				variant='outlined'
 				value={country}
-				// defaultValue={!!user ? user.country : ''}
 				select
 				fullWidth
-				onChange={(e) => setCountry(e.target.value)}
+				onChange={handleChange}
 			>
-				{CountryRegionData.map((option, index) => (
-					<MenuItem key={option[0]} value={option[0]}>
-						{option[0]}
-					</MenuItem>
-				))}
+					{countryData && countryData.length > 0 && countryData.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
 			</TextField>
+		</Paper>
+
+		<Paper elevation={0} className={classes.container}>
+			<Button  disabled={isLoading} className={`${classes.submitButton} space-2`} variant="contained" color="primary" onClick={updateProfile}>
+					<Typography>
+							Save Changes
+					</Typography>
+			</Button>
+			{message && <Typography className={classes.message}>{message}</Typography>}
 		</Paper>
 
 		{/* <Paper elevation={0} className={classes.container}>
@@ -136,6 +198,9 @@ const EditProfile = (props) => {
 		</Grid>
 		</>
 	);
+	} else {
+	return <Typography variant="h5">You need to sign in to view this page!</Typography>
+}
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -170,7 +235,19 @@ const useStyles = makeStyles((theme) => ({
 	greyInput: {
 		borderRadius: 8,
 		background: Colors.inputBg,
-	}
+	},
+	saveButtonActive : {
+		textAlign: 'center',
+		// background : 
+	},
+	submitButton : {
+		textAlign: 'center',
+		width: '100%',
+	},
+	message : {
+		textAlign: 'center',
+	},
+
 }))
 
 function mapStateToProps(state) {

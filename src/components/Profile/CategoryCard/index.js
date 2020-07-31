@@ -10,6 +10,11 @@ import PoolIcon from '@material-ui/icons/Pool';
 const CategoryCard = (props) => {
   const { isSelected , category , showSubCategory, selectedCategoryCallback } = props;
   const classes = useStyles();
+  
+  const handleShowSubCategory = () => {
+    if(showSubCategory){
+    showSubCategory(category.sub_categories); selectedCategoryCallback(category.name)}
+  }
 
   return (
     <Card className={isSelected ? classes.root : classes.rootFade} variant="outlined">
@@ -19,7 +24,7 @@ const CategoryCard = (props) => {
           <Typography>{category.name}</Typography>
         </Grid>
       </CardContent>
-      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer} onClick={() =>{ showSubCategory(category.sub_categories); selectedCategoryCallback(category.name)}}>
+      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer} onClick={handleShowSubCategory}>
         <Typography>Pro</Typography>
         <MoreIcon className={classes.moreIcon} />
         <Typography>{category.count} Lists</Typography>

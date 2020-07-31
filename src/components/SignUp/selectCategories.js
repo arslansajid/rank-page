@@ -1,22 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {Button, Typography , Grid, ButtonBase} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import {useForm} from 'react-hook-form';
 import CategoryCard from "../Profile/CategoryCard";
+import {getCategoriesWithSubCategories} from './action'
 
 
 const SelectCategories = props => {
   const {close} = props;
   const [isLoading, setIsLoading] = useState(false);
   const {errors, handleSubmit, control} = useForm ();
+  const [categories , setCategories] = useState();
+  const [selectedCategory , setSelectedCategory] = useState(null)
+
+  useEffect(() =>{
+    setIsLoading(true);
+    getCategoriesWithSubCategories()
+    .then((res) => {
+        setIsLoading(false);
+        setCategories(res.data.data.all_categories)
+    })
+    .catch((err) =>{ 
+        setIsLoading(false);
+        console.log(err)
+    })
+} , [])
 
   const classes = useStyles();
   return (
     <div className={classes.container}>
         <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
 
-        <Grid container spacing={2} className = 'space-4'>
+        {/* <Grid container spacing={2} className = 'space-4'>
           {[...Array(4)].map((category, index) => {
             return (
                 <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
@@ -26,7 +42,23 @@ const SelectCategories = props => {
                 </Grid>
               )
           })}
-      </Grid>
+      </Grid> */}
+      <Grid container spacing={2} className='space-4'>
+                {!!categories && categories.length > 0 && (
+                    categories.map((category, index) => {
+                    return (
+                        <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
+                            <CategoryCard
+                                isSelected={selectedCategory === null ? true : selectedCategory === category.name ? true :  false}
+                                category = {category}
+                                // showSubCategory = {(value) => handleShowSubCategory(value)}
+                                selectedCategoryCallback={(value) => setSelectedCategory(value)}
+                            />
+                        </Grid>
+                    )
+                })
+            )}
+        </Grid>
 
 
       <Grid className={classes.fixedBottom}>

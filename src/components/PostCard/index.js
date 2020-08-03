@@ -13,7 +13,8 @@ import CommentIcon from '@material-ui/icons/ChatBubbleOutline';
 import ShareIcon from '@material-ui/icons/Share';
 import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import { LikeUnlikePost } from "./action";
 
 const PostCard = (props) => {
     const classes = useStyles();
@@ -29,6 +30,20 @@ const PostCard = (props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const likeHandler = () => {
+        const data = {
+            'share_post_id': 1,
+            'like_type': 1
+        }
+        LikeUnlikePost(data)
+        .then((res) => {
+            console.log('res', res)
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
 
     const { user } = props;
     return (
@@ -81,7 +96,7 @@ const PostCard = (props) => {
                 {/* </CardContent> */}
                 <CardActions>
                     <Grid container justify="space-between">
-                        <Button className={classes.weight} startIcon={<LikeIcon />}>Like</Button>
+                        <Button onClick={() => likeHandler()} className={classes.weight} startIcon={<LikeIcon />}>Like</Button>
                         <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
                         <Button className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>

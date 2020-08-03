@@ -3,6 +3,7 @@ import {Typography, TextField, IconButton, Avatar, Grid} from "@material-ui/core
 import Colors from "../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 import CommentTile from "./Comment";
+import { addComment } from "./action";
 
 const comments = [  
     {  
@@ -146,6 +147,20 @@ const comments = [
       )
     };
 
+    const addCommentHandler = (commentText) => {
+      const data = {
+        'share_post_id': 1,
+        'comment': commentText,
+      }
+      addComment(data)
+      .then((res) => {
+          console.log('res', res)
+      })
+      .catch((err) => {
+          console.log('err', err)
+      })
+    } 
+
 const CommentSection = () => {
     const classes = useStyles();
     // const newArr = nestComments(comments);
@@ -162,6 +177,11 @@ const CommentSection = () => {
                         variant='outlined'
                         fullWidth
                         placeholder={"Write your comment..."}
+                        onKeyPress={(event) => {
+                          if(event.key === 'Enter') {
+                            addCommentHandler(event.target.value);
+                          }
+                        }}
                     />
                 </Grid>
             </Grid>

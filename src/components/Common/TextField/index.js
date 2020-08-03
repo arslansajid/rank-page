@@ -19,6 +19,7 @@ const ZTextField = ({
     rows,
     type,
     placeholder,
+    required,
 
 }) => {
     const classes = useStyles();
@@ -34,12 +35,18 @@ const ZTextField = ({
                     >
                     <InputLabel
                         htmlFor={id}
-                        // className={classes.textFieldLabel}
+                        className={classes.textFieldLabel}
                     >
                     {label}
+                    {!!required && (
+                    <span className={classes.asteric}>
+                        *
+                    </span>
+                    )}
                     </InputLabel>
                 </div>
             )}
+       
             <Controller
                 key={name}
                 as={
@@ -86,7 +93,14 @@ const useStyles = makeStyles((theme) => ({
 	greyInput: {
         borderRadius: 8,
 		background: Colors.inputBg,
-    }
+    },
+    asteric : {
+        color: Colors.red,
+        marginLeft : 5,
+    },
+    textFieldLabel : {
+        color: Colors.black,
+    },
 }))
 
 ZTextField.defaultProps = {};

@@ -76,18 +76,20 @@ const SignUpStep2 = props => {
       <form key={'form'} onSubmit={handleSubmit(onSubmit)} className = {classes.main}>
         <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
         <div className="space-4">
+          <InputLabel className={`${classes.title} space-2`}>Username <span className={classes.asteric}>*</span></InputLabel>
           <TextField
             type="text"
             name="user_name"
             rules={{required: 'This field is required'}}
             control={control}
             error={errors.user_name ? true : false}
-            placeholder="Username or Email"
+            placeholder="Username"
             defaultValue={''}
             className="text-field space-2"
-            label='Username'
+            // label='Username'
+            required = {true}
           />
-          <Typography variant="body2">Username can contain underscores, alphbets, numbers only!</Typography>
+          <Typography variant="body2" className='smallFont'>Username can contain underscores, alphbets, numbers only!</Typography>
         </div>
 
         { showError ?
@@ -148,7 +150,7 @@ const useStyles = makeStyles (theme =>
       width: '100%',
     },
     main : {
-      padding :'1.3rem 0',
+      padding :'0 0 3rem 0',
     },
     submitButton: {
       minWidth: '100px',
@@ -180,6 +182,14 @@ const useStyles = makeStyles (theme =>
       borderTop: '1px solid rgba(38, 38, 38, 0.12)',
       textAlign : 'center',
     }
+    ,
+    title : {
+      color: Colors.black,
+    },
+    asteric : {
+      color: Colors.red,
+      marginLeft : 5,
+  },
   })
 );
 

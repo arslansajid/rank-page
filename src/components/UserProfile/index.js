@@ -79,7 +79,7 @@ const UserProfile = (props) => {
             {
                 showSignUpStep2 && (
                     <Dialog
-                        title={"Sign Up"}
+                        title={"Register"}
                         open={showSignUpStep2}
                         message={<SignUpStep2
                             openLogin = {() => {setShowSignUpStep2(false) ; setShowSignIn(true)}}

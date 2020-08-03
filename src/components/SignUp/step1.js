@@ -25,7 +25,7 @@ const SignUp = props => {
   const [dateError, setDateError] = useState(null);
 
 
-  console.log('country state', country)
+  // console.log('country state', country)
 
 
   const ageValidation = (data) => {
@@ -79,13 +79,14 @@ const SignUp = props => {
             <TextField
               type="text"
               name="name"
-              rules={{ required: 'This field is required' }}
+              // rules={{ required: 'This field is required' }}
               control={control}
-              error={errors.name ? true : false}
+              // error={errors.name ? true : false}
               placeholder="Enter full name"
               defaultValue={userData && userData.name ? userData.name : ''}
               label='Full Name'
               className="text-field"
+              // required = {true}
             />
           </div>
           <div className="space-2">
@@ -99,10 +100,11 @@ const SignUp = props => {
               defaultValue={userData && userData.email ? userData.email : ''}
               label='Email Address'
               className="text-field"
+              required = {true}
             />
           </div>
           <div className="space-2">
-            <InputLabel>Age</InputLabel>
+            <InputLabel className = 'black'>Age</InputLabel>
             <TextField
               type="date"
               name="date_of_birth"
@@ -113,6 +115,7 @@ const SignUp = props => {
               // defaultValue={''}
               defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
               className="text-field"
+              required = {true}
             />
           </div>
           {dateError ?
@@ -136,6 +139,7 @@ const SignUp = props => {
               defaultValue={userData && userData.password ? userData.password : ''}
               className="text-field"
               label='Password'
+              required = {true}
             />
           </div>
           <div className="space-2">
@@ -150,6 +154,7 @@ const SignUp = props => {
               defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
               className="text-field"
               label='Confirm Password'
+              required = {true}
             />
           </div>
           {passwordError ?
@@ -163,18 +168,17 @@ const SignUp = props => {
           }
 
           <div className="space-2">
-            <InputLabel className='space-2'>Gender</InputLabel>
             <Select
               name="gender"
-              rules={{ required: 'This field is required' }}
+              // rules={{ required: 'This field is required' }}
               control={control}
-              error={errors.gender ? true : false}
+              // error={errors.gender ? true : false}
               placeholder="Select Gender"
-              // label='Gender'
+              label='Gender'
               items={GenderItems}
-              // defaultValue={''}
               defaultValue={userData && userData.gender ? userData.gender : ''}
               className="text-field"
+              // required = {true}
             />
           </div>
 
@@ -205,7 +209,7 @@ const SignUp = props => {
           selectLabel = {(label) => console.log(label)}
           className="menu-flags" /> */}
 
-            <InputLabel className='space-2'>Country</InputLabel>
+            <InputLabel className='space-2 black'>Country</InputLabel>
             <CountryDropdown
               className={classes.selectBox}
               value={country}
@@ -215,7 +219,7 @@ const SignUp = props => {
 
           {!!country && (
             <div className="space-4">
-              <InputLabel className='space-2'>State</InputLabel>
+              <InputLabel className='space-2 black'>State</InputLabel>
               <RegionDropdown
                 className={classes.selectBox}
                 country={country}

@@ -6,10 +6,6 @@ import Colors from '../../static/_colors';
 import RightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from '@material-ui/core/Avatar';
 
-const style = {
-  
-}
-
 const Box = ({ name, type, isDropped, number }) => {
     const classes = useStyles();
 

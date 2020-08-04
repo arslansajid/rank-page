@@ -1,11 +1,12 @@
 
-import React from "react";
-import {Typography, Grid, Avatar, Button} from "@material-ui/core";
+import React, {useState} from "react";
+import {Typography, Grid, Avatar, TextField} from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 
 const Comment = (props) => {
     const classes = useStyles();
+    const [showCommentInput, setShowCommentInput] = useState(false);
     const {comment, id, isChildren} = props;
     return (
         <>
@@ -20,9 +21,19 @@ const Comment = (props) => {
                 <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ id }</Typography>
                 <Grid container>
                     <Typography className={classes.textButton}>Like</Typography>
-                    <Typography className={classes.textButton}>Reply</Typography>
+                    <Typography onClick={() => setShowCommentInput(!showCommentInput)} className={classes.textButton}>Reply</Typography>
                 </Grid>
             </Grid>
+            {
+                showCommentInput && (
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        fullWidth
+                        placeholder="Add Comment"
+                    />
+                )
+            }
             </Grid>
             </Grid>
         </Grid>

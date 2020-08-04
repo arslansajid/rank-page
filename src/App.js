@@ -7,7 +7,11 @@ import { Grid } from '@material-ui/core';
 import { theme } from './utils/MuiTheme';
 import { MuiThemeProvider, StylesProvider } from '@material-ui/core';
 import Colors from './static/_colors';
-import AppMain from "./containers/AppMain"
+import AppMain from "./containers/AppMain";
+
+//drag an drop
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 // Styles
 import './App.scss';
@@ -31,6 +35,7 @@ const App = () => {
       <ConnectedRouter history={history}>
         <MuiThemeProvider theme={theme}>
           <StylesProvider injectFirst>
+          <DndProvider backend={HTML5Backend}>
             <AppMain />
             <Grid className={classes.main} container>
               <Grid className={classes.leftSidebar} item lg={3} md={3} sm={false} xs={false}>
@@ -45,6 +50,7 @@ const App = () => {
               </Grid>
             </Grid>
             <BottomNavigation history={history} />
+            </DndProvider>
           </StylesProvider>
         </MuiThemeProvider>
       </ConnectedRouter>

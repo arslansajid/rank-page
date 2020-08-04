@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import styled from "styled-components";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {useDropzone} from 'react-dropzone';
 import Colors from '../../../static/_colors';

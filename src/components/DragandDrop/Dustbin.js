@@ -6,7 +6,7 @@ import Colors from '../../static/_colors';
 import RightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from '@material-ui/core/Avatar';
 
-const Dustbin = ({ accept, lastDroppedItem, onDrop, number }) => {
+const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
     const classes = useStyles();
 
     const [{ isOver, canDrop }, drop] = useDrop({
@@ -27,7 +27,7 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number }) => {
     }
 
   return (
-    <div ref={drop} className={classes.container} style={{ backgroundColor }}>
+    <div ref={drop} className={isDragging ? classes.lightcontainer : classes.container} style={{ backgroundColor }}>
       {/* {isActive
         ? 'Release to drop'
         : `This dustbin accepts: ${accept.join(', ')}`} */}
@@ -63,6 +63,13 @@ const useStyles = makeStyles((theme) => ({
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 4,
+    },
+    lightcontainer: {
+        margin: '0 0.5em 0.5em 0',
+        background: '#FAFAFA',
+        border: '1px solid rgba(38, 38, 38, 0.12)',
+        borderRadius: 4,
+        filter: 'contrast(0.5)',
     },
     blueSection: {
         padding: '0.5em',

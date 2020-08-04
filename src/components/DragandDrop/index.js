@@ -5,11 +5,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const dragandDrop = () => {
     return (
-        <div className="App">
-            <DndProvider backend={HTML5Backend}>
-                <Example />
-            </DndProvider>
-        </div>
+        <DndProvider backend={HTML5Backend}>
+            <Example />
+        </DndProvider>
     )
 }
 

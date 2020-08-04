@@ -15,7 +15,8 @@ const SelectField = ({
     helperText,
     rules,
     placeholder,
-    items
+    items,
+    required,
 }) => {
     const classes = useStyles();
 
@@ -27,9 +28,14 @@ const SelectField = ({
                     >
                     <InputLabel
                         htmlFor={id}
-                        // className={classes.textFieldLabel}
+                        className={classes.selectLabel}
                     >
                     {label}
+                    {!!required && (
+                    <span className={classes.asteric}>
+                        *
+                    </span>
+                    )}
                     </InputLabel>
                 </div>
             )}
@@ -66,7 +72,15 @@ const useStyles = makeStyles((theme) => ({
 	greyInput: {
         // borderRadius: 8,
 		background: Colors.inputBg,
-    }
+    },
+    asteric : {
+        color: Colors.red,
+        marginLeft : 5,
+    },
+    selectLabel : {
+        marginBottom : 7,
+        color : Colors.black,
+    },
 }))
 
 SelectField.defaultProps = {};

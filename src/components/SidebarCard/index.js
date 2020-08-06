@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Typography, Grid, ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
@@ -13,6 +13,7 @@ import ListCreation from "../ListCreation"
 const SidebarCard = (props) => {
     const classes = useStyles();
     const { items, title, showSeeMoreLink, listCreateDialog, dispatch } = props;
+
 
     const handleSignOut = (value) => {
         if (value === "Sign Out") {
@@ -45,7 +46,7 @@ const SidebarCard = (props) => {
                 <Grid className={classes.cardContent}>
                     {
                         title === "Profile" && (
-                            <UserProfile />
+                            <UserProfile/>
                         )
                     }
                     {
@@ -130,4 +131,9 @@ SidebarCard.defaultProps = {
     showSeeMoreLink: false,
 };
 
-export default connect(null)(SidebarCard);
+// export default connect(null)(SidebarCard);
+export default connect(store => {
+    return{
+        user: store.user,
+    }
+  })(SidebarCard)

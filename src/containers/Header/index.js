@@ -15,6 +15,7 @@ const Header = (props) => {
     const classes = useStyles();
     const { location, history } = props;
     const [showBackButton, setShowBackButton] = React.useState(false);
+    console.log('location ' , location.pathname)
 
     React.useEffect(() => {
         if (location.pathname !== "/") {
@@ -35,7 +36,7 @@ const Header = (props) => {
                         )
                     }
                     <Typography variant="h6" className={classes.routeTitle}>
-                        {location.pathname === "/" ? "Rank Page" : location.pathname.split("/")[1]}
+                        {location.pathname === "/" ? "Rank Page" :(location.pathname === "/edit-profile" ? 'Edit Profile' : location.pathname.split("/")[1])}
                     </Typography>
                 </Toolbar>
             </AppBar>

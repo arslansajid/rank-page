@@ -1,5 +1,5 @@
-import Config from '../../api/config';
-import axiosInstance from '../../api/api.config';
+import Config from '../../../api/config';
+import axiosInstance from '../../../api/api.config';
 
 export const getUserData = async (params) => {
   try {

@@ -6,23 +6,13 @@ import Lists from "../../components/Profile/Lists";
 import Challenges from "../../components/Profile/Challenges";
 import Categories from "../../components/Profile/Categories";
 import { withRouter, Switch, Route } from "react-router-dom";
-import {getUserData} from './actions';
+import { connect } from 'react-redux';
 
 const Profile = (props) => {
     const classes = useStyles();
     const [activeTab, setActiveTab] = useState(null);
-    const [userData , setUserData] = useState(null);
-
+   
     useEffect(() => {
-        let params = {};
-        params.user_id = '68';
-        getUserData(params)
-        .then((res)=>{
-            if(res.data && res.data.success){
-                setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
-            }
-        })
-        .catch((err) => { console.log('user api error')})
         if (props.match.params.tab === "lists") {
             setActiveTab(1)
         } else if (props.match.params.tab === "challenges") {
@@ -45,7 +35,8 @@ const Profile = (props) => {
 
     return (
         <div className={classes.main}>
-            <ProfileCover info = {userData ? userData : null}/>
+            {props.user &&  
+            <ProfileCover info = {props.user}/> }
             <ButtonGroup fullWidth size='large'>
                 <Button className={classes.buttons} onClick={() => onTabChangeHandler(1)}>
                     <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>
@@ -100,4 +91,18 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
-export default withRouter(Profile);
+// export default withRouter(Profile);
+
+// function mapStateToProps(state) {
+//     return {
+//         user: state.user,
+//     };
+// }
+
+
+// export default connect(mapStateToProps)(Profile);
+export default withRouter(connect(store => {
+    return{
+        user: store.user,
+    }
+  })(Profile))

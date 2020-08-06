@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography , TextField} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
-import TextField from "../../components/Common/TextField";
+// import TextField from "../../components/Common/TextField";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
@@ -14,6 +14,8 @@ import {UpdateProfile} from './actions'
 
 const Settings = (props) => {
 	// const [user , setUser] = useState(props.user ? props.user : null);
+	const [ name, setName] = useState('')
+	const [ email , setEmail] = useState('')
 	const [isLoading, setIsLoading] = React.useState(false);
 	const { errors, handleSubmit, control } = useForm();
 	const [activeTab, setActiveTab] = useState(1);
@@ -21,29 +23,56 @@ const Settings = (props) => {
 	const [activeTabFollowingPrivacy, setActiveTabFollowingPrivacy] = useState(1);
 	const [activeDisable, setActiveDisable] = useState(false);
 	const [showConfirmationDiallog, setShowConfirmationDiallog] = useState(false)
+	const [ isLoadingName, setIsLoadingName] = useState(false);
+	const [ isLoadingEmail, setIsLoadingEmail] = useState(false);
+	const [messageName , setMessageName] = useState('');
+	const [messageEmail , setMessageEmail] = useState('');
 
+	// console.log('username here' , userName)
 	const onSubmit = data => {
 		setIsLoading(true);
 	}
-
+	useEffect(() => {
+		//re-rendering when the user data changes
+		if(!!props.user) {
+			setName(props.user.name);
+			setEmail(props.user.email);
+			console.log('user here in useEffect' , props.user)
+		}
+	}, [props.user])
 	
 
 	const classes = useStyles();
 
-	// const updateName = () => {
-	// 	setIsLoadingName(true);
-	// 	let user = {};
-	// 	user.name = userName;
-	// 	UpdateProfile(user)
-	// 	.then((res) => {
-	// 		setIsLoadingName(false);
-	// 			setMessageName(res.data.message)
-	// 	})
-	// 	.catch((err) => { 
-	// 		setIsLoadingName(false);
-	// 		console.log(err)
-	// 	})
-	// }
+	const updateName = () => {
+		setIsLoadingName(true);
+		let user = {};
+		user.name = name;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingName(false);
+				setMessageName(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingName(false);
+			console.log(err)
+		})
+	}
+
+	const updateEmail = () => {
+		setIsLoadingEmail(true);
+		let user = {};
+		user.email = email;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingEmail(false);
+				setMessageEmail(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingEmail(false);
+			console.log(err)
+		})
+	}
 
 	if (!!props.user) {
 		return (
@@ -52,25 +81,39 @@ const Settings = (props) => {
 					<form form={'user_name'} onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-4'>
 							<InputLabel className={`${classes.heading}`}>Username</InputLabel>
-							<TextField
+							{/* <TextField
 								id='user-name'
 								type='text'
 								name='user_name'
-								rules={{ required: 'This field is required' }}
-								control={control}
-								error={errors.user_name ? true : false}
+								className={`${classes.greyInput} space-4`}
+								// rules={{ required: 'This field is required' }}
+								// control={control}
+								// error={errors.user_name ? true : false}
 								placeholder='Username'
-								defaultValue={!!props.user ? props.user.name : ''}
-								className='text-field'
+								// defaultValue={!!props.user ? props.user.name : ''}
+								value = {userName}
+								// className='text-field'
+							/> */}
+							<TextField
+								className={`${classes.greyInput}`}
+								id='user-name'
+								type='text'
+								name='user_name'
+								margin='dense'
+								variant='outlined'
+								fullWidth
+								value={name}
+								onChange={(e) => setName(e.target.value)}
 							/>
 						</div>
 						<div className='space-4'>
-							<Button form={'user_name'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button form={'user_name'} type="submit" disabled={isLoadingName} className={classes.submitButton} variant="outlined" color="primary" onClick={updateName}>
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
 							</Button>
 						</div>
+						{messageName && <Typography className={classes.message}>{messageName}</Typography>}
 					</form>
 				</div>
 
@@ -82,6 +125,9 @@ const Settings = (props) => {
 								id='new_password'
 								type='password'
 								name='old_password'
+								margin='dense'
+								variant='outlined'
+								fullWidth
 								rules={{ required: 'This field is required' }}
 								control={control}
 								error={errors.old_password ? true : false}
@@ -95,6 +141,9 @@ const Settings = (props) => {
 								id='new_password'
 								type='password'
 								name='new_password'
+								margin='dense'
+								variant='outlined'
+								fullWidth
 								rules={{ required: 'This field is required' }}
 								control={control}
 								error={errors.new_password ? true : false}
@@ -108,6 +157,9 @@ const Settings = (props) => {
 								id='confirm_passwrod'
 								type='password'
 								name='confirm_password'
+								margin='dense'
+								variant='outlined'
+								fullWidth
 								rules={{ required: 'This field is required' }}
 								control={control}
 								error={errors.confirm_password ? true : false}
@@ -134,24 +186,22 @@ const Settings = (props) => {
 								id='user-email'
 								type='email'
 								name='email'
-								rules={{ required: 'This field is required' }}
-								control={control}
-								error={errors.email ? true : false}
+								margin='dense'
+								variant='outlined'
+								fullWidth
 								placeholder='Enter your email'
-								defaultValue={''}
-								// value={!!props.user && props.user.email ? props.user.email : ''}
-								// value = {!!user ? user.date_of_birth : ''}
-								defaultValue={!!props.user ? props.user.email : ''}
+								value = {email}
 								className='text-field'
 							/>
 						</div>
 						<div className='space-4'>
-							<Button  form={'email'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button  form={'email'} type="submit" disabled={isLoadingEmail} className={classes.submitButton} variant="outlined" color="primary" onClick={updateEmail}>
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
 							</Button>
 						</div>
+						{messageEmail && <Typography className={classes.message}>{messageEmail}</Typography>}
 					</form>
 				</div>
 
@@ -324,12 +374,29 @@ const useStyles = makeStyles((theme) =>
 			color: Colors.black,
 
 		},
+		greyInput: {
+			borderRadius: 8,
+			background: Colors.inputBg,
+		},
+		message : {
+			textAlign: 'center',
+			// marginTop : 10,
+		},
 	})
 );
 
 
-export default connect(store => {
+// export default connect(store => {
+// 	return {
+// 		user: store.user,
+// 	}
+// })(Settings)
+
+function mapStateToProps(state) {
 	return {
-		user: store.user,
-	}
-})(Settings)
+			user: state.user,
+	};
+}
+
+
+export default connect(mapStateToProps)(Settings);

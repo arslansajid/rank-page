@@ -19,7 +19,7 @@ const ZTextField = ({
     rows,
     type,
     placeholder,
-    required,
+    // required,
 
 }) => {
     const classes = useStyles();
@@ -38,11 +38,11 @@ const ZTextField = ({
                         className={classes.textFieldLabel}
                     >
                     {label}
-                    {!!required && (
+                    {/* {!!required && (
                     <span className={classes.asteric}>
                         *
                     </span>
-                    )}
+                    )} */}
                     </InputLabel>
                 </div>
             )}

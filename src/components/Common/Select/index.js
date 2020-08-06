@@ -16,7 +16,7 @@ const SelectField = ({
     rules,
     placeholder,
     items,
-    required,
+    // required,
 }) => {
     const classes = useStyles();
 
@@ -31,11 +31,11 @@ const SelectField = ({
                         className={classes.selectLabel}
                     >
                     {label}
-                    {!!required && (
+                    {/* {!!required && (
                     <span className={classes.asteric}>
                         *
                     </span>
-                    )}
+                    )} */}
                     </InputLabel>
                 </div>
             )}

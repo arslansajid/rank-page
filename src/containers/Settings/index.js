@@ -10,6 +10,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
+import {UpdateProfile} from './actions'
 
 const Settings = (props) => {
 	// const [user , setUser] = useState(props.user ? props.user : null);
@@ -25,7 +26,24 @@ const Settings = (props) => {
 		setIsLoading(true);
 	}
 
+	
+
 	const classes = useStyles();
+
+	// const updateName = () => {
+	// 	setIsLoadingName(true);
+	// 	let user = {};
+	// 	user.name = userName;
+	// 	UpdateProfile(user)
+	// 	.then((res) => {
+	// 		setIsLoadingName(false);
+	// 			setMessageName(res.data.message)
+	// 	})
+	// 	.catch((err) => { 
+	// 		setIsLoadingName(false);
+	// 		console.log(err)
+	// 	})
+	// }
 
 	if (!!props.user) {
 		return (

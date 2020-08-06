@@ -40,6 +40,7 @@ const SignUpStep2 = props => {
       setIsLoading(true)
       registerData.country = registerData.country[0];
       let submitdata = {...registerData}
+      submitdata.name = submitdata.first_name + submitdata.last_name;
       submitdata.user_name = data.user_name;
       signUp(submitdata)
       .then((res) => {
@@ -76,7 +77,7 @@ const SignUpStep2 = props => {
       <form key={'form'} onSubmit={handleSubmit(onSubmit)} className = {classes.main}>
         <Typography variant="body1" className ='space-4'>Please choose your username, it can be changed later</Typography>
         <div className="space-4">
-          <InputLabel className={`${classes.title} space-2`}>Username <span className={classes.asteric}>*</span></InputLabel>
+          <InputLabel className={`${classes.title} space-2`}>Username*</InputLabel>
           <TextField
             type="text"
             name="user_name"

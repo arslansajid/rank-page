@@ -76,18 +76,35 @@ const SignUp = props => {
         <form id={'signup-form'} key={'form'} onSubmit={handleSubmit(onSubmit)}>
           <Typography variant="body1" className='space-4'>Please fill in the details to continue registration</Typography>
           <div className="space-2">
-            <TextField
-              type="text"
-              name="name"
-              // rules={{ required: 'This field is required' }}
-              control={control}
-              // error={errors.name ? true : false}
-              placeholder="Enter full name"
-              defaultValue={userData && userData.name ? userData.name : ''}
-              label='Full Name'
-              className="text-field"
-              // required = {true}
-            />
+            <InputLabel className='black'>Name*</InputLabel>
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  name="first_name"
+                  rules={{ required: 'This field is required' }}
+                  control={control}
+                  error={errors.first_name ? true : false}
+                  placeholder="First Name"
+                  defaultValue={userData && userData.first_name ? userData.first_name : ''}
+                  className="text-field"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="text"
+                  name="last_name"
+                  rules={{ required: 'This field is required' }}
+                  control={control}
+                  error={errors.last_name ? true : false}
+                  placeholder="Last Name"
+                  defaultValue={userData && userData.first_name ? userData.first_name : ''}
+                  className="text-field"
+                />
+              </Grid>
+             </Grid> 
+
+
           </div>
           <div className="space-2">
             <TextField
@@ -98,13 +115,13 @@ const SignUp = props => {
               error={errors.email ? true : false}
               placeholder="Enter email address"
               defaultValue={userData && userData.email ? userData.email : ''}
-              label='Email Address'
+              label='Email Address*'
               className="text-field"
-              required = {true}
+              // required = {true}
             />
           </div>
           <div className="space-2">
-            <InputLabel className = 'black'>Age</InputLabel>
+            <InputLabel className = 'black'>Age*</InputLabel>
             <TextField
               type="date"
               name="date_of_birth"
@@ -115,7 +132,7 @@ const SignUp = props => {
               // defaultValue={''}
               defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
               className="text-field"
-              required = {true}
+              // required = {true}
             />
           </div>
           {dateError ?
@@ -138,7 +155,7 @@ const SignUp = props => {
               // defaultValue={''}
               defaultValue={userData && userData.password ? userData.password : ''}
               className="text-field"
-              label='Password'
+              label='Password*'
               required = {true}
             />
           </div>
@@ -153,8 +170,8 @@ const SignUp = props => {
               // defaultValue={''}
               defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
               className="text-field"
-              label='Confirm Password'
-              required = {true}
+              label='Confirm Password*'
+              // required = {true}
             />
           </div>
           {passwordError ?

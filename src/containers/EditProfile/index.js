@@ -20,16 +20,30 @@ const EditProfile = (props) => {
 	const [gender, setGender] = useState('')
 	const [userDOB, setUserDOB] = useState('')
 	const [bio , setBio] = useState('')
-	const [ isLoading, setIsLoading] = useState(false);
+	const [ isLoadingName, setIsLoadingName] = useState(false);
+	const [ isLoadingGender, setIsLoadingGender] = useState(false);
+	const [ isLoadingDOB, setIsLoadingDOB] = useState(false);
+	const [ isLoadingBio, setIsLoadingBio] = useState(false);
+	const [ isLoadingCountry, setIsLoadingCountry] = useState(false);
+	const [messageName , setMessageName] = useState('');
+	const [messageBio , setMessageBio] = useState('');
+	const [messageGender , setMessageGender] = useState('');
+	const [messageDOB , setMessageDOB] = useState('');
+	const [messageCountry , setMessageCountry] = useState('');
+
 	const [message , setMessage] = useState('');
 	let countryData = CountryRegionData.map((item , index) => { return {value : item[0] , label : item[0]}})
 	
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!user) {
-			setUserName(user.name)
-			setCountry(Capitalize(user.country));
-			setGender(Capitalize(user.gender));
+			setUserName(user.name);
+			if(user.country){
+				setCountry(Capitalize(user.country))
+			}  
+			if(user.gender){
+				setGender(Capitalize(user.gender))
+			}
 			setUserDOB(moment(user.date_of_birth).format("YYYY-MM-DD"));
 			setBio(user.bio ? user.bio : '')
 		}
@@ -54,26 +68,95 @@ const EditProfile = (props) => {
 		else return null;
 	}
 
-	const updateProfile = () => {
-		setIsLoading(true);
+	// const updateProfile = () => {
+	// 	setIsLoading(true);
+	// 	let user = {};
+	// 	user.gender = translateGender(gender);
+	// 	user.name = userName;
+	// 	user.country = country;
+	// 	user.bio = bio;
+	// 	UpdateProfile(user)
+	// 	.then((res) => {
+	// 		setIsLoading(false);
+	// 			setMessage(res.data.message)
+	// 	})
+	// 	.catch((err) => { 
+	// 		setIsLoading(false);
+	// 		console.log(err)
+	// 	})
+	// }
+
+	const updateName = () => {
+		setIsLoadingName(true);
 		let user = {};
-		user.gender = translateGender(gender);
 		user.name = userName;
-		user.country = country;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingName(false);
+				setMessageName(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingName(false);
+			console.log(err)
+		})
+	}
+	const updateBio = () => {
+		setIsLoadingBio(true);
+		let user = {};
 		user.bio = bio;
 		UpdateProfile(user)
 		.then((res) => {
-			setIsLoading(false);
-				setMessage(res.data.message)
+			setIsLoadingBio(false);
+				setMessageBio(res.data.message)
 		})
 		.catch((err) => { 
-			setIsLoading(false);
+			setIsLoadingBio(false);
 			console.log(err)
-			// setMessage(err.data.message)
 		})
+	}
+	const updateGender = () => {
+		setIsLoadingGender(true);
+		let user = {};
+		user.gender = translateGender(gender);
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingGender(false);
+				setMessageGender(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingGender(false);
+			console.log(err)
+		})
+	}
 
-		// user.user_name = 
+	const updateDOB = () => {
+		setIsLoadingDOB(true);
+		let user = {};
+		user.date_of_birth= userDOB;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingDOB(false);
+				setMessageDOB(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingDOB(false);
+			console.log(err)
+		})
+	}
 
+	const updateCountry = () => {
+		setIsLoadingCountry(true);
+		let user = {};
+		user.country= country;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingCountry(false);
+				setMessageCountry(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingCountry(false);
+			console.log(err)
+		})
 	}
 
 
@@ -90,7 +173,6 @@ const EditProfile = (props) => {
 		</Paper>
 		
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Cover</Typography> */}
 			<InputLabel className='space-2'>Cover</InputLabel>
 			<Grid className={classes.coverContainer}>
 				<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
@@ -98,23 +180,27 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Full Name</Typography> */}
 			<InputLabel className='space-2'>Full Name</InputLabel>
 			<TextField
-				className={classes.greyInput}
+				className={`${classes.greyInput} space-4`}
 				margin='dense'
 				variant='outlined'
 				fullWidth
 				value={userName}
 				onChange={(e) => setUserName(e.target.value)}
 			/>
+			<Button  disabled={isLoadingName} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateName}>
+				<Typography>
+					Change
+				</Typography>
+			</Button>
+			{messageName && <Typography className={classes.message}>{messageName}</Typography>}
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Bio (140 Characters)</Typography> */}
 			<InputLabel className='space-2'>Bio (140 Characters)</InputLabel>
 			<TextField
-				className={classes.greyInput}
+				className={`${classes.greyInput} space-4`}
 				margin='dense'
 				variant='outlined'
 				multiline={true}
@@ -123,35 +209,42 @@ const EditProfile = (props) => {
 				value={bio}
 				onChange={(e) => {setBio(e.target.value)}}
 			/>
+			<Button  disabled={isLoadingBio} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateBio}>
+				<Typography>
+					Change
+				</Typography>
+			</Button>
+			{messageBio && <Typography className={classes.message}>{messageBio}</Typography>}
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Date of birth</Typography> */}
 			<InputLabel className='space-2'>Date of Birth</InputLabel>
 			<TextField
-				className={classes.greyInput}
+				className={`${classes.greyInput} space-4`}
 				type="date"
 				name="date_of_birth"
 				placeholder="Date"
 				value={userDOB}
-				// defaultValue={!!user ? user.date_of_birth : ''}
-				className="text-field"
 				margin='dense'
 				variant='outlined'
 				fullWidth
 				onChange={(e) => setUserDOB(e.target.value)}
 			/>
+			<Button  disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
+				<Typography>
+					Change
+				</Typography>
+			</Button>
+			{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Gender</Typography> */}
 			<InputLabel className='space-2'>Gender</InputLabel>
 			<TextField
-				className={classes.greyInput}
+				className={`${classes.greyInput} space-4`}
 				margin='dense'
 				variant='outlined'
 				value={gender}
-				// defaultValue={!!user ? user.gender : ''}
 				select
 				fullWidth
 				onChange={(e) => setGender(e.target.value)}
@@ -160,13 +253,18 @@ const EditProfile = (props) => {
 					<MenuItem key={index} value={item.label}>{item.label}</MenuItem>
 				))}
 			</TextField>
+			<Button  disabled={isLoadingGender} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateGender}>
+				<Typography>
+					Change
+				</Typography>
+			</Button>
+			{messageGender && <Typography className={classes.message}>{messageGender}</Typography>}
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom>Country</Typography> */}
 			<InputLabel className='space-2'>Country</InputLabel>
 			<TextField
-				className={classes.greyInput}
+				className={`${classes.greyInput} space-4`}
 				margin='dense'
 				variant='outlined'
 				value={country}
@@ -180,21 +278,13 @@ const EditProfile = (props) => {
             </MenuItem>
           ))}
 			</TextField>
-		</Paper>
-
-		<Paper elevation={0} className={classes.container}>
-			<Button  disabled={isLoading} className={`${classes.submitButton} space-2`} variant="contained" color="primary" onClick={updateProfile}>
-					<Typography>
-							Save Changes
-					</Typography>
+			<Button  disabled={isLoadingCountry} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateCountry}>
+				<Typography>
+					Change
+				</Typography>
 			</Button>
-			{message && <Typography className={classes.message}>{message}</Typography>}
+			{messageCountry && <Typography className={classes.message}>{messageCountry}</Typography>}
 		</Paper>
-
-		{/* <Paper elevation={0} className={classes.container}>
-			<Typography variant="h6" gutterBottom>State</Typography>
-			
-		</Paper> */}
 		</Grid>
 		</>
 	);

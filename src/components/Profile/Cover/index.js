@@ -7,21 +7,37 @@ import Avatar from '@material-ui/core/Avatar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
 import { connect } from "react-redux"
+import {getUserData} from './actions'
 
 const ProfileCover = (props) => {
 
     const classes = useStyles();
+    const [userData , setUserData] = useState(null);
     const { user , info} = props;
-    console.log('user info in profile cover' , info)
+
+    useEffect(() => {
+        let params = {};
+        params.user_id = props.user &&  props.user.id ? props.user.id : null ;
+        getUserData(params)
+        .then((res)=>{
+            if(res.data && res.data.success){
+                setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
+            }
+        })
+        .catch((err) => { console.log('user api error')})
+
+    } , [])
+    console.log('user data here' , userData && userData.followings)
+
     return (
         <>
         <Paper elevation={0} className={classes.coverContainer}>
             <Grid className={classes.mainContainer}>
                 <Grid container justify="space-between">
                     <div>
-                        <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={!!user && user.profile_image ? user.profile_image : require("../../../assets/images/user.jpg")} />
-                        <Typography variant='body1' className = {classes.bold}>{!!user && user.name ? user.name : ''}</Typography>
-                        <Typography variant='body2' className = {classes.font}>{!!user && user.user_name ? `@ ${user.user_name}` : ''}</Typography>
+                        <Avatar className={classes.avatar} alt={!!userData ? userData.name : 'image'} src={!!userData && userData.profile_image ? userData.profile_image : require("../../../assets/images/user.jpg")} />
+                        <Typography variant='body1' className = {classes.bold}>{!!userData && userData.name ? userData.name : ''}</Typography>
+                        <Typography variant='body2' className = {classes.font}>{!!userData && userData.user_name ? `@ ${userData.user_name}` : ''}</Typography>
                     </div>
                     <div>
                         <Link to="/settings">
@@ -38,24 +54,24 @@ const ProfileCover = (props) => {
                 <Grid container justify="space-between">
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Typography className = {classes.introText}>
-                        {!!info && info.bio ? info.bio : 'No Bio Added'}
+                        {!!userData && userData.bio ? userData.bio : 'No Bio Added'}
                     </Typography>
                     </Grid>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!info && info.followings ? info.followings : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.followings ? userData.followings : ''}</Typography>
                             <Typography className = {classes.font}>Following</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!info && info.followers ? info.followers : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.followers ? userData.followers : ''}</Typography>
                             <Typography className = {classes.font}>Fans</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!info && info.total_lists ? info.total_lists : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.total_lists ? userData.total_lists : ''}</Typography>
                             <Typography className = {classes.font}>Lists</Typography>
                         </Grid>
-                    </Grid>
+                    </Grid> 
                     </Grid>
                 </Grid>
             </Grid>

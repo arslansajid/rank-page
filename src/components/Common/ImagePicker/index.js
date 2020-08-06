@@ -45,7 +45,15 @@ const ImagePicker = (props) => {
       {renderThumbs}
         <div className = 'imageContainer'>
           <input {...getInputProps()} />
-          <div className = 'picker'>
+          {/* <div className = 'picker'> */}
+          {
+                type === 'image' ?
+                <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , borderRadius: '50%'}}/>
+                :
+                <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , height : '150px' , objectFit : 'cover'}}/>
+              }
+            {/* </div> */}
+          {/* <div className = 'picker'>
             <div className ='pickerText'>
               {
                 type === 'image' ?
@@ -54,7 +62,7 @@ const ImagePicker = (props) => {
                 'COVER PHOTO'
               }
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
@@ -64,16 +72,16 @@ const ImagePicker = (props) => {
 const useStyles = makeStyles((theme) =>
     createStyles({
       dropZoneImage : {
-          width: '5rem',
-          height: '5rem',
+          // width: '5rem',
+          // height: '5rem',
           backgroundColor: 'transparent',
           zIndex: 100,
         '& .thumb': {
           cursor: 'pointer',
           display: 'inline-flex',
           borderRadius: 2,
-          width: '5rem',
-          height: '5rem',
+          width: '7.75rem',
+          height: '7.75rem',
           boxSizing: 'border-box',
           position: 'absolute',
           top: 0,
@@ -92,8 +100,8 @@ const useStyles = makeStyles((theme) =>
           overflow: 'hidden'
         },
 				'& .imageContainer' :{
-          width: '5rem',
-          height: '5rem',
+          width: '7.75rem',
+          height: '7.75rem',
           backgroundColor: '#484B5C',
           display:'flex',
           justifyContent: 'center',
@@ -110,6 +118,7 @@ const useStyles = makeStyles((theme) =>
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: '50%',
+          // backgroundImage : ('../../../assets/icons/placeholder.svg')
 
 				},
         '& .pickerText': {

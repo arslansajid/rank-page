@@ -55,9 +55,9 @@ const PostCard = (props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Hide</MenuItem>
-                <MenuItem onClick={handleClose}>Show</MenuItem>
-                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={handleClose}>Report</MenuItem>
+                <MenuItem onClick={handleClose}>Block User</MenuItem>
+                <MenuItem onClick={handleClose}>Unfollow User</MenuItem>
             </Menu>
 
             <Card elevation={0} className={classes.root}>

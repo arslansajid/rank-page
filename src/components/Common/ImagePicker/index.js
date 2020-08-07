@@ -53,16 +53,19 @@ const ImagePicker = (props) => {
                 <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , height : '150px' , objectFit : 'cover'}}/>
               }
             {/* </div> */}
-          {/* <div className = 'picker'> */}
+            {!files.length && (
             <div className ='pickerText'>
-              {/* {
-                type === 'image' ?
-                'PROFILE'
-                :
-                'COVER PHOTO'
-              } */}
-              Change
-            </div>
+            {/* {
+              type === 'image' ?
+              'PROFILE'
+              :
+              'COVER PHOTO'
+            } */}
+            Change
+          </div>
+            )}
+          {/* <div className = 'picker'> */}
+            
           {/* </div> */}
         </div>
       </div>

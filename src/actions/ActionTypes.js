@@ -13,6 +13,10 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const SHOW_SIGNIN = 'SHOW_SIGNIN';
 export const HIDE_SIGNIN = 'HIDE_SIGNIN';
 
+///sign up form
+export const SHOW_SIGNUP = 'SHOW_SIGNUP';
+export const HIDE_SIGNUP = 'HIDE_SIGNUP';
+
 ///list creation dialog
 export const SHOW_LIST_DIALOG = 'SHOW_LIST_DIALOG';
 export const HIDE_LIST_DIALOG = 'HIDE_LIST_DIALOG';

@@ -53,16 +53,17 @@ const ImagePicker = (props) => {
                 <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , height : '150px' , objectFit : 'cover'}}/>
               }
             {/* </div> */}
-          {/* <div className = 'picker'>
+          {/* <div className = 'picker'> */}
             <div className ='pickerText'>
-              {
+              {/* {
                 type === 'image' ?
                 'PROFILE'
                 :
                 'COVER PHOTO'
-              }
+              } */}
+              Change
             </div>
-          </div> */}
+          {/* </div> */}
         </div>
       </div>
     </>
@@ -122,8 +123,10 @@ const useStyles = makeStyles((theme) =>
 
 				},
         '& .pickerText': {
-          color: Colors.white,
-          fontSize: '11px',
+          fontSize: '1rem',
+          position : 'absolute' ,
+          color : Colors.black,
+          fontWeight : 'bold',
         }
       },
 
@@ -179,8 +182,10 @@ const useStyles = makeStyles((theme) =>
 
       },
       '& .pickerText': {
-        color: Colors.white,
         fontSize: '1rem',
+        position : 'absolute' ,
+        color : Colors.black,
+        fontWeight : 'bold',
       }
     },
     })

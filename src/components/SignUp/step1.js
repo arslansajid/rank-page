@@ -157,6 +157,7 @@ const SignUp = props => {
               className="text-field"
               label='Password*'
               required = {true}
+              onChange = {() => console.log('password change called')}
             />
           </div>
           <div className="space-2">

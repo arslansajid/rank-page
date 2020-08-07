@@ -1,106 +1,51 @@
-import React , {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import PostCard from "../../PostCard";
-import CreateList from "./createList";
-import Dialog from "../../Common/Dialog";
-import ListTile  from './listTile'
-import CreateListStep2 from "./createListStep2";
-import CreateListStep3 from "./createListStep3";
-import Published from "./published";
-
-
+import { getLists } from "./actions";
+import { connect } from "react-redux";
+import LoadingSpinner from "../../Common/LoadingSpinner"
 
 const Lists = (props) => {
-    const [showCreateList , setShowCreateList] = useState(true)
-    const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
-    const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
-    const [showPublished, setShowPublished] = useState(false)
-    const [ listItems , setListItems] = useState(null)
+    const [lists, setLists] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const classes = useStyles();
 
-    console.log('list items data here' , listItems)
+    const { user } = props;
+
+    useEffect(() => {
+        if (!!user) {
+            getLists({ 'user_id': user.id })
+                .then((res) => {
+                    console.log('res', res)
+                    setLists(res.data.data.users_own_lists)
+                    setIsLoading(false);
+                })
+                .catch((err) => {
+                    console.log('err', err);
+                    setIsLoading(false);
+                })
+        }
+    }, [user])
 
     return (
         <>
-            {[...Array(3)].map((list, index) => {
+            {
+                isLoading && (
+                    <LoadingSpinner
+                        loading={isLoading}
+                        text="Fetching Lists..."
+                        size="large"
+                    />
+                )
+            }
+            {lists.length && lists.map((list, index) => {
                 return (
                     <Grid key={index}>
-                        <PostCard />
+                        <PostCard data={list} />
                     </Grid>
                 )
             })}
-        {/* {
-            showCreateList && (
-            <Dialog
-                title={"Create List"}
-                open={showCreateList}
-                message={
-                    <CreateList 
-                    // createNew = {() => { setShowCreateList(false) ; setShowCreateListStep2(true)}}
-                    continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
-                    getData = {(value) =>  setListItems(value)}
-                    // continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true)}}
-                    />
-                }
-                applyForm={() => setShowCreateList(false)}
-                cancelForm={() => setShowCreateList(false)}
-                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep2(true) }}
-                hideActions={true}
-            />
-        )
-            }
-             {showCreateListStep2 && (
-            <Dialog
-                title={"Create List"}
-                open={showCreateListStep2}
-                message={
-                    <CreateListStep2 
-                    listItems = {listItems}
-                    getListData = {(value) => {setListItems(value)}}
-                    continueNext = {() => {setShowCreateListStep2(false) ; setShowCreateListStep3(true) }}/>
-                }
-                applyForm={() => {setShowCreateList(true) ; setShowCreateListStep2(false) }}
-                // cancelForm={() => setShowCreateListStep2(false)}
-                // continueNext = {() => {setShowCreateList(false) ; setShowCreateListStep3(true) }}
-
-                backAction={() => {setShowCreateList(true) ; setShowCreateListStep2(false) }}
-                hideActions={true}
-            />
-        )
-            }
-
-            {showCreateListStep3 && (
-            <Dialog
-                title={"Create List"}
-                open={showCreateListStep3}
-                message={
-                    <CreateListStep3 
-                    listItems = {listItems}
-                    publish = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}/>
-                }
-                applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
-                // cancelForm={() => setShowCreateListStep3(false)}
-                // continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true) }}
-                backAction = {() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
-                hideActions={true}
-            />
-        )
-            }
-        {showPublished && (
-            <Dialog
-                title={"Published"}
-                open={setShowPublished}
-                message={
-                    <Published/>
-                }
-                applyForm={() => setShowPublished(false)}
-                cancelForm={() => setShowPublished(false)}
-                // continueNext = {() => setShowCreateList(false)}
-                hideActions={true}
-            />
-        )
-            } */}
         </>
     )
 
@@ -114,5 +59,10 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
 
-export default Lists;
+export default connect(mapStateToProps)(Lists);

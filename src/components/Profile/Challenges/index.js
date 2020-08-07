@@ -11,7 +11,7 @@ const Challenges = () => {
             {[...Array(3)].map((list, index) => {
                 return (
                     <Grid key={index}>
-                        <PostCard />
+                        {/* <PostCard /> */}
                     </Grid>
                 )
             })}

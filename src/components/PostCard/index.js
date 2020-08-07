@@ -19,8 +19,10 @@ import moment from "moment";
 
 const PostCard = (props) => {
     const classes = useStyles();
+    const { user, post } = props;
     const [expanded, setExpanded] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -34,20 +36,19 @@ const PostCard = (props) => {
 
     const likeHandler = () => {
         const data = {
-            'share_post_id': 1,
+            'share_post_id': post.id,
             'like_type': 1
         }
         LikeUnlikePost(data)
         .then((res) => {
             console.log('res', res)
+            setIsLiked(res.data.message.includes("unliked") ? false : true);
         })
         .catch((err) => {
             console.log('err', err)
         })
     }
 
-    const { user, post } = props;
-    console.log("POST DATA", post)
     return (
         <>
             <Menu
@@ -98,7 +99,7 @@ const PostCard = (props) => {
                 {/* </CardContent> */}
                 <CardActions>
                     <Grid container justify="space-between">
-                        <Button onClick={() => likeHandler()} className={classes.weight} startIcon={<LikeIcon />}>Like</Button>
+                        <Button onClick={() => likeHandler()} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>Like</Button>
                         <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
                         <Button className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>

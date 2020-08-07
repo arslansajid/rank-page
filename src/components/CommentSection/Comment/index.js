@@ -3,11 +3,32 @@ import React, {useState} from "react";
 import {Typography, Grid, Avatar, TextField} from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
+import {replyToComment} from "../action";
 
 const Comment = (props) => {
     const classes = useStyles();
     const [showCommentInput, setShowCommentInput] = useState(false);
-    const {comment, id, isChildren} = props;
+    const [commentTextInput, setCommentTextInput] = useState('');
+    const {comment, author, isChildren, postId, commentId, fetchComments} = props;
+
+    const replyToCommentHandler = () => {
+        const data = {
+            'share_post_id': postId,
+            'comment_id': commentId,
+            'comment': commentTextInput,
+          }
+        replyToComment(data)
+        .then((res) => {
+            console.log(res);
+            setCommentTextInput('');
+            fetchComments();
+        })
+        .catch((err) => {
+            console.log(err);
+            setCommentTextInput('');
+        })
+    }
+
     return (
         <>
         <Grid container className={`${classes.cardProfileSection}`}>
@@ -17,8 +38,8 @@ const Comment = (props) => {
             </Grid>
             <Grid item>
             <Grid className={classes.verticalCenter}>
-                <Typography gutterBottom variant='body1'>{/* !!user ? user.name : '' */ comment} </Typography>
-                <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ id }</Typography>
+                <Typography gutterBottom variant='body1'>{/* !!user ? user.name : '' */ author } </Typography>
+                <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ comment }</Typography>
                 <Grid container>
                     <Typography className={classes.textButton}>Like</Typography>
                     <Typography onClick={() => setShowCommentInput(!showCommentInput)} className={classes.textButton}>Reply</Typography>
@@ -30,7 +51,14 @@ const Comment = (props) => {
                         margin='dense'
                         variant='outlined'
                         fullWidth
-                        placeholder="Add Comment"
+                        placeholder="Reply to comment"
+                        value={commentTextInput}
+                        onChange={(e) => setCommentTextInput(e.target.value)}
+                        onKeyPress={(event) => {
+                            if(event.key === 'Enter') {
+                              replyToCommentHandler();
+                            }
+                          }}
                     />
                 )
             }

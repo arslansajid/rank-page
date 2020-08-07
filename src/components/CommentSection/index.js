@@ -1,139 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Typography, TextField, IconButton, Avatar, Grid} from "@material-ui/core";
 import Colors from "../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 import CommentTile from "./Comment";
-import { addComment } from "./action";
-
-const comments = [  
-    {  
-      "id":1,
-      "comment_text":"asdasdadasdsadsadadsa",
-      "author":"Arslan",
-      "post_id":1,
-      "ancestry":null,
-      "archived":false,
-      "created_at":"2014-10-16T23:16:44.173Z",
-      "updated_at":"2014-10-16T23:16:44.173Z",
-      "is_moderated":false,
-      "avatar_url":null,
-      "slug":null,
-      "blog_id":2,
-      "children":[  
-
-      ]
-    },
-    {  
-      "id":2,
-      "comment_text":"idlsfghlskdhvbsldfhjdslifds\nzf\ndsf\nds\nf\ns\nf\ns\nfds\nfsdjghfsdligjhsepfiguhefdliguhefldiughfeliughnfesg\nf\nsg\ns\ng\ns\ndf\nsd\nf\nsdgsofughlefidughls;uhgsuhg.vskjfhglsiuhg.sfv",
-      "author":"Zeshan",
-      "post_id":1,
-      "ancestry":null,
-      "archived":false,
-      "created_at":"2014-10-16T23:17:02.270Z",
-      "updated_at":"2014-10-16T23:17:02.270Z",
-      "is_moderated":false,
-      "avatar_url":null,
-      "slug":null,
-      "blog_id":2,
-      "children":[  
-        {  
-          "id":3,
-          "comment_text":"fdsfdsfdsfsdfsfsdf",
-          "author":"Haseeb",
-          "post_id":1,
-          "ancestry":"2",
-          "archived":false,
-          "created_at":"2014-11-28T17:39:47.059Z",
-          "updated_at":"2014-11-28T17:39:47.059Z",
-          "is_moderated":false,
-          "avatar_url":null,
-          "slug":null,
-          "blog_id":2,
-          "children":[  
-            {  
-              "id":4,
-              "comment_text":"fdsfdsfdsdsfdsfds",
-              "author":"Kamran",
-              "post_id":1,
-              "ancestry":"2/3",
-              "archived":false,
-              "created_at":"2014-11-28T17:39:53.049Z",
-              "updated_at":"2014-11-28T17:39:53.049Z",
-              "is_moderated":false,
-              "avatar_url":null,
-              "slug":null,
-              "blog_id":2,
-              "children":[  
-                {
-                  "id":5,
-                  "comment_text":"sdfdsfdsfdsfdssdfsdfdsfdsfdsfds",
-                  "author":"Javed",
-                  "post_id":1,
-                  "ancestry":"2/3/4",
-                  "archived":false,
-                  "created_at":"2014-11-28T17:40:02.032Z",
-                  "updated_at":"2014-11-28T17:40:02.032Z",
-                  "is_moderated":false,
-                  "avatar_url":null,
-                  "slug":null,
-                  "blog_id":2,
-                  "children":[  
-                    {
-                        "id":6,
-                        "comment_text":"sdfdsfdsfdsfdssdfsdfdsfdsfdsfds",
-                        "author":"Ali",
-                        "post_id":1,
-                        "ancestry":"2/3/4",
-                        "archived":false,
-                        "created_at":"2014-11-28T17:40:02.032Z",
-                        "updated_at":"2014-11-28T17:40:02.032Z",
-                        "is_moderated":false,
-                        "avatar_url":null,
-                        "slug":null,
-                        "blog_id":2,
-                        "children":[  
-      
-                        ]
-                      },
-                      {
-                        "id":7,
-                        "comment_text":"sdfdsfdsfdsfdssdfsdfdsfdsfdsfds",
-                        "author":"Shahid",
-                        "post_id":1,
-                        "ancestry":"2/3/4",
-                        "archived":false,
-                        "created_at":"2014-11-28T17:40:02.032Z",
-                        "updated_at":"2014-11-28T17:40:02.032Z",
-                        "is_moderated":false,
-                        "avatar_url":null,
-                        "slug":null,
-                        "blog_id":2,
-                        "children":[  
-      
-                        ]
-                      }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+import { addComment, getComments } from "./action";
 
   const Comment = (props) => {
       var comment = props.comment;
       return (
         <>
-            <CommentTile id={comment.id} comment={comment.author} isChildren={props.child} />
+            <CommentTile
+              postId={comment.share_post_id}
+              commentId={comment.id}
+              author={comment.user.user_name}
+              comment={comment.comment}
+              isChildren={props.child}
+              fetchComments={props.fetchComments}
+            />
             {
-                comment.children.length > 0 && (
-                    <Comments
-                        child={true}
-                        comments={comment.children.length ? comment.children: []} />
-                )
+              !!comment.replies && comment.replies.length > 0 && (
+                  <Comments
+                    child={true}
+                    comments={comment.replies.length ? comment.replies : []} />
+              )
             }
         </>
       )
@@ -147,23 +36,44 @@ const comments = [
       )
     };
 
-    const addCommentHandler = (commentText) => {
+const CommentSection = (props) => {
+    const classes = useStyles();
+    const {postId} = props;
+    const [comments, setComments] = useState([]);
+    const [commentTextInput, setCommentTextInput] = useState('');
+
+    useEffect(() => {
+      fetchComments();
+    }, [])
+
+    const fetchComments = () => {
+      getComments({'post_id': postId})
+      .then((res) => {
+        console.log(res);
+        setComments(res.data.data.comments)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+
+    const addCommentHandler = () => {
       const data = {
-        'share_post_id': 1,
-        'comment': commentText,
+        'share_post_id': postId,
+        'comment': commentTextInput,
       }
       addComment(data)
       .then((res) => {
           console.log('res', res)
+          setCommentTextInput('');
+          fetchComments();
       })
       .catch((err) => {
-          console.log('err', err)
+          console.log('err', err);
+          setCommentTextInput('');
       })
     } 
 
-const CommentSection = () => {
-    const classes = useStyles();
-    // const newArr = nestComments(comments);
     return (
         <>
         <Grid className={classes.root} container>
@@ -177,15 +87,17 @@ const CommentSection = () => {
                         variant='outlined'
                         fullWidth
                         placeholder={"Write your comment..."}
+                        value={commentTextInput}
+                        onChange={(e) => setCommentTextInput(e.target.value)}
                         onKeyPress={(event) => {
                           if(event.key === 'Enter') {
-                            addCommentHandler(event.target.value);
+                            addCommentHandler();
                           }
                         }}
                     />
                 </Grid>
             </Grid>
-            <Comments comments={comments} />
+            <Comments comments={comments} fetchComments={() => fetchComments()} {...props} />
         </Grid>
         </>
     )

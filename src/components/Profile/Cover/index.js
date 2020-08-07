@@ -6,14 +6,16 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
-import { connect } from "react-redux"
+import { connect } from "react-redux";
+import { showSignIn } from "../../../actions/SignInFormActions";
+import { showSignUp } from "../../../actions/SignUpFormActions";
 import {getUserData} from './actions'
 
 const ProfileCover = (props) => {
 
     const classes = useStyles();
     const [userData , setUserData] = useState(null);
-    const { user , info} = props;
+    const { user , info, dispatch} = props;
 
     useEffect(() => {
         let params = {};
@@ -39,6 +41,7 @@ const ProfileCover = (props) => {
                         <Typography variant='body1' className = {classes.bold}>{!!userData && userData.name ? userData.name : ''}</Typography>
                         <Typography variant='body2' className = {classes.font}>{!!userData && userData.user_name ? `@ ${userData.user_name}` : ''}</Typography>
                     </div>
+                    {!!user ?
                     <div>
                         <Link to="/settings">
                             <Button className={classes.buttonSettings} color="inherit">
@@ -49,6 +52,16 @@ const ProfileCover = (props) => {
                             <Button className={classes.buttonEdit} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
                         </Link>
                     </div>
+                :
+                    <div>
+                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignUp())}>
+                            Register
+                        </Button>
+                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignIn())}>
+                            Sign In
+                        </Button>
+                    </div>
+                }
                     
                 </Grid>
                 <Grid container justify="space-between">

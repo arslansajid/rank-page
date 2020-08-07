@@ -7,10 +7,10 @@ import { checkIfLoggedIn } from "./actions";
 import { userLogin } from "../../actions/LoginActions";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
 import ListCreation from "../../components/ListCreation";
+import SigninSignup from "../SigninSignup"
 
 const AppContainer = (props) => {
     const classes = useStyles();
-    const {history} = props;
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -39,7 +39,10 @@ const AppContainer = (props) => {
         )
     } else {
         return (
+            <>
+            <SigninSignup />
             <ListCreation />
+            </>
         )
     }
     }

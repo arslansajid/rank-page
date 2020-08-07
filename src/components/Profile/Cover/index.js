@@ -60,15 +60,15 @@ const ProfileCover = (props) => {
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                     <Grid container justify="flex-end">
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.followings ? userData.followings : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.followings ? userData.followings : 0}</Typography>
                             <Typography className = {classes.font}>Following</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.followers ? userData.followers : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.followers ? userData.followers : 0}</Typography>
                             <Typography className = {classes.font}>Fans</Typography>
                         </Grid>
                         <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.total_lists ? userData.total_lists : ''}</Typography>
+                            <Typography className = {classes.font}>{!!userData && userData.total_lists ? userData.total_lists : 0}</Typography>
                             <Typography className = {classes.font}>Lists</Typography>
                         </Grid>
                     </Grid> 

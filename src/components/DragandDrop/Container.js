@@ -9,7 +9,6 @@ import { Typography, Grid, colors } from "@material-ui/core";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Container = (props) => {
-  console.log("LIST ITEMS PROPS:", props.listItems)
   const {listItems} = props;
   const [dustbins, setDustbins] = useState([
     { id: 1, accepts: [ItemTypes.LIST], lastDroppedItem: null },
@@ -41,8 +40,6 @@ const Container = (props) => {
         lastDroppedItem: null
       }
     })
-    console.log("BOXES", BOXES)
-    console.log("DUSTBINS", DUSTBINS)
     setDustbins([...DUSTBINS]);
     setBoxes([...BOXES])
   }, [])

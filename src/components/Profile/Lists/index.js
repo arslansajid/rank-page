@@ -42,7 +42,7 @@ const Lists = (props) => {
             {lists.length && lists.map((list, index) => {
                 return (
                     <Grid key={index}>
-                        <PostCard data={list} />
+                        <PostCard post={list} />
                     </Grid>
                 )
             })}

@@ -15,6 +15,7 @@ import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
 import { connect } from "react-redux";
 import { LikeUnlikePost } from "./action";
+import moment from "moment";
 
 const PostCard = (props) => {
     const classes = useStyles();
@@ -45,7 +46,8 @@ const PostCard = (props) => {
         })
     }
 
-    const { user } = props;
+    const { user, post } = props;
+    console.log("POST DATA", post)
     return (
         <>
             <Menu
@@ -77,11 +79,11 @@ const PostCard = (props) => {
                     </Grid>
                 </Grid>
                 <Grid className={classes.cardProfileSection}>
-                    <Typography variant='h6' className={`${classes.heading} space-2`}>Who Is the Coolest Actor in the World Right Now? </Typography>
-                    <Typography variant='body2' className='smallFont'>• 9 July 2020 at 12:30 AM</Typography>
+                    <Typography variant='h6' className={`${classes.heading} space-2`}>{!!post.title && post.title} </Typography>
+                    <Typography variant='body2' className='smallFont'>• {moment(post.updated_at).format("DD MMM YYYY")} at {moment(post.updated_at).format("hh:mm A")}</Typography>
                 </Grid>
                 <Grid className={classes.cardProfileSection} style={!expanded ? { maxHeight: '71vh', overflow: 'hidden' } : { height: '100%' }}>
-                    <DragandDrop />
+                    <DragandDrop listItems={post.list_items} />
 
                     <Grid container alignItems="center" justify="center" className={classes.showMoreContainer}>
                         <Button onClick={() => setExpanded(!expanded)} variant="text" className={classes.showMoreText}>{expanded ? "Collapse" : "Click to Expand"}</Button>
@@ -90,8 +92,8 @@ const PostCard = (props) => {
 
                 {/* <CardContent> */}
                 <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
-                    <Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>Arslan sajid and 23 others</Typography>
-                    <Typography variant='body2' className='smallFont'>16 Comments • 2 Shares</Typography>
+                    <Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{!!post.likes_count && post.likes_count}</Typography>
+                    <Typography variant='body2' className='smallFont'>{!!post.comments_count ? post.comments_count : 0} Comments • 2 Shares</Typography>
                 </Grid>
                 {/* </CardContent> */}
                 <CardActions>
@@ -103,7 +105,7 @@ const PostCard = (props) => {
                 </CardActions>
                 {
                 showComments && (
-                    <CommentSection />
+                    <CommentSection postId={post.id} />
                 )
             }
             </Card>
@@ -155,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
     showMoreContainer: {
         position: 'absolute',
         width: 'calc(100% - 40px)',
-        bottom: 0,
+        bottom: '15%',
         minHeight: 40,
         color: Colors.white,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%)',

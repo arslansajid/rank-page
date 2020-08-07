@@ -10,11 +10,11 @@ import SelectCategories from "../SignUp/selectCategories";
 import RecoverAccount from "../RecoverAccount";
 import Success from "../RecoverAccount/sucees";
 import Colors from '../../static/_colors';
-import { Link } from 'react-router-dom';
+import { Link , withRouter} from 'react-router-dom';
 
 const UserProfile = (props) => {
     const classes = useStyles();
-    const { user } = props;
+    const { user  , history} = props;
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
@@ -22,6 +22,7 @@ const UserProfile = (props) => {
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
     const [showRecoverySuccess, setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();
+    console.log('props here ,' , props)
 
     const registerData = (data) => {
         setValue(data)
@@ -85,7 +86,6 @@ const UserProfile = (props) => {
                             openLogin = {() => {setShowSignUpStep2(false) ; setShowSignIn(true)}}
                             registerData={value}
                             showCatergories={() => { setShowSignUpStep2(false); setShowSelectCategories(true) }}
-
                         />}
                         applyForm={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
                         backAction={() => { setShowSignUp(true); setShowSignUpStep2(false) }}
@@ -99,10 +99,10 @@ const UserProfile = (props) => {
                         title={"Select Categories"}
                         open={showSelectCategories}
                         message={<SelectCategories
-                            close={() => setShowSelectCategories(false)}
+                            close={() => {setShowSelectCategories(false) ; history.push('/profile/lists')}}
                         />}
-                        applyForm={() => setShowSelectCategories(false)}
-                        skipAction={() => setShowSelectCategories(false)}
+                        applyForm={() => {setShowSelectCategories(false)  ; history.push('/profile/lists')}}
+                        skipAction={() => {setShowSelectCategories(false) ; history.push('/profile/lists')}}
 
                         hideActions={true}
                     />
@@ -199,4 +199,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(UserProfile);
+export default withRouter(connect(mapStateToProps)(UserProfile));

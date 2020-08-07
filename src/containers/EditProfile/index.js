@@ -7,9 +7,17 @@ import {GenderItems} from "../../static/_selectOptions";
 import { makeStyles } from '@material-ui/core/styles';
 import { CountryRegionData } from "react-country-region-selector";
 import MenuItem from "@material-ui/core/MenuItem";
+import { useForm } from 'react-hook-form';
 import ImagePicker from "../../components/Common/ImagePicker";
 import { Capitalize } from "../../utils/Functions";
 import moment from "moment"
+import DatePicker from 'react-date-picker';
+// import DateFnsUtils from '@date-io/date-fns';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
 import {UpdateProfile} from './action'
 
 const EditProfile = (props) => {
@@ -30,10 +38,15 @@ const EditProfile = (props) => {
 	const [messageGender , setMessageGender] = useState('');
 	const [messageDOB , setMessageDOB] = useState('');
 	const [messageCountry , setMessageCountry] = useState('');
+	const [value, setValue] = useState(new Date());
+	const { errors, handleSubmit, control } = useForm();
+	const [day , setDay] = useState('');
+	const [month , setMonth] = useState('');
+	const [year , setYear] = useState('');
 
 	const [message , setMessage] = useState('');
 	let countryData = CountryRegionData.map((item , index) => { return {value : item[0] , label : item[0]}})
-	
+	// console.log('data of bith here' , userDOB)
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!user) {
@@ -44,7 +57,12 @@ const EditProfile = (props) => {
 			if(user.gender){
 				setGender(Capitalize(user.gender))
 			}
-			setUserDOB(moment(user.date_of_birth).format("YYYY-MM-DD"));
+			if(user.date_of_birth){
+				let dateArray = moment(user.date_of_birth).format("YYYY-MM-DD").split('-')
+				setDay(dateArray[2])
+				setMonth(dateArray[1])
+				setYear(dateArray[0])
+			}
 			setBio(user.bio ? user.bio : '')
 		}
 	}, [props.user])
@@ -130,9 +148,12 @@ const EditProfile = (props) => {
 	}
 
 	const updateDOB = () => {
+		let date_of_birth = year+'-'+month+'-'+day;
+
+		console.log('userDOB' , date_of_birth)
 		setIsLoadingDOB(true);
 		let user = {};
-		user.date_of_birth= userDOB;
+		user.date_of_birth= date_of_birth;
 		UpdateProfile(user)
 		.then((res) => {
 			setIsLoadingDOB(false);
@@ -159,7 +180,25 @@ const EditProfile = (props) => {
 		})
 	}
 
+	const getArray = (length) => {
+    return new Array(length).fill(undefined)
+	}
+	const handleDateChange = (value , index) => {
+		if(index === 'day'){
+		setDay(value)
+		}
+		else if(index === 'month'){
+			setMonth(value)
+		}
+		else if(index === 'year'){
+			setYear(value)
+		}
 
+	}
+
+	// const onSubmit = async (data) => {
+	// 	console.log('date form data' , data)
+	// }
 
 	if (!!props.user) {
 	return (
@@ -218,8 +257,40 @@ const EditProfile = (props) => {
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Date of Birth</InputLabel>
-			<TextField
+			<InputLabel className='space-4'>Date of Birth</InputLabel>
+
+			{/* <form  key={'form'} onSubmit={handleSubmit(onSubmit)}> */}
+				<Grid container>
+							<Grid item xs={4} className = 'space-4'>
+								<select name="day" className={classes.select}  value = {day} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
+									{/* <option value={ userDOB && userDOB.length > 0 ? userDOB[2] : ''}>{userDOB && userDOB.length > 0 ? userDOB[2] : ''}</option> */}
+									{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
+								</select>
+								{/* <p>{userDOB && userDOB.length > 0 ? userDOB[2] : ''}</p> */}
+							</Grid>
+							<Grid item xs={4}>
+								<select name="month" className={classes.select}  value = {month} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
+									{/* <option value={''}>Month</option> */}
+									{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
+										(month, index) => <option key={index} value={index}>{month}</option>
+									)}
+								</select>
+							</Grid>
+							<Grid item xs={4}>
+								<select name="year" className={classes.select}  value = {year} onChange = {(e)=>handleDateChange(e.target.value , 'year')}>
+									{/* <option value={''}>Year</option> */}
+									{getArray(100).map((val, index) => <option key={index} value={2020 - index}>{2020 - index}</option>)}
+								</select>
+							</Grid>
+					</Grid>
+					<Button type = 'submit' disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
+						<Typography>
+							Change
+						</Typography>
+					</Button>
+					{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
+				{/* </form> */}
+			{/* <TextField
 				className={`${classes.greyInput} space-4`}
 				type="date"
 				name="date_of_birth"
@@ -229,13 +300,30 @@ const EditProfile = (props) => {
 				variant='outlined'
 				fullWidth
 				onChange={(e) => setUserDOB(e.target.value)}
-			/>
-			<Button  disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
-				<Typography>
-					Change
-				</Typography>
-			</Button>
-			{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
+			/> */}
+			 {/* <DatePicker
+				// format = "dd-MM-y"
+			 	className = {`${classes.datePicker}`}
+				// onChange={(e) => {console.log('date here',e.format())}}
+				onChange={(value)=>this.handleDateChange(format(value, "yyyy/MM/dd", { 
+					awareOfUnicodeTokens: true }))}
+				value={value}
+				dateFormat="yyyy/MM/dd"
+      /> */}
+			{/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+			  <KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Date picker dialog"
+          format="MM/dd/yyyy"
+          // value={selectedDate}
+          // onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+				</MuiPickersUtilsProvider> */}
+
 		</Paper>
 
 		<Paper elevation={0} className={classes.container}>
@@ -336,6 +424,25 @@ const useStyles = makeStyles((theme) => ({
 	},
 	message : {
 		textAlign: 'center',
+	},
+	datePicker : {
+		height: '44px',
+    border: '1px solid #ddd',
+    width: '100%',
+    background: '#fafafa',
+    borderRadius: '4px',
+    marginBottom: '20px',
+		padding: '10px',
+		'& .react-date-picker__wrapper' : {
+			border : 'none',
+		}
+	},
+	select : {
+		height : '44px',
+		width : '90%',
+		border : '1px solid #ddd',
+		borderRadius : '4px',
+		padding : '0 10px',
 	},
 
 }))

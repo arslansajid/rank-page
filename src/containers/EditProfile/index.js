@@ -5,19 +5,13 @@ import {Typography, TextField, InputLabel, Grid, Paper, Button} from "@material-
 import Colors from "../../static/_colors";
 import {GenderItems} from "../../static/_selectOptions";
 import { makeStyles } from '@material-ui/core/styles';
-import { CountryRegionData } from "react-country-region-selector";
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
 import MenuItem from "@material-ui/core/MenuItem";
 import { useForm } from 'react-hook-form';
 import ImagePicker from "../../components/Common/ImagePicker";
 import { Capitalize } from "../../utils/Functions";
 import moment from "moment"
-import DatePicker from 'react-date-picker';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
+import { userLogin } from "../../actions/LoginActions";
 import {UpdateProfile} from './action'
 
 const EditProfile = (props) => {
@@ -25,6 +19,7 @@ const EditProfile = (props) => {
 	const {user} = props;
 	const [ userName , setUserName] = useState('')
 	const [country, setCountry] = useState('')
+	const [region, setRegion] = useState('')
 	const [gender, setGender] = useState('')
 	const [userDOB, setUserDOB] = useState('')
 	const [bio , setBio] = useState('')
@@ -33,20 +28,20 @@ const EditProfile = (props) => {
 	const [ isLoadingDOB, setIsLoadingDOB] = useState(false);
 	const [ isLoadingBio, setIsLoadingBio] = useState(false);
 	const [ isLoadingCountry, setIsLoadingCountry] = useState(false);
+	const [ isLoadingRegion, setIsLoadingRegion] = useState(false);
 	const [messageName , setMessageName] = useState('');
 	const [messageBio , setMessageBio] = useState('');
 	const [messageGender , setMessageGender] = useState('');
 	const [messageDOB , setMessageDOB] = useState('');
 	const [messageCountry , setMessageCountry] = useState('');
+	const [messageRegion , setMessageRegion] = useState('');
 	const [value, setValue] = useState(new Date());
 	const { errors, handleSubmit, control } = useForm();
 	const [day , setDay] = useState('');
 	const [month , setMonth] = useState('');
 	const [year , setYear] = useState('');
-
 	const [message , setMessage] = useState('');
 	let countryData = CountryRegionData.map((item , index) => { return {value : item[0] , label : item[0]}})
-	// console.log('data of bith here' , userDOB)
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!user) {
@@ -54,8 +49,11 @@ const EditProfile = (props) => {
 			if(user.country){
 				setCountry(Capitalize(user.country))
 			}  
+			if(user.state){
+				setRegion(Capitalize(user.state))
+			}  
 			if(user.gender){
-				setGender(Capitalize(user.gender))
+				setGender(translateGender(user.gender))
 			}
 			if(user.date_of_birth){
 				let dateArray = moment(user.date_of_birth).format("YYYY-MM-DD").split('-')
@@ -64,6 +62,7 @@ const EditProfile = (props) => {
 				setYear(dateArray[0])
 			}
 			setBio(user.bio ? user.bio : '')
+
 		}
 	}, [props.user])
 
@@ -80,29 +79,14 @@ const EditProfile = (props) => {
 		else if(value == 'female' ){
 			return 2;
 		}
-		else if (value == 'prefer not to answer'){
+		else if (value == 'other'){
 			return 3;
+		}
+		else if (value == 'prefer not to answer'){
+			return 4;
 		}
 		else return null;
 	}
-
-	// const updateProfile = () => {
-	// 	setIsLoading(true);
-	// 	let user = {};
-	// 	user.gender = translateGender(gender);
-	// 	user.name = userName;
-	// 	user.country = country;
-	// 	user.bio = bio;
-	// 	UpdateProfile(user)
-	// 	.then((res) => {
-	// 		setIsLoading(false);
-	// 			setMessage(res.data.message)
-	// 	})
-	// 	.catch((err) => { 
-	// 		setIsLoading(false);
-	// 		console.log(err)
-	// 	})
-	// }
 
 	const updateName = () => {
 		setIsLoadingName(true);
@@ -112,6 +96,9 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingName(false);
 				setMessageName(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingName(false);
@@ -126,31 +113,18 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingBio(false);
 				setMessageBio(res.data.message)
+				// if(res.data.success){
+				// 	props.dispatch(userLogin(res.data.data.user));
+				// }
 		})
 		.catch((err) => { 
 			setIsLoadingBio(false);
 			console.log(err)
 		})
 	}
-	const updateGender = () => {
-		setIsLoadingGender(true);
-		let user = {};
-		user.gender = translateGender(gender);
-		UpdateProfile(user)
-		.then((res) => {
-			setIsLoadingGender(false);
-				setMessageGender(res.data.message)
-		})
-		.catch((err) => { 
-			setIsLoadingGender(false);
-			console.log(err)
-		})
-	}
 
 	const updateDOB = () => {
 		let date_of_birth = year+'-'+month+'-'+day;
-
-		console.log('userDOB' , date_of_birth)
 		setIsLoadingDOB(true);
 		let user = {};
 		user.date_of_birth= date_of_birth;
@@ -158,6 +132,9 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingDOB(false);
 				setMessageDOB(res.data.message)
+				// if(res.data.success){
+				// 	props.dispatch(userLogin(res.data.data.user));
+				// }
 		})
 		.catch((err) => { 
 			setIsLoadingDOB(false);
@@ -173,9 +150,49 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingCountry(false);
 				setMessageCountry(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingCountry(false);
+			console.log(err)
+		})
+	}
+
+	const updateRegion = () => {
+		setIsLoadingRegion(true);
+		let user = {};
+		user.state= region;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingRegion(false);
+				setMessageRegion(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
+		})
+		.catch((err) => { 
+			setIsLoadingRegion(false);
+			console.log(err)
+		})
+	}
+
+	const updateGender = (value) => {
+		// setGender(value)
+		setIsLoadingGender(true);
+		let user = {};
+		user.gender= gender;
+		UpdateProfile(user)
+		.then((res) => {
+			setIsLoadingGender(false);
+			setMessageGender(res.data.message)
+			// if(res.data.success){
+			// 		props.dispatch(userLogin(res.data.data.user));
+			// 	}
+		})
+		.catch((err) => { 
+			setIsLoadingGender(false);
 			console.log(err)
 		})
 	}
@@ -196,183 +213,195 @@ const EditProfile = (props) => {
 
 	}
 
-	// const onSubmit = async (data) => {
-	// 	console.log('date form data' , data)
-	// }
-
 	if (!!props.user) {
 	return (
 		<>
 		<Grid className={classes.main}>
-		<Paper elevation={0} className={classes.container}>
-			{/* <Typography variant="h6" gutterBottom></Typography> */}
-			<InputLabel className='space-2'>Picture</InputLabel>
-			{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
-			<ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} />
-		</Paper>
-		
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Cover</InputLabel>
-			<Grid className={classes.coverContainer}>
-				<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
-			</Grid>
-		</Paper>
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-2'>Picture</InputLabel>
+				{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
+				<ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} />
+			</Paper>
+			
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-2'>Cover</InputLabel>
+				<Grid className={classes.coverContainer}>
+					<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
+				</Grid>
+			</Paper>
 
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Full Name</InputLabel>
-			<TextField
-				className={`${classes.greyInput} space-4`}
-				margin='dense'
-				variant='outlined'
-				fullWidth
-				value={userName}
-				onChange={(e) => setUserName(e.target.value)}
-			/>
-			<Button  disabled={isLoadingName} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateName}>
-				<Typography>
-					Change
-				</Typography>
-			</Button>
-			{messageName && <Typography className={classes.message}>{messageName}</Typography>}
-		</Paper>
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-2'>Full Name</InputLabel>
+				<TextField
+					className={`${classes.greyInput} space-4`}
+					margin='dense'
+					variant='outlined'
+					fullWidth
+					value={userName}
+					onChange={(e) => setUserName(e.target.value)}
+				/>
+				<Button  disabled={isLoadingName} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateName}>
+					<Typography>
+						Change
+					</Typography>
+				</Button>
+				{messageName && <Typography className={classes.message}>{messageName}</Typography>}
+			</Paper>
 
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Bio (140 Characters)</InputLabel>
-			<TextField
-				className={`${classes.greyInput} space-4`}
-				margin='dense'
-				variant='outlined'
-				multiline={true}
-        rows={3}
-				fullWidth
-				value={bio}
-				onChange={(e) => {setBio(e.target.value)}}
-			/>
-			<Button  disabled={isLoadingBio} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateBio}>
-				<Typography>
-					Change
-				</Typography>
-			</Button>
-			{messageBio && <Typography className={classes.message}>{messageBio}</Typography>}
-		</Paper>
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-2'>Bio (140 Characters)</InputLabel>
+				<TextField
+					className={`${classes.greyInput} space-4`}
+					margin='dense'
+					variant='outlined'
+					multiline={true}
+					rows={3}
+					fullWidth
+					value={bio}
+					onChange={(e) => {setBio(e.target.value)}}
+				/>
+				<Button  disabled={isLoadingBio} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateBio}>
+					<Typography>
+						Change
+					</Typography>
+				</Button>
+				{messageBio && <Typography className={classes.message}>{messageBio}</Typography>}
+			</Paper>
 
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-4'>Date of Birth</InputLabel>
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-4'>Date of Birth</InputLabel>
+					<Grid container>
+								<Grid item xs={2} className = 'space-4'>
+									<select name="day" className={classes.select}  value = {day} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
+										{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
+									</select>
+								</Grid>
+								<Grid item xs={2}>
+									<select name="month" className={classes.select}  value = {month} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
+										{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
+											(month, index) => <option key={index} value={index}>{month}</option>
+										)}
+									</select>
+								</Grid>
+								<Grid item xs={2}>
+									<select name="year" className={classes.select}  value = {year} onChange = {(e)=>handleDateChange(e.target.value , 'year')}>
+										{getArray(100).map((val, index) => <option key={index} value={2020 - index}>{2020 - index}</option>)}
+									</select>
+								</Grid>
+						</Grid>
+						<Button type = 'submit' disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
+							<Typography>
+								Change
+							</Typography>
+						</Button>
+						{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
+				{/* <TextField
+					className={`${classes.greyInput} space-4`}
+					type="date"
+					name="date_of_birth"
+					placeholder="Date"
+					value={userDOB}
+					margin='dense'
+					variant='outlined'
+					fullWidth
+					onChange={(e) => setUserDOB(e.target.value)}
+				/> */}
 
-			{/* <form  key={'form'} onSubmit={handleSubmit(onSubmit)}> */}
-				<Grid container>
-							<Grid item xs={4} className = 'space-4'>
-								<select name="day" className={classes.select}  value = {day} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
-									{/* <option value={ userDOB && userDOB.length > 0 ? userDOB[2] : ''}>{userDOB && userDOB.length > 0 ? userDOB[2] : ''}</option> */}
-									{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
-								</select>
-								{/* <p>{userDOB && userDOB.length > 0 ? userDOB[2] : ''}</p> */}
-							</Grid>
-							<Grid item xs={4}>
-								<select name="month" className={classes.select}  value = {month} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
-									{/* <option value={''}>Month</option> */}
-									{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
-										(month, index) => <option key={index} value={index}>{month}</option>
-									)}
-								</select>
-							</Grid>
-							<Grid item xs={4}>
-								<select name="year" className={classes.select}  value = {year} onChange = {(e)=>handleDateChange(e.target.value , 'year')}>
-									{/* <option value={''}>Year</option> */}
-									{getArray(100).map((val, index) => <option key={index} value={2020 - index}>{2020 - index}</option>)}
-								</select>
-							</Grid>
-					</Grid>
-					<Button type = 'submit' disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
+			</Paper>
+
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-4'>Gender</InputLabel>
+					<div className='space-4'>
+						<Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(1)}>
+							<Typography>
+								male
+							</Typography>
+						</Button>
+						<Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(2)}>
+							<Typography>
+								female
+							</Typography>
+						</Button>
+						<Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(3)}>
+							<Typography>
+								other
+							</Typography>
+						</Button>
+						<Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(4)}>
+							<Typography>
+								prefer not to answer
+							</Typography>
+						</Button>
+					</div>
+					<Button  disabled={isLoadingGender} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateGender}>
+					<Typography>
+						Change
+					</Typography>
+				</Button>
+					{messageGender && <Typography className={classes.message}>{messageGender}</Typography>}
+				{/* <TextField
+					className={`${classes.greyInput} space-4`}
+					margin='dense'
+					variant='outlined'
+					value={gender}
+					select
+					fullWidth
+					onChange={(e) => setGender(e.target.value)}
+				>
+					{GenderItems.map((item, index) => (
+						<MenuItem key={index} value={item.label}>{item.label}</MenuItem>
+					))}
+				</TextField>
+				<Button  disabled={isLoadingGender} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateGender}>
+					<Typography>
+						Change
+					</Typography>
+				</Button>
+				{messageGender && <Typography className={classes.message}>{messageGender}</Typography>} */}
+			</Paper>
+
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-2'>Country</InputLabel>
+				<TextField
+					className={`${classes.greyInput} space-4`}
+					margin='dense'
+					variant='outlined'
+					value={country}
+					select
+					// fullWidth
+					onChange={handleChange}
+				>
+						{countryData && countryData.length > 0 && countryData.map((option) => (
+							<MenuItem key={option.value} value={option.value}>
+								{option.label}
+							</MenuItem>
+						))}
+				</TextField>
+				<Button  disabled={isLoadingCountry} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateCountry}>
+					<Typography>
+						Change
+					</Typography>
+				</Button>
+				{messageCountry && <Typography className={classes.message}>{messageCountry}</Typography>}
+			</Paper>
+
+			{!!country && (
+			<Paper elevation={0} className={classes.container}>
+				 <InputLabel className='space-2 black'>State</InputLabel>
+              <RegionDropdown
+                className={`${classes.selectBox} space-4`}
+                country={country}
+                value={region}
+                placeholder="Select Region"
+                onChange={(region) => setRegion(region)} />
+					<Button  disabled={isLoadingRegion} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateRegion}>
 						<Typography>
 							Change
 						</Typography>
 					</Button>
-					{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
-				{/* </form> */}
-			{/* <TextField
-				className={`${classes.greyInput} space-4`}
-				type="date"
-				name="date_of_birth"
-				placeholder="Date"
-				value={userDOB}
-				margin='dense'
-				variant='outlined'
-				fullWidth
-				onChange={(e) => setUserDOB(e.target.value)}
-			/> */}
-			 {/* <DatePicker
-				// format = "dd-MM-y"
-			 	className = {`${classes.datePicker}`}
-				// onChange={(e) => {console.log('date here',e.format())}}
-				onChange={(value)=>this.handleDateChange(format(value, "yyyy/MM/dd", { 
-					awareOfUnicodeTokens: true }))}
-				value={value}
-				dateFormat="yyyy/MM/dd"
-      /> */}
-			{/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-			  <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          // value={selectedDate}
-          // onChange={handleDateChange}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-				</MuiPickersUtilsProvider> */}
-
-		</Paper>
-
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Gender</InputLabel>
-			<TextField
-				className={`${classes.greyInput} space-4`}
-				margin='dense'
-				variant='outlined'
-				value={gender}
-				select
-				fullWidth
-				onChange={(e) => setGender(e.target.value)}
-			>
-				{GenderItems.map((item, index) => (
-					<MenuItem key={index} value={item.label}>{item.label}</MenuItem>
-				))}
-			</TextField>
-			<Button  disabled={isLoadingGender} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateGender}>
-				<Typography>
-					Change
-				</Typography>
-			</Button>
-			{messageGender && <Typography className={classes.message}>{messageGender}</Typography>}
-		</Paper>
-
-		<Paper elevation={0} className={classes.container}>
-			<InputLabel className='space-2'>Country</InputLabel>
-			<TextField
-				className={`${classes.greyInput} space-4`}
-				margin='dense'
-				variant='outlined'
-				value={country}
-				select
-				fullWidth
-				onChange={handleChange}
-			>
-					{countryData && countryData.length > 0 && countryData.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-			</TextField>
-			<Button  disabled={isLoadingCountry} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateCountry}>
-				<Typography>
-					Change
-				</Typography>
-			</Button>
-			{messageCountry && <Typography className={classes.message}>{messageCountry}</Typography>}
-		</Paper>
+					{messageRegion && <Typography className={classes.message}>{messageRegion}</Typography>}
+			</Paper>
+			)}
 		</Grid>
 		</>
 	);
@@ -428,7 +457,7 @@ const useStyles = makeStyles((theme) => ({
 	datePicker : {
 		height: '44px',
     border: '1px solid #ddd',
-    width: '100%',
+    // width: '100%',
     background: '#fafafa',
     borderRadius: '4px',
     marginBottom: '20px',
@@ -443,6 +472,34 @@ const useStyles = makeStyles((theme) => ({
 		border : '1px solid #ddd',
 		borderRadius : '4px',
 		padding : '0 10px',
+	},
+	selectBox: {
+		border: '1px solid #ddd',
+		border: '1px solid rgba(0, 0, 0, 0.23)',
+		height: '42px',
+		padding: '0px 10px',
+		borderRadius: '5px',
+		// '-webkit-appearance': 'none'
+	},
+	choiceButton: {
+		minWidth: "20px",
+		height: "40px",
+		background: Colors.inputBg,
+		marginRight: 10,
+		color: Colors.black,
+		boxShadow: 'none',
+		border: '1px solid rgba(38, 38, 38, 0.12)',
+	},
+	choiceButtonActive: {
+		minWidth: "20px",
+		height: "40px",
+		background: Colors.brandColor,
+		marginRight: 10,
+		color: Colors.white,
+		border: '1px solid rgba(38, 38, 38, 0.12)',
+		"&:hover": {
+			background: Colors.brandColor,
+		}
 	},
 
 }))

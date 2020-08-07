@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import Dustbin from './Dustbin'
 import Box from './Box'
@@ -8,45 +8,17 @@ import { Typography, Grid, colors } from "@material-ui/core";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const Container = () => {
+const Container = (props) => {
+  console.log("LIST ITEMS PROPS:", props.listItems)
+  const {listItems} = props;
   const [dustbins, setDustbins] = useState([
     { id: 1, accepts: [ItemTypes.LIST], lastDroppedItem: null },
     { id: 2, accepts: [ItemTypes.LIST], lastDroppedItem: null },
     { id: 3, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
     { id: 4, accepts: [ItemTypes.LIST], lastDroppedItem: null },
     { id: 5, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 6, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
-    { id: 7, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 8, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 9, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
-    { id: 10, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 11, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 12, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
-    { id: 13, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 14, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 15, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
-    { id: 16, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 17, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 18, accepts: [ItemTypes.LIST, /* NativeTypes.FILE */], lastDroppedItem: null },
-    { id: 19, accepts: [ItemTypes.LIST], lastDroppedItem: null },
-    { id: 20, accepts: [ItemTypes.LIST], lastDroppedItem: null },
   ])
-  const [boxes] = useState([
-    { name: 'Bottle', type: ItemTypes.LIST },
-    { name: 'Banana', type: ItemTypes.LIST },
-    { name: 'Magazine', type: ItemTypes.LIST },
-    { name: 'Bottle', type: ItemTypes.LIST },
-    { name: 'Banana', type: ItemTypes.LIST },
-    { name: 'Magazine', type: ItemTypes.LIST },
-    { name: 'Bottle', type: ItemTypes.LIST },
-    { name: 'Banana', type: ItemTypes.LIST },
-    { name: 'Magazine', type: ItemTypes.LIST },
-    { name: 'Bottle', type: ItemTypes.LIST },
-    { name: 'Banana', type: ItemTypes.LIST },
-    { name: 'Magazine', type: ItemTypes.LIST },
-    { name: 'Bottle', type: ItemTypes.LIST },
-    { name: 'Banana', type: ItemTypes.LIST },
-    { name: 'Magazine', type: ItemTypes.LIST },
+  const [boxes, setBoxes] = useState([
     { name: 'Bottle', type: ItemTypes.LIST },
     { name: 'Banana', type: ItemTypes.LIST },
     { name: 'Magazine', type: ItemTypes.LIST },
@@ -54,9 +26,31 @@ const Container = () => {
     { name: 'Banana', type: ItemTypes.LIST },
   ])
   const [droppedBoxNames, setDroppedBoxNames] = useState([])
+
+  useEffect(() => {
+    const BOXES = listItems.map((item, index) => {
+      return {
+        name: item.title,
+        type: ItemTypes.LIST
+      }
+    })
+    const DUSTBINS = listItems.map((item, index) => {
+      return {
+        id: item.id,
+        accepts: [ItemTypes.LIST],
+        lastDroppedItem: null
+      }
+    })
+    console.log("BOXES", BOXES)
+    console.log("DUSTBINS", DUSTBINS)
+    setDustbins([...DUSTBINS]);
+    setBoxes([...BOXES])
+  }, [])
+
   function isDropped(boxName) {
     return droppedBoxNames.indexOf(boxName) > -1
   }
+
   const handleDrop = useCallback(
     (index, item) => {
       const { name } = item
@@ -104,7 +98,7 @@ const Container = () => {
     <Grid container>
         <Grid item xs={6}>
             <div style={{ overflow: 'hidden', clear: 'both' }}>
-                {boxes.map(({ name, type }, index) => (
+                {boxes.length > 0 && boxes.map(({ name, type }, index) => (
                 <Box
                     number={index + 1}
                     name={name}
@@ -123,7 +117,7 @@ const Container = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {dustbins.map(({ id, accepts, lastDroppedItem }, index) => (
+                  {dustbins.length > 0 && dustbins.map(({ id, accepts, lastDroppedItem }, index) => (
                     <Draggable key={id} draggableId={String(id)} index={index}>
                       {(provided, snapshot) => (
                         <div

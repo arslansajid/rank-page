@@ -46,7 +46,7 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
                 <Grid className={classes.row}>
                     <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                     {lastDroppedItem && (
-                        `Last dropped: ${lastDroppedItem.name}`
+                        `${lastDroppedItem.name}`
                     )}
                 </Grid>
                 <RightIcon fontSize="large" className = {classes.iconColor} />

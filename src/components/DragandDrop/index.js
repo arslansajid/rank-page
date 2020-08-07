@@ -1,9 +1,9 @@
 import React from 'react'
 import Example from './Container';
 
-const dragandDrop = () => {
+const dragandDrop = (props) => {
     return (
-        <Example />
+        <Example {...props} />
     )
 }
 

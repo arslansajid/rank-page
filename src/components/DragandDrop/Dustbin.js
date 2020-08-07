@@ -20,10 +20,15 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
 
     const isActive = isOver && canDrop
     let backgroundColor;
+    // if (isActive) {
+    //     backgroundColor = 'darkgreen'
+    // } else if (canDrop) {
+    //     backgroundColor = 'darkkhaki'
+    // }
     if (isActive) {
-        backgroundColor = 'darkgreen'
+        backgroundColor = 'transparent'
     } else if (canDrop) {
-        backgroundColor = 'darkkhaki'
+        backgroundColor = 'transparent'
     }
 
   return (

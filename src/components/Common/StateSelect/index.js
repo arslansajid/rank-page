@@ -33,7 +33,6 @@ function CountryRegionMUISelectors(props) {
     } = props;
     const classes = useStyles();
 
-    console.log('props here in state select' , props)
 
     return (
         <>

@@ -24,10 +24,6 @@ const SignUp = props => {
   const [region, setRegion] = useState(userData && userData.region ? userData.region : '');
   const [dateError, setDateError] = useState(null);
 
-
-  // console.log('country state', country)
-
-
   const ageValidation = (data) => {
     let today = new Date();
     let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -157,7 +153,7 @@ const SignUp = props => {
               className="text-field"
               label='Password*'
               required = {true}
-              onChange = {() => console.log('password change called')}
+              // onChange = {() => console.log('password change called')}
             />
           </div>
           <div className="space-2">

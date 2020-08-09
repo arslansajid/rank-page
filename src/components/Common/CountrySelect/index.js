@@ -86,7 +86,7 @@ function CountryRegionMUISelectors(props) {
 				// 	return selected;
                 //   }}
                   
-                  onChange = {() => console.log('onchange function called country select')}
+                //   onChange = {() => console.log('onchange function called country select')}
             />
             {/* <br />
       <TextField

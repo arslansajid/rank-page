@@ -168,9 +168,12 @@ const EditProfile = (props) => {
 
 	const updateCover = (value) => {
 
-		var fd = new FormData();
-			fd.append('cover_image' , value[0])
-			UpdateProfile(fd)
+		// var fd = new FormData();
+		// 	fd.append('cover_image' , value[0])
+			// UpdateProfile(fd)
+		let user = {};
+		user.cover_image = value[0]
+		UpdateProfile(user)
 			.then((res) => {
 				setIsLoadingDOB(false);
 					setMessageDOB(res.data.message)

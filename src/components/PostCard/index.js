@@ -29,6 +29,7 @@ const PostCard = (props) => {
     const [activeTab, setActiveTab] = useState(1);
     const [showComments, setShowComments] = useState(false);
     const [showShareDialog, setShowShareDialog] = useState(false);
+    const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
     const [isLiked, setIsLiked] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -81,8 +82,8 @@ const PostCard = (props) => {
     const sharePostHandler = () => {
         const data = {
             'share_post_id': post.id,
-            'user_ids': '',
-            'share_type': 1, //1 for public 2 for private
+            'user_ids': activeTabAccountPrivacy === 2 ? '4' : '',
+            'share_type': activeTabAccountPrivacy, //1 for public 2 for private
         }
         sharePost(data)
         .then((res) => {
@@ -146,7 +147,21 @@ const PostCard = (props) => {
                         title={"Share List"}
                         open={showShareDialog}
                         message={
+                            <>
+                            <Grid className="space-3" container>
+                                <Button color={activeTabAccountPrivacy === 1 ? "primary" : "default"} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
+                                    <Typography>
+                                        Public
+                                    </Typography>
+                                </Button>
+                                <Button color={activeTabAccountPrivacy === 2 ? "primary" : "default"} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
+                                    <Typography>
+                                        Private
+                                    </Typography>
+                                </Button>
+                            </Grid>
                             <Button variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
+                            </>
                         }
                         applyForm={() => setShowShareDialog(false)}
                         cancelForm={() => setShowShareDialog(false)}

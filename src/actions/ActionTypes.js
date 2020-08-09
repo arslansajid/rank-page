@@ -21,3 +21,7 @@ export const HIDE_SIGNUP = 'HIDE_SIGNUP';
 export const SHOW_LIST_DIALOG = 'SHOW_LIST_DIALOG';
 export const HIDE_LIST_DIALOG = 'HIDE_LIST_DIALOG';
 
+///selected post actions
+export const SET_POST_ID = 'SET_POST_ID';
+export const SET_POST_ORDER = 'SET_POST_ORDER';
+

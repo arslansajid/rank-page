@@ -14,7 +14,7 @@ import {getAllUsers} from "./action"
 
 const ShareCard = (props) => {
     const classes = useStyles();
-    const { user, post, showTabs } = props;
+    const { user, post, showTabs, close } = props;
     const [activeTab, setActiveTab] = useState(1);
     const [showComments, setShowComments] = useState(false);
     const [showShareDialog, setShowShareDialog] = useState(false);
@@ -60,11 +60,11 @@ const ShareCard = (props) => {
         .then((res) => {
             console.log("res", res)
             window.alert(res.data.message);
-            setShowShareDialog(false);
+            close();
         })
         .catch((err) => {
             console.log("err", err)
-            setShowShareDialog(false);
+            setShowShareDialog();
         })
     }
 
@@ -87,23 +87,28 @@ const ShareCard = (props) => {
             </Button>
           </Grid>
 
+        {activeTabAccountPrivacy === 2 ? (
           <Grid item xs={12} className = 'space-4'>
-              <Select
-                closeMenuOnSelect={false}
-                isMulti
-                options={users ? users : null}
-                getOptionLabel={option => option.name}
-                getOptionValue={option => option.id}
-                className='space-4'
-                placeholder = "Search User"
-                onChange={handleUserChange}
-                styles={colourStyles}
-                
-              />
-              {/* {categoriesError && <Typography className={classes.error}>Please fill in categories first</Typography>} */}
+            <Select
+              closeMenuOnSelect={false}
+              isMulti
+              options={users ? users : []}
+              getOptionLabel={option => option.name}
+              getOptionValue={option => option.id}
+              className='space-4'
+              placeholder = "Search User"
+              onChange={handleUserChange}
+              styles={colourStyles}
+              
+            />
           </Grid>
+        )
+        :
+        null
+      }
+          
         </Grid>
-        <Button variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
+        <Button fullWidth variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
         </div>
         </>
     )

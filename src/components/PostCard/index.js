@@ -106,23 +106,23 @@ const PostCard = (props) => {
         // }
     }
 
-    const sharePostHandler = () => {
-        const data = {
-            'share_post_id': post.id,
-            'user_ids': activeTabAccountPrivacy === 2 ? '4' : '',
-            'share_type': activeTabAccountPrivacy, //1 for public 2 for private
-        }
-        sharePost(data)
-        .then((res) => {
-            console.log("res", res)
-            window.alert(res.data.message);
-            setShowShareDialog(false);
-        })
-        .catch((err) => {
-            console.log("err", err)
-            setShowShareDialog(false);
-        })
-    }
+    // const sharePostHandler = () => {
+    //     const data = {
+    //         'share_post_id': post.id,
+    //         'user_ids': activeTabAccountPrivacy === 2 ? '4' : '',
+    //         'share_type': activeTabAccountPrivacy, //1 for public 2 for private
+    //     }
+    //     sharePost(data)
+    //     .then((res) => {
+    //         console.log("res", res)
+    //         window.alert(res.data.message);
+    //         setShowShareDialog(false);
+    //     })
+    //     .catch((err) => {
+    //         console.log("err", err)
+    //         setShowShareDialog(false);
+    //     })
+    // }
 
     console.log("POST DATA", post)
     console.log("POST LIKE COUNT", post.like_count)
@@ -174,7 +174,7 @@ const PostCard = (props) => {
                     <Dialog
                         title={"Share List"}
                         open={showShareDialog}
-                        message={ <ShareCard post = {post}/> }
+                        message={ <ShareCard post = {post} close={() => setShowShareDialog(false)} /> }
                         applyForm={() => setShowShareDialog(false)}
                         cancelForm={() => setShowShareDialog(false)}
                         hideActions={true}

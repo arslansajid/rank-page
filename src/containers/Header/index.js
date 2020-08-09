@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withRouter, useHistory } from 'react-router-dom';
 import Colors from '../../static/_colors';
-
+import { reArrangeList } from "./action";
 import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 280;
@@ -17,7 +17,7 @@ const Header = (props) => {
     const { location, history } = props;
     const [showBackButton, setShowBackButton] = React.useState(false);
     const [showSubmitButton, setShowSubmitButton] = React.useState(false);
-    console.log('location ' , location.pathname)
+    console.log('location ' , props)
 
     React.useEffect(() => {
         if (location.pathname !== "/") {
@@ -32,6 +32,23 @@ const Header = (props) => {
             setShowSubmitButton(false);
         }
     }, [props.location])
+
+
+    const onSubmitHandler = () => {
+        const data = {
+            list_id: location.postId,
+            list_item_ids: '',
+            user_ids: '',
+            share_type: '',
+        }
+        reArrangeList(data)
+        .then((res) => {
+            console.log('res', res)
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
 
     return (
             <AppBar elevation={0} position="static" classes={{ root: classes.headerBar }}>
@@ -48,7 +65,7 @@ const Header = (props) => {
                     </Typography>
                     {
                         showSubmitButton && (
-                            <Button className={classes.submitBtn} variant="contained" color="primary" onClick={() => history.goBack()}>
+                            <Button onClick={() => onSubmitHandler()} className={classes.submitBtn} variant="contained" color="primary">
                                 Submit
                             </Button>
                         )

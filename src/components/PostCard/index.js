@@ -14,6 +14,7 @@ import CommentIcon from '@material-ui/icons/ChatBubbleOutline';
 import ShareIcon from '@material-ui/icons/Share';
 import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
+import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
 import { LikeUnlikePost } from "./action";
 import moment from "moment";
@@ -27,6 +28,7 @@ const PostCard = (props) => {
     const { user, post, showTabs } = props;
     const [activeTab, setActiveTab] = useState(1);
     const [showComments, setShowComments] = useState(false);
+    const [showShareDialog, setShowShareDialog] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -119,6 +121,19 @@ const PostCard = (props) => {
                     </Grid>
                 {/* </ClickAwayListener> */}
             </Popover>
+
+            {
+                showShareDialog && (
+                    <Dialog
+                        title={"Share List"}
+                        open={showShareDialog}
+                        message={"Share"}
+                        applyForm={() => setShowShareDialog(false)}
+                        cancelForm={() => setShowShareDialog(false)}
+                        hideActions={true}
+                    />
+                )
+            }
             
 
             <Card elevation={0} className={classes.root}>
@@ -142,7 +157,7 @@ const PostCard = (props) => {
                     <Typography variant='body2' className='smallFont'>• {moment(post.updated_at).format("DD MMM YYYY")} at {moment(post.updated_at).format("hh:mm A")}</Typography>
                 </Grid>
                 {
-                    showTabs && (
+                    !!showTabs && (
                         <Grid className={classes.cardProfileSection}>
                             <Grid container justify="space-between">
                                 <Button className={classes.buttons} onClick={() => onTabChangeHandler(1)}>
@@ -184,7 +199,7 @@ const PostCard = (props) => {
                             // onMouseLeave={handlePopoverClose}
                             onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>Like</Button>
                         <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
-                        <Button className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
+                        <Button onClick={() => setShowShareDialog(!showShareDialog)} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>
                 </CardActions>
                 {

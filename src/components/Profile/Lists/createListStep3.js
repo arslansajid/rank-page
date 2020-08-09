@@ -69,10 +69,8 @@ const CreateListStep3 = (props) => {
         params.user_ids = selectedUser ? selectedUser.join() : null;
         params.categories = params.categories.join();
 
-        console.log('published data' , params);  
         PostListItem(params)
         .then((res)=>{
-          console.log('success' , res.data)
           if(res.data.success){
             publish()
           }

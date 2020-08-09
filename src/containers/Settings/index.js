@@ -68,6 +68,7 @@ const Settings = (props) => {
 			.catch((error) =>{
 				setIsLoadingPassword(false);
 				console.log('error' , error)
+				// setPasswordMessage(error.data.message)
 			})
 		}
 		}
@@ -149,7 +150,9 @@ const Settings = (props) => {
 		})
 		.catch((err) => { 
 			setIsLoadingFollowingPrivacy(false);
-			console.log(err)
+			// console.log(err.data , 'updateFollowingPrivacy')
+
+			setMessageFollowingPrivacy('We re sorry, but something went wrong')
 		})
 	}
 

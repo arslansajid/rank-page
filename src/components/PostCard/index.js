@@ -17,6 +17,7 @@ import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
 import { LikeUnlikePost, sharePost } from "./action";
+import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
 import moment from "moment";
 
 import LikeReactIcon from "../../assets/icons/icon/social/like.svg";
@@ -25,7 +26,7 @@ import ThinkReactIcon from "../../assets/icons/icon/social/think.svg";
 
 const PostCard = (props) => {
     const classes = useStyles();
-    const { user, post, showTabs } = props;
+    const { user, post, showTabs, dispatch } = props;
     const [activeTab, setActiveTab] = useState(1);
     const [showComments, setShowComments] = useState(false);
     const [showShareDialog, setShowShareDialog] = useState(false);
@@ -246,7 +247,7 @@ const PostCard = (props) => {
                                     pathname: `/list-detail/${post.id}`,
                                     'postId': post.id
                                 }}>
-                                <Button variant="text" className={classes.showMoreText}>Click to Expand</Button>
+                                <Button onClick={() => dispatch(setPostId(post.id))} variant="text" className={classes.showMoreText}>Click to Expand</Button>
                             </Link> 
                         </Grid>
                     )
@@ -255,7 +256,7 @@ const PostCard = (props) => {
 
                 {/* <CardContent> */}
                 <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
-            {likeMessage.length ? (<Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{likeMessage}</Typography>) : <Typography>{"  "}</Typography>}
+                {likeMessage.length ? (<Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{likeMessage}</Typography>) : <Typography>{"  "}</Typography>}
                     <Typography variant='body2' className='smallFont'>{!!post.comments_count ? post.comments_count : 0} Comments • {!!post.share_count ? post.share_count : 0} Shares</Typography>
                 </Grid>
                 {/* </CardContent> */}
@@ -265,7 +266,7 @@ const PostCard = (props) => {
                             // onMouseEnter={handlePopoverOpen}
                             // onMouseLeave={handlePopoverClose}
                             onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
-                                <Typography color={isLiked ? "primary" : "default"}>Like</Typography>
+                                <Typography color={isLiked ? "primary" : "inherit"}>Like</Typography>
                             </Button>
                         <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
                         <Button onClick={() => setShowShareDialog(!showShareDialog)} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>

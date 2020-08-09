@@ -6,11 +6,14 @@ import {getListById} from "./actions"
 import PostCard from "../../components/PostCard";
 import {withRouter} from "react-router-dom";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
+import {connect} from "react-redux"
+import { setPostOrder } from "../../actions/SelectedPostAction";
 
 const PostDetail = (props) => {
     const classes = useStyles();
     const [post, setPost] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
+    const { selectedPost, dispatch } = props;
 
     useEffect(() => {
         console.log('HAHAH', props)
@@ -19,18 +22,33 @@ const PostDetail = (props) => {
 
     const getListData = () => {
         const data = {
-            post_id: props.match.params.postId
+            post_id: props.match.params.postId ? props.match.params.postId : selectedPost.postId
         }
         getListById(data)
         .then((res) => {
             console.log("res", res)
-            setPost(res.data.data)
-            setIsLoading(false);
+            setPostData(res.data.data)
         })
         .catch((err) => {
             console.log("err", err)
             setIsLoading(false);
         })
+    }
+
+    const setPostData = (data) => {
+        setPost(data);
+        setIsLoading(false);
+
+        let reorderString = "";
+        const items = data.list_items;
+        items.forEach((item, index) => {
+        reorderString = reorderString + item.id;
+        if(index + 1 < items.length) {
+            reorderString = reorderString + ","
+        }
+        })
+
+        dispatch(setPostOrder(reorderString))
     }
 
 		return (
@@ -55,4 +73,10 @@ const useStyles = makeStyles((theme) => ({
     })
 )
 
-export default withRouter(PostDetail);
+function mapStateToProps(state) {
+	return {
+		selectedPost: state.selectedPost,
+	};
+}
+
+export default withRouter(connect(mapStateToProps)(PostDetail));

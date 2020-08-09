@@ -5,8 +5,9 @@ import Box from './Box'
 import { ItemTypes } from './ItemTypes'
 import update from 'immutability-helper';
 import { Typography, Grid, colors } from "@material-ui/core";
-
+import { setPostOrder } from "../../actions/SelectedPostAction";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {connect} from "react-redux"
 
 const Container = (props) => {
   const {listItems} = props;
@@ -88,6 +89,15 @@ const Container = (props) => {
     );
 
     setDustbins([...items])
+
+    let reorderString = "";
+    [...items].forEach((item, index) => {
+      reorderString = reorderString + item.id;
+      if(index + 1 < items.length) {
+        reorderString = reorderString + ","
+      }
+    })
+    props.dispatch(setPostOrder(reorderString))
   }
 
   return (
@@ -145,5 +155,10 @@ const Container = (props) => {
   )
 }
 
+function mapStateToProps(state) {
+	return {
+		selectedPost: state.selectedPost,
+	};
+}
 
-export default Container;
+export default connect(mapStateToProps)(Container);

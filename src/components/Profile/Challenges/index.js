@@ -18,7 +18,7 @@ const Challenges = (props) => {
             getChallenges({ 'user_id': user.id })
                 .then((res) => {
                     console.log('res', res)
-                    setChallenges(res.data.data.users_own_lists)
+                    setChallenges(res.data.data.users_own_challenges)
                     setIsLoading(false);
                 })
                 .catch((err) => {

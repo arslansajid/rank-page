@@ -3,6 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { withRouter, useHistory } from 'react-router-dom';
 import Colors from '../../static/_colors';
@@ -15,6 +16,7 @@ const Header = (props) => {
     const classes = useStyles();
     const { location, history } = props;
     const [showBackButton, setShowBackButton] = React.useState(false);
+    const [showSubmitButton, setShowSubmitButton] = React.useState(false);
     console.log('location ' , location.pathname)
 
     React.useEffect(() => {
@@ -22,6 +24,12 @@ const Header = (props) => {
             setShowBackButton(true);
         } else {
             setShowBackButton(false);
+        }
+        // submit button hide/show
+        if (location.pathname.includes("list-detail")) {
+            setShowSubmitButton(true);
+        } else {
+            setShowSubmitButton(false);
         }
     }, [props.location])
 
@@ -36,8 +44,15 @@ const Header = (props) => {
                         )
                     }
                     <Typography variant="h6" className={classes.routeTitle}>
-                        {location.pathname === "/" ? "Rank Page" :(location.pathname === "/edit-profile" ? 'Edit Profile' : location.pathname.split("/")[1])}
+                        {location.pathname === "/" ? "Rank Page" :(location.pathname === "/edit-profile" ? 'Edit Profile' : location.pathname.split("/")[1].replace("-", " "))}
                     </Typography>
+                    {
+                        showSubmitButton && (
+                            <Button className={classes.submitBtn} variant="contained" color="primary" onClick={() => history.goBack()}>
+                                Submit
+                            </Button>
+                        )
+                    }
                 </Toolbar>
             </AppBar>
     );
@@ -57,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         padding: '0px !important',
-        position: 'relative'
+        position: 'relative',
+        justifyContent: 'space-between'
     },
     routeTitle: {
         textTransform: 'capitalize',
@@ -67,6 +83,9 @@ const useStyles = makeStyles((theme) => ({
         // [theme.breakpoints.down('sm')]: {
         //     left: 'calc(50% - 30px)',
         // },
+    },
+    submitBtn: {
+        marginRight: 10
     }
 }));
 

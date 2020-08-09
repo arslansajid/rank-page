@@ -88,12 +88,13 @@ const useStyles = makeStyles (theme =>
 
     },
     input : {
-      background: '#FAFAFA',
+      background: Colors.inputBg,
       border: '1px solid rgba(38, 38, 38, 0.12)',
       marginRight : 5,
       height : '44px',
       width : '44px',
       borderRadius : 8,
+      textAlign : 'center',
 
     },
     submitButton: {

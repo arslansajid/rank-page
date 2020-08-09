@@ -16,7 +16,8 @@ import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
-import { LikeUnlikePost, sharePost } from "./action";
+import { LikeUnlikePost, sharePost , getAllUsers } from "./action";
+import ShareCard from './share'
 import moment from "moment";
 
 import LikeReactIcon from "../../assets/icons/icon/social/like.svg";
@@ -172,23 +173,7 @@ const PostCard = (props) => {
                     <Dialog
                         title={"Share List"}
                         open={showShareDialog}
-                        message={
-                            <>
-                            <Grid className="space-3" container>
-                                <Button color={activeTabAccountPrivacy === 1 ? "primary" : "default"} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
-                                    <Typography>
-                                        Public
-                                    </Typography>
-                                </Button>
-                                <Button color={activeTabAccountPrivacy === 2 ? "primary" : "default"} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
-                                    <Typography>
-                                        Private
-                                    </Typography>
-                                </Button>
-                            </Grid>
-                            <Button variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
-                            </>
-                        }
+                        message={ <ShareCard post = {post}/> }
                         applyForm={() => setShowShareDialog(false)}
                         cancelForm={() => setShowShareDialog(false)}
                         hideActions={true}

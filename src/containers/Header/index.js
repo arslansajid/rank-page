@@ -37,13 +37,14 @@ const Header = (props) => {
     const onSubmitHandler = () => {
         const data = {
             list_id: location.postId,
-            list_item_ids: '',
+            list_item_ids: '2,1',
             user_ids: '',
-            share_type: '',
+            share_type: '1', //1 for public 2 for private
         }
         reArrangeList(data)
         .then((res) => {
             console.log('res', res)
+            window.alert(res.data.message);
         })
         .catch((err) => {
             console.log('err', err)

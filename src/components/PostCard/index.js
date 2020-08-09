@@ -288,7 +288,7 @@ const useStyles = makeStyles((theme) => ({
     showMoreContainer: {
         position: 'absolute',
         width: 'calc(100% - 40px)',
-        bottom: '15%',
+        bottom: 24,
         minHeight: 40,
         color: Colors.white,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%)',

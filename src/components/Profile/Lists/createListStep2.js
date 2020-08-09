@@ -20,7 +20,6 @@ const options = [
 
 const CreateListStep2 = (props) => {
     const classes = useStyles();
-    // const { errors, handleSubmit, control } = useForm();
     const {continueNext , getListData , listItems} = props;
     const [ title , setTitle ] = useState(null);
     const [ titleError , setTitleError ] = useState(false);
@@ -33,7 +32,6 @@ const CreateListStep2 = (props) => {
     const onSubmit = async (data) => {  
       console.log('handle submit called')
     }
-    console.log('data in second comp' , listItems)
 
     useEffect(() =>{
       getAllCategories()
@@ -70,7 +68,6 @@ const CreateListStep2 = (props) => {
       }
     }
     const handleCategoryChange = (value) => {
-      console.log('handle categories' , value)
       setCategoriesError(false)
       let categoryList = [];
       value && value.length && value.map((item) => {

@@ -17,7 +17,7 @@ const SelectCategories = props => {
   const [activeList , setActiveList] = useState([])
 
 
-  console.log('array here' , activeList)
+  // console.log('array here' , activeList)
 
   useEffect(() =>{
     setIsLoading(true);

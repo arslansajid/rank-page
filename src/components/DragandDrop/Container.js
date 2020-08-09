@@ -115,7 +115,7 @@ const Container = (props) => {
                   ref={provided.innerRef}
                 >
                   {dustbins.length > 0 && dustbins.map(({ id, accepts, lastDroppedItem }, index) => (
-                    <Draggable key={id+index} draggableId={String(id)} index={index}>
+                    <Draggable key={id} draggableId={String(id)} index={index}>
                       {(provided, snapshot) => (
                         <div
                           ref={provided.innerRef}

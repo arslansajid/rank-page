@@ -16,7 +16,7 @@ import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
-import { LikeUnlikePost } from "./action";
+import { LikeUnlikePost, sharePost } from "./action";
 import moment from "moment";
 
 import LikeReactIcon from "../../assets/icons/icon/social/like.svg";
@@ -78,6 +78,24 @@ const PostCard = (props) => {
         // }
     }
 
+    const sharePostHandler = () => {
+        const data = {
+            'share_post_id': post.id,
+            'user_ids': '',
+            'share_type': 1, //1 for public 2 for private
+        }
+        sharePost(data)
+        .then((res) => {
+            console.log("res", res)
+            window.alert(res.data.message);
+            setShowShareDialog(false);
+        })
+        .catch((err) => {
+            console.log("err", err)
+            setShowShareDialog(false);
+        })
+    }
+
     console.log("POST DATA", post)
 
     return (
@@ -127,7 +145,9 @@ const PostCard = (props) => {
                     <Dialog
                         title={"Share List"}
                         open={showShareDialog}
-                        message={"Share"}
+                        message={
+                            <Button variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
+                        }
                         applyForm={() => setShowShareDialog(false)}
                         cancelForm={() => setShowShareDialog(false)}
                         hideActions={true}
@@ -178,12 +198,18 @@ const PostCard = (props) => {
                 }
                 <Grid className={classes.cardProfileSection}>
                     <DragandDrop listItems={post.list_items} />
-
-                    <Grid container alignItems="center" justify="center" className={classes.showMoreContainer}>
-                        <Link to={`/list-detail/${post.id}`}>
-                            <Button variant="text" className={classes.showMoreText}>Click to Expand</Button>
-                        </Link> 
-                    </Grid>
+                {
+                    !showTabs && (
+                        <Grid container alignItems="center" justify="center" className={classes.showMoreContainer}>
+                            <Link to={{
+                                    pathname: `/list-detail/${post.id}`,
+                                    'postId': post.id
+                                }}>
+                                <Button variant="text" className={classes.showMoreText}>Click to Expand</Button>
+                            </Link> 
+                        </Grid>
+                    )
+                }
                 </Grid>
 
                 {/* <CardContent> */}

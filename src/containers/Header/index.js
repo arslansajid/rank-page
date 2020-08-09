@@ -9,12 +9,13 @@ import { withRouter, useHistory } from 'react-router-dom';
 import Colors from '../../static/_colors';
 import { reArrangeList } from "./action";
 import { makeStyles } from '@material-ui/core/styles';
+import {connect} from "react-redux"
 
 const drawerWidth = 280;
 
 const Header = (props) => {
     const classes = useStyles();
-    const { location, history } = props;
+    const { location, history, selectedPost } = props;
     const [showBackButton, setShowBackButton] = React.useState(false);
     const [showSubmitButton, setShowSubmitButton] = React.useState(false);
     console.log('location ' , props)
@@ -36,8 +37,8 @@ const Header = (props) => {
 
     const onSubmitHandler = () => {
         const data = {
-            list_id: location.postId,
-            list_item_ids: '2,1',
+            list_id: selectedPost.postId,
+            list_item_ids: selectedPost.listOrder,
             user_ids: '',
             share_type: '1', //1 for public 2 for private
         }
@@ -109,4 +110,11 @@ const useStyles = makeStyles((theme) => ({
 
 Header.defaultProps = {};
 
-export default withRouter(Header);
+function mapStateToProps(state) {
+	return {
+		selectedPost: state.selectedPost,
+	};
+}
+
+export default withRouter(connect(mapStateToProps)(Header));
+

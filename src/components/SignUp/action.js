@@ -22,3 +22,14 @@ export const getCategoriesWithSubCategories = async () => {
       throw err.response;
     }
   };
+
+  export const followCategory = async user => {
+    try {
+      const res = await axiosInstance.post(
+        `${Config.API_END_POINT}/category_toggle_following`, {user}
+      );
+      return res;
+    } catch (err) {
+      throw err.response;
+    }
+  };

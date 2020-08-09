@@ -6,27 +6,21 @@ import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/ExpandMore';
 import PoolIcon from '@material-ui/icons/Pool';
-import Colors from '../../../static/_colors'
+import Colors from '../../static/_colors'
 const CategoryCard = (props) => {
-  const { isSelected , category , showSubCategory, selectedCategoryCallback , followCategoryCallback , categoryToFollow} = props;
+  const { selectedList , category , followCategoryCallback } = props;
   const classes = useStyles();
-  
-  const handleShowSubCategory = () => {
-    selectedCategoryCallback(category.name)
-    if(showSubCategory){
-    showSubCategory(category.sub_categories)}
-  }
 
   return (
     
-    <Card className={isSelected ? classes.rootv: classes.rootFade} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
+    <Card className={selectedList && selectedList.length && selectedList.includes(category.id) ?  classes.rootFade : classes.rootv} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
       <CardContent>
         <Grid className={classes.verticalCenter}>
           <PoolIcon fontSize={"large"} />
           <Typography>{category.name}</Typography>
         </Grid>
       </CardContent>
-      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer} onClick={handleShowSubCategory}>
+      <Grid container justify="space-between" alignItems="center" className={classes.actionContainer}>
         <Typography>Pro</Typography>
         <MoreIcon className={classes.moreIcon} />
         <Typography>{category.count} Lists</Typography>

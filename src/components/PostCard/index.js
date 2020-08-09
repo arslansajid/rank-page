@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 import { makeStyles, fade } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -30,11 +30,14 @@ const PostCard = (props) => {
     const [showComments, setShowComments] = useState(false);
     const [showShareDialog, setShowShareDialog] = useState(false);
     const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
-    const [isLiked, setIsLiked] = useState(false);
-
+    const [isLiked, setIsLiked] = useState(post.likes_count.includes("You"));
+    const [likeMessage, setLikeMessage] = useState(post.likes_count);
     const [anchorEl, setAnchorEl] = React.useState(null);
-
     const [anchorElPopover, setAnchorElPopover] = React.useState(null);
+
+    useEffect(() => {
+
+    }, [likeMessage])
 
     const handlePopoverOpen = (event) => {
         setAnchorElPopover(event.currentTarget);
@@ -62,6 +65,16 @@ const PostCard = (props) => {
         .then((res) => {
             console.log('res', res)
             setIsLiked(res.data.message.includes("unliked") ? false : true);
+            //custome like handling
+            // if(post.likes_count === 'You likes this') {
+            //     setLikeMessage('')
+            // } else if(post.like_count === 0) {
+            //     setLikeMessage('You likes this')
+            // } else if(!(post.likes_count.includes("You"))) {
+            //     setLikeMessage("You " + likeMessage)
+            // } else if(!(res.data.message.includes("unliked"))) {
+            //     setLikeMessage(post.likes_count.replace("You", ""))
+            // }
         })
         .catch((err) => {
             console.log('err', err)
@@ -98,6 +111,7 @@ const PostCard = (props) => {
     }
 
     console.log("POST DATA", post)
+    console.log("POST LIKE COUNT", post.like_count)
 
     return (
         <>
@@ -229,7 +243,7 @@ const PostCard = (props) => {
 
                 {/* <CardContent> */}
                 <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
-                    <Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{!!post.likes_count && post.likes_count}</Typography>
+                    {likeMessage.length ? (<Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{likeMessage}</Typography>) : null}
                     <Typography variant='body2' className='smallFont'>{!!post.comments_count ? post.comments_count : 0} Comments • {!!post.share_count ? post.share_count : 0} Shares</Typography>
                 </Grid>
                 {/* </CardContent> */}

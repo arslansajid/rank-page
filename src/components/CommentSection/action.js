@@ -3,11 +3,8 @@ import axiosInstance from '../../api/api.config';
 
 export const getComments = async postData => {
   try {
-    const res = await axiosInstance.get(
-      `${Config.API_END_POINT}/comments_listing`,
-    {
-      params: postData
-    }
+    const res = await axiosInstance.post(
+      `${Config.API_END_POINT}/comments_listing`, postData
     );
     return res;
   } catch (err) {

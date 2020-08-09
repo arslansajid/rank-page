@@ -3,8 +3,8 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {Button, Typography , Grid, ButtonBase} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import {useForm} from 'react-hook-form';
-import CategoryCard from "../Profile/CategoryCard";
-import {getCategoriesWithSubCategories} from './action'
+import CategoryCard from "./generlCategoryCard";
+import {getCategoriesWithSubCategories , followCategory} from './action'
 
 
 const SelectCategories = props => {
@@ -13,6 +13,11 @@ const SelectCategories = props => {
   const {errors, handleSubmit, control} = useForm ();
   const [categories , setCategories] = useState();
   const [selectedCategory , setSelectedCategory] = useState(null)
+  const [followId , setFollowId] = useState(null)
+  const [activeList , setActiveList] = useState([])
+
+
+  console.log('array here' , activeList)
 
   useEffect(() =>{
     setIsLoading(true);
@@ -27,6 +32,34 @@ const SelectCategories = props => {
     })
 } , [])
 
+const toggleCategoryFollowing = (id) => {
+  let list = [...activeList];
+  if(list.includes(id)){
+    const index = list.indexOf(id);
+    if (index > -1) {
+      list.splice(index, 1);
+      setActiveList(list);
+    }
+  }
+  else {
+    let idArray = [...activeList];
+    idArray.push(id)
+    setActiveList(idArray)
+  }
+
+  let user = {};
+  user.follow_category_id = id;
+
+  followCategory(user)
+  .then((res) => {
+    console.log('response here' , res.data)
+  })
+  .catch((err) =>{
+
+  })
+}
+
+
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -37,10 +70,9 @@ const SelectCategories = props => {
                     return (
                         <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
                             <CategoryCard
-                                isSelected={selectedCategory === null ? true : selectedCategory === category.name ? true :  false}
+                                selectedList={activeList}
                                 category = {category}
-                                // showSubCategory = {(value) => handleShowSubCategory(value)}
-                                selectedCategoryCallback={(value) => setSelectedCategory(value)}
+                                followCategoryCallback = {(id) =>toggleCategoryFollowing(id)}
                             />
                         </Grid>
                     )

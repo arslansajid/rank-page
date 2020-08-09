@@ -66,15 +66,27 @@ const PostCard = (props) => {
             console.log('res', res)
             setIsLiked(res.data.message.includes("unliked") ? false : true);
             //custome like handling
-            // if(post.likes_count === 'You likes this') {
-            //     setLikeMessage('')
-            // } else if(post.like_count === 0) {
+            if(likeMessage.length) {
+            if(!(res.data.message.includes("unliked"))) {
+                setLikeMessage('You, ' + likeMessage)
+                // window.alert("1")
+            } else {
+                setLikeMessage(post.likes_count)
+                // window.alert("2")
+            }
+
+            if(post.likes_count === 'You likes this') {
+                setLikeMessage('')
+                // window.alert("3")
+            }
+            // else if(post.like_count === 0) {
             //     setLikeMessage('You likes this')
-            // } else if(!(post.likes_count.includes("You"))) {
-            //     setLikeMessage("You " + likeMessage)
-            // } else if(!(res.data.message.includes("unliked"))) {
-            //     setLikeMessage(post.likes_count.replace("You", ""))
+            //     window.alert("4")
             // }
+        }
+            else {
+                setLikeMessage('You likes this')
+            }
         })
         .catch((err) => {
             console.log('err', err)
@@ -243,7 +255,7 @@ const PostCard = (props) => {
 
                 {/* <CardContent> */}
                 <Grid container justify="space-between" alignItems="center" className={classes.cardProfileSection}>
-                    {likeMessage.length ? (<Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{likeMessage}</Typography>) : null}
+            {likeMessage.length ? (<Typography variant='body1' className='smallFont'><span className={classes.likeMain}><LikeIcon color='primary' className={classes.likeIcon} /></span>{likeMessage}</Typography>) : <Typography>{"  "}</Typography>}
                     <Typography variant='body2' className='smallFont'>{!!post.comments_count ? post.comments_count : 0} Comments • {!!post.share_count ? post.share_count : 0} Shares</Typography>
                 </Grid>
                 {/* </CardContent> */}
@@ -252,7 +264,9 @@ const PostCard = (props) => {
                         <Button
                             // onMouseEnter={handlePopoverOpen}
                             // onMouseLeave={handlePopoverClose}
-                            onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>Like</Button>
+                            onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
+                                <Typography color={isLiked ? "primary" : "default"}>Like</Typography>
+                            </Button>
                         <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
                         <Button onClick={() => setShowShareDialog(!showShareDialog)} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>

@@ -289,6 +289,7 @@ const SignUp = props => {
 const useStyles = makeStyles(theme =>
   createStyles({
     container: {
+      padding : '3rem 0',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

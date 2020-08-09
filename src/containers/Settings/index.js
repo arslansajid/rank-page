@@ -2,47 +2,81 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
-import { Button, Typography , TextField} from '@material-ui/core';
+import { Button, Typography} from '@material-ui/core';
+import {TextField as TextFieldMaterial} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
-// import TextField from "../../components/Common/TextField";
+import TextField from "../../components/Common/TextField";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
-import {UpdateProfile} from './actions'
+import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus} from './actions'
+import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 
 const Settings = (props) => {
-	// const [user , setUser] = useState(props.user ? props.user : null);
 	const [ name, setName] = useState('')
 	const [ email , setEmail] = useState('')
 	const [isLoading, setIsLoading] = React.useState(false);
 	const { errors, handleSubmit, control } = useForm();
-	const [activeTab, setActiveTab] = useState(1);
+	const [activeTabEmailActivity, setActiveTabEmailActivity] = useState(1);
 	const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
 	const [activeTabFollowingPrivacy, setActiveTabFollowingPrivacy] = useState(1);
-	const [activeDisable, setActiveDisable] = useState(false);
+	const [disable, setDisable] = useState(false);
 	const [showConfirmationDiallog, setShowConfirmationDiallog] = useState(false)
 	const [ isLoadingName, setIsLoadingName] = useState(false);
 	const [ isLoadingEmail, setIsLoadingEmail] = useState(false);
+	const [ isLoadingAccountPrivacy, setIsLoadingAccountPrivacy] = useState(false);
+	const [ isLoadingFollowingPrivacy, setIsLoadingFollowingPrivacy] = useState(false);
+	const [ isLoadingEmailActivity, setIsLoadingEmailActivity] = useState(false);
+	const [ isLoadingPassword, setIsLoadingPassword] = useState(false);
 	const [messageName , setMessageName] = useState('');
 	const [messageEmail , setMessageEmail] = useState('');
+	const [messageEmailActivity , setMessageEmailActivity] = useState('');
+	const [messageAccountPrivacy , setMessageAccountPrivacy] = useState('');
+	const [messageFollowingPrivacy , setMessageFollowingPrivacy] = useState('');
+	const [ passwordMessage , setPasswordMessage] = useState('');
 
-	// console.log('username here' , userName)
-	const onSubmit = data => {
-		setIsLoading(true);
-	}
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!props.user) {
 			setName(props.user.name);
 			setEmail(props.user.email);
-			console.log('user here in useEffect' , props.user)
+			setActiveTabEmailActivity(props.user.email_availability === true ? 1 : 2)
+			setActiveTabAccountPrivacy(translateAccountPrivacy(props.user.account_visibility));
+			setIsLoadingFollowingPrivacy(translateAccountFollowingPrivacy(props.user.following_visibility))
+			setDisable(props.user.account_status === 'enable' ? true : false)
 		}
 	}, [props.user])
 	
 
 	const classes = useStyles();
+
+	const onSubmit = data => {
+		if(data.new_password === data.confirm_password){
+			if(data.new_password.length < 7){
+				setPasswordMessage('Password should be greater than 6 characters')
+			}
+			else{
+			setIsLoadingPassword(true);
+			UpdatePassword(data)
+			.then((res) =>{
+				setIsLoadingPassword(false);
+				setPasswordMessage(res.data.message)
+				console.log('response here' , res.data)
+			})
+			.catch((error) =>{
+				setIsLoadingPassword(false);
+				console.log('error' , error)
+			})
+		}
+		}
+		else {
+			setPasswordMessage('New passwords does not match')
+		}
+
+
+	}
 
 	const updateName = () => {
 		setIsLoadingName(true);
@@ -74,27 +108,72 @@ const Settings = (props) => {
 		})
 	}
 
+	const updateEmailActivity = () => {
+		setIsLoadingEmail(true);
+		let user = {};
+		user.email_availability = activeTabEmailActivity;
+		EmailActivity(user)
+		.then((res) => {
+			setIsLoadingEmailActivity(false);
+				setMessageEmailActivity(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingEmailActivity(false);
+			console.log(err)
+		})
+	}
+
+	const updateAccountPrivacy = () => {
+		setIsLoadingAccountPrivacy(true);
+		let user = {};
+		user.account_visibility = activeTabAccountPrivacy;
+		AccountPrivacy(user)
+		.then((res) => {
+			setIsLoadingAccountPrivacy(false);
+				setMessageAccountPrivacy(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingAccountPrivacy(false);
+			console.log(err)
+		})
+	}
+
+	const updateFollowingPrivacy = () => {
+		setIsLoadingFollowingPrivacy(true);
+		let user = {};
+		user.following_visibility = activeTabFollowingPrivacy
+		AccountPrivacy(user)
+		.then((res) => {
+			setIsLoadingFollowingPrivacy(false);
+			setMessageFollowingPrivacy(res.data.message)
+		})
+		.catch((err) => { 
+			setIsLoadingFollowingPrivacy(false);
+			console.log(err)
+		})
+	}
+
+	const updateAccountStatus = () => {
+		let user = {};
+		user.account_status = disable ? 2 : 1;
+		AccountStatus(user)
+		.then((res) => {
+			if(res.data.success){
+				setDisable(!disable); 
+			}
+		})
+		.catch((err) => { 
+			console.log(err)
+		})
+	}
+
 	if (!!props.user) {
 		return (
 			<div className={classes.pageContainer}>
 				<div className={classes.main}>
-					<form form={'user_name'} onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-4'>
 							<InputLabel className={`${classes.heading}`}>Username</InputLabel>
-							{/* <TextField
-								id='user-name'
-								type='text'
-								name='user_name'
-								className={`${classes.greyInput} space-4`}
-								// rules={{ required: 'This field is required' }}
-								// control={control}
-								// error={errors.user_name ? true : false}
-								placeholder='Username'
-								// defaultValue={!!props.user ? props.user.name : ''}
-								value = {userName}
-								// className='text-field'
-							/> */}
-							<TextField
+							<TextFieldMaterial
 								className={`${classes.greyInput}`}
 								id='user-name'
 								type='text'
@@ -107,18 +186,17 @@ const Settings = (props) => {
 							/>
 						</div>
 						<div className='space-4'>
-							<Button form={'user_name'} type="submit" disabled={isLoadingName} className={classes.submitButton} variant="outlined" color="primary" onClick={updateName}>
+							<Button disabled={isLoadingName} className={classes.submitButton} variant="outlined" color="primary" onClick={updateName}>
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
 							</Button>
 						</div>
 						{messageName && <Typography className={classes.message}>{messageName}</Typography>}
-					</form>
 				</div>
 
 				<div className={classes.main}>
-					<form  form={'password'} onSubmit={handleSubmit(onSubmit)}>
+					<form  key = {'form'} onSubmit={handleSubmit(onSubmit)}>
 						<div className='space-1'>
 							<InputLabel className={`${classes.heading}`}>Password</InputLabel>
 							<TextField
@@ -169,20 +247,20 @@ const Settings = (props) => {
 							/>
 						</div>
 						<div className='space-4'>
-							<Button form={'password'} type="submit" disabled={isLoading} className={classes.submitButton} variant="outlined" color="primary">
+							<Button  type="submit" disabled={isLoadingPassword} className={classes.submitButton} variant="outlined" color="primary">
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
 							</Button>
 						</div>
+						{passwordMessage && <Typography className={classes.message}>{passwordMessage}</Typography>}
 					</form>
 				</div>
 
 				<div className={classes.main}>
-					<form  form={'email'} onSubmit={handleSubmit(onSubmit)}>
 						<InputLabel className={`${classes.heading}`}>Email Address</InputLabel>
 						<div className='space-4'>
-							<TextField
+							<TextFieldMaterial
 								id='user-email'
 								type='email'
 								name='email'
@@ -192,17 +270,17 @@ const Settings = (props) => {
 								placeholder='Enter your email'
 								value = {email}
 								className='text-field'
+								onChange={(e)=>setEmail(e.target.value)}
 							/>
 						</div>
 						<div className='space-4'>
-							<Button  form={'email'} type="submit" disabled={isLoadingEmail} className={classes.submitButton} variant="outlined" color="primary" onClick={updateEmail}>
+							<Button  disabled={isLoadingEmail} className={classes.submitButton} variant="outlined" color="primary" onClick={updateEmail}>
 								<Typography className={classes.submitButtonText}>
 									Change
 							</Typography>
 							</Button>
 						</div>
 						{messageEmail && <Typography className={classes.message}>{messageEmail}</Typography>}
-					</form>
 				</div>
 
 
@@ -212,18 +290,27 @@ const Settings = (props) => {
 						Recieve activity emails
 					</Typography>
 
-					<span className='space-4'>
-						<Button className={activeTab === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTab(1)}>
+					<div className='space-4'>
+						<Button className={activeTabEmailActivity === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabEmailActivity(1) ; setMessageEmailActivity('')}}>
 							<Typography>
 								yes
 							</Typography>
 						</Button>
-						<Button className={activeTab === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTab(2)}>
+						<Button className={activeTabEmailActivity === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabEmailActivity(2) ; setMessageEmailActivity('')}}>
 							<Typography>
 								no
 							</Typography>
 						</Button>
-					</span>
+					</div>
+
+					<div className='space-4'>
+							<Button  disabled={isLoadingEmailActivity} className={classes.submitButton} variant="outlined" color="primary" onClick= {updateEmailActivity}>
+								<Typography className={classes.submitButtonText}>
+									Change
+							</Typography>
+							</Button>
+					</div>
+					{messageEmailActivity && <Typography className={classes.message}>{messageEmailActivity}</Typography>}
 				</div>
 
 				<div className={classes.main}>
@@ -232,23 +319,32 @@ const Settings = (props) => {
 						Set your profile’s visbility
 					</Typography>
 
-					<span className='space-4'>
-						<Button className={activeTabAccountPrivacy === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
+					<div className='space-4'>
+						<Button className={activeTabAccountPrivacy === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabAccountPrivacy(1) ; setMessageAccountPrivacy('') }}>
 							<Typography>
 								Public
 							</Typography>
 						</Button>
-						<Button className={activeTabAccountPrivacy === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
+						<Button className={activeTabAccountPrivacy === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabAccountPrivacy(2) ; setMessageAccountPrivacy('') }}>
 							<Typography>
 								Private
 							</Typography>
 						</Button>
-						<Button className={activeTabAccountPrivacy === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(3)}>
+						<Button className={activeTabAccountPrivacy === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabAccountPrivacy(3) ; setMessageAccountPrivacy('') }}>
 							<Typography>
 								Hidden
 							</Typography>
 						</Button>
-					</span>
+					</div>
+
+					<div className='space-4'>
+							<Button  disabled={isLoadingAccountPrivacy} className={classes.submitButton} variant="outlined" color="primary" onClick = {updateAccountPrivacy}>
+								<Typography className={classes.submitButtonText}>
+									Change
+							</Typography>
+							</Button>
+					</div>
+
 				</div>
 
 				<div className={classes.main}>
@@ -257,23 +353,30 @@ const Settings = (props) => {
 						Set your following visbility
 					</Typography>
 
-					<span className='space-4'>
-						<Button className={activeTabFollowingPrivacy === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(1)}>
+					<div className='space-4'>
+						<Button className={activeTabFollowingPrivacy === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabFollowingPrivacy(1) ; setMessageFollowingPrivacy('')}}>
 							<Typography>
 								Public
 							</Typography>
 						</Button>
-						<Button className={activeTabFollowingPrivacy === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(2)}>
+						<Button className={activeTabFollowingPrivacy === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabFollowingPrivacy(2) ; setMessageFollowingPrivacy('')}}>
 							<Typography>
 								Mutual
 							</Typography>
 						</Button>
-						<Button className={activeTabFollowingPrivacy === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabFollowingPrivacy(3)}>
+						<Button className={activeTabFollowingPrivacy === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTabFollowingPrivacy(3) ; setMessageFollowingPrivacy('')}}>
 							<Typography>
 								Hidden
 							</Typography>
 						</Button>
-					</span>
+					</div>
+					<div className='space-4'>
+							<Button  disabled={isLoadingFollowingPrivacy} className={classes.submitButton} variant="outlined" color="primary" onClick={updateFollowingPrivacy}>
+								<Typography className={classes.submitButtonText}>
+									Change
+							</Typography>
+							</Button>
+					</div>
 				</div>
 
 				<div className={classes.main}>
@@ -283,9 +386,9 @@ const Settings = (props) => {
 					</Typography>
 
 					<span className='space-4'>
-						<Button className={activeDisable ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => { setActiveDisable(!activeDisable); setShowConfirmationDiallog(true) }}>
+						<Button className={disable ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setShowConfirmationDiallog(true) }}>
 							<Typography>
-								Disable
+								{disable  ? 'Disable' : 'Enable'}
 							</Typography>
 						</Button>
 					</span>
@@ -296,11 +399,12 @@ const Settings = (props) => {
 						title={"Confirmation"}
 						open={showConfirmationDiallog}
 						message={<ConformationDialog
+							status = {disable}
+							onConfirm = {() => {updateAccountStatus()}}
 							cancelForm={() => setShowConfirmationDiallog(false)} />}
 						applyForm={() => setShowConfirmationDiallog(false)}
 						hideActions={true}
 						cancelForm={() => setShowConfirmationDiallog(false)}
-					// cancelForm={() => setShowConfirmationDiallog(false)}
 					/>}
 			</div>
 		);
@@ -382,21 +486,19 @@ const useStyles = makeStyles((theme) =>
 			textAlign: 'center',
 			// marginTop : 10,
 		},
+		errorMessage : {
+			textAlign: 'center',
+			color : Colors.red,
+			// marginTop : 10,
+		},
 	})
 );
 
-
-// export default connect(store => {
-// 	return {
-// 		user: store.user,
-// 	}
-// })(Settings)
 
 function mapStateToProps(state) {
 	return {
 			user: state.user,
 	};
 }
-
 
 export default connect(mapStateToProps)(Settings);

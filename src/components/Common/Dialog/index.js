@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) =>
             borderBottom: '1px solid #ddd',
         },
         content: {
-            padding: '3rem',
+            padding: '0 3rem',
         },
         buttonClose: {
             position: 'absolute',

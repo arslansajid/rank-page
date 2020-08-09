@@ -2,8 +2,9 @@ import React , {useState , useEffect} from "react";
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import CategoryCard from "../CategoryCard";
+import { connect } from 'react-redux';
 import SubCategoryCard from '../SubCategoriesCard'
-import {getCategoriesWithSubCategories} from './actions'
+import {getUserCategories} from './actions'
 import LoadingSpinner from "../../Common/LoadingSpinner"
 
 const Categories = [ 
@@ -30,25 +31,34 @@ const Categories = [
 
 ]
 
-const FooterLinks = () => {
+const FooterLinks = (props) => {
+    const { user} = props;
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState()
     const [categories , setCategories] = useState()
     const [selectedCategory , setSelectedCategory] = useState(null)
     const [subCategories , setSubCategories] = useState(null)
 
+    // console.log('user data here' , user)
+
     useEffect(() =>{
-        setIsLoading(true);
-        getCategoriesWithSubCategories()
-        .then((res) => {
-            setIsLoading(false);
-            setCategories(res.data.data.all_categories)
-        })
-        .catch((err) =>{ 
-            setIsLoading(false);
-            console.log(err)
-        })
-    } , [])
+        if(!!user){
+            let params = {};
+            params.category_id = user.id;
+            setIsLoading(true);
+            getUserCategories(params)
+            .then((res) => {
+                setIsLoading(false);
+                if(res.data && res.data.data){
+                setCategories(res.data.data.all_categories)
+                }
+            })
+            .catch((err) =>{ 
+                setIsLoading(false);
+                console.log(err)
+            })
+        }
+    } , [user])
 
     const handleShowSubCategory = (value) => {
         console.log('SubCategory value' , value);
@@ -138,4 +148,11 @@ const useStyles = makeStyles((theme) => ({
 )
 
 
-export default FooterLinks;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
+export default connect(mapStateToProps)(FooterLinks);
+
+// export default connect(FooterLinks);

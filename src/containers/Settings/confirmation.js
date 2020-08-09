@@ -7,7 +7,7 @@ import {useForm} from 'react-hook-form';
 
 const ConformationDialog = props => {
   const [activeTab, setActiveTab] = useState(1);
-  const {cancelForm} = props;
+  const {cancelForm , onConfirm , status} = props;
 
   const classes = useStyles ();
   return (
@@ -20,9 +20,9 @@ const ConformationDialog = props => {
                 no
             </Typography>
         </Button>
-        <Button  className={activeTab === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTab(2)  ; cancelForm()}}>
+        <Button  className={activeTab === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setActiveTab(2)  ; cancelForm() ; onConfirm()}}>
             <Typography>
-              Disable my account
+              {status == false ? 'Enable my account' : 'Disable my account'}
             </Typography>
         </Button>					
 			</span>

@@ -175,6 +175,7 @@ const CreateListStep3 = (props) => {
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    padding : '3rem 0',
   },
   choiceButton: {
     minWidth: "20px",

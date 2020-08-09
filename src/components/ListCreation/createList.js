@@ -59,7 +59,7 @@ const CreateList = (props) => {
 
     return (
         <>
-        <div style = {{ minHeight: '10vh'}}>
+        <div className = {classes.container}>
           {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
               <ListTile key={index} name = {item.title} number = {index}/>
@@ -110,6 +110,7 @@ const CreateList = (props) => {
 const useStyles = makeStyles((theme) => ({
     container : {
 
+      padding : '3rem 0',
     },
     optionsMain : {
       border: '1px solid rgba(38, 38, 38, 0.12)',

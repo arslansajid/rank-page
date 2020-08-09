@@ -22,7 +22,6 @@ const UserProfile = (props) => {
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
     const [showRecoverySuccess, setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();
-    console.log('props here ,' , props)
 
     const registerData = (data) => {
         setValue(data)

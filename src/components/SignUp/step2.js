@@ -27,7 +27,7 @@ const SignUpStep2 = props => {
   const validate = (data) => {
     let regex = /^[a-zA-Z0-9_]*$/
     if(data.match(regex)){
-      console.log('sending true')
+      // console.log('sending true')
       return true
     }
     else {
@@ -145,6 +145,7 @@ const SignUpStep2 = props => {
 const useStyles = makeStyles (theme =>
   createStyles ({
     container: {
+      padding : '3rem 0',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

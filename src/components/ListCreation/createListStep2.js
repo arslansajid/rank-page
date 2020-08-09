@@ -129,6 +129,7 @@ const CreateListStep2 = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     container: {
+      padding : '3rem 0',
     },
     greyInput: {
       borderRadius: 8,

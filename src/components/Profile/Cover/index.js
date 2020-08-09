@@ -18,8 +18,9 @@ const ProfileCover = (props) => {
     const { user , info, dispatch} = props;
 
     useEffect(() => {
+        if(!!user){
         let params = {};
-        params.user_id = props.user &&  props.user.id ? props.user.id : null ;
+        params.user_id = user.id ;
         getUserData(params)
         .then((res)=>{
             if(res.data && res.data.success){
@@ -27,8 +28,9 @@ const ProfileCover = (props) => {
             }
         })
         .catch((err) => { console.log('user api error')})
+    }
 
-    } , [])
+    } , [user])
     console.log('user data here' , userData && userData.followings)
 
     return (

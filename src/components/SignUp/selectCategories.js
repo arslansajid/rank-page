@@ -30,19 +30,7 @@ const SelectCategories = props => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
-        <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
-
-        {/* <Grid container spacing={2} className = 'space-4'>
-          {[...Array(4)].map((category, index) => {
-            return (
-                <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
-                    <CategoryCard
-                        isSelected={true}
-                    />
-                </Grid>
-              )
-          })}
-      </Grid> */}
+      <Typography variant="body2" className ='space-4'>You have been registered, please choose categories you like</Typography>
       <Grid container spacing={2} className='space-4'>
                 {!!categories && categories.length > 0 && (
                     categories.map((category, index) => {
@@ -80,6 +68,7 @@ const SelectCategories = props => {
 const useStyles = makeStyles (theme =>
   createStyles ({
     container: {
+      padding : '3rem 0',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

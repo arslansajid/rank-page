@@ -23,6 +23,8 @@ const EditProfile = (props) => {
 	const [gender, setGender] = useState('')
 	const [userDOB, setUserDOB] = useState('')
 	const [bio , setBio] = useState('')
+	const [image , setImage] = useState('')
+	const [cover , setCover] = useState('')
 	const [ isLoadingName, setIsLoadingName] = useState(false);
 	const [ isLoadingGender, setIsLoadingGender] = useState(false);
 	const [ isLoadingDOB, setIsLoadingDOB] = useState(false);
@@ -67,6 +69,7 @@ const EditProfile = (props) => {
 	}, [props.user])
 
 	const handleChange = (event) => {
+		setMessageCountry('')
     setCountry(event.target.value);
 	};
 
@@ -197,10 +200,52 @@ const EditProfile = (props) => {
 		})
 	}
 
+	const updateImage = (value) => {
+
+		// var fd = new FormData();
+		// 	fd.append('profile_image' , value[0])
+		console.log(value[0]);
+			let user = {};
+			user.profile_image = value[0]
+			UpdateProfile(user)
+			.then((res) => {
+				setIsLoadingDOB(false);
+					setMessageDOB(res.data.message)
+					// if(res.data.success){
+					// 	props.dispatch(userLogin(res.data.data.user));
+					// }
+			})
+			.catch((err) => { 
+				setIsLoadingDOB(false);
+				console.log(err)
+			})
+		}
+	
+		const updateCover = (value) => {
+	
+			var fd = new FormData();
+				fd.append('cover_image' , value[0])
+				UpdateProfile(fd)
+				.then((res) => {
+					setIsLoadingDOB(false);
+						setMessageDOB(res.data.message)
+						// if(res.data.success){
+						// 	props.dispatch(userLogin(res.data.data.user));
+						// }
+				})
+				.catch((err) => { 
+					setIsLoadingDOB(false);
+					console.log(err)
+				})
+			}
+
+			
+
 	const getArray = (length) => {
     return new Array(length).fill(undefined)
 	}
 	const handleDateChange = (value , index) => {
+		setMessageDOB('')
 		if(index === 'day'){
 		setDay(value)
 		}
@@ -220,13 +265,16 @@ const EditProfile = (props) => {
 			<Paper elevation={0} className={classes.container}>
 				<InputLabel className='space-2'>Picture</InputLabel>
 				{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
-				<ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} />
+				{/* <ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} /> */}
+				<ImagePicker image={[]} type = 'image' setImage={(value) => updateImage(value)}/>
+
 			</Paper>
 			
 			<Paper elevation={0} className={classes.container}>
 				<InputLabel className='space-2'>Cover</InputLabel>
 				<Grid className={classes.coverContainer}>
-					<ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} />
+					{/* <ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} /> */}
+					<ImagePicker image={[]} type = 'cover' setImage={(value) => updateCover(value)} />
 				</Grid>
 			</Paper>
 
@@ -238,7 +286,8 @@ const EditProfile = (props) => {
 					variant='outlined'
 					fullWidth
 					value={userName}
-					onChange={(e) => setUserName(e.target.value)}
+					// onChange={(e) => setUserName(e.target.value)}
+					onChange={(e) => {setUserName(e.target.value) ; setMessageName('')}}
 				/>
 				<Button  disabled={isLoadingName} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateName}>
 					<Typography>
@@ -258,7 +307,8 @@ const EditProfile = (props) => {
 					rows={3}
 					fullWidth
 					value={bio}
-					onChange={(e) => {setBio(e.target.value)}}
+					// onChange={(e) => {setBio(e.target.value)}}
+					onChange={(e) => {setBio(e.target.value) ; setMessageBio('')}}
 				/>
 				<Button  disabled={isLoadingBio} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateBio}>
 					<Typography>
@@ -312,22 +362,26 @@ const EditProfile = (props) => {
 			<Paper elevation={0} className={classes.container}>
 				<InputLabel className='space-4'>Gender</InputLabel>
 					<div className='space-4'>
-						<Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(1)}>
+						{/* <Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(1)}> */}
+						<Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setGender(1) ; setMessageGender('')}}>
 							<Typography>
 								male
 							</Typography>
 						</Button>
-						<Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(2)}>
+						{/* <Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(2)}> */}
+						<Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setGender(2) ; setMessageGender('')}}>
 							<Typography>
 								female
 							</Typography>
 						</Button>
-						<Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(3)}>
+						{/* <Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(3)}> */}
+						<Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setGender(3) ; setMessageGender('')}}>
 							<Typography>
 								other
 							</Typography>
 						</Button>
-						<Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(4)}>
+						{/* <Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(4)}> */}
+						<Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setGender(4) ; setMessageGender('')}}>
 							<Typography>
 								prefer not to answer
 							</Typography>
@@ -393,7 +447,8 @@ const EditProfile = (props) => {
                 country={country}
                 value={region}
                 placeholder="Select Region"
-                onChange={(region) => setRegion(region)} />
+                // onChange={(region) => setRegion(region)} />
+								onChange={(region) => {setRegion(region) ; setMessageRegion('')}}/>
 					<Button  disabled={isLoadingRegion} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateRegion}>
 						<Typography>
 							Change

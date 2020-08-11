@@ -78,14 +78,14 @@ const CommentSection = (props) => {
         <>
         <Grid className={classes.root} container>
             <Grid container alignItems="center" className={classes.commentTextContainer}>
-                <Grid item>
+                <Grid item lg={1}>
                     <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                 </Grid>
-                <Grid item lg={10}>
+                <Grid item lg={11}>
                     <TextField
                         margin='dense'
                         variant='outlined'
-                        fullWidth
+                        className = {classes.alingment}
                         placeholder={"Write your comment..."}
                         value={commentTextInput}
                         onChange={(e) => setCommentTextInput(e.target.value)}
@@ -118,10 +118,15 @@ const useStyles = makeStyles((theme) => ({
         padding: '1em',
     },
     avatar: {
-        marginRight: 15,
+        // marginRight: 15,
         width: theme.spacing(7),
         height: theme.spacing(7),
     },
+    alingment : {
+      width: '97%',
+      marginLeft: '3%',
+    },
+
     })
 )
 

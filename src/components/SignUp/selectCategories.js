@@ -68,7 +68,7 @@ const toggleCategoryFollowing = (id) => {
                 {!!categories && categories.length > 0 && (
                     categories.map((category, index) => {
                     return (
-                        <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
+                        <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
                             <CategoryCard
                                 selectedList={activeList}
                                 category = {category}
@@ -100,11 +100,13 @@ const toggleCategoryFollowing = (id) => {
 const useStyles = makeStyles (theme =>
   createStyles ({
     container: {
-      padding : '3rem 0',
+      padding : '3rem 0 ',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       width: '100%',
+      // maxHeight : '460px',
+      // overflowY : 'scroll',
     },
     heading: {
       alignSelf: 'left',
@@ -116,7 +118,7 @@ const useStyles = makeStyles (theme =>
       minWidth: '100px',
       height: '40px',
       background: Colors.themeBlue,
-      width: '80%',
+      width: '100%',
     },
     center: {
         textAlign : 'center'

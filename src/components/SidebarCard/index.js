@@ -52,19 +52,25 @@ const SidebarCard = (props) => {
                     {
                         !!items && items.length && items.map((item, index) => {
                             if(!!item.route) {
-                            return (
-                                <Link key={index} to={item.route}>
-                                    <ListItem onClick={() => handleSignOut(item.name)} button>
-                                        <ListItemIcon className={classes.sideIcon}>
-                                            <img alt={`${item.icon}_icon`} src={require(`../../assets/icons/${item.icon}.png`)} />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            classes={{ primary: classes.text }}
-                                            primary={item.name}
-                                        />
-                                    </ListItem>
-                                </Link>
-                            )
+
+                                if(!props.user && item.name === 'Sign Out'){
+                                    return null
+                                } 
+                                else {
+                                return (
+                                    <Link key={index} to={item.route}>
+                                        <ListItem onClick={() => handleSignOut(item.name)} button>
+                                            <ListItemIcon className={classes.sideIcon}>
+                                                <img alt={`${item.icon}_icon`} src={require(`../../assets/icons/${item.icon}.png`)} />
+                                            </ListItemIcon>
+                                            <ListItemText
+                                                classes={{ primary: classes.text }}
+                                                primary={item.name}
+                                            />
+                                        </ListItem>
+                                    </Link>
+                                )
+                                }
                             } else {
                                 return (
                                     <ListItem key={index} onClick={() => handleDialogs(item.name)} button>

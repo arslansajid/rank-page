@@ -59,6 +59,16 @@ export const Account = [
         route: '/settings'
     },
     {
+        name: 'Reported Users',
+        icon: 'settings',
+        route: '/reported-users'
+    },
+    {
+        name: 'Blocked Users',
+        icon: 'settings',
+        route: '/blocked-users'
+    },
+    {
         name: 'Sign Out',
         icon: 'sign-out',
         route: '/'

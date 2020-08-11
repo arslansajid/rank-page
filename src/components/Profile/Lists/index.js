@@ -39,13 +39,18 @@ const Lists = (props) => {
                     />
                 )
             }
-            {lists.length && lists.map((list, index) => {
-                return (
-                    <Grid key={index}>
-                        <PostCard post={list} />
-                    </Grid>
-                )
-            })}
+            {lists.length > 0
+                ?
+                lists.map((list, index) => {
+                    return (
+                        <Grid key={index}>
+                            <PostCard post={list} />
+                        </Grid>
+                    )
+                })
+                :
+                null
+            }
         </>
     )
 

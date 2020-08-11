@@ -44,13 +44,13 @@ const FooterLinks = (props) => {
     useEffect(() =>{
         if(!!user){
             let params = {};
-            params.category_id = user.id;
+            params.user_id = user.id;
             setIsLoading(true);
             getUserCategories(params)
             .then((res) => {
                 setIsLoading(false);
                 if(res.data && res.data.data){
-                setCategories(res.data.data.all_categories)
+                setCategories(res.data.data.user_followings ? res.data.data.user_followings.user_category_followings : [])
                 }
             })
             .catch((err) =>{ 

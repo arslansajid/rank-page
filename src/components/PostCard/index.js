@@ -17,7 +17,7 @@ import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
 import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
-import { LikeUnlikePost, sharePost , getAllUsers } from "./action";
+import { LikeUnlikePost, blockUser, unfollowUser } from "./action";
 import ShareCard from './share'
 import moment from "moment";
 
@@ -95,6 +95,36 @@ const PostCard = (props) => {
         })
     }
 
+    const blockUserHandler = () => {
+        const data = {
+            'block_user_id': post.user ? post.user.id : "",
+        }
+        blockUser(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert("User blocked");
+            handleClose();
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
+
+    const unfollowUserHandler = () => {
+        const data = {
+            'unfollow_user_id': post.user ? post.user.id : "",
+        }
+        unfollowUser(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert("User unfollowed");
+            handleClose();
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
+
     const onTabChangeHandler = (selected) => {
         setActiveTab(selected);
         // if(selected === 1) {
@@ -119,8 +149,8 @@ const PostCard = (props) => {
                 onClose={handleClose}
             >
                 <MenuItem onClick={handleClose}>Report</MenuItem>
-                <MenuItem onClick={handleClose}>Block User</MenuItem>
-                <MenuItem onClick={handleClose}>Unfollow User</MenuItem>
+                <MenuItem onClick={() => blockUserHandler()}>Block User</MenuItem>
+                <MenuItem onClick={() => unfollowUserHandler()}>Unfollow User</MenuItem>
             </Menu>
 
             

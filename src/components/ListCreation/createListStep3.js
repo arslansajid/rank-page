@@ -114,6 +114,7 @@ const CreateListStep3 = (props) => {
             </Button>
           </div>
 
+          {activeTabShare === 2 && 
           <Select
             closeMenuOnSelect={false}
             isMulti
@@ -125,7 +126,9 @@ const CreateListStep3 = (props) => {
             getOptionValue={option => option.value}
             onChange={handleSelectd}
           />
+          }
           {userError && <Typography className={classes.error}>Select user first</Typography>}
+
           <Divider className='space-4' />
 
           <div className='space-2'>

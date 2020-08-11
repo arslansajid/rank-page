@@ -232,7 +232,7 @@ const PostCard = (props) => {
                 <CardActions>
                     <Grid container justify="space-between">
                         <Button
-                            // onMouseEnter={handlePopoverOpen}
+                            onMouseEnter={handlePopoverOpen}
                             // onMouseLeave={handlePopoverClose}
                             onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
                                 <Typography color={isLiked ? "primary" : "inherit"}>Like</Typography>

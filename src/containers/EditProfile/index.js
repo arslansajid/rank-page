@@ -209,8 +209,8 @@ const EditProfile = (props) => {
 			user.profile_image = value[0]
 			UpdateProfile(user)
 			.then((res) => {
-				setIsLoadingDOB(false);
-					setMessageDOB(res.data.message)
+				// setIsLoadingDOB(false);
+				// 	setMessageDOB(res.data.message)
 					// if(res.data.success){
 					// 	props.dispatch(userLogin(res.data.data.user));
 					// }
@@ -227,8 +227,8 @@ const EditProfile = (props) => {
 				fd.append('cover_image' , value[0])
 				UpdateProfile(fd)
 				.then((res) => {
-					setIsLoadingDOB(false);
-						setMessageDOB(res.data.message)
+					// setIsLoadingDOB(false);
+					// 	setMessageDOB(res.data.message)
 						// if(res.data.success){
 						// 	props.dispatch(userLogin(res.data.data.user));
 						// }

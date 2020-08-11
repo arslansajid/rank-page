@@ -106,24 +106,6 @@ const PostCard = (props) => {
         // }
     }
 
-    // const sharePostHandler = () => {
-    //     const data = {
-    //         'share_post_id': post.id,
-    //         'user_ids': activeTabAccountPrivacy === 2 ? '4' : '',
-    //         'share_type': activeTabAccountPrivacy, //1 for public 2 for private
-    //     }
-    //     sharePost(data)
-    //     .then((res) => {
-    //         console.log("res", res)
-    //         window.alert(res.data.message);
-    //         setShowShareDialog(false);
-    //     })
-    //     .catch((err) => {
-    //         console.log("err", err)
-    //         setShowShareDialog(false);
-    //     })
-    // }
-
     console.log("POST DATA", post)
     console.log("POST LIKE COUNT", post.like_count)
 
@@ -192,13 +174,15 @@ const PostCard = (props) => {
                         <MoreIcon />
                     </IconButton>
                 </Grid>
-                <Grid container className={classes.cardProfileSection}>
-                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    <Grid className={classes.verticalCenter}>
-                        <Typography variant='body1' className='mediumFont'>{!!post.user ? post.user.name : ''}</Typography>
-                        <Typography variant='body2' className='smallFont'>{!!post.user ? `@ ${post.user.user_name}` : ''}</Typography>
+                <Link to={`/user-detail/${post.user? post.user.id : "1"}/lists`}>
+                    <Grid container className={classes.cardProfileSection}>
+                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <Grid className={classes.verticalCenter}>
+                            <Typography variant='body1' className='mediumFont'>{!!post.user ? post.user.name : ''}</Typography>
+                            <Typography variant='body2' className='smallFont'>{!!post.user ? `@ ${post.user.user_name}` : ''}</Typography>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </Link>
                 <Grid className={classes.cardProfileSection}>
                     <Typography variant='h6' className={`${classes.heading} space-2`}>{!!post.title && post.title} </Typography>
                     <Typography variant='body2' className='smallFont'>• {moment(post.updated_at).format("DD MMM YYYY")} at {moment(post.updated_at).format("hh:mm A")}</Typography>

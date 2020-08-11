@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
 import { Button, Typography} from '@material-ui/core';
-import {TextField as TextFieldMaterial} from '@material-ui/core';
+import {TextField as TextFieldMaterial , Paper} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
 import TextField from "../../components/Common/TextField";
@@ -12,6 +12,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
 import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus} from './actions'
+import ReportedUsers from '../../containers/ReportedUsers'
+import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 
 const Settings = (props) => {
@@ -36,6 +38,8 @@ const Settings = (props) => {
 	const [messageAccountPrivacy , setMessageAccountPrivacy] = useState('');
 	const [messageFollowingPrivacy , setMessageFollowingPrivacy] = useState('');
 	const [ passwordMessage , setPasswordMessage] = useState('');
+	const [showReportedUsers , setShowReportedUsers] = useState(false)
+	const [showBlockedUsers , setShowBlockedUsers] = useState(false)
 
 	useEffect(() => {
 		//re-rendering when the user data changes
@@ -382,6 +386,25 @@ const Settings = (props) => {
 					</div>
 				</div>
 
+				<Paper elevation={0} className={classes.coverContainer} onClick={()=> {setShowReportedUsers(!showReportedUsers)}}>
+					<InputLabel className={`${classes.heading}`}>Reported Users</InputLabel>
+				</Paper>
+
+				{showReportedUsers &&
+				<Paper elevation={0} className={classes.coverContainer}>
+					<ReportedUsers/>
+				</Paper>}
+
+				<Paper elevation={0} className={classes.coverContainer} onClick={()=> {setShowBlockedUsers(!showBlockedUsers)}}>
+					<InputLabel className={`${classes.heading}`}>Blocked Users</InputLabel>
+				</Paper>
+
+				{showBlockedUsers &&
+				<Paper elevation={0} className={classes.coverContainer}>
+					<BlockedUsers/>
+				</Paper>}
+
+
 				<div className={classes.main}>
 					<InputLabel className={`${classes.heading}`}>Disable Account</InputLabel>
 					<Typography className='body2 space-2 mediumFont'>
@@ -389,7 +412,8 @@ const Settings = (props) => {
 					</Typography>
 
 					<span className='space-4'>
-						<Button className={disable ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setShowConfirmationDiallog(true) }}>
+						<Button className={classes.choiceButton} variant="contained" onClick={() => {setShowConfirmationDiallog(true) }}>
+						{/* <Button className={disable ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => {setShowConfirmationDiallog(true) }}> */}
 							<Typography>
 								{disable  ? 'Disable' : 'Enable'}
 							</Typography>
@@ -494,6 +518,14 @@ const useStyles = makeStyles((theme) =>
 			color : Colors.red,
 			// marginTop : 10,
 		},
+		coverContainer: {
+			// color: Colors.white,
+			padding: '1em',
+			marginBottom: 8,
+			background: Colors.white,
+			borderRadius: 8,
+			border: '1px solid rgba(38, 38, 38, 0.12)',
+	},
 	})
 );
 

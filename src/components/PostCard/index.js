@@ -186,7 +186,10 @@ const PostCard = (props) => {
                     <Dialog
                         title={"Share List"}
                         open={showShareDialog}
-                        message={ <ShareCard post = {post} close={() => setShowShareDialog(false)} /> }
+                        message={ <ShareCard 
+                            post = {post} 
+                            close={() => setShowShareDialog(false)}
+                             /> }
                         applyForm={() => setShowShareDialog(false)}
                         cancelForm={() => setShowShareDialog(false)}
                         hideActions={true}

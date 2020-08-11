@@ -66,7 +66,8 @@ const CreateListStep3 = (props) => {
         params.share_type = activeTabShare;
         params.allow_rearrangement = activeTabRearangement;
         params.display_images = activeTabDisplayImages;
-        params.user_ids = selectedUser ? selectedUser.join() : null;
+        // params.user_ids = selectedUser ? selectedUser.join() : null;
+        params.user_ids = activeTabAccountPrivacy === 2 ? (selectedUser ? selectedUser.join() : null) : '';
         params.categories = params.categories.join();
 
         PostListItem(params)

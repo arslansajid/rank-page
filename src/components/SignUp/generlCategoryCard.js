@@ -13,7 +13,7 @@ const CategoryCard = (props) => {
 
   return (
     
-    <Card className={selectedList && selectedList.length && selectedList.includes(category.id) ?  classes.rootFade : classes.rootv} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
+    <Card className={selectedList && selectedList.length && selectedList.includes(category.id) ?  classes.rootFade : classes.rootv} variant="outlined"  style = {{ position : 'relative'}}>
       <CardContent>
         <Grid className={classes.verticalCenter}>
           <PoolIcon fontSize={"large"} />
@@ -25,6 +25,8 @@ const CategoryCard = (props) => {
         <MoreIcon className={classes.moreIcon} />
         <Typography>{category.count} Lists</Typography>
       </Grid>
+      <Grid onClick = {()=> followCategoryCallback(category.id)} className = {classes.plusIcon}><img src={require('../../assets/icons/plus-circle-black.png')}/></Grid>
+      {/* <Grid onClick = {()=> followCategoryCallback(category.id)} className = {classes.plusIcon}><img src={require(selectedList && selectedList.length && selectedList.includes(category.id) ?  '../../assets/icons/ACTIVE-heart.png' :  '../../assets/icons/plus-circle-black.png'  )}/></Grid> */}
     </Card>
   );
 }
@@ -72,6 +74,11 @@ const useStyles = makeStyles(theme => ({
     },
     followed : {
       background: Colors.brandColor,
+    },
+    plusIcon : {
+       position : 'absolute',
+       top : 10,
+       right : 10,
     },
   }));
 

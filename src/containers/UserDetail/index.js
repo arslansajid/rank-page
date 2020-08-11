@@ -4,38 +4,52 @@ import { makeStyles } from '@material-ui/core/styles';
 import ProfileCover from "../../components/Profile/Cover";
 import Lists from "../../components/Profile/Lists";
 import Challenges from "../../components/Profile/Challenges";
-import Categories from "../../components/Profile/Categories";
 import { withRouter, Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux';
+import {getUserById} from "./action";
 
-const Profile = (props) => {
+const UserDetail = (props) => {
     const classes = useStyles();
     const [activeTab, setActiveTab] = useState(null);
+    const [user, setUser] = useState(null);
+    console.log('props user detail', props)
+    const { tab, id } = props.match.params
    
     useEffect(() => {
-        if (props.match.params.tab === "lists") {
+        if (tab === "lists") {
             setActiveTab(1)
-        } else if (props.match.params.tab === "challenges") {
+        } else if (tab === "pools") {
             setActiveTab(2)
-        } else if (props.match.params.tab === "categories") {
-            setActiveTab(3)
         }
+        fetchUserData();
     }, [])
+
+    const fetchUserData = () => {
+        const params = {
+            user_id: id
+        };
+
+        getUserById(params)
+        .then((res) => {
+            setUser(res.data.data && res.data.data.user ? res.data.data.user : null);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
 
     const onTabChangeHandler = (selected) => {
         setActiveTab(selected);
         if(selected === 1) {
-            props.history.push('/profile/lists');
+            props.history.push(`/user-detail/${id}/lists`);
         } else if(selected === 2) {
-            props.history.push('/profile/challenges');
-        } else if(selected === 3) {
-            props.history.push('/profile/categories');
+            props.history.push(`/user-detail/${id}/pools`);
         }
     }
 
     return (
         <div className={classes.main}>
-            <ProfileCover info = {props.user}/>
+            <ProfileCover isUserDetail={true} info={user}/>
             <ButtonGroup fullWidth size='large'>
                 <Button className={classes.buttons} onClick={() => onTabChangeHandler(1)}>
                     <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>
@@ -43,25 +57,19 @@ const Profile = (props) => {
                 <Button onClick={() => onTabChangeHandler(2)}>
                     <Typography className={activeTab === 2 ? classes.tabselected : classes.tab}>Pools</Typography>
                 </Button>
-                <Button onClick={() => onTabChangeHandler(3)}>
-                    <Typography className={activeTab === 3 ? classes.tabselected : classes.tab}>Categories</Typography></Button>
             </ButtonGroup>
 
             <Grid>
                 <Switch>
                     <Route
-                        path="/profile/lists"
+                        path={`/user-detail/${id}/lists`}
                         render={props => (
                             <Lists {...props} />
                         )}
                     />
                     <Route
-                        path="/profile/challenges"
+                        path={`/user-detail/${id}/pools`}
                         render={props => <Challenges {...props} />}
-                    />
-                    <Route
-                        path="/profile/categories"
-                        render={props => <Categories {...props} />}
                     />
                 </Switch>
             </Grid>
@@ -90,18 +98,8 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
-// export default withRouter(Profile);
-
-// function mapStateToProps(state) {
-//     return {
-//         user: state.user,
-//     };
-// }
-
-
-// export default connect(mapStateToProps)(Profile);
 export default withRouter(connect(store => {
     return{
         user: store.user,
     }
-  })(Profile))
+  })(UserDetail))

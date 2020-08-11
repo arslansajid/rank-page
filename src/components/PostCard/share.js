@@ -55,7 +55,7 @@ const ShareCard = (props) => {
         // console.log('selected user ids' , selectedUser.join())
         let data = {};
         data.share_post_id = post ? post.id : null;
-        data.user_ids = selectedUser ? selectedUser.join() : null;
+        data.user_ids = activeTabAccountPrivacy === 2 ? (selectedUser ? selectedUser.join() : null) : '';
         data.share_type = activeTabAccountPrivacy;
 
         sharePost(data)

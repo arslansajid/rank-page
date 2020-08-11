@@ -18,7 +18,7 @@ export const Create = [
         route: null
     },
     {
-        name: 'Challenge',
+        name: 'Pool',
         icon: 'plus',
         route: null
     },
@@ -57,6 +57,16 @@ export const Account = [
         name: 'Settings',
         icon: 'settings',
         route: '/settings'
+    },
+    {
+        name: 'Reported Users',
+        icon: 'settings',
+        route: '/reported-users'
+    },
+    {
+        name: 'Blocked Users',
+        icon: 'settings',
+        route: '/blocked-users'
     },
     {
         name: 'Sign Out',

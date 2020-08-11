@@ -41,7 +41,7 @@ const Profile = (props) => {
                     <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>
                 </Button>
                 <Button onClick={() => onTabChangeHandler(2)}>
-                    <Typography className={activeTab === 2 ? classes.tabselected : classes.tab}>Challenges</Typography>
+                    <Typography className={activeTab === 2 ? classes.tabselected : classes.tab}>Pools</Typography>
                 </Button>
                 <Button onClick={() => onTabChangeHandler(3)}>
                     <Typography className={activeTab === 3 ? classes.tabselected : classes.tab}>Categories</Typography></Button>

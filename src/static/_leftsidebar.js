@@ -18,7 +18,7 @@ export const Create = [
         route: null
     },
     {
-        name: 'Challenge',
+        name: 'Pool',
         icon: 'plus',
         route: null
     },

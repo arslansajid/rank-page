@@ -118,7 +118,7 @@ const useStyles = makeStyles (theme =>
       minWidth: '100px',
       height: '40px',
       background: Colors.themeBlue,
-      width: '80%',
+      width: '100%',
     },
     center: {
         textAlign : 'center'

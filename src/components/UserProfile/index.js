@@ -18,7 +18,7 @@ const UserProfile = (props) => {
     const [showSignIn, setShowSignIn] = useState(false);
     const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
-    const [showSelectCategories, setShowSelectCategories] = useState(true);
+    const [showSelectCategories, setShowSelectCategories] = useState(false);
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
     const [showRecoverySuccess, setShowRecoverySuccess] = useState(false);
     const [value, setValue] = useState();

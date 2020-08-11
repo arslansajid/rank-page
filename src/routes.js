@@ -13,6 +13,11 @@ const Notifications = React.lazy(() => import('./containers/Notifications'));
 const Messages = React.lazy(() => import('./containers/Chat'));
 const Settings = React.lazy(() => import('./containers/Settings'));
 const EditProfile = React.lazy(() => import('./containers/EditProfile'));
+const Followers = React.lazy(() => import('./containers/Followers'));
+const Fans = React.lazy(() => import('./containers/Fans'));
+const BlockedUsers = React.lazy(() => import('./containers/BlockedUsers'));
+const ReportedUsers = React.lazy(() => import('./containers/ReportedUsers'));
+const UserDetail = React.lazy(() => import('./containers/UserDetail'));
 const Explore = React.lazy(() => import('./containers/Explore'));
 const ListDetail = React.lazy(() => import('./containers/ListDetail'));
 const PageNotFound = React.lazy(() => import('./containers/PageNotFound'));
@@ -37,6 +42,11 @@ const Routes = () => {
         <Route exact path="/messages" render={() => <Messages />} />
         <Route exact path="/settings" render={() => <Settings />} />
         <Route exact path="/edit-profile" render={() => <EditProfile />} />
+        <Route exact path="/followers" render={() => <Followers />} />
+        <Route exact path="/fans" render={() => <Fans />} />
+        <Route exact path="/reported-users" render={() => <ReportedUsers />} />
+        <Route exact path="/blocked-users" render={() => <BlockedUsers />} />
+        <Route exact path="/user-detail/:id/:tab" render={() => <UserDetail />} />
         <Route exact path="/explore" render={() => <Explore />} />
         <Route exact path="/list-detail/:postId" render={() => <ListDetail />} />
         <Route exact path='*' render={() => <PageNotFound />} />

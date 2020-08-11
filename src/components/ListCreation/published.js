@@ -61,6 +61,7 @@ const Published = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     container: {
+      padding : '3rem 0',
     },
     textCenter: {
       textAlign: 'center',

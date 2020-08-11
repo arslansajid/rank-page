@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid,  Button } from '@material-ui/core';
+import { Grid,  Button , TextField  } from '@material-ui/core';
 import Colors from '../../static/_colors';
-import Typography from '@material-ui/core/Typography';
+import  Typography  from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import { connect } from "react-redux";
+import Divider from '@material-ui/core/Divider';
 import { sharePost } from "./action";
 import Select , { components }  from 'react-select'
 import { colourStyles } from "../../styles/ReactSelect";
@@ -21,6 +22,7 @@ const ShareCard = (props) => {
     const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
     const [users , setUsers] = useState() 
     const [selectedUser, setSelectedUser] = useState(null);
+    const [comment , setComment] = useState('')
 
     useEffect(() => {
       getAllUsers()
@@ -72,45 +74,72 @@ const ShareCard = (props) => {
     return (
         <>
         <div className = {`${classes.container}`}>
-        <Grid  container>
-        <Grid item xs={12} className = 'space-4'>
-           <InputLabel className ={`${classes.label} space-2`}>Share to</InputLabel>
-            <Button className={activeTabAccountPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
-              <Typography>
-                Public
-              </Typography>
-            </Button>
-            <Button className={activeTabAccountPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
-              <Typography>
-                Private
-              </Typography>
-            </Button>
-          </Grid>
-
-        {activeTabAccountPrivacy === 2 ? (
+          <Grid  container>
           <Grid item xs={12} className = 'space-4'>
-            <Select
-              closeMenuOnSelect={false}
-              isMulti
-              options={users ? users : []}
-              getOptionLabel={option => option.name}
-              getOptionValue={option => option.id}
-              className='space-4'
-              placeholder = "Search User"
-              onChange={handleUserChange}
-              styles={colourStyles}
-              
-            />
-          </Grid>
-        )
-        :
-        null
-      }
-          
+            <InputLabel className ={`${classes.label} space-2`}>Share to</InputLabel>
+              <Button className={activeTabAccountPrivacy === 1 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(1)}>
+                <Typography>
+                  Public
+                </Typography>
+              </Button>
+              <Button className={activeTabAccountPrivacy === 2 ?  classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setActiveTabAccountPrivacy(2)}>
+                <Typography>
+                  Private
+                </Typography>
+              </Button>
+            </Grid>
+
+          {activeTabAccountPrivacy === 2 ? (
+            <Grid item xs={12} className = 'space-4'>
+              <Select
+                closeMenuOnSelect={false}
+                isMulti
+                options={users ? users : []}
+                getOptionLabel={option => option.name}
+                getOptionValue={option => option.id}
+                className='space-4'
+                placeholder = "Search User"
+                onChange={handleUserChange}
+                styles={colourStyles}
+                
+              />
+            </Grid>
+          )
+          :
+          null
+        }
+        <Divider/>
+        <Grid item xs={12} className = 'space-4'>
+          <InputLabel className ={`${classes.label}`}>Add your comment</InputLabel>
+            <TextField
+                  className={classes.greyInput}
+                  margin='dense'
+                  variant='outlined'
+                  multiline={true}
+                  rows={2}
+                  fullWidth
+                  onChange={(e)=> {setComment(e.target.value)}}
+                  defaultValue={''}
+              />
+        </Grid> 
+
+        <Grid item xs = {12} className={`space-4`}>
+          <Typography className={`${classes.label} space-2`}>Share to other social networks</Typography>
+          <img src = {require('../../assets/icons/socialMedia/facebook1.svg')} className = {classes.image}/>
+          <img src = {require('../../assets/icons/socialMedia/twitter.svg')} className = {classes.image}/>
+          <img src = {require('../../assets/icons/socialMedia/instagram1.svg')} className = {classes.image}/>
+          <img src = {require('../../assets/icons/socialMedia/email.svg')} className = {classes.image}/>
         </Grid>
-        <Button fullWidth variant="contained" color="primary" onClick={() => sharePostHandler()}>Share</Button>
-        </div>
-        </>
+
+      </Grid>
+      <Button
+        onClick={() => sharePostHandler()}
+        className = {classes.buttonPosition}
+      >
+        <Typography> Share </Typography>
+      </Button>
+    </div>
+    </>
     )
 
 }
@@ -138,7 +167,24 @@ const useStyles = makeStyles((theme) => ({
 			"&:hover": {
 				background: Colors.brandColor,
 			}
-		},
+    },
+    buttonPosition : {
+      position : 'absolute',
+      top : 13,
+      right : 13,
+  
+    },
+    label : {
+      color : Colors.black,
+    },
+    greyInput: {
+      borderRadius: 8,
+      background: Colors.inputBg,
+    },
+    image : {
+      marginRight : 10,
+      width : '2rem',
+    },
 })
 )
 

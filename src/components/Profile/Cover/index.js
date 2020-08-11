@@ -1,96 +1,125 @@
-import React , { useState , useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import {Typography, TextField, IconButton, Grid, Paper, Button} from "@material-ui/core";
+import { Typography, TextField, IconButton, Grid, Paper, Button } from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import SettingsIcon from '@material-ui/icons/Settings';
 import EditIcon from '@material-ui/icons/Edit';
+import InfoIcon from '@material-ui/icons/Info';
 import { connect } from "react-redux";
 import { showSignIn } from "../../../actions/SignInFormActions";
 import { showSignUp } from "../../../actions/SignUpFormActions";
-import {getUserData} from './actions'
+import { getUserData, followUser } from './actions'
 
 const ProfileCover = (props) => {
 
     const classes = useStyles();
-    const [userData , setUserData] = useState(null);
-    const { user , info, dispatch} = props;
+    const [userData, setUserData] = useState(null);
+    const { user, info, isUserDetail, dispatch } = props;
 
     useEffect(() => {
-        if(!!user){
-        let params = {};
-        params.user_id = user.id ;
-        getUserData(params)
-        .then((res)=>{
-            if(res.data && res.data.success){
-                setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
-            }
-        })
-        .catch((err) => { console.log('user api error')})
-    }
+        if (!!user) {
+            let params = {};
+            params.user_id = user.id;
+            getUserData(params)
+                .then((res) => {
+                    if (res.data && res.data.success) {
+                        setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
+                    }
+                })
+                .catch((err) => { console.log('user api error') })
+        }
 
-    } , [user])
-    console.log('user data here' , userData && userData.followings)
+    }, [user])
+    console.log('user data here', userData && userData.followings)
+
+    const followUserHandler = () => {
+        const data = {
+            "follow_user_id": info.id
+        }
+        followUser(data)
+            .then((res) => {
+                console.log("res", res)
+                window.alert(res.data.message)
+            })
+            .catch((err) => {
+                console.log("err", err)
+            })
+    }
 
     return (
         <>
-        <Paper elevation={0} className={classes.coverContainer}>
-            <Grid className={classes.mainContainer}>
-                <Grid container justify="space-between">
-                    <div>
-                        <Avatar className={classes.avatar} alt={!!userData ? userData.name : 'image'} src={!!userData && userData.profile_image ? userData.profile_image : require("../../../assets/images/user.jpg")} />
-                        <Typography variant='body1' className = {classes.bold}>{!!userData && userData.name ? userData.name : ''}</Typography>
-                        <Typography variant='body2' className = {classes.font}>{!!userData && userData.user_name ? `@ ${userData.user_name}` : ''}</Typography>
-                    </div>
-                    {!!user ?
-                    <div>
-                        <Link to="/settings">
-                            <Button className={classes.buttonSettings} color="inherit">
-                                <SettingsIcon />
-                            </Button>
-                        </Link>
-                        <Link to="/edit-profile">
-                            <Button className={classes.buttonEdit} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
-                        </Link>
-                    </div>
-                :
-                    <div>
-                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignUp())}>
-                            Register
-                        </Button>
-                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignIn())}>
-                            Sign In
-                        </Button>
-                    </div>
-                }
-                    
-                </Grid>
-                <Grid container justify="space-between">
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <Typography className = {classes.introText}>
-                        {!!userData && userData.bio ? userData.bio : 'No Bio Added'}
-                    </Typography>
+            <Paper elevation={0} className={classes.coverContainer}>
+                <Grid className={classes.mainContainer}>
+                    <Grid container justify="space-between">
+                        <div>
+                            <Avatar className={classes.avatar} alt={!!userData ? userData.name : 'image'} src={!!userData && userData.profile_image ? userData.profile_image : require("../../../assets/images/user.jpg")} />
+                            <Typography variant='body1' className={classes.bold}>{!!userData && userData.name ? userData.name : ''}</Typography>
+                            <Typography variant='body2' className={classes.font}>{!!userData && userData.user_name ? `@ ${userData.user_name}` : ''}</Typography>
+                        </div>
+                        {
+                            !!isUserDetail ?
+                                <div>
+                                    <Button className={classes.buttonSettings} color="inherit">
+                                        <InfoIcon />
+                                    </Button>
+                                    <Button onClick={() => followUserHandler()} className={classes.buttonEdit} color="inherit" variant="outlined">Follow</Button>
+                                </div>
+                                :
+                                !!user ?
+                                    <div>
+                                        <Link to="/settings">
+                                            <Button className={classes.buttonSettings} color="inherit">
+                                                <SettingsIcon />
+                                            </Button>
+                                        </Link>
+                                        <Link to="/edit-profile">
+                                            <Button className={classes.buttonEdit} color="inherit" variant="outlined" startIcon={<EditIcon />}>Edit Profile</Button>
+                                        </Link>
+                                    </div>
+                                    :
+                                    <div>
+                                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignUp())}>
+                                            Register
+                                        </Button>
+                                        <Button className={classes.buttonEdit} color="inherit" variant="outlined" onClick={() => dispatch(showSignIn())}>
+                                            Sign In
+                                        </Button>
+                                    </div>
+                        }
                     </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                    <Grid container justify="flex-end">
-                        <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.followings ? userData.followings : 0}</Typography>
-                            <Typography className = {classes.font}>Following</Typography>
+                    <Grid container justify="space-between">
+                        <Grid item lg={6} md={6} sm={12} xs={12}>
+                            <Typography className={classes.introText}>
+                                {!!userData && userData.bio ? userData.bio : 'No Bio Added'}
+                            </Typography>
                         </Grid>
-                        <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.followers ? userData.followers : 0}</Typography>
-                            <Typography className = {classes.font}>Fans</Typography>
+                        <Grid item lg={6} md={6} sm={12} xs={12}>
+                            <Grid container justify="flex-end">
+                                <Link to="/followers">
+                                    <Grid item className={classes.textContainer}>
+                                        <Typography className={classes.font}>{!!userData && userData.followings ? userData.followings : 0}</Typography>
+                                        <Typography className={classes.font}>Following</Typography>
+                                    </Grid>
+                                </Link>
+                                <Link to="/fans">
+                                    <Grid item className={classes.textContainer}>
+                                        <Typography className={classes.font}>{!!userData && userData.followers ? userData.followers : 0}</Typography>
+                                        <Typography className={classes.font}>Fans</Typography>
+                                    </Grid>
+                                </Link>
+                                {/* <Link to="/followers"> */}
+                                    <Grid item className={classes.textContainer}>
+                                        <Typography className={classes.font}>{!!userData && userData.total_lists ? userData.total_lists : 0}</Typography>
+                                        <Typography className={classes.font}>Lists</Typography>
+                                    </Grid>
+                                {/* </Link> */}
+                            </Grid>
                         </Grid>
-                        <Grid item className={classes.textContainer}>
-                            <Typography className = {classes.font}>{!!userData && userData.total_lists ? userData.total_lists : 0}</Typography>
-                            <Typography className = {classes.font}>Lists</Typography>
-                        </Grid>
-                    </Grid> 
                     </Grid>
                 </Grid>
-            </Grid>
-        </Paper>
+            </Paper>
         </>
     )
 
@@ -120,16 +149,16 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     buttonSettings: {
-        border : '2px solid',
+        border: '2px solid',
         borderRadius: '50%',
         height: 40,
-        width : 40,
-        borderRadius : 50,
+        width: 40,
+        borderRadius: 50,
     },
-    buttonEdit : {
+    buttonEdit: {
         marginLeft: 15,
-        border : '2px solid',
-        borderRadius : 20,
+        border: '2px solid',
+        borderRadius: 20,
 
     },
     textContainer: {
@@ -137,17 +166,17 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         fontSize: '0.75rem',
     },
-    bold : {
+    bold: {
         fontWeight: 'bold',
     },
-    font : {
+    font: {
         fontSize: '0.75rem'
     },
-    introText : {
+    introText: {
         opacity: 0.8,
         fontSize: '0.75rem'
     },
-    })
+})
 )
 
 function mapStateToProps(state) {

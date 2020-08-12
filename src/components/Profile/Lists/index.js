@@ -13,8 +13,7 @@ const Lists = (props) => {
     const [lists, setLists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const classes = useStyles();
-
-    const { user , dispatch} = props;
+    const { user , dispatch , userId} = props;
 
     const handleListShow = () => {
         dispatch(showListDialog());
@@ -22,17 +21,28 @@ const Lists = (props) => {
     }
 
     useEffect(() => {
-        if (!!user) {
+        if(!!userId) {
+            getLists({ 'user_id': userId })
+            .then((res) => {
+                console.log('res', res)
+                setLists(res.data.data.users_own_lists)
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log('err', err);
+                setIsLoading(false);
+            })
+        } else if (!!user) {
             getLists({ 'user_id': user.id })
-                .then((res) => {
-                    console.log('res', res)
-                    setLists(res.data.data.users_own_lists)
-                    setIsLoading(false);
-                })
-                .catch((err) => {
-                    console.log('err', err);
-                    setIsLoading(false);
-                })
+            .then((res) => {
+                console.log('res', res)
+                setLists(res.data.data.users_own_lists)
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log('err', err);
+                setIsLoading(false);
+            })
         }
     }, [user])
 

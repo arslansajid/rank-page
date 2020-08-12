@@ -49,7 +49,7 @@ const UserDetail = (props) => {
 
     return (
         <div className={classes.main}>
-            <ProfileCover isUserDetail={true} info={user}/>
+            <ProfileCover isUserDetail={true} userData={user}/>
             <ButtonGroup fullWidth size='large'>
                 <Button className={classes.buttons} onClick={() => onTabChangeHandler(1)}>
                     <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>
@@ -58,21 +58,21 @@ const UserDetail = (props) => {
                     <Typography className={activeTab === 2 ? classes.tabselected : classes.tab}>Pools</Typography>
                 </Button>
             </ButtonGroup>
-
+            
+            {!!user && (
             <Grid>
                 <Switch>
                     <Route
                         path={`/user-detail/${id}/lists`}
-                        render={props => (
-                            <Lists {...props} />
-                        )}
+                        render={props => <Lists userId={user.id} {...props} />}
                     />
                     <Route
                         path={`/user-detail/${id}/pools`}
-                        render={props => <Challenges {...props} />}
+                        render={props => <Challenges userId={user.id} {...props} />}
                     />
                 </Switch>
             </Grid>
+            )}
         </div>
     );
 }

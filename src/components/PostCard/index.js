@@ -29,7 +29,7 @@ const PostCard = (props) => {
     const classes = useStyles();
     const { user, post, showTabs, dispatch } = props;
     const [activeTab, setActiveTab] = useState(1);
-    const [showComments, setShowComments] = useState(false);
+    const [showComments, setShowComments] = useState(!!showTabs ? true : false);
     const [showShareDialog, setShowShareDialog] = useState(false);
     const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
     const [isLiked, setIsLiked] = useState(post.likes_count.includes("You"));

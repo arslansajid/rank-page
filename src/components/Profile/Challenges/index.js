@@ -11,10 +11,21 @@ const Challenges = (props) => {
     const [challenges, setChallenges] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const { user } = props;
+    const { user, userId } = props;
 
     useEffect(() => {
-        if (!!user) {
+        if(!!userId) {
+            getChallenges({ 'user_id': userId })
+            .then((res) => {
+                console.log('res', res)
+                setChallenges(res.data.data.users_own_challenges)
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log('err', err);
+                setIsLoading(false);
+            })
+        } else if (!!user) {
             getChallenges({ 'user_id': user.id })
                 .then((res) => {
                     console.log('res', res)

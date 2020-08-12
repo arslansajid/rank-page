@@ -49,7 +49,7 @@ const UserDetail = (props) => {
 
     return (
         <div className={classes.main}>
-            <ProfileCover isUserDetail={true} info={user}/>
+            <ProfileCover isUserDetail={true} userData={user}/>
             <ButtonGroup fullWidth size='large'>
                 <Button className={classes.buttons} onClick={() => onTabChangeHandler(1)}>
                     <Typography className={activeTab === 1 ? classes.tabselected : classes.tab}>Lists</Typography>

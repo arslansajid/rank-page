@@ -15,23 +15,23 @@ import { getUserData, followUser } from './actions'
 const ProfileCover = (props) => {
 
     const classes = useStyles();
-    const [userData, setUserData] = useState(null);
-    const { user, info, isUserDetail, dispatch } = props;
+    // const [userData, setUserData] = useState(null);
+    const { user, info, isUserDetail, dispatch, userData } = props;
 
-    useEffect(() => {
-        if (!!user) {
-            let params = {};
-            params.user_id = user.id;
-            getUserData(params)
-                .then((res) => {
-                    if (res.data && res.data.success) {
-                        setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
-                    }
-                })
-                .catch((err) => { console.log('user api error') })
-        }
+    // useEffect(() => {
+    //     if (!!user) {
+    //         let params = {};
+    //         params.user_id = user.id;
+    //         getUserData(params)
+    //             .then((res) => {
+    //                 if (res.data && res.data.success) {
+    //                     setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
+    //                 }
+    //             })
+    //             .catch((err) => { console.log('user api error') })
+    //     }
 
-    }, [user])
+    // }, [user])
     console.log('user data here', userData && userData.followings)
 
     const followUserHandler = () => {

@@ -46,7 +46,7 @@ const Explore = () => {
             <Link to="/competitions">
                 <Card variant="outlined" className={classes.card}>
                     <CompetitionIcon fontSize="large" className={classes.icon} />
-                    <Typography variant="h6">Competitions</Typography>
+                    <Typography variant="h6">Contests</Typography>
                 </Card>
             </Link>
         </>

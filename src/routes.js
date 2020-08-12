@@ -32,7 +32,7 @@ const Routes = () => {
       />
     }>
       <Switch>
-        <Route exact path="/" render={() => <Home />} />
+        <Route exact path="/" render={() => <Newsfeed />} />
         <Route exact path="/about" render={() => <About />} />
         <Route exact path="/SignUp" render={() => <SignUp />} />
         <Route exact path="/search" render={() => <Search />} />

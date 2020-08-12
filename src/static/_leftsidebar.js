@@ -46,7 +46,7 @@ export const Menu = [
         route: '/messages'
     },
     {
-        name: 'Competitions',
+        name: 'Contest',
         icon: 'competetion',
         route: '/competitions'
     },

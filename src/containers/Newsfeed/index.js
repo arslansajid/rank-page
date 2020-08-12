@@ -4,12 +4,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import ProfileCover from "../../components/Profile/Cover";
 import PostCard from "../../components/PostCard";
 import {getNewsFeed} from "./action";
-import LoadingSpinner from "../../components/Common/LoadingSpinner"
+import LoadingSpinner from "../../components/Common/LoadingSpinner";
+import { connect } from "react-redux";
+import { showListDialog } from "../../actions/ListCreateDialogActions";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add'
 
-const Newsfeed = () => {
+const Newsfeed = (props) => {
     const classes = useStyles();
+    const {dispatch} = props;
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const handleListShow = () => {
+        dispatch(showListDialog());
+        console.log('show list called')
+    }
 
     useEffect(() => {
         getNewsFeed()
@@ -42,6 +52,12 @@ const Newsfeed = () => {
                     </Grid>
                 )
             })}
+
+            <div className = {classes.addIcon} onClick= {handleListShow}>
+                <Fab color="primary" aria-label="add">
+                    <AddIcon />
+                </Fab>
+            </div>
             </>
 		);
     }
@@ -57,7 +73,23 @@ const useStyles = makeStyles((theme) => ({
         padding: '12px 21px',
         fontSize: '1rem'
     },
+    addIcon : {
+        display : 'none',
+        position : 'fixed', 
+        bottom : '10%',
+        right : '5%',
+        [theme.breakpoints.down('sm')]: {
+           display: 'block',
+       },
+   },
     })
 )
 
-export default Newsfeed;
+
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
+
+export default connect(mapStateToProps)(Newsfeed);

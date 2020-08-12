@@ -89,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
     addIcon : {
          display : 'none',
          position : 'fixed', 
-         bottom : '15%',
-         right : '25%',
+         bottom : '10%',
+         right : '5%',
          [theme.breakpoints.down('sm')]: {
             display: 'block',
         },

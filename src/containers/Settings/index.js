@@ -16,8 +16,11 @@ import ReportedUsers from '../../containers/ReportedUsers'
 import MoreIcon from '@material-ui/icons/MoreVert';
 import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
+import Cookie from "js-cookie";
+import { userLogout } from "../../actions/LoginActions";
 
 const Settings = (props) => {
+	const {dispatch} = props;
 	const [ name, setName] = useState('')
 	const [ email , setEmail] = useState('')
 	const [isLoading, setIsLoading] = React.useState(false);
@@ -174,6 +177,11 @@ const Settings = (props) => {
 			console.log(err)
 		})
 	}
+
+	const handleSignOut = () => {
+		Cookie.remove("rankpage_access_token");
+		dispatch(userLogout());
+    }
 
 	if (!!props.user) {
 		return (
@@ -421,6 +429,19 @@ const Settings = (props) => {
 					</span>
 				</div>
 
+				<div className={`${classes.logout} ${classes.main}`}>
+					<InputLabel className={`${classes.heading}`}>Log Out</InputLabel>
+					<Typography className='body2 space-2 mediumFont'>
+						Log out from your account
+					</Typography>
+
+					<span className='space-4'>
+						<Button className={classes.choiceButton} variant="contained" onClick={() => handleSignOut()}>
+							Log Out
+						</Button>
+					</span>
+				</div>
+
 				{showConfirmationDiallog &&
 					<Dialog
 						title={"Confirmation"}
@@ -526,7 +547,13 @@ const useStyles = makeStyles((theme) =>
 			background: Colors.white,
 			borderRadius: 8,
 			border: '1px solid rgba(38, 38, 38, 0.12)',
-	},
+		},
+		logout : {
+			display : 'none',
+			[theme.breakpoints.down('sm')]: {
+				display: 'block',
+			},
+		},
 	})
 );
 

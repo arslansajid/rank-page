@@ -47,6 +47,7 @@ const Profile = (props) => {
                     <Typography className={activeTab === 3 ? classes.tabselected : classes.tab}>Categories</Typography></Button>
             </ButtonGroup>
 
+            {!!props.user && (
             <Grid>
                 <Switch>
                     <Route
@@ -65,6 +66,7 @@ const Profile = (props) => {
                     />
                 </Switch>
             </Grid>
+            )}
         </div>
     );
 }

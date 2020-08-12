@@ -27,6 +27,7 @@ const CreateListStep2 = (props) => {
       .then((res)=>{setAllCategories(res.data.data.all_categories)})
       .catch((err) => console.log(err , 'categories error'))
     }, [])
+    
 
 
     const onContinue = () => {
@@ -113,6 +114,7 @@ const CreateListStep2 = (props) => {
                 multiline={true}
                 rows={3}
                 fullWidth
+                placeholder = "Enter Description(140 characters"
                 onChange={(e)=> {setDescription(e.target.value)}}
                 defaultValue={listItems.description ? listItems.description : null}
               />

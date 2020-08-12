@@ -32,3 +32,14 @@ export const GetListItems = async () => {
     }
   };
 
+  export const getAllUsers = async () => {
+    try {
+      const res = await axiosInstance.get(
+        `${Config.API_END_POINT}/all_users`
+      );
+      return res;
+    } catch (err) {
+      throw err.response;
+    }
+  };
+

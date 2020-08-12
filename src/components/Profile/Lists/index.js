@@ -5,13 +5,21 @@ import PostCard from "../../PostCard";
 import { getLists } from "./actions";
 import { connect } from "react-redux";
 import LoadingSpinner from "../../Common/LoadingSpinner"
+import AddIcon from '@material-ui/icons/Add'
+import Fab from '@material-ui/core/Fab';
+import { showListDialog } from "../../../actions/ListCreateDialogActions";
 
 const Lists = (props) => {
     const [lists, setLists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const classes = useStyles();
 
-    const { user } = props;
+    const { user , dispatch} = props;
+
+    const handleListShow = () => {
+        dispatch(showListDialog());
+        console.log('show list called')
+    }
 
     useEffect(() => {
         if (!!user) {
@@ -48,9 +56,16 @@ const Lists = (props) => {
                         </Grid>
                     )
                 })
+                
                 :
                 null
             }
+
+            <div className = {classes.addIcon} onClick= {handleListShow}>
+                <Fab color="primary" aria-label="add">
+                    <AddIcon />
+                </Fab>
+            </div>
         </>
     )
 
@@ -60,7 +75,16 @@ const useStyles = makeStyles((theme) => ({
     moreText: {
         margin: theme.spacing(6, 0, 6, 0),
         textAlign: 'center'
-    }
+    },
+    addIcon : {
+         display : 'none',
+         position : 'fixed', 
+         bottom : '15%',
+         right : '25%',
+         [theme.breakpoints.down('sm')]: {
+            display: 'block',
+        },
+    },
 })
 )
 

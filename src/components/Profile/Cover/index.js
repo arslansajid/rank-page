@@ -16,7 +16,7 @@ const ProfileCover = (props) => {
 
     const classes = useStyles();
     // const [userData, setUserData] = useState(null);
-    const { user, info, isUserDetail, dispatch, userData } = props;
+    const { user, isUserDetail, dispatch, userData } = props;
 
     // useEffect(() => {
     //     if (!!user) {
@@ -36,7 +36,7 @@ const ProfileCover = (props) => {
 
     const followUserHandler = () => {
         const data = {
-            "follow_user_id": info.id
+            "follow_user_id": userData.id
         }
         followUser(data)
             .then((res) => {

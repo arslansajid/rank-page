@@ -78,10 +78,10 @@ const CommentSection = (props) => {
         <>
         <Grid className={classes.root} container>
             <Grid container alignItems="center" className={classes.commentTextContainer}>
-                <Grid item lg={1}>
+                <Grid item lg={1} md = {1} sm = {1} xs = {1}>
                     <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                 </Grid>
-                <Grid item lg={11}>
+                <Grid item lg={11} md = {11} sm = {11} xs={11}>
                     <TextField
                         margin='dense'
                         variant='outlined'
@@ -123,8 +123,8 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(7),
     },
     alingment : {
-      width: '97%',
-      marginLeft: '3%',
+      width: '96%',
+      marginLeft: '4%',
     },
 
     })

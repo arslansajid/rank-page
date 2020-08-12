@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux'
 import { Button, Typography} from '@material-ui/core';
-import {TextField as TextFieldMaterial , Paper} from '@material-ui/core';
+import {TextField as TextFieldMaterial , Paper , IconButton , Grid} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import { useForm } from 'react-hook-form';
 import TextField from "../../components/Common/TextField";
@@ -13,6 +13,7 @@ import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
 import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus} from './actions'
 import ReportedUsers from '../../containers/ReportedUsers'
+import MoreIcon from '@material-ui/icons/MoreVert';
 import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 
@@ -386,23 +387,22 @@ const Settings = (props) => {
 					</div>
 				</div>
 
-				<Paper elevation={0} className={classes.coverContainer} onClick={()=> {setShowReportedUsers(!showReportedUsers)}}>
+				<Paper elevation={0} className={classes.coverContainer}>
 					<InputLabel className={`${classes.heading}`}>Reported Users</InputLabel>
+					<IconButton onClick={()=> {setShowReportedUsers(!showReportedUsers)}} style = {{ position : 'absolute' , right : '0' ,top : '0' }}>
+							<MoreIcon />
+					</IconButton>
+					{showReportedUsers &&<ReportedUsers/>}
 				</Paper>
 
-				{showReportedUsers &&
 				<Paper elevation={0} className={classes.coverContainer}>
-					<ReportedUsers/>
-				</Paper>}
-
-				<Paper elevation={0} className={classes.coverContainer} onClick={()=> {setShowBlockedUsers(!showBlockedUsers)}}>
 					<InputLabel className={`${classes.heading}`}>Blocked Users</InputLabel>
+					<IconButton onClick={()=> {setShowBlockedUsers(!showBlockedUsers)}} style = {{ position : 'absolute' , right : '0' ,top : '0' }}>
+							<MoreIcon />
+					</IconButton>
+					{showBlockedUsers && <BlockedUsers/>}
 				</Paper>
 
-				{showBlockedUsers &&
-				<Paper elevation={0} className={classes.coverContainer}>
-					<BlockedUsers/>
-				</Paper>}
 
 
 				<div className={classes.main}>
@@ -520,6 +520,7 @@ const useStyles = makeStyles((theme) =>
 		},
 		coverContainer: {
 			// color: Colors.white,
+			position : 'relative',
 			padding: '1em',
 			marginBottom: 8,
 			background: Colors.white,

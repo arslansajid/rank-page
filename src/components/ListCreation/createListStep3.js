@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { Typography, Grid, colors, Button } from "@material-ui/core";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
 import InputLabel from '@material-ui/core/InputLabel';
@@ -8,7 +8,7 @@ import { useForm, get } from 'react-hook-form';
 import Colors from '../../static/_colors';
 import Divider from '@material-ui/core/Divider';
 import Select from 'react-select';
-import { PostListItem } from './actions';
+import { PostListItem  , getAllUsers} from './actions';
 import { colourStyles } from "../../styles/ReactSelect";
 
 
@@ -29,6 +29,19 @@ const CreateListStep3 = (props) => {
   const [userError, setUserError] = useState(false);
   const [message, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [users , setUsers] = useState() 
+
+  useEffect(() => {
+    getAllUsers()
+    .then((res)=> {
+        if(res.data.success){
+          setUsers(res.data.data)
+        }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [])
 
   const handlePublish = () => {
     if (activeTabShare === 2 && (!selectedUser || selectedUser.length < 1)) {
@@ -52,7 +65,7 @@ const CreateListStep3 = (props) => {
       params.share_type = activeTabShare;
       params.allow_rearrangement = activeTabRearangement;
       params.display_images = activeTabDisplayImages;
-      params.user_ids = selectedUser ? selectedUser.join() : null;
+      params.user_ids = activeTabShare === 2 ? (selectedUser ? selectedUser.join() : null) : '';
       params.categories = params.categories ? params.categories.join() : null;
 
       console.log('published data', params);
@@ -118,12 +131,13 @@ const CreateListStep3 = (props) => {
           <Select
             closeMenuOnSelect={false}
             isMulti
-            options={options}
+            // options={options}
             className='space-4'
             placeholder="Search Users"
-            styles={colourStyles}
-            getOptionLabel={option => option.label}
-            getOptionValue={option => option.value}
+            styles={colourStyles} 
+            options={users ? users : []}
+            getOptionLabel={option => option.name}
+            getOptionValue={option => option.id}
             onChange={handleSelectd}
           />
           }

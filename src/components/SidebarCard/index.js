@@ -26,6 +26,9 @@ const SidebarCard = (props) => {
         if(value === "List") {
             dispatch(showListDialog());
         }
+        if(value === "Pool") {
+            dispatch(showListDialog());
+        }
     }
 
     return (

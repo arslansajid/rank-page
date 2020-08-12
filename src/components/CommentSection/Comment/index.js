@@ -33,10 +33,10 @@ const Comment = (props) => {
         <>
         <Grid container className={`${classes.cardProfileSection}`}>
             <Grid container className={isChildren ? classes.isChildren : ""}>
-            <Grid item>
+            <Grid item lg={1} md={1} sm={1} xs={1}>
             <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
             </Grid>
-            <Grid item>
+            <Grid item lg={11} md={11} sm={11} xs={11}>
             <Grid className={classes.verticalCenter}>
                 <Typography gutterBottom variant='body1'>{/* !!user ? user.name : '' */ author } </Typography>
                 <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ comment }</Typography>
@@ -50,7 +50,8 @@ const Comment = (props) => {
                     <TextField
                         margin='dense'
                         variant='outlined'
-                        fullWidth
+                        // fullWidth
+                        className={classes.fullWidth}
                         placeholder="Reply to comment"
                         value={commentTextInput}
                         onChange={(e) => setCommentTextInput(e.target.value)}
@@ -83,6 +84,8 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: 'center',
+        width : '96%',
+        marginLeft : '4%',
     },
     avatar: {
         marginRight: 15,
@@ -98,7 +101,11 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
             color: Colors.textGrey,
         }
-    }
+    },
+    fullWidth: {
+        width : '96%',
+        marginLeft : '4%',
+    },
     })
 )
 

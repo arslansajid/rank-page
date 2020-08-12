@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
 import { UnBlockUser } from "./action"
@@ -25,17 +26,19 @@ const BlockTile = (props) => {
     return (
         <>
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
-                <div className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    <div>
-                        <Typography className={classes.bold}>
-                            {!!name ? name : "Arslan Sajid"}
-                        </Typography>
-                        <Typography color="textSecondary" variant="body2">
-                            {!!userName ? "@" + userName : "@arslansajid"}
-                        </Typography>
+                <Link to={`/user-detail/${userId}/lists`}>
+                    <div className={classes.row}>
+                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <div>
+                            <Typography className={classes.bold}>
+                                {!!name ? name : "Arslan Sajid"}
+                            </Typography>
+                            <Typography color="textSecondary" variant="body2">
+                                {!!userName ? "@" + userName : "@arslansajid"}
+                            </Typography>
+                        </div>
                     </div>
-                </div>
+                </Link>
                 {
                     showButton && (
                         <Button onClick={() => unBlockUserHandler()} color="primary" variant="outlined">UnBlock</Button>

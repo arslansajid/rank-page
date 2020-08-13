@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {InputAdornment, TextField, IconButton} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Colors from "../../../static/_colors";
@@ -7,8 +7,13 @@ import {Redirect} from "react-router-dom"
 
 const SearchInput = (props) => {
     const classes = useStyles();
-    const [value, setValue] = useState(props.value ? props.value : '')
+    const [value, setValue] = useState('')
     const { handleSearch, onFocusRoute, whiteInput } = props;
+
+    useEffect(() => {
+        console.log("FORECE RE_RENDER", props.value)
+        setValue(props.value ? props.value : '')
+    }, [props.value])
     return (
         <TextField
             className={whiteInput ? classes.whiteInput : classes.container}

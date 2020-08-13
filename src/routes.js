@@ -35,7 +35,7 @@ const Routes = () => {
         <Route exact path="/" render={() => <Newsfeed />} />
         <Route exact path="/about" render={() => <About />} />
         <Route exact path="/SignUp" render={() => <SignUp />} />
-        <Route exact path="/search" render={() => <Search />} />
+        <Route exact path="/search/:query" render={() => <Search />} />
         <Route exact path="/profile/:tab" render={() => <Profile />} />
         <Route exact path="/newsfeed" render={() => <Newsfeed />} />
         <Route exact path="/notifications" render={() => <Notifications />} />

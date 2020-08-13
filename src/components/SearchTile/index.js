@@ -5,6 +5,7 @@ import { Avatar, Typography, Grid, Button } from '@material-ui/core';
 
 const SearchTile = (props) => {
     const classes = useStyles();
+    const {userId, name, userName} = props;
     return (
         <>
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
@@ -12,10 +13,10 @@ const SearchTile = (props) => {
                     <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
                     <div>
                         <Typography className={classes.bold}>
-                            Arslan Sajid
+                            {!!name ? name : "Arslan Sajid"}
                         </Typography>
-                        <Typography variant="body2">
-                            @arslansajid
+                        <Typography color="textSecondary" variant="body2">
+                            {!!userName ? "@" + userName : "@arslansajid"}
                         </Typography>
                     </div>
                 </div>

@@ -9,8 +9,8 @@ const RightSidebar = (props) => {
     const classes = useStyles();
 
     const searchHandler = (value) => {
-        window.alert(`send request for searching with ${value}`);
-        props.history.push('/search')
+        // window.alert(`send request for searching with ${value}`);
+        props.history.push(`/search/${value}`)
     }
 
     return (

@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import BlockTile from "../../components/BlockTile"
 import user from '../../reducers/UserReducer';
+import {getBlockedUsers} from "./action";
 
 const BlockedUsers = () => {
     const classes = useStyles();
+    const [blockedUsers, setBlockedUsers] = useState([])
+
+    useEffect(() => {
+        const data = {
+            user_id: '19',
+        }
+        getBlockedUsers(data)
+        .then((res) => {
+            console.log("res")
+            setBlockedUsers(res.data.data ? res.data.data : [])
+        })
+        .catch((err) => 
+        console.log(err))
+    }, [])
+
 		return (
 			<>
             <Paper elevation={0} className={classes.container}>
-                {[...Array(3)].map((user, index) => {
+                {blockedUsers.length > 0 ? blockedUsers.map((item, index) => {
                     return (
                         <Grid key={index}>
-                            <BlockTile userId={1} showButton={true} />
+                            <BlockTile userId={item.id} showButton={true} name={item.name} userName={item.user_name} />
                         </Grid>
                     )
-                })}
+                })
+                :
+                <Typography variant="h6">No Blocked Users</Typography>
+            }
             </Paper>
             </>
 		);

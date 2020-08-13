@@ -3,7 +3,7 @@ import { ButtonGroup, Button, Grid, Typography, Paper } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import SearchInput from "../../components/Common/SearchInput";
-import SearchTile from "../../components/SearchTile";
+import UserTile from "../../components/Search/UserTile";
 import { withRouter } from "react-router-dom";
 import { searchResults } from "./action";
 
@@ -71,7 +71,7 @@ const Search = (props) => {
                                 {[...Array(5)].map((news, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile />
+                                            <UserTile />
                                         </Grid>
                                     )
                                 })}
@@ -82,7 +82,7 @@ const Search = (props) => {
                                 {[...Array(5)].map((news, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile />
+                                            <UserTile />
                                         </Grid>
                                     )
                                 })}
@@ -96,7 +96,7 @@ const Search = (props) => {
                                 {!!results.users && results.users.map((user, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile userId={user.id} name={user.name} userName={user.user_name} />
+                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} />
                                         </Grid>
                                     )
                                 })}
@@ -110,7 +110,7 @@ const Search = (props) => {
                                 {!!results.experts && results.experts.map((expert, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile />
+                                            <UserTile />
                                         </Grid>
                                     )
                                 })}
@@ -124,7 +124,7 @@ const Search = (props) => {
                                 {!!results.lists && results.lists.map((list, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile />
+                                            <UserTile />
                                         </Grid>
                                     )
                                 })}
@@ -138,7 +138,7 @@ const Search = (props) => {
                                 {!!results.categories && results.categories.map((category, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <SearchTile />
+                                            <UserTile />
                                         </Grid>
                                     )
                                 })}

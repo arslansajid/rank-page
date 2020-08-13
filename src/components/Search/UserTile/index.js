@@ -2,10 +2,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
+import {followUser} from "./actions"
 
 const SearchTile = (props) => {
     const classes = useStyles();
     const {userId, name, userName} = props;
+
+    const followUserHandler = () => {
+        const data = {
+            "follow_user_id": userId
+        }
+        followUser(data)
+        .then((res) => {
+            console.log("res", res)
+            window.alert(res.data.message)
+        })
+        .catch((err) => {
+            console.log("err", err)
+        })
+    }
+
     return (
         <>
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
@@ -20,7 +36,7 @@ const SearchTile = (props) => {
                         </Typography>
                     </div>
                 </div>
-                <Button color="primary" variant="outlined">Follow</Button>
+                <Button onClick={() => followUserHandler()}  color="primary" variant="outlined">Follow</Button>
             </Grid>
         </>
     )

@@ -13,7 +13,7 @@ const Lists = (props) => {
     const [lists, setLists] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const classes = useStyles();
-    const { user , dispatch , userId} = props;
+    const { user, reloadData, dispatch, userId} = props;
 
     const handleListShow = () => {
         dispatch(showListDialog());
@@ -25,7 +25,7 @@ const Lists = (props) => {
             getLists({ 'user_id': userId })
             .then((res) => {
                 console.log('res', res)
-                setLists(res.data.data.users_own_lists)
+                setLists(res.data.data.users_own_lists ? res.data.data.users_own_lists : [])
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -36,7 +36,7 @@ const Lists = (props) => {
             getLists({ 'user_id': user.id })
             .then((res) => {
                 console.log('res', res)
-                setLists(res.data.data.users_own_lists)
+                setLists(res.data.data.users_own_lists ? res.data.data.users_own_lists : [])
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -44,7 +44,7 @@ const Lists = (props) => {
                 setIsLoading(false);
             })
         }
-    }, [user])
+    }, [user, reloadData])
 
     return (
         <>
@@ -101,6 +101,7 @@ const useStyles = makeStyles((theme) => ({
 function mapStateToProps(state) {
     return {
         user: state.user,
+        reloadData: state.reloadData
     };
 }
 

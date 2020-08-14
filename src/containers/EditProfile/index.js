@@ -116,9 +116,9 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingBio(false);
 				setMessageBio(res.data.message)
-				// if(res.data.success){
-				// 	props.dispatch(userLogin(res.data.data.user));
-				// }
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingBio(false);

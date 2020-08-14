@@ -25,3 +25,5 @@ export const HIDE_LIST_DIALOG = 'HIDE_LIST_DIALOG';
 export const SET_POST_ID = 'SET_POST_ID';
 export const SET_POST_ORDER = 'SET_POST_ORDER';
 
+//Reload Data
+export const RELOAD_DATA = 'RELOAD_DATA';

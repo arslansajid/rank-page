@@ -7,6 +7,7 @@ import CreateListStep2 from "./createListStep2";
 import CreateListStep3 from "./createListStep3";
 import Published from "./published";
 import { showListDialog, hideListDialog } from "../../actions/ListCreateDialogActions";
+import { reloadData } from "../../actions/ReloadDataAction";
 
 
 
@@ -79,8 +80,8 @@ const Lists = (props) => {
                 message={
                     <Published createNewList={() => {dispatch(showListDialog()) ; setShowPublished(false)}} />
                 }
-                applyForm={() => setShowPublished(false)}
-                cancelForm={() => setShowPublished(false)}
+                applyForm={() => {setShowPublished(false); dispatch(reloadData())}}
+                cancelForm={() => {setShowPublished(false); dispatch(reloadData())}}
                 hideActions={true}
             />
         )

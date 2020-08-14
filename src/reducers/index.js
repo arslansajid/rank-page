@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import user from './UserReducer'
 import signIn from './SignInFormReducer'
 import signUp from './SignUpFormReducer'
+import reloadData from './ReloadDataReducer'
 import selectedPost from './SelectedPostReducer'
 import listCreateDialog from "./ListCreateDialogReducer"
 import { connectRouter } from 'connected-react-router'
@@ -11,6 +12,7 @@ export default (history) => combineReducers({
   user,
   signIn,
   signUp,
+  reloadData,
   selectedPost,
   listCreateDialog,
   form: formReducer,

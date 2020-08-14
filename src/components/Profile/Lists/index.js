@@ -62,7 +62,7 @@ const Lists = (props) => {
                 lists.map((list, index) => {
                     return (
                         <Grid key={index}>
-                            <PostCard post={list} />
+                            <PostCard post={list} hideMenu={true} />
                         </Grid>
                     )
                 })

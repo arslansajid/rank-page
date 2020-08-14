@@ -27,7 +27,7 @@ import ThinkReactIcon from "../../assets/icons/icon/social/think.svg";
 
 const PostCard = (props) => {
     const classes = useStyles();
-    const { user, post, showTabs, dispatch } = props;
+    const { user, post, showTabs, hideMenu, dispatch } = props;
     const [activeTab, setActiveTab] = useState(1);
     const [showComments, setShowComments] = useState(!!showTabs ? true : false);
     const [showShareDialog, setShowShareDialog] = useState(false);
@@ -202,10 +202,12 @@ const PostCard = (props) => {
                 <Grid container alignItems="center" justify="space-between" className={classes.cardSection}>
                     <Typography className='smallFont'>
                     {!!post.description ? post.description : ''}
-                </Typography>
-                    <IconButton onClick={handleClick}>
-                        <MoreIcon />
-                    </IconButton>
+                    </Typography>
+                    {!hideMenu && ( //menu hidden when postcard is displayed on user list page
+                        <IconButton onClick={handleClick}>
+                            <MoreIcon />
+                        </IconButton>
+                    )}
                 </Grid>
                 <Link to={`/user-detail/${post.user? post.user.id : "1"}/lists`}>
                     <Grid container className={classes.cardProfileSection}>
@@ -294,6 +296,7 @@ const useStyles = makeStyles((theme) => ({
     cardSection: {
         paddingLeft: '1em',
         borderBottom: '1px solid rgba(38, 38, 38, 0.12)',
+        minHeight: 50,
     },
     cardProfileSection: {
         borderBottom: '1px solid rgba(38, 38, 38, 0.12)',

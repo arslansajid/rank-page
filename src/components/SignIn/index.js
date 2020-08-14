@@ -89,7 +89,7 @@ const SignIn = (props) => {
                 }
 
                 <div className={`${classes.center} space-2`}>
-                    <Typography className={classes.registerText}>
+                    <Typography className={classes.registerText} style = {{ opacity: 0.5 , fontWeight : 'bold'}}>
                         Don't have an account!
                 </Typography>
                 </div>
@@ -102,8 +102,8 @@ const SignIn = (props) => {
                 </div>
                 <div className={`${classes.center} space-2`}>
                 <Button onClick={showRecoveryModal} className={classes.fixedBottom}>
-                    <Typography className={classes.recoveryText}>
-                        Unable to Sign In?
+                    <Typography className={classes.recoveryText} style = {{ textTransform : 'none' , opacity : 0.7}}>
+                        Unable to Sign in?
                     </Typography>
                 </Button>
                 </div>

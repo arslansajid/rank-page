@@ -6,6 +6,7 @@ import ListTile  from './listTile';
 import Select , { components }  from 'react-select'
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
+import Colors from '../../static/_colors';
 
 
 const customStyles = {
@@ -22,6 +23,7 @@ const CreateList = (props) => {
     const classes = useStyles();
     const [listItems , setListItems] = useState(null)
     const [selectedList  , setSelectedList] = useState(null)
+    const [errroList , setErrorList] = useState(null)
 
     useEffect(() =>{
       GetListItems()
@@ -30,13 +32,19 @@ const CreateList = (props) => {
     } , [])
 
     const handleUpdateList = () => {
+      if(selectedList && selectedList.length > 0) {
       let listItemsObject = {}
       listItemsObject.list_items = selectedList
       getData(listItemsObject)
       continueNext()
+      }
+      else {
+        setErrorList('choose a page first')
+      }
 
     }
     const handleSelectd = (value) => {
+      setErrorList(null)
       let List = [];
       value && value.length && value.map((item) => {
         List.push(item)
@@ -66,21 +74,7 @@ const CreateList = (props) => {
             )
           })
           : null }
-          {/* <div className = {classes.optionsMain}>
-            <Grid container alignItems="center" justify="space-between">
-                {listItems && listItems.length>0 && listItems.map((item, index) => {return(
-                <Grid key={index} className={classes.row} item xs = {12}>
-                  <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                <Typography className={classes.text}>{item.title}</Typography>
-                </Grid>
-                )})}
-                <Grid item xs = {12} className={`${classes.row} space-2`} onClick={createNew}>
-                  <img src = {require('../../../assets/icons/plus-circle-black.png')}/>
-                  <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
-                </Grid>
-            </Grid>
-          </div> */}
-          <div>
+          <div className = "space-2">
              <Select
               closeMenuOnSelect={false}
               isMulti = {true}
@@ -95,6 +89,7 @@ const CreateList = (props) => {
               // menuPlacement="top"
             />
           </div>
+          {errroList && <Typography className={classes.errorMessage}>{errroList}</Typography>}
           <Button
             onClick={handleUpdateList}
             className = {classes.buttonPosition}
@@ -143,6 +138,10 @@ const useStyles = makeStyles((theme) => ({
   },
   selectInput : {
     height: '42px',
+  },
+  errorMessage : {
+    textAlign: 'center',
+    color : Colors.red,
   },
 })
 )

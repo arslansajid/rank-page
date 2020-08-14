@@ -21,6 +21,8 @@ const CreateListStep2 = (props) => {
     const [ description , setDescription ] = useState(listItems.description ? listItems.description : '');
     const [multiValue , setMultiValue ] = useState(null);
 
+    console.log('title error' , titleError , categoriesError)
+
 
     useEffect(() =>{
       getAllCategories()
@@ -84,6 +86,7 @@ const CreateListStep2 = (props) => {
                 onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
                 className={'text-field space-4'}
               />
+            {titleError && <Typography className={classes.error}>Enter title to continue</Typography>}
             <Divider/>
             </div>
             
@@ -100,9 +103,8 @@ const CreateListStep2 = (props) => {
                 placeholder = "Search Category"
                 onChange={handleCategoryChange}
                 styles={colourStyles}
-                
               />
-              {categoriesError && <Typography className={classes.error}>Please fill in categories first</Typography>}
+              {categoriesError && <Typography className={classes.error}>Enter categories to continue</Typography>}
               <Divider/>
             </div>
             <div className = 'space-4'>
@@ -114,7 +116,7 @@ const CreateListStep2 = (props) => {
                 multiline={true}
                 rows={3}
                 fullWidth
-                placeholder = "Enter Description(140 characters"
+                placeholder = "Enter Description(140 characters)"
                 onChange={(e)=> {setDescription(e.target.value)}}
                 defaultValue={listItems.description ? listItems.description : null}
               />

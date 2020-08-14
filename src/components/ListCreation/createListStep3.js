@@ -31,6 +31,8 @@ const CreateListStep3 = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [users , setUsers] = useState() 
 
+  // console.log('selected users here' , selectedUser)
+
   useEffect(() => {
     getAllUsers()
     .then((res)=> {
@@ -68,7 +70,7 @@ const CreateListStep3 = (props) => {
       params.user_ids = activeTabShare === 2 ? (selectedUser ? selectedUser.join() : null) : '';
       params.categories = params.categories ? params.categories.join() : null;
 
-      console.log('published data', params);
+      // console.log('published data', params);
       setIsLoading(true);
       PostListItem(params)
         .then((res) => {
@@ -91,7 +93,7 @@ const CreateListStep3 = (props) => {
   const handleSelectd = (value) => {
     let userList = [];
     value && value.length && value.map((item) => {
-      userList.push(item.value)
+      userList.push(item.id)
     })
     setSelectedUser(userList)
   }

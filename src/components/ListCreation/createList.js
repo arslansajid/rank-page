@@ -26,7 +26,7 @@ const CreateList = (props) => {
     useEffect(() =>{
       GetListItems()
       .then(res => {setListItems(res.data.data.list_items)})
-      .catch((err) => { console.log('error api ', err)})
+      // .catch((err) => { console.log('error api ', err)})
     } , [])
 
     const handleUpdateList = () => {

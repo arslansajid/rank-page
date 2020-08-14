@@ -64,6 +64,7 @@ const CreateListStep3 = (props) => {
         let ids = params.list_items.map((item, index) => { return (item.id) })
         params.list_item_ids = ids.join();
       }
+      params.list_items = [];
       params.share_type = activeTabShare;
       params.allow_rearrangement = activeTabRearangement;
       params.display_images = activeTabDisplayImages;

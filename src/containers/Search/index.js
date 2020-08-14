@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import SearchInput from "../../components/Common/SearchInput";
 import UserTile from "../../components/Search/UserTile";
+import FollowCategoryCard from "../../components/Profile/CategoryCard/FollowCategoryCard";
 import { withRouter } from "react-router-dom";
 import { searchResults } from "./action";
 
@@ -68,24 +69,32 @@ const Search = (props) => {
                         <Typography variant="h5" className="space-3">All Results</Typography>
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Users</Typography>
-                                {[...Array(5)].map((news, index) => {
+                                {!!results.users && results.users.length >= 1 ?
+                                results.users.slice(0,5).map((user, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile />
+                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} />
                                         </Grid>
                                     )
-                                })}
+                                })
+                                :
+                                <Typography variant="h6" gutterBottom>No Users found...</Typography>
+                            }
                             </Paper>
 
                             <Paper elevation={0} className={classes.container}>
-                                <Typography variant="h6" gutterBottom>Users</Typography>
-                                {[...Array(5)].map((news, index) => {
+                                <Typography variant="h6" gutterBottom>Experts</Typography>
+                                {!!results.experts && results.experts.length > 1 ?
+                                results.experts.map((expert, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile />
+                                            <UserTile userId={expert.id} name={expert.name} userName={expert.user_name} />
                                         </Grid>
                                     )
-                                })}
+                                })
+                                :
+                                <Typography variant="h6" gutterBottom>No Experts found...</Typography>
+                            }
                             </Paper>
                         </>
                     )}
@@ -135,13 +144,17 @@ const Search = (props) => {
                         <>
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Categories</Typography>
-                                {!!results.categories && results.categories.map((category, index) => {
-                                    return (
-                                        <Grid key={index}>
-                                            <UserTile />
-                                        </Grid>
-                                    )
-                                })}
+                                <Grid container spacing={2}>
+                                    {!!results.categories && results.categories.map((category, index) => {
+                                        return (
+                                            <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
+                                                <FollowCategoryCard
+                                                    category={category}
+                                                />
+                                            </Grid>
+                                        )
+                                    })}
+                                </Grid>
                             </Paper>
                         </>
                     )}

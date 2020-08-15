@@ -11,12 +11,14 @@ import RecoverAccount from "../RecoverAccount";
 import Success from "../RecoverAccount/sucees";
 import Colors from '../../static/_colors';
 import { Link , withRouter} from 'react-router-dom';
+import { hideSignIn, showSignIn } from "../../actions/SignInFormActions";
+import { hideSignUp, showSignUp } from "../../actions/SignUpFormActions";
 
 const UserProfile = (props) => {
     const classes = useStyles();
-    const { user  , history} = props;
-    const [showSignIn, setShowSignIn] = useState(false);
-    const [showSignUp, setShowSignUp] = useState(false);
+    const { user, history, dispatch} = props;
+    // const [showSignIn, setShowSignIn] = useState(false);
+    // const [showSignUp, setShowSignUp] = useState(false);
     const [showSignUpStep2, setShowSignUpStep2] = useState(false);
     const [showSelectCategories, setShowSelectCategories] = useState(false);
     const [showRecoveryModal, setShowRecoveryModal] = useState(false);
@@ -27,14 +29,14 @@ const UserProfile = (props) => {
         setValue(data)
     }
 
-    const switchToSignUp = () => {
-        setShowSignIn(false);
-        setShowSignUp(true);
-    }
+    // const switchToSignUp = () => {
+    //     setShowSignIn(false);
+    //     setShowSignUp(true);
+    // }
 
     return (
         <>
-            {
+            {/* {
                 showSignIn && (
                     <Dialog
                         title={"Sign In"}
@@ -132,7 +134,7 @@ const UserProfile = (props) => {
                         hideActions={true}
                     />
                 )
-            }
+            } */}
             <Grid container className={classes.profileContainer}>
                     {!!user ? (
                         <Link to="/profile/lists">
@@ -151,8 +153,8 @@ const UserProfile = (props) => {
                                     <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={require("../../assets/images/user.jpg")} />
                                     <Grid className={classes.verticalCenter}> */}
                                         <Grid container alignItems="center" className={classes.unRegContainer}>
-                                            <Typography  className={classes.textButton} onClick={() => setShowSignIn(true)}>Sign In</Typography>&nbsp; / &nbsp;
-                                            <Typography  className={classes.textButton} onClick={() => setShowSignUp(true)}>Register</Typography>
+                                            <Typography  className={classes.textButton} onClick={() => dispatch(showSignIn())}>Sign In</Typography>&nbsp; / &nbsp;
+                                            <Typography  className={classes.textButton} onClick={() => dispatch(showSignUp())}>Register</Typography>
                                         </Grid>
                                     {/* </Grid>
                                 </Grid> */}

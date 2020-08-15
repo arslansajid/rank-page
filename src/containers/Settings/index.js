@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 import Cookie from "js-cookie";
+import { userLogin } from "../../actions/LoginActions";
 import { userLogout } from "../../actions/LoginActions";
 
 const Settings = (props) => {
@@ -90,11 +91,14 @@ const Settings = (props) => {
 	const updateName = () => {
 		setIsLoadingName(true);
 		let user = {};
-		user.name = name;
+		user.user_name = name;
 		UpdateProfile(user)
 		.then((res) => {
 			setIsLoadingName(false);
 				setMessageName(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingName(false);
@@ -110,6 +114,9 @@ const Settings = (props) => {
 		.then((res) => {
 			setIsLoadingEmail(false);
 				setMessageEmail(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingEmail(false);

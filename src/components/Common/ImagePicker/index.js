@@ -43,15 +43,27 @@ const ImagePicker = (props) => {
     <>
       <div {...getRootProps({className: type === 'image' ?  classes.dropZoneImage : classes.dropZoneCover})} className = {type === 'image' ?  classes.dropZoneImage : classes.dropZoneCover}>
       {renderThumbs}
-        <div className = 'imageContainer'>
+        <div className = 'imageContainer' style={{
+                    backgroundImage: `url(${props.selectedImage})`, backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    minHeight: type === 'image' ? 100 : 150,
+                    overflow: 'hidden'
+                }}>
           <input {...getInputProps()} />
           {/* <div className = 'picker'> */}
           {
+            <>
+          {!props.selectedImage && (
                 type === 'image' ?
                 <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , borderRadius: '50%'}}/>
                 :
                 <img src={require('../../../assets/icons/placeholder.png')} style = {{width : '100%' , height : '150px' , objectFit : 'cover'}}/>
-              }
+              
+              )
+            }
+            </>
+            }
             {/* </div> */}
             {!files.length && (
             <div className ='pickerText'>
@@ -106,6 +118,8 @@ const useStyles = makeStyles((theme) =>
 				'& .imageContainer' :{
           width: '7.75rem',
           height: '7.75rem',
+          minHeight: '7.75rem',
+          position: 'relative',
           backgroundColor: '#484B5C',
           display:'flex',
           justifyContent: 'center',
@@ -130,6 +144,10 @@ const useStyles = makeStyles((theme) =>
           position : 'absolute' ,
           color : Colors.black,
           fontWeight : 'bold',
+          backgroundColor: 'rgba(37, 37, 37, 0.2)',
+          textAlign: 'center',
+          width: '100%',
+          padding: "5px 0"
         }
       },
 
@@ -168,6 +186,7 @@ const useStyles = makeStyles((theme) =>
       '& .imageContainer' :{
         width: '100%',
         height: '100%',
+        position: 'relative',
         // backgroundColor: '#484B5C',
         display:'flex',
         justifyContent: 'center',
@@ -189,6 +208,10 @@ const useStyles = makeStyles((theme) =>
         position : 'absolute' ,
         color : Colors.black,
         fontWeight : 'bold',
+        backgroundColor: 'rgba(37, 37, 37, 0.2)',
+        textAlign: 'center',
+        width: '100%',
+        padding: "5px 0"
       }
     },
     })

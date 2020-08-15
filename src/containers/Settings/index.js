@@ -368,7 +368,7 @@ const Settings = (props) => {
 							</Typography>
 							</Button>
 					</div>
-
+					{messageAccountPrivacy && <Typography className={classes.message}>{messageAccountPrivacy}</Typography>}
 				</div>
 
 				<div className={classes.main}>
@@ -401,6 +401,7 @@ const Settings = (props) => {
 							</Typography>
 							</Button>
 					</div>
+					{messageFollowingPrivacy && <Typography className={classes.message}>{messageFollowingPrivacy}</Typography>}
 				</div>
 
 				<Paper elevation={0} className={classes.coverContainer}>

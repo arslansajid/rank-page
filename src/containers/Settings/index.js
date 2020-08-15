@@ -141,6 +141,7 @@ const Settings = (props) => {
 	const updateAccountPrivacy = () => {
 		setIsLoadingAccountPrivacy(true);
 		let user = {};
+		user.following_visibility = activeTabFollowingPrivacy
 		user.account_visibility = activeTabAccountPrivacy;
 		AccountPrivacy(user)
 		.then((res) => {
@@ -156,6 +157,7 @@ const Settings = (props) => {
 	const updateFollowingPrivacy = () => {
 		setIsLoadingFollowingPrivacy(true);
 		let user = {};
+		user.account_visibility = activeTabAccountPrivacy;
 		user.following_visibility = activeTabFollowingPrivacy
 		AccountPrivacy(user)
 		.then((res) => {

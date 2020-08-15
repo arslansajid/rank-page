@@ -10,6 +10,7 @@ import RecoverAccount from "../../components/RecoverAccount";
 import Success from "../../components/RecoverAccount/sucees";
 import { hideSignIn, showSignIn } from "../../actions/SignInFormActions";
 import { hideSignUp, showSignUp } from "../../actions/SignUpFormActions";
+import { reloadData } from '../../actions/ReloadDataAction';
 
 const UserProfile = (props) => {
     const classes = useStyles();
@@ -43,7 +44,10 @@ const UserProfile = (props) => {
                                     setShowRecoveryModal(true);
                                     dispatch(hideSignIn());
                                 }}
-                                closeSignIn={() => dispatch(hideSignIn())}
+                                closeSignIn={() => {
+                                    dispatch(hideSignIn())
+                                    dispatch(reloadData())
+                                }}
                             />
                         }
                         applyForm={() => dispatch(hideSignIn())}

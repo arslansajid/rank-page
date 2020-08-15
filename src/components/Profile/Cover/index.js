@@ -10,31 +10,28 @@ import InfoIcon from '@material-ui/icons/Info';
 import { connect } from "react-redux";
 import { showSignIn } from "../../../actions/SignInFormActions";
 import { showSignUp } from "../../../actions/SignUpFormActions";
-import { getUserData, followUser } from './actions'
+import { getUserData, followUser, unfollowUser } from './actions'
 import Config from "../../../api/config";
 
 const ProfileCover = (props) => {
 
     const classes = useStyles();
-    // const [userData, setUserData] = useState(null);
     const { user, isUserDetail, dispatch, userData } = props;
+    const [followState, setFollowState] = useState(false);
 
-    // useEffect(() => {
-    //     if (!!user) {
-    //         let params = {};
-    //         params.user_id = user.id;
-    //         getUserData(params)
-    //             .then((res) => {
-    //                 if (res.data && res.data.success) {
-    //                     setUserData(res.data.data && res.data.data.user ? res.data.data.user : null)
-    //                 }
-    //             })
-    //             .catch((err) => { console.log('user api error') })
-    //     }
+    console.log("###########", {
+        userData,
+        followState
+    })
 
-    // }, [user])
-    console.log('user data here', userData && userData.followings)
+    useEffect(() => {
+        setFollowState(userData && userData.is_followed ? true : false)
+    }, [userData])
 
+    const toggleFollowState = () => {
+        setFollowState(!followState);
+    }
+    
     const followUserHandler = () => {
         const data = {
             "follow_user_id": userData.id
@@ -43,10 +40,26 @@ const ProfileCover = (props) => {
             .then((res) => {
                 console.log("res", res)
                 window.alert(res.data.message)
+                toggleFollowState();
             })
             .catch((err) => {
                 console.log("err", err)
             })
+    }
+
+    const unfollowUserHandler = () => {
+        const data = {
+            'unfollow_user_id': userData.id
+        }
+        unfollowUser(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert(res.data.message);
+            toggleFollowState();
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
     }
 
     return (
@@ -65,7 +78,14 @@ const ProfileCover = (props) => {
                                     <Button className={classes.buttonSettings} color="inherit">
                                         <InfoIcon />
                                     </Button>
-                                    <Button onClick={() => followUserHandler()} className={classes.buttonEdit} color="inherit" variant="outlined">Follow</Button>
+                                    <Button
+                                        onClick={() => followState ? unfollowUserHandler() : followUserHandler()}
+                                        className={classes.buttonEdit}
+                                        color="inherit"
+                                        variant="outlined"
+                                    >
+                                        {followState ? "Unfollow" : "Follow"}
+                                    </Button>
                                 </div>
                                 :
                                 !!user ?

@@ -68,9 +68,6 @@ const EditProfile = (props) => {
 		}
 	}, [props.user])
 
-	console.log('country here  / / / / / / / / // / / / / / / / /' , country)
-
-
 	const handleChange = (event) => {
 		setMessageCountry('')
 		setCountry(event.target.value);

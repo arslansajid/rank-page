@@ -19,7 +19,7 @@ const CategoryCard = (props) => {
 
   return (
     
-    <Card className={isSelected ? classes.rootv: classes.rootFade} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
+    <Card className={isSelected ? classes.root: classes.rootFade} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
       <CardContent>
         <Grid className={classes.verticalCenter}>
           <PoolIcon fontSize={"large"} />

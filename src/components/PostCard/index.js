@@ -18,6 +18,7 @@ import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
 import { LikeUnlikePost, blockUser, unfollowUser } from "./action";
 import ShareCard from './share'
 import moment from "moment";
+import Config from "../../api/config";
 
 import LikeReactIcon from "../../assets/icons/icon/social/like.svg";
 import LoveReactIcon from "../../assets/icons/icon/social/love.svg";
@@ -209,7 +210,8 @@ const PostCard = (props) => {
                 </Grid>
                 <Link to={`/user-detail/${post.user? post.user.id : "1"}/lists`}>
                     <Grid container className={classes.cardProfileSection}>
-                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        {console.log("!@#!@#!@#!@#", post.user.profile_image )}
+                        <Avatar className={classes.avatar} alt="avatar-image" src={post.user.profile_image ? `${Config.BASE_APP_URL}${post.user.profile_image}` : require('../../assets/icons/placeholder.png')} />
                         <Grid className={classes.verticalCenter}>
                             <Typography variant='body1' className='mediumFont'>{!!post.user ? post.user.name : ''}</Typography>
                             <Typography variant='body2' className='smallFont'>{!!post.user ? `@ ${post.user.user_name}` : ''}</Typography>

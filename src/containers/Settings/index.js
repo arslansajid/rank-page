@@ -11,14 +11,13 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
-import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus} from './actions'
+import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus , UpdateUserName} from './actions'
 import ReportedUsers from '../../containers/ReportedUsers'
 import MoreIcon from '@material-ui/icons/MoreVert';
 import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 import Cookie from "js-cookie";
-import { userLogin } from "../../actions/LoginActions";
-import { userLogout } from "../../actions/LoginActions";
+import { userLogout , userLogin} from "../../actions/LoginActions";
 
 const Settings = (props) => {
 	const {dispatch} = props;

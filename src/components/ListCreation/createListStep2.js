@@ -114,7 +114,7 @@ const CreateListStep2 = (props) => {
                 multiline={true}
                 rows={3}
                 fullWidth
-                placeholder = "Enter Description(140 characters"
+                placeholder = "Enter Description(140 characters)"
                 onChange={(e)=> {setDescription(e.target.value)}}
                 defaultValue={listItems.description ? listItems.description : null}
               />

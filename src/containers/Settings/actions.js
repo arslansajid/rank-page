@@ -23,6 +23,17 @@ export const UpdatePassword = async (params) => {
   }
 };
 
+
+export const UpdateUserName = async (params) => {
+  try {
+    const res = await axiosInstance.post(
+      `${Config.API_END_POINT}/change_user_name` , params);
+    return res;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
 export const EmailActivity = async (params) => {
   try {
     const res = await axiosInstance.post(

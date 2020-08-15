@@ -40,7 +40,7 @@ const SignUpStep2 = props => {
       setIsLoading(true)
       registerData.country = registerData.country[0];
       let submitdata = {...registerData}
-      submitdata.name = submitdata.first_name + submitdata.last_name;
+      submitdata.name = submitdata.first_name + " " + submitdata.last_name;
       submitdata.user_name = data.user_name;
       signUp(submitdata)
       .then((res) => {

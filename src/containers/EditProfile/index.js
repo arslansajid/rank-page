@@ -13,6 +13,7 @@ import { Capitalize } from "../../utils/Functions";
 import moment from "moment"
 import { userLogin } from "../../actions/LoginActions";
 import { UpdateProfile } from './action'
+import Config from '../../api/config'
 
 const EditProfile = (props) => {
 	const classes = useStyles();
@@ -64,7 +65,6 @@ const EditProfile = (props) => {
 				setYear(dateArray[0])
 			}
 			setBio(user.bio ? user.bio : '')
-
 		}
 	}, [props.user])
 
@@ -259,7 +259,7 @@ const EditProfile = (props) => {
 						<InputLabel className='space-2'>Picture</InputLabel>
 						{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
 						{/* <ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} /> */}
-						<ImagePicker image={[]} type='image' setImage={(value) => updateImage(value)} />
+						<ImagePicker selectedImage={!!user.profile_image && `${Config.BASE_APP_URL}${(user.profile_image)}`} image={[]} type='image' setImage={(value) => updateImage(value)} />
 
 					</Paper>
 
@@ -267,7 +267,7 @@ const EditProfile = (props) => {
 						<InputLabel className='space-2'>Cover</InputLabel>
 						<Grid className={classes.coverContainer}>
 							{/* <ImagePicker image={[]} type = 'cover' setImage={(value) => console.log(value)} /> */}
-							<ImagePicker image={[]} type='cover' setImage={(value) => updateCover(value)} />
+							<ImagePicker selectedImage={!!user.cover_image && `${Config.BASE_APP_URL}${(user.cover_image)}`} image={[]} type='cover' setImage={(value) => updateCover(value)} />
 						</Grid>
 					</Paper>
 
@@ -477,8 +477,8 @@ const useStyles = makeStyles((theme) => ({
 	coverContainer: {
 		color: Colors.white,
 		marginBottom: 8,
-		backgroundColor: Colors.brandColor,
-		background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',
+		// backgroundColor: Colors.brandColor,
+		// background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',
 		borderRadius: 8,
 		minHeight: 150,
 		maxWidth: 350

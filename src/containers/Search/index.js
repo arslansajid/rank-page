@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import SearchInput from "../../components/Common/SearchInput";
 import UserTile from "../../components/Search/UserTile";
+import PostCard from "../../components/PostCard";
 import FollowCategoryCard from "../../components/Profile/CategoryCard/FollowCategoryCard";
 import { withRouter } from "react-router-dom";
 import { searchResults } from "./action";
@@ -130,10 +131,10 @@ const Search = (props) => {
                         <>
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Lists</Typography>
-                                {!!results.lists && results.lists.map((list, index) => {
+                                {!!results.lists && results.lists.map((post, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile />
+                                            <PostCard post={post} />
                                         </Grid>
                                     )
                                 })}

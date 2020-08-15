@@ -16,7 +16,7 @@ const ReportedUsers = () => {
         getFollowers()
             .then((res) => {
                 console.log("res", res)
-                setFollowers(res.data.data ? res.data.data.followers : [])
+                setFollowers(res.data.data ? res.data.data.followings : [])
                 setIsLoading(false)
             })
             .catch((err) => {

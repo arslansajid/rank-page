@@ -20,7 +20,7 @@ const ReportedUsers = () => {
         getFans()
             .then((res) => {
                 console.log("res", res)
-                setFans(res.data.data ? res.data.data.followings : []);
+                setFans(res.data.data ? res.data.data.followers : []);
                 setIsLoading(false)
             })
             .catch((err) => {

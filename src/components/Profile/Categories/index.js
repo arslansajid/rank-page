@@ -39,8 +39,6 @@ const FooterLinks = (props) => {
     const [selectedCategory , setSelectedCategory] = useState(null)
     const [subCategories , setSubCategories] = useState(null)
 
-    // console.log('user data here' , user)
-
     useEffect(() =>{
         if(!!user){
             let params = {};

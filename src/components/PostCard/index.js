@@ -210,7 +210,6 @@ const PostCard = (props) => {
                 </Grid>
                 <Link to={`/user-detail/${post.user? post.user.id : "1"}/lists`}>
                     <Grid container className={classes.cardProfileSection}>
-                        {console.log("!@#!@#!@#!@#", post.user.profile_image )}
                         <Avatar className={classes.avatar} alt="avatar-image" src={post.user.profile_image ? `${Config.BASE_APP_URL}${post.user.profile_image}` : require('../../assets/icons/placeholder.png')} />
                         <Grid className={classes.verticalCenter}>
                             <Typography variant='body1' className='mediumFont'>{!!post.user ? post.user.name : ''}</Typography>

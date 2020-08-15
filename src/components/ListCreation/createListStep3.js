@@ -31,8 +31,6 @@ const CreateListStep3 = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [users , setUsers] = useState() 
 
-  // console.log('selected users here' , selectedUser)
-
   useEffect(() => {
     getAllUsers()
     .then((res)=> {

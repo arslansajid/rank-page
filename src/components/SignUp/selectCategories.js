@@ -16,9 +16,6 @@ const SelectCategories = props => {
   const [followId , setFollowId] = useState(null)
   const [activeList , setActiveList] = useState([])
 
-
-  // console.log('array here' , activeList)
-
   useEffect(() =>{
     setIsLoading(true);
     getCategoriesWithSubCategories()

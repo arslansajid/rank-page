@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ButtonGroup, Button, Grid, Typography, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
+import LoadingSpinner from "../../components/Common/LoadingSpinner"
 import SearchInput from "../../components/Common/SearchInput";
 import UserTile from "../../components/Search/UserTile";
 import PostCard from "../../components/PostCard";
@@ -14,6 +15,7 @@ const Search = (props) => {
     const { match, history } = props;
     const [activeTab, setActiveTab] = useState(1);
     const [results, setResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getSearchResults();
@@ -24,6 +26,7 @@ const Search = (props) => {
     }
 
     const getSearchResults = () => {
+        setIsLoading(true);
         const data = {
             search: match.params.query,
         }
@@ -31,9 +34,11 @@ const Search = (props) => {
             .then((res) => {
                 console.log("res");
                 setResults(res.data.data ? res.data.data : null)
+                setIsLoading(false);
             })
             .catch((err) =>
                 console.log(err))
+                setIsLoading(false);
     }
 
     console.log("searchResults", results)
@@ -41,6 +46,15 @@ const Search = (props) => {
 
     return (
         <>
+            {
+                isLoading && (
+                <LoadingSpinner
+                    loading={isLoading}
+                    text="Searching..."
+                    size="large"
+                />
+                )
+            }
             <SearchInput value={match.params.query} handleSearch={(value) => {
                 // getSearchResults(value)
                 history.push(`/search/${value}`)

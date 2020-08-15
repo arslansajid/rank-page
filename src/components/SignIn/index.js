@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../../api/api.config";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Button, Typography } from '@material-ui/core';
 import Colors from '../../static/_colors';
@@ -24,7 +25,8 @@ const SignIn = (props) => {
             .then((res) => {
                 console.log("res ###", res.data.data.user.auth_token)
                 let token = res.data.data.user.auth_token;
-                axios.defaults.headers.common['Authorization'] = `${token}`;
+                // axiosInstance.defaults.headers.common['Authorization'] = `${token}`;
+                axiosInstance.defaults.headers['Authorization'] = `${token}`; 
                 Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
                 props.dispatch(userLogin(res.data.data.user));
                 setIsLoading(false);

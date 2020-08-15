@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../../api/api.config";
 import Cookie from "js-cookie";
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
@@ -19,7 +20,8 @@ const AppContainer = (props) => {
             // console.log("res ###", res.data.data.user)
             const token = Cookie.get('rankpage_access_token')
             console.log("token ###", token)
-            axios.defaults.headers.common['Authorization'] = `${token}`;
+            // axios.defaults.headers.common['Authorization'] = `${token}`;
+            axiosInstance.defaults.headers['Authorization'] = `${token}`; 
             props.dispatch(userLogin(res.data.data.user));
             setIsLoading(false);
         })

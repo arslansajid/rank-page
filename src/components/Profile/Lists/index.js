@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import LoadingSpinner from "../../Common/LoadingSpinner"
 import AddIcon from '@material-ui/icons/Add'
 import Fab from '@material-ui/core/Fab';
+import { userLogin } from "../../../actions/LoginActions";
 import { showListDialog } from "../../../actions/ListCreateDialogActions";
 
 const Lists = (props) => {
@@ -26,6 +27,7 @@ const Lists = (props) => {
             .then((res) => {
                 console.log('res', res)
                 setLists(res.data.data.users_own_lists ? res.data.data.users_own_lists : [])
+                dispatch(userLogin(res.data.data.user));
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -37,6 +39,7 @@ const Lists = (props) => {
             .then((res) => {
                 console.log('res', res)
                 setLists(res.data.data.users_own_lists ? res.data.data.users_own_lists : [])
+                dispatch(userLogin(res.data.data.user));
                 setIsLoading(false);
             })
             .catch((err) => {
@@ -44,7 +47,7 @@ const Lists = (props) => {
                 setIsLoading(false);
             })
         }
-    }, [user, reloadData])
+    }, [reloadData])
 
     return (
         <>

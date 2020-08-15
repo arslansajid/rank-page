@@ -114,6 +114,12 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '1rem',
         borderRadius: '8px 0px 0px 8px',
     },
+    tabSelected: {
+        fontWeight: 400
+    },
+    tabselected: {
+        fontWeight: 600
+    },
 })
 )
 

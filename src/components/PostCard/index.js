@@ -4,8 +4,6 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import { Grid, IconButton, Menu, MenuItem, Avatar, Button, Popover, Popper, Paper, ButtonGroup } from '@material-ui/core';
 import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Colors from '../../static/_colors';
 import Typography from '@material-ui/core/Typography';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -174,9 +172,9 @@ const PostCard = (props) => {
             >
                 {/* <ClickAwayListener onClickAway={handlePopoverClose}> */}
                     <Grid className={classes.reactContainer} component={Paper} elevation={1} container justify="space-between">
-                        <Button className={classes.reactIcon} onClick={() => likeHandler(1)} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={() => likeHandler(2)} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={() => likeHandler(3)} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={() => !!user ? likeHandler(1) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={() => !!user ?likeHandler(2) : window.alert("Please sign in first")} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={() => !!user ? likeHandler(3) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
                     </Grid>
                 {/* </ClickAwayListener> */}
             </Popover>
@@ -267,13 +265,13 @@ const PostCard = (props) => {
                 <CardActions>
                     <Grid container justify="space-between">
                         <Button
-                            onMouseEnter={handlePopoverOpen}
+                            onMouseEnter={!!user && handlePopoverOpen}
                             // onMouseLeave={handlePopoverClose}
-                            onClick={(e) => handlePopoverOpen(e)} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
+                            onClick={(e) => !!user ? handlePopoverOpen(e) : window.alert("Please sign in first")} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
                                 <Typography color={isLiked ? "primary" : "inherit"}>Like</Typography>
                             </Button>
-                        <Button onClick={() => setShowComments(!showComments)} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
-                        <Button onClick={() => setShowShareDialog(!showShareDialog)} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
+                        <Button onClick={() => !!user ? setShowComments(!showComments) : window.alert("Please sign in first")} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
+                        <Button onClick={() => !!user ? setShowShareDialog(!showShareDialog) : window.alert("Please sign in first")} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>
                 </CardActions>
                 {

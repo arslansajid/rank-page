@@ -48,7 +48,7 @@ const Settings = (props) => {
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!props.user) {
-			setName(props.user.name);
+			setName(props.user.user_name);
 			setEmail(props.user.email);
 			setActiveTabEmailActivity(props.user.email_availability === true ? 1 : 2)
 			setActiveTabAccountPrivacy(translateAccountPrivacy(props.user.account_visibility));

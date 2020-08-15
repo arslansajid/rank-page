@@ -15,7 +15,7 @@ import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
 import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
-import { LikeUnlikePost, blockUser, unfollowUser } from "./action";
+import { LikeUnlikePost, blockUser, unfollowUser, followUser } from "./action";
 import ShareCard from './share'
 import moment from "moment";
 import Config from "../../api/config";
@@ -33,12 +33,13 @@ const PostCard = (props) => {
     const [activeTabAccountPrivacy, setActiveTabAccountPrivacy] = useState(1);
     const [isLiked, setIsLiked] = useState(post.likes_count.includes("You"));
     const [likeMessage, setLikeMessage] = useState(post.likes_count);
+    const [followState, setFollowState] = useState(post.user && post.user.is_followed ? true : false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorElPopover, setAnchorElPopover] = React.useState(null);
 
-    useEffect(() => {
-
-    }, [likeMessage])
+    const toggleFollowState = () => {
+        setFollowState(!followState);
+    }
 
     const handlePopoverOpen = (event) => {
         setAnchorElPopover(event.currentTarget);
@@ -116,11 +117,28 @@ const PostCard = (props) => {
         unfollowUser(data)
         .then((res) => {
             console.log('res', res)
-            window.alert("User unfollowed");
+            window.alert(res.data.message);
             handleClose();
+            toggleFollowState();
         })
         .catch((err) => {
             console.log('err', err)
+        })
+    }
+
+    const followUserHandler = () => {
+        const data = {
+            "follow_user_id": post.user ? post.user.id : "",
+        }
+        followUser(data)
+        .then((res) => {
+            console.log("res", res)
+            window.alert(res.data.message)
+            handleClose();
+            toggleFollowState();
+        })
+        .catch((err) => {
+            console.log("err", err)
         })
     }
 
@@ -149,7 +167,7 @@ const PostCard = (props) => {
             >
                 <MenuItem onClick={handleClose}>Report</MenuItem>
                 <MenuItem onClick={() => blockUserHandler()}>Block User</MenuItem>
-                <MenuItem onClick={() => unfollowUserHandler()}>Unfollow User</MenuItem>
+                <MenuItem onClick={() => followState ? unfollowUserHandler() : followUserHandler()}>{followState ? "Unfollow" : "Follow"} User</MenuItem>
             </Menu>
 
             

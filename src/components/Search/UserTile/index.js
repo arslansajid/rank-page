@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
@@ -6,7 +7,7 @@ import { followUser, unfollowUser } from './actions'
 
 const SearchTile = (props) => {
     const classes = useStyles();
-    const {userId, name, userName, userFollow} = props;
+    const { userId, name, userName, userFollow } = props;
     const [followState, setFollowState] = useState(false);
 
     useEffect(() => {
@@ -22,14 +23,14 @@ const SearchTile = (props) => {
             "follow_user_id": userId
         }
         followUser(data)
-        .then((res) => {
-            console.log("res", res)
-            window.alert(res.data.message)
-            toggleFollowState();
-        })
-        .catch((err) => {
-            console.log("err", err)
-        })
+            .then((res) => {
+                console.log("res", res)
+                window.alert(res.data.message)
+                toggleFollowState();
+            })
+            .catch((err) => {
+                console.log("err", err)
+            })
     }
 
     const unfollowUserHandler = () => {
@@ -37,31 +38,33 @@ const SearchTile = (props) => {
             'unfollow_user_id': userId
         }
         unfollowUser(data)
-        .then((res) => {
-            console.log('res', res)
-            window.alert(res.data.message);
-            toggleFollowState();
-        })
-        .catch((err) => {
-            console.log('err', err)
-        })
+            .then((res) => {
+                console.log('res', res)
+                window.alert(res.data.message);
+                toggleFollowState();
+            })
+            .catch((err) => {
+                console.log('err', err)
+            })
     }
 
     return (
         <>
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
-                <div className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    <div>
-                        <Typography className={classes.bold}>
-                            {!!name ? name : "Arslan Sajid"}
-                        </Typography>
-                        <Typography color="textSecondary" variant="body2">
-                            {!!userName ? "@" + userName : "@arslansajid"}
-                        </Typography>
+                <Link to={`/user-detail/${userId}/lists`}>
+                    <div className={classes.row}>
+                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <div>
+                            <Typography className={classes.bold}>
+                                {!!name ? name : "Arslan Sajid"}
+                            </Typography>
+                            <Typography color="textSecondary" variant="body2">
+                                {!!userName ? "@" + userName : "@arslansajid"}
+                            </Typography>
+                        </div>
                     </div>
-                </div>
-                <Button onClick={() => followState ? unfollowUserHandler() : followUserHandler()}  color="primary" variant="outlined">{followState ? "Unfollow" : "Follow"}</Button>
+                </Link>
+                <Button onClick={() => followState ? unfollowUserHandler() : followUserHandler()} color="primary" variant="outlined">{followState ? "Unfollow" : "Follow"}</Button>
             </Grid>
         </>
     )

@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { showSignIn } from "../../../actions/SignInFormActions";
 import { showSignUp } from "../../../actions/SignUpFormActions";
 import { getUserData, followUser } from './actions'
+import Config from "../../../api/config";
 
 const ProfileCover = (props) => {
 
@@ -54,7 +55,7 @@ const ProfileCover = (props) => {
                 <Grid className={classes.mainContainer}>
                     <Grid container justify="space-between">
                         <div>
-                            <Avatar className={classes.avatar} alt={!!userData ? userData.name : 'image'} src={!!userData && userData.profile_image ? userData.profile_image : require("../../../assets/images/user.jpg")} />
+                            <Avatar className={classes.avatar} alt={!!userData ? userData.name : 'image'} src={!!userData && userData.profile_image ? `${Config.BASE_APP_URL}${userData.profile_image}` : require("../../../assets/images/user.jpg")} />
                             <Typography variant='body1' className={classes.bold}>{!!userData && userData.name ? userData.name : ''}</Typography>
                             <Typography variant='body2' className={classes.font}>{!!userData && userData.user_name ? `@ ${userData.user_name}` : ''}</Typography>
                         </div>

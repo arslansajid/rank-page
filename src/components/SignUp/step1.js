@@ -94,7 +94,7 @@ const SignUp = props => {
                   control={control}
                   error={errors.last_name ? true : false}
                   placeholder="Last Name"
-                  defaultValue={userData && userData.first_name ? userData.first_name : ''}
+                  defaultValue={userData && userData.last_name ? userData.last_name : ''}
                   className="text-field"
                 />
               </Grid>

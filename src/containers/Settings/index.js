@@ -91,10 +91,13 @@ const Settings = (props) => {
 		setIsLoadingName(true);
 		let user = {};
 		user.user_name = name;
-		UpdateUserName(user)
+		UpdateProfile(user)
 		.then((res) => {
 			setIsLoadingName(false);
 				setMessageName(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingName(false);
@@ -110,6 +113,9 @@ const Settings = (props) => {
 		.then((res) => {
 			setIsLoadingEmail(false);
 				setMessageEmail(res.data.message)
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingEmail(false);

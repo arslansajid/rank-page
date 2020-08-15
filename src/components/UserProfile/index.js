@@ -11,8 +11,9 @@ import RecoverAccount from "../RecoverAccount";
 import Success from "../RecoverAccount/sucees";
 import Colors from '../../static/_colors';
 import { Link , withRouter} from 'react-router-dom';
-import { hideSignIn, showSignIn } from "../../actions/SignInFormActions";
-import { hideSignUp, showSignUp } from "../../actions/SignUpFormActions";
+import { showSignIn } from "../../actions/SignInFormActions";
+import { showSignUp } from "../../actions/SignUpFormActions";
+import Config from "../../api/config";
 
 const UserProfile = (props) => {
     const classes = useStyles();
@@ -139,7 +140,7 @@ const UserProfile = (props) => {
                     {!!user ? (
                         <Link to="/profile/lists">
                             <Grid container>
-                                <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? user.profile_image : require("../../assets/images/user.jpg")} />
+                                <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? `${Config.BASE_APP_URL}${user.profile_image}` : require("../../assets/images/user.jpg")} />
                                 <Grid className={classes.verticalCenter}>
                                     <Typography>{user.name}</Typography>
                                     <Typography variant='body2'>{!!user ? `@ ${user.user_name}` : null}</Typography>

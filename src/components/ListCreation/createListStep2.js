@@ -20,6 +20,7 @@ const CreateListStep2 = (props) => {
     const [ categoriesError , setCategoriesError ] = useState(false);
     const [ description , setDescription ] = useState(listItems.description ? listItems.description : '');
     const [multiValue , setMultiValue ] = useState(null);
+    const [maxLimitError , setMaxLimitError ] = useState(false);
 
 
     useEffect(() =>{
@@ -31,7 +32,7 @@ const CreateListStep2 = (props) => {
 
 
     const onContinue = () => {
-      if(title && categories){
+      if(!!title && !!categories){
         let list_item = listItems
         list_item.title = title;
         list_item.categories = categories;
@@ -67,6 +68,16 @@ const CreateListStep2 = (props) => {
         return selectedCategories;
     }
 
+    const handleDescription = (description) => {
+      if(description.length < 50){
+      setMaxLimitError(false)
+      setDescription(description)
+      }
+      else {
+        setMaxLimitError(true)
+      }
+    }
+
 
   return (
     <div className={classes.container}>
@@ -84,6 +95,7 @@ const CreateListStep2 = (props) => {
                 onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
                 className={'text-field space-4'}
               />
+              {titleError && <Typography className={classes.error}>Please Enter title first</Typography>}
             <Divider/>
             </div>
             
@@ -102,7 +114,7 @@ const CreateListStep2 = (props) => {
                 styles={colourStyles}
                 
               />
-              {categoriesError && <Typography className={classes.error}>Please fill in categories first</Typography>}
+              {categoriesError && <Typography className={classes.error}>Please fill in categories to continue</Typography>}
               <Divider/>
             </div>
             <div className = 'space-4'>
@@ -114,11 +126,12 @@ const CreateListStep2 = (props) => {
                 multiline={true}
                 rows={3}
                 fullWidth
-                placeholder = "Enter Description(140 characters)"
-                onChange={(e)=> {setDescription(e.target.value)}}
+                placeholder = "Enter Description(50 characters)"
+                onChange={(e)=> {handleDescription(e.target.value)}}
                 defaultValue={listItems.description ? listItems.description : null}
               />
               </div>
+              { maxLimitError && <Typography className = {classes.error}>Decription should not exceed 50 characters</Typography>}
               <Button
                 onClick={onContinue}
                 className = {classes.buttonPosition}
@@ -149,7 +162,8 @@ const useStyles = makeStyles((theme) => ({
     error : {
       color : Colors.red,
       textAlign: 'center',
-      margin : '10px 0px'
+      margin : '5px 0px',
+      fontSize : '12px',
     }
 })
 )

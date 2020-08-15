@@ -3,7 +3,9 @@ import React , {useState , useEffect}from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Grid, colors  , TextField , Button } from "@material-ui/core";
 import ListTile  from './listTile';
+import Colors from '../../static/_colors';
 import Select , { components }  from 'react-select'
+import InputLabel from '@material-ui/core/InputLabel';
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
 
@@ -22,6 +24,7 @@ const CreateList = (props) => {
     const classes = useStyles();
     const [listItems , setListItems] = useState(null)
     const [selectedList  , setSelectedList] = useState(null)
+    const [emptyList , setEmptyList] = useState(false);
 
     useEffect(() =>{
       GetListItems()
@@ -30,13 +33,21 @@ const CreateList = (props) => {
     } , [])
 
     const handleUpdateList = () => {
-      let listItemsObject = {}
-      listItemsObject.list_items = selectedList
-      getData(listItemsObject)
-      continueNext()
+      if(selectedList && selectedList.length > 0) {
+        setEmptyList(false)
+        let listItemsObject = {}
+        listItemsObject.list_items = selectedList
+        getData(listItemsObject)
+        continueNext()
+      }
+      else {
+        setEmptyList(true)
+      }
+
 
     }
     const handleSelectd = (value) => {
+      setEmptyList(false)
       let List = [];
       value && value.length && value.map((item) => {
         List.push(item)
@@ -66,21 +77,7 @@ const CreateList = (props) => {
             )
           })
           : null }
-          {/* <div className = {classes.optionsMain}>
-            <Grid container alignItems="center" justify="space-between">
-                {listItems && listItems.length>0 && listItems.map((item, index) => {return(
-                <Grid key={index} className={classes.row} item xs = {12}>
-                  <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                <Typography className={classes.text}>{item.title}</Typography>
-                </Grid>
-                )})}
-                <Grid item xs = {12} className={`${classes.row} space-2`} onClick={createNew}>
-                  <img src = {require('../../../assets/icons/plus-circle-black.png')}/>
-                  <Typography variant="body1" className = {classes.marginL}>Create a new page for “Enter your new page”</Typography>
-                </Grid>
-            </Grid>
-          </div> */}
-          <div>
+          <div className='space-2'>
              <Select
               closeMenuOnSelect={false}
               isMulti = {true}
@@ -95,6 +92,7 @@ const CreateList = (props) => {
               // menuPlacement="top"
             />
           </div>
+          {emptyList && <InputLabel className = {classes.error}>Select pages to continue</InputLabel>}
           <Button
             onClick={handleUpdateList}
             className = {classes.buttonPosition}
@@ -144,6 +142,12 @@ const useStyles = makeStyles((theme) => ({
   selectInput : {
     height: '42px',
   },
+  error : {
+    color : Colors.red,
+    textAlign: 'center',
+    margin : '5px 0px',
+    fontSize : '12px',
+  }
 })
 )
 

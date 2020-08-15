@@ -38,7 +38,7 @@ const SignUpStep2 = props => {
     if(data.user_name && data.user_name.length > 4 && validate(data.user_name) == true){
       setShowError(false)
       setIsLoading(true)
-      registerData.country = registerData.country[0];
+      // registerData.country = registerData.country[0];
       let submitdata = {...registerData}
       submitdata.name = submitdata.first_name + " " + submitdata.last_name;
       submitdata.user_name = data.user_name;

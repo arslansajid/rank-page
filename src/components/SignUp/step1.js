@@ -36,11 +36,10 @@ const SignUp = props => {
     }
     else return true;
   }
-
   const onSubmit = async (data) => {
     if (data.password === data.password_confirmation && data.password.length >= 6 && ageValidation(data)) {
       data.country = country;
-      data.region = region;
+      data.state = region;
       setPasswordError(false)
       setDateError(null)
       setUserData(data)

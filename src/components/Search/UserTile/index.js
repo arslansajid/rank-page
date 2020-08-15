@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
-import {followUser} from "./actions"
+import { followUser, unfollowUser } from './actions'
 
 const SearchTile = (props) => {
     const classes = useStyles();
-    const {userId, name, userName} = props;
+    const {userId, name, userName, userFollow} = props;
+    const [followState, setFollowState] = useState(false);
+
+    useEffect(() => {
+        setFollowState(userFollow ? true : false)
+    }, [])
+
+    const toggleFollowState = () => {
+        setFollowState(!followState);
+    }
 
     const followUserHandler = () => {
         const data = {
@@ -16,9 +25,25 @@ const SearchTile = (props) => {
         .then((res) => {
             console.log("res", res)
             window.alert(res.data.message)
+            toggleFollowState();
         })
         .catch((err) => {
             console.log("err", err)
+        })
+    }
+
+    const unfollowUserHandler = () => {
+        const data = {
+            'unfollow_user_id': userId
+        }
+        unfollowUser(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert(res.data.message);
+            toggleFollowState();
+        })
+        .catch((err) => {
+            console.log('err', err)
         })
     }
 
@@ -36,7 +61,7 @@ const SearchTile = (props) => {
                         </Typography>
                     </div>
                 </div>
-                <Button onClick={() => followUserHandler()}  color="primary" variant="outlined">Follow</Button>
+                <Button onClick={() => followState ? unfollowUserHandler() : followUserHandler()}  color="primary" variant="outlined">{followState ? "Unfollow" : "Follow"}</Button>
             </Grid>
         </>
     )

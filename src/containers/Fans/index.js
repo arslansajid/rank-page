@@ -61,7 +61,7 @@ const ReportedUsers = () => {
                     {fans.length > 0 ? fans.map((fan, index) => {
                         return (
                             <Grid key={index}>
-                                <UserTile userId={fan.id} name={fan.name} userName={fan.user_name} />
+                                <UserTile userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} />
                             </Grid>
                         )
                     })
@@ -79,7 +79,7 @@ const ReportedUsers = () => {
                                 {fans.length > 0 ? fans.map((fan, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userId={fan.id} name={fan.name} userName={fan.user_name} />
+                                            <UserTile userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} />
                                         </Grid>
                                     )
                                 })

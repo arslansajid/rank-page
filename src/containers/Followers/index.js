@@ -61,7 +61,7 @@ const ReportedUsers = () => {
                     {followers.length > 0 ? followers.map((follower, index) => {
                         return (
                             <Grid key={index}>
-                                <UserTile userId={follower.id} name={follower.name} userName={follower.user_name} />
+                                <UserTile userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} />
                             </Grid>
                         )
                     })
@@ -79,7 +79,7 @@ const ReportedUsers = () => {
                                 {followers.length > 0 ? followers.map((follower, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userId={follower.id} name={follower.name} userName={follower.user_name} />
+                                            <UserTile userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} />
                                         </Grid>
                                     )
                                 })

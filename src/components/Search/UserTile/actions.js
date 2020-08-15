@@ -10,3 +10,14 @@ export const followUser = async (params) => {
     throw err.response;
   }
 };
+
+export const unfollowUser = async (data) => {
+  try {
+    const res = await axiosInstance.post(
+      `${Config.API_END_POINT}/unfollow_user`, data
+    );
+    return res;
+  } catch (err) {
+    throw err.response;
+  }
+};

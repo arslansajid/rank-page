@@ -12,9 +12,9 @@ import AddIcon from '@material-ui/icons/Add'
 
 const Newsfeed = (props) => {
     const classes = useStyles();
-    const {dispatch} = props;
+    const {reloadData, dispatch} = props;
     const [posts, setPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleListShow = () => {
         dispatch(showListDialog());
@@ -22,6 +22,7 @@ const Newsfeed = (props) => {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         getNewsFeed()
         .then((res) => {
             console.log(res)
@@ -32,7 +33,7 @@ const Newsfeed = (props) => {
             console.log(err);
             setIsLoading(false);
         })
-    }, [])
+    }, [reloadData])
 
 		return (
 			<>
@@ -89,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
 function mapStateToProps(state) {
     return {
         user: state.user,
+        reloadData: state.reloadData,
     };
 }
 

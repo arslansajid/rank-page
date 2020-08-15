@@ -1,6 +1,6 @@
 export const Profile = [
     {
-        name: 'Challenges',
+        name: 'Pools',
         icon: 'challenge',
         route: '/profile/challenges'
     },

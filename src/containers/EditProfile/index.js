@@ -68,6 +68,9 @@ const EditProfile = (props) => {
 		}
 	}, [props.user])
 
+	console.log('country here  / / / / / / / / // / / / / / / / /' , country)
+
+
 	const handleChange = (event) => {
 		setMessageCountry('')
 		setCountry(event.target.value);
@@ -135,14 +138,14 @@ const EditProfile = (props) => {
 			.then((res) => {
 				setIsLoadingDOB(false);
 				setMessageDOB(res.data.message)
-				// if(res.data.success){
-				// 	props.dispatch(userLogin(res.data.data.user));
-				// }
-			})
-			.catch((err) => {
-				setIsLoadingDOB(false);
-				console.log(err)
-			})
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
+		})
+		.catch((err) => { 
+			setIsLoadingDOB(false);
+			console.log(err)
+		})
 	}
 
 	const updateCountry = () => {
@@ -187,17 +190,17 @@ const EditProfile = (props) => {
 		let user = {};
 		user.gender = gender;
 		UpdateProfile(user)
-			.then((res) => {
-				setIsLoadingGender(false);
-				setMessageGender(res.data.message)
-				// if(res.data.success){
-				// 		props.dispatch(userLogin(res.data.data.user));
-				// 	}
-			})
-			.catch((err) => {
-				setIsLoadingGender(false);
-				console.log(err)
-			})
+		.then((res) => {
+			setIsLoadingGender(false);
+			setMessageGender(res.data.message)
+			if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
+		})
+		.catch((err) => { 
+			setIsLoadingGender(false);
+			console.log(err)
+		})
 	}
 
 	const updateImage = (value) => {
@@ -242,7 +245,9 @@ const EditProfile = (props) => {
 		if (index === 'day') {
 			setDay(value)
 		}
-		else if (index === 'month') {
+		else if(index === 'month'){
+			// let month =  parseInt(value)
+			// month = month+1;
 			setMonth(value)
 		}
 		else if (index === 'year') {
@@ -311,26 +316,26 @@ const EditProfile = (props) => {
 						{messageBio && <Typography className={classes.message}>{messageBio}</Typography>}
 					</Paper>
 
-					<Paper elevation={0} className={classes.container}>
-						<InputLabel className='space-4'>Date of Birth</InputLabel>
-						<Grid container>
-							<Grid item xs={2} className='space-4'>
-								<select name="day" className={classes.select} value={day} onChange={(e) => handleDateChange(e.target.value, 'day')}>
-									{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
-								</select>
-							</Grid>
-							<Grid item xs={2}>
-								<select name="month" className={classes.select} value={month} onChange={(e) => handleDateChange(e.target.value, 'month')}>
-									{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
-										(month, index) => <option key={index} value={index}>{month}</option>
-									)}
-								</select>
-							</Grid>
-							<Grid item xs={2}>
-								<select name="year" className={classes.select} value={year} onChange={(e) => handleDateChange(e.target.value, 'year')}>
-									{getArray(100).map((val, index) => <option key={index} value={2020 - index}>{2020 - index}</option>)}
-								</select>
-							</Grid>
+			<Paper elevation={0} className={classes.container}>
+				<InputLabel className='space-4'>Date of Birth</InputLabel>
+					<Grid container>
+								<Grid item xs={2} className = 'space-4'>
+									<select name="day" className={classes.select}  value = {JSON.stringify(parseInt(day))} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
+										{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
+									</select>
+								</Grid>
+								<Grid item xs={2}>
+									<select name="month" className={classes.select}  value = {JSON.stringify(parseInt(month))} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
+										{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
+											(month, index) => <option key={index} value={index}>{month}</option>
+										)}
+									</select>
+								</Grid>
+								<Grid item xs={2}>
+									<select name="year" className={classes.select}  value = {year} onChange = {(e)=>handleDateChange(e.target.value , 'year')}>
+										{getArray(100).map((val, index) => <option key={index} value={2020 - index}>{2020 - index}</option>)}
+									</select>
+								</Grid>
 						</Grid>
 						<Button type='submit' disabled={isLoadingDOB} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateDOB}>
 							<Typography>

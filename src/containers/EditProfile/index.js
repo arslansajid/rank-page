@@ -68,6 +68,7 @@ const EditProfile = (props) => {
 		}
 	}, [props.user])
 
+
 	const handleChange = (event) => {
 		setMessageCountry('')
     setCountry(event.target.value);
@@ -135,9 +136,9 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingDOB(false);
 				setMessageDOB(res.data.message)
-				// if(res.data.success){
-				// 	props.dispatch(userLogin(res.data.data.user));
-				// }
+				if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingDOB(false);
@@ -190,9 +191,9 @@ const EditProfile = (props) => {
 		.then((res) => {
 			setIsLoadingGender(false);
 			setMessageGender(res.data.message)
-			// if(res.data.success){
-			// 		props.dispatch(userLogin(res.data.data.user));
-			// 	}
+			if(res.data.success){
+					props.dispatch(userLogin(res.data.data.user));
+				}
 		})
 		.catch((err) => { 
 			setIsLoadingGender(false);
@@ -250,6 +251,8 @@ const EditProfile = (props) => {
 		setDay(value)
 		}
 		else if(index === 'month'){
+			// let month =  parseInt(value)
+			// month = month+1;
 			setMonth(value)
 		}
 		else if(index === 'year'){
@@ -322,12 +325,12 @@ const EditProfile = (props) => {
 				<InputLabel className='space-4'>Date of Birth</InputLabel>
 					<Grid container>
 								<Grid item xs={2} className = 'space-4'>
-									<select name="day" className={classes.select}  value = {day} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
+									<select name="day" className={classes.select}  value = {JSON.stringify(parseInt(day))} onChange = {(e)=>handleDateChange(e.target.value , 'day')}>
 										{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
 									</select>
 								</Grid>
 								<Grid item xs={2}>
-									<select name="month" className={classes.select}  value = {month} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
+									<select name="month" className={classes.select}  value = {JSON.stringify(parseInt(month))} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
 										{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
 											(month, index) => <option key={index} value={index}>{month}</option>
 										)}

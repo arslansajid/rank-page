@@ -90,7 +90,7 @@ const CommentSection = (props) => {
                         value={commentTextInput}
                         onChange={(e) => setCommentTextInput(e.target.value)}
                         onKeyPress={(event) => {
-                          if(event.key === 'Enter') {
+                          if(event.key === 'Enter' && event.target.value.length) {
                             addCommentHandler();
                           }
                         }}

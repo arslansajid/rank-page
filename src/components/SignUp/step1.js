@@ -229,6 +229,7 @@ const SignUp = props => {
               value={country}
               placeholder="Select Country"
               onChange={(country) => setCountry(country)} />
+              {/* onChange={(country) => console.log('country here' , country)} /> */}
           </div>
 
           {!!country && (

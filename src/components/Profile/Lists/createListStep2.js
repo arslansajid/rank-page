@@ -148,6 +148,8 @@ const CreateListStep2 = (props) => {
                 rows={3}
                 fullWidth
                 onChange={(e)=> {setDescription(e.target.value)}}
+                // multiLine={true} 
+                
               />
               </div>
               <Button

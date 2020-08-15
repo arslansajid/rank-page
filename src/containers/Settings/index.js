@@ -11,13 +11,13 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from "../../components/Common/Dialog"
 import ConformationDialog from './confirmation'
-import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus} from './actions'
+import {UpdateProfile , UpdatePassword , EmailActivity , AccountPrivacy , AccountStatus , UpdateUserName} from './actions'
 import ReportedUsers from '../../containers/ReportedUsers'
 import MoreIcon from '@material-ui/icons/MoreVert';
 import BlockedUsers from '../../containers/BlockedUsers'
 import {translateAccountPrivacy , translateAccountFollowingPrivacy} from '../../helper'
 import Cookie from "js-cookie";
-import { userLogout } from "../../actions/LoginActions";
+import { userLogout , userLogin} from "../../actions/LoginActions";
 
 const Settings = (props) => {
 	const {dispatch} = props;
@@ -48,7 +48,7 @@ const Settings = (props) => {
 	useEffect(() => {
 		//re-rendering when the user data changes
 		if(!!props.user) {
-			setName(props.user.name);
+			setName(props.user.user_name);
 			setEmail(props.user.email);
 			setActiveTabEmailActivity(props.user.email_availability === true ? 1 : 2)
 			setActiveTabAccountPrivacy(translateAccountPrivacy(props.user.account_visibility));
@@ -90,8 +90,8 @@ const Settings = (props) => {
 	const updateName = () => {
 		setIsLoadingName(true);
 		let user = {};
-		user.name = name;
-		UpdateProfile(user)
+		user.user_name = name;
+		UpdateUserName(user)
 		.then((res) => {
 			setIsLoadingName(false);
 				setMessageName(res.data.message)

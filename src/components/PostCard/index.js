@@ -46,6 +46,8 @@ const PostCard = (props) => {
     };
 
     const handlePopoverClose = (event) => {
+        console.log("###########", event.preventDefault())
+        event.preventDefault();
         setAnchorElPopover(null);
     };
 
@@ -57,8 +59,8 @@ const PostCard = (props) => {
         setAnchorEl(null);
     };
 
-    const likeHandler = (reactId) => {
-        handlePopoverClose();
+    const likeHandler = (reactId, event) => {
+        handlePopoverClose(event)
         const data = {
             'share_post_id': post.id,
             'like_type': reactId
@@ -66,29 +68,26 @@ const PostCard = (props) => {
         LikeUnlikePost(data)
         .then((res) => {
             console.log('res', res)
+            setLikeMessage(res.data.data.like_string)
             setIsLiked(res.data.message.includes("unliked") ? false : true);
             //custome like handling
-            if(likeMessage.length) {
-            if(!(res.data.message.includes("unliked"))) {
-                setLikeMessage('You, ' + likeMessage)
-                // window.alert("1")
-            } else {
-                setLikeMessage(post.likes_count)
-                // window.alert("2")
-            }
+        //     if(likeMessage.length) {
+        //     if(!(res.data.message.includes("unliked"))) {
+        //         setLikeMessage('You, ' + likeMessage)
+        //         // window.alert("1")
+        //     } else {
+        //         setLikeMessage(post.likes_count)
+        //         // window.alert("2")
+        //     }
 
-            if(post.likes_count === 'You likes this') {
-                setLikeMessage('')
-                // window.alert("3")
-            }
-            // else if(post.like_count === 0) {
-            //     setLikeMessage('You likes this')
-            //     window.alert("4")
-            // }
-        }
-            else {
-                setLikeMessage('You likes this')
-            }
+        //     if(post.likes_count === 'You likes this') {
+        //         setLikeMessage('')
+        //         // window.alert("3")
+        //     }
+        // }
+        //     else {
+        //         setLikeMessage('You likes this')
+        //     }
         })
         .catch((err) => {
             console.log('err', err)
@@ -186,14 +185,14 @@ const PostCard = (props) => {
                 vertical: 'center',
                 horizontal: 'left',
                 }}
-                onClose={handlePopoverClose}
+                onClose={e => handlePopoverClose(e)}
                 // disableRestoreFocus
             >
                 {/* <ClickAwayListener onClickAway={handlePopoverClose}> */}
                     <Grid className={classes.reactContainer} component={Paper} elevation={1} container justify="space-between">
-                        <Button className={classes.reactIcon} onClick={() => !!user ? likeHandler(1) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={() => !!user ?likeHandler(2) : window.alert("Please sign in first")} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={() => !!user ? likeHandler(3) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(1, event) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ?likeHandler(2, event) : window.alert("Please sign in first")} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(3, event) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
                     </Grid>
                 {/* </ClickAwayListener> */}
             </Popover>

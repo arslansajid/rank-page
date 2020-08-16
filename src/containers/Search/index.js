@@ -111,6 +111,40 @@ const Search = (props) => {
                                 <Typography variant="h6" gutterBottom>No Experts found...</Typography>
                             }
                             </Paper>
+
+                            <Paper elevation={0} className={classes.container}>
+                                <Typography variant="h6" gutterBottom>Categories</Typography>
+                                <Grid container spacing={2}>
+                                    {!!results.categories && results.categories.length > 1 ?
+                                    results.categories.map((category, index) => {
+                                        return (
+                                            <Grid key={index} item lg={4} md={4} sm={6} xs={12}>
+                                                <FollowCategoryCard
+                                                    category={category}
+                                                />
+                                            </Grid>
+                                        )
+                                    })
+                                    :
+                                    <Typography variant="h6" gutterBottom>No Categories found...</Typography>
+                                }
+                                </Grid>
+                            </Paper>
+
+                            <Paper elevation={0} className={classes.container}>
+                                <Typography variant="h6" gutterBottom>Lists</Typography>
+                                {!!results.lists && results.lists.length > 0 ?
+                                results.lists.map((post, index) => {
+                                    return (
+                                        <Grid key={index}>
+                                            <PostCard post={post} />
+                                        </Grid>
+                                    )
+                                })
+                                :
+                                <Typography variant="h6" gutterBottom>No Lists found...</Typography>
+                            }
+                            </Paper>
                         </>
                     )}
                     {activeTab === 2 && (

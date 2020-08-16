@@ -33,3 +33,14 @@ export const replyToComment = async postData => {
     throw err.response;
   }
 };
+
+export const likeComment = async commentData => {
+  try {
+    const res = await axiosInstance.post(
+      `${Config.API_END_POINT}/like_comment`, commentData
+    );
+    return res;
+  } catch (err) {
+    throw err.response;
+  }
+};

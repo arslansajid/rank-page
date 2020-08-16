@@ -1,18 +1,34 @@
 
 import React, {useState} from "react";
-import {Typography, Grid, Avatar, TextField} from "@material-ui/core";
+import { connect } from 'react-redux';
+import {Typography, Grid, Avatar, TextField, Popover, Paper, Button} from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
-import {replyToComment} from "../action";
+import { showSignIn } from "../../../actions/SignInFormActions";
+import {replyToComment, likeComment} from "../action";
 import Config from "../../../api/config";
+
+import LikeReactIcon from "../../../assets/icons/icon/social/like.svg";
+import LoveReactIcon from "../../../assets/icons/icon/social/love.svg";
+import ThinkReactIcon from "../../../assets/icons/icon/social/think.svg";
 
 const Comment = (props) => {
     const classes = useStyles();
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [commentTextInput, setCommentTextInput] = useState('');
-    const {comment, commentTime, author, isChildren, postId, commentId, fetchComments, authorImage} = props;
+    const [isLiked, setIsLiked] = useState(false);
+    const [anchorElPopover, setAnchorElPopover] = useState(null);
+    const {comment, commentTime, author, isChildren, postId, commentId, fetchComments, authorImage, user, dispatch} = props;
 
     console.log("#########", comment)
+
+    const handlePopoverOpen = (event) => {
+        setAnchorElPopover(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorElPopover(null);
+    };
 
     const replyToCommentHandler = () => {
         const data = {
@@ -32,8 +48,53 @@ const Comment = (props) => {
         })
     }
 
+    const likeHandler = (reactId) => {
+        handlePopoverClose()
+        const data = {
+            'comment_id': commentId,
+            'like_type': reactId
+        }
+        likeComment(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert(res.data.message)
+            // setLikeMessage(res.data.data.like_string)
+            setIsLiked(res.data.message.includes("unliked") ? false : true);
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
+
     return (
         <>
+        <Popover
+            id="mouse-over-popover"
+            classes={{
+            paper: classes.paper,
+            }}
+            open={Boolean(anchorElPopover)}
+            anchorEl={anchorElPopover}
+            anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+            }}
+            transformOrigin={{
+            vertical: 'center',
+            horizontal: 'left',
+            }}
+            onClose={e => handlePopoverClose(e)}
+            disableRestoreFocus //this was the fix for scroll to top on like
+        >
+            {/* <ClickAwayListener onClickAway={handlePopoverClose}> */}
+                <Grid className={classes.reactContainer} component={Paper} elevation={1} container justify="space-between">
+                    <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(1, event) : dispatch(showSignIn())} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
+                    <Button className={classes.reactIcon} onClick={(event) => !!user ?likeHandler(2, event) : dispatch(showSignIn())} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
+                    <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(3, event) : dispatch(showSignIn())} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
+                </Grid>
+            {/* </ClickAwayListener> */}
+        </Popover>
+
         <Grid container className={`${classes.cardProfileSection}`}>
             <Grid container className={isChildren ? classes.isChildren : ""}>
             <Grid item lg={1} md={1} sm={1} xs={1}>
@@ -48,7 +109,7 @@ const Comment = (props) => {
                 </Grid>
                 <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ comment }</Typography>
                 <Grid container>
-                    <Typography className={classes.textButton}>Like</Typography>
+                    <Typography onClick={(e) => handlePopoverOpen(e)} color={isLiked ? "primary" : "inherit"} className={classes.textButton}>Like</Typography>
                     <Typography onClick={() => setShowCommentInput(!showCommentInput)} className={classes.textButton}>Reply</Typography>
                 </Grid>
             </Grid>
@@ -113,8 +174,22 @@ const useStyles = makeStyles((theme) => ({
         width : '96%',
         marginLeft : '4%',
     },
+    paper: {
+        padding: theme.spacing(1),
+      },
+    reactIcon: {
+        cursor: 'pointer',
+        "&:hover": {
+            backgroundColor: "transparent"
+        }
+    },
     })
 )
 
-
-export default Comment;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+  }
+  
+  export default connect(mapStateToProps)(Comment);

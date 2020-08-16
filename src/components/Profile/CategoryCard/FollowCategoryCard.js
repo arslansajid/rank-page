@@ -10,7 +10,7 @@ import Colors from '../../../static/_colors';
 import {followCategory} from "./action";
 
 const CategoryCard = (props) => {
-  const { selectedList , category , followCategoryCallback } = props;
+  const { selectedList , category, showSubCategory, followCategoryCallback } = props;
   const classes = useStyles();
 
   const handleFollowCategory = (id) => {
@@ -27,6 +27,11 @@ const CategoryCard = (props) => {
     })
   }
 
+  const handleMore = () => {
+    if(showSubCategory){
+      showSubCategory(category.sub_categories)}
+  }
+
   return (
     
     <Card className={selectedList && selectedList.length && selectedList.includes(category.id) ?  classes.rootFade : classes.rootv} variant="outlined"  style = {{ position : 'relative'}}>
@@ -38,7 +43,7 @@ const CategoryCard = (props) => {
       </CardContent>
       <Grid container justify="space-between" alignItems="center" className={classes.actionContainer}>
         <Typography>Pro</Typography>
-        <MoreIcon className={classes.moreIcon} />
+        <MoreIcon onClick={() => handleMore()} className={classes.moreIcon} />
         <Typography>{category.count} Lists</Typography>
       </Grid>
       <Grid onClick = {()=> handleFollowCategory(category.id)} className = {classes.plusIcon}><img className={"link"} src={require('../../../assets/icons/plus-circle-black.png')}/></Grid>

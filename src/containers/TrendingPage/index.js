@@ -46,7 +46,7 @@ const Trending = (props) => {
                 isLoading && (
                 <LoadingSpinner
                     loading={isLoading}
-                    text="Searching..."
+                    text="Fetching Trendings..."
                     size="large"
                 />
                 )

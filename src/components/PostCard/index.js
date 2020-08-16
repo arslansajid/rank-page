@@ -15,7 +15,7 @@ import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
 import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
-import { LikeUnlikePost, blockUser, unfollowUser, followUser } from "./action";
+import { LikeUnlikePost, reportUser, blockUser, unfollowUser, followUser } from "./action";
 import ShareCard from './share'
 import moment from "moment";
 import Config from "../../api/config";
@@ -109,6 +109,21 @@ const PostCard = (props) => {
         })
     }
 
+    const reportUserHandler = () => {
+        const data = {
+            'report_user_id': post.user ? post.user.id : "",
+        }
+        reportUser(data)
+        .then((res) => {
+            console.log('res', res)
+            window.alert(res.data.message);
+            handleClose();
+        })
+        .catch((err) => {
+            console.log('err', err)
+        })
+    }
+
     const unfollowUserHandler = () => {
         const data = {
             'unfollow_user_id': post.user ? post.user.id : "",
@@ -164,7 +179,7 @@ const PostCard = (props) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Report</MenuItem>
+                <MenuItem onClick={() => reportUserHandler()}>Report</MenuItem>
                 <MenuItem onClick={() => blockUserHandler()}>Block User</MenuItem>
                 <MenuItem onClick={() => followState ? unfollowUserHandler() : followUserHandler()}>{followState ? "Unfollow" : "Follow"} User</MenuItem>
             </Menu>

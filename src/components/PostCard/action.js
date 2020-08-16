@@ -34,6 +34,17 @@ export const sharePost = async postData => {
   }
 };
 
+export const reportUser = async (data) => {
+  try {
+    const res = await axiosInstance.post(
+      `${Config.API_END_POINT}/report_user`, data
+    );
+    return res;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
 export const blockUser = async (data) => {
   try {
     const res = await axiosInstance.post(

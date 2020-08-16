@@ -76,7 +76,7 @@ const CreateListStep3 = (props) => {
           console.log('success', res.data);
           setIsLoading(false);
           if (res.data.success) {
-            publish()
+            publish(159)
           }
           else if (!res.data.success) {
             setErrorMessage(res.data.message)

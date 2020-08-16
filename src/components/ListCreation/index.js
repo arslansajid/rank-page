@@ -15,8 +15,9 @@ const Lists = (props) => {
     const { dispatch, listCreateDialog } = props;
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
-    const [showPublished, setShowPublished] = useState(false);
+    const [showPublished, setShowPublished] = useState(true);
     const [ listItems , setListItems] = useState(null)
+    const [listId , setListId] = useState(null)
     const classes = useStyles();
 
     return (
@@ -64,7 +65,7 @@ const Lists = (props) => {
                     listItems = {listItems}
                     getListData = {(value) => {setListItems(value)}}
                     continueNext = {() => {setShowCreateListStep3(false) ; setShowPublished(true)}}
-                    publish = {() => {setShowCreateListStep3(false) ; setShowPublished(true)}}
+                    publish = {(listId) => {setShowCreateListStep3(false) ; setShowPublished(true) ; setListId(listId)}}
                     />
                 }
                 applyForm={() => {setShowCreateListStep3(false) ; setShowCreateListStep2(true)}}
@@ -78,7 +79,9 @@ const Lists = (props) => {
                 title={"Published"}
                 open={showPublished}
                 message={
-                    <Published createNewList={() => {dispatch(showListDialog()) ; setShowPublished(false)}} />
+                    <Published 
+                    listId = {listId}
+                    createNewList={() => {dispatch(showListDialog()) ; setShowPublished(false)}} />
                 }
                 applyForm={() => {setShowPublished(false); dispatch(reloadData())}}
                 cancelForm={() => {setShowPublished(false); dispatch(reloadData())}}

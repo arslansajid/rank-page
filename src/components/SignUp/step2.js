@@ -17,10 +17,13 @@ const SignUpStep2 = props => {
   const {errors, handleSubmit, control} = useForm ();
   const [value , setValue] = useState (null);
   const [showError, setShowError] = useState (null)
+  // const [user , setUser] = useState (props.user ? props.user : null);
 
   // useEffect(() => {
-  //   console.log(validate('zeeshan@#'))
-  // })
+  //   if(props.user){
+  //     setUser(props.user)
+  //   }
+  // }, [props.user])
 
 
 
@@ -49,7 +52,13 @@ const SignUpStep2 = props => {
         if(res.data && res.data.success){
           let token = res.data.data.user.auth_token;
           Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
-          props.dispatch(userLogin(res.data.data.user));
+          props.dispatch(userLogin(res.data.data.user))
+          // if(user){
+          //   showCatergories();
+          // }
+          // // .then(()=>{
+          // //   showCatergories();
+          // // })
           showCatergories();
         }
         else if(res.data && !res.data.success && res.data.message === 'Email has already been taken'){
@@ -197,5 +206,13 @@ const useStyles = makeStyles (theme =>
 
 SignUpStep2.defaultProps = {};
 
-// export default SignUpStep2;
-export default connect(null)(SignUpStep2);
+// export default connect(null)(SignUpStep2);
+
+function mapStateToProps(state) {
+	return {
+		user: state.user,
+	};
+}
+
+
+export default connect(mapStateToProps)(SignUpStep2);

@@ -4,6 +4,7 @@ import {Button, Typography , Grid, ButtonBase} from '@material-ui/core';
 import Colors from '../../static/_colors';
 import {useForm} from 'react-hook-form';
 import CategoryCard from "./generlCategoryCard";
+import { connect } from 'react-redux';
 import {getCategoriesWithSubCategories , followCategory} from './action'
 
 
@@ -27,7 +28,7 @@ const SelectCategories = props => {
         setIsLoading(false);
         console.log(err)
     })
-} , [])
+} , [props.user])
 
 const toggleCategoryFollowing = (id) => {
   let list = [...activeList];
@@ -146,4 +147,12 @@ const useStyles = makeStyles (theme =>
 
 SelectCategories.defaultProps = {};
 
-export default SelectCategories;
+// export default SelectCategories;
+function mapStateToProps(state) {
+	return {
+		user: state.user,
+	};
+}
+
+
+export default connect(mapStateToProps)(SelectCategories);

@@ -7,7 +7,7 @@ import { followUser, unfollowUser } from './actions'
 
 const SearchTile = (props) => {
     const classes = useStyles();
-    const { userId, name, userName, userFollow } = props;
+    const { userId, name, userName, userFollow, unFollowSuccessHanlder, index } = props;
     const [followState, setFollowState] = useState(false);
 
     useEffect(() => {
@@ -41,6 +41,7 @@ const SearchTile = (props) => {
             .then((res) => {
                 console.log('res', res)
                 window.alert(res.data.message);
+                unFollowSuccessHanlder && unFollowSuccessHanlder(index);
                 toggleFollowState();
             })
             .catch((err) => {

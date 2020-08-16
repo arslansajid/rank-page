@@ -29,6 +29,12 @@ const ReportedUsers = () => {
             })
     }, [])
 
+    const unFollowSuccessHanlder = (index) => { //removing from the list
+        const updatedUsers = fans.slice();
+        updatedUsers.splice(index, 1);
+        setFans(updatedUsers);
+    }
+
     if (isLoading) {
         return (
             <LoadingSpinner
@@ -61,7 +67,7 @@ const ReportedUsers = () => {
                     {fans.length > 0 ? fans.map((fan, index) => {
                         return (
                             <Grid key={index}>
-                                <UserTile userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} />
+                                <UserTile index={index} userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                             </Grid>
                         )
                     })
@@ -79,7 +85,7 @@ const ReportedUsers = () => {
                                 {fans.length > 0 ? fans.map((fan, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} />
+                                            <UserTile index={index} userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                                         </Grid>
                                     )
                                 })

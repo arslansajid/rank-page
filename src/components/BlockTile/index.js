@@ -17,7 +17,7 @@ const BlockTile = (props) => {
         UnBlockUser(data)
         .then((res) => {
             window.alert("Unblocked successfully")
-            unBlockSuccessHanlder(index);
+            unBlockSuccessHanlder && unBlockSuccessHanlder(index);
         })
         .catch((err) => {
             console.log(err)

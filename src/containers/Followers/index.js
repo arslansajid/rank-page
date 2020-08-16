@@ -29,6 +29,12 @@ const ReportedUsers = () => {
         setActiveTab(value)
     }
 
+    const unFollowSuccessHanlder = (index) => { //removing from the list
+        const updatedUsers = followers.slice();
+        updatedUsers.splice(index, 1);
+        setFollowers(updatedUsers);
+    }
+
     if (isLoading) {
         return (
             <LoadingSpinner
@@ -61,7 +67,7 @@ const ReportedUsers = () => {
                     {followers.length > 0 ? followers.map((follower, index) => {
                         return (
                             <Grid key={index}>
-                                <UserTile userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} />
+                                <UserTile index={index} userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                             </Grid>
                         )
                     })
@@ -79,7 +85,7 @@ const ReportedUsers = () => {
                                 {followers.length > 0 ? followers.map((follower, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} />
+                                            <UserTile index={index} userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                                         </Grid>
                                     )
                                 })

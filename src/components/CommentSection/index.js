@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { connect } from 'react-redux';
 import {Typography, TextField, IconButton, Avatar, Grid} from "@material-ui/core";
 import Colors from "../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 import CommentTile from "./Comment";
 import { addComment, getComments } from "./action";
+import Config from "../../api/config";
 
   const Comment = (props) => {
       var comment = props.comment;
@@ -13,6 +15,7 @@ import { addComment, getComments } from "./action";
               postId={comment.share_post_id}
               commentId={comment.id}
               author={comment.user.user_name}
+              authorImage={comment.user.profile_image}
               comment={comment.comment}
               isChildren={props.child}
               fetchComments={props.fetchComments}
@@ -38,7 +41,7 @@ import { addComment, getComments } from "./action";
 
 const CommentSection = (props) => {
     const classes = useStyles();
-    const {postId} = props;
+    const {postId, user} = props;
     const [comments, setComments] = useState([]);
     const [commentTextInput, setCommentTextInput] = useState('');
 
@@ -79,7 +82,8 @@ const CommentSection = (props) => {
         <Grid className={classes.root} container>
             <Grid container alignItems="center" className={classes.commentTextContainer}>
                 <Grid item lg={1} md = {1} sm = {1} xs = {1}>
-                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                    {/* <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" /> */}
+                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? `${Config.BASE_APP_URL}${user.profile_image}` : require("../../assets/images/user.jpg")} />
                 </Grid>
                 <Grid item lg={11} md = {11} sm = {11} xs={11}>
                     <TextField
@@ -130,5 +134,10 @@ const useStyles = makeStyles((theme) => ({
     })
 )
 
+function mapStateToProps(state) {
+  return {
+      user: state.user,
+  };
+}
 
-export default CommentSection;
+export default connect(mapStateToProps)(CommentSection);

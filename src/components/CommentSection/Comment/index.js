@@ -4,12 +4,15 @@ import {Typography, Grid, Avatar, TextField} from "@material-ui/core";
 import Colors from "../../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
 import {replyToComment} from "../action";
+import Config from "../../../api/config";
 
 const Comment = (props) => {
     const classes = useStyles();
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [commentTextInput, setCommentTextInput] = useState('');
-    const {comment, author, isChildren, postId, commentId, fetchComments} = props;
+    const {comment, author, isChildren, postId, commentId, fetchComments, authorImage} = props;
+
+    console.log("#########", comment)
 
     const replyToCommentHandler = () => {
         const data = {
@@ -34,7 +37,8 @@ const Comment = (props) => {
         <Grid container className={`${classes.cardProfileSection}`}>
             <Grid container className={isChildren ? classes.isChildren : ""}>
             <Grid item lg={1} md={1} sm={1} xs={1}>
-            <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+            <Avatar className={classes.avatar} alt={'user-image'} src={!!authorImage ? `${Config.BASE_APP_URL}${authorImage}` : require("../../../assets/images/user.jpg")} />
+            {/* <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" /> */}
             </Grid>
             <Grid item lg={11} md={11} sm={11} xs={11}>
             <Grid className={classes.verticalCenter}>

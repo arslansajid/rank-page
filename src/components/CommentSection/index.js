@@ -85,7 +85,7 @@ const CommentSection = (props) => {
             <Grid container alignItems="center" className={classes.commentTextContainer}>
                 <Grid item lg={1} md = {1} sm = {1} xs = {1}>
                     {/* <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" /> */}
-                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={user.profile_image ? `${Config.BASE_APP_URL}${user.profile_image}` : require("../../assets/images/user.jpg")} />
+                    <Avatar className={classes.avatar} alt={!!user ? user.name : 'image'} src={!!user && user.profile_image ? `${Config.BASE_APP_URL}${user.profile_image}` : require("../../assets/images/user.jpg")} />
                 </Grid>
                 <Grid item lg={11} md = {11} sm = {11} xs={11}>
                     <TextField

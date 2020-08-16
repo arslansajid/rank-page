@@ -15,7 +15,7 @@ const Lists = (props) => {
     const { dispatch, listCreateDialog } = props;
     const [showCreateListStep2 , setShowCreateListStep2] = useState(false)
     const [showCreateListStep3 , setShowCreateListStep3] = useState(false)
-    const [showPublished, setShowPublished] = useState(true);
+    const [showPublished, setShowPublished] = useState(false);
     const [ listItems , setListItems] = useState(null)
     const [listId , setListId] = useState(null)
     const classes = useStyles();

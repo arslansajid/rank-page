@@ -14,6 +14,7 @@ import DragandDrop from '../DragandDrop';
 import CommentSection from '../CommentSection';
 import Dialog from '../Common/Dialog';
 import { connect } from "react-redux";
+import { showSignIn } from "../../actions/SignInFormActions";
 import { setPostId, setPostOrder } from "../../actions/SelectedPostAction";
 import { LikeUnlikePost, reportUser, blockUser, unfollowUser, followUser } from "./action";
 import ShareCard from './share'
@@ -205,9 +206,9 @@ const PostCard = (props) => {
             >
                 {/* <ClickAwayListener onClickAway={handlePopoverClose}> */}
                     <Grid className={classes.reactContainer} component={Paper} elevation={1} container justify="space-between">
-                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(1, event) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={(event) => !!user ?likeHandler(2, event) : window.alert("Please sign in first")} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
-                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(3, event) : window.alert("Please sign in first")} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(1, event) : dispatch(showSignIn())} startIcon={<img className={classes.reactIcon} src={LikeReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ?likeHandler(2, event) : dispatch(showSignIn())} className={classes.reactIcon} startIcon={<img className={classes.weight} src={LoveReactIcon} />}></Button>
+                        <Button className={classes.reactIcon} onClick={(event) => !!user ? likeHandler(3, event) : dispatch(showSignIn())} startIcon={<img className={classes.reactIcon} src={ThinkReactIcon} />}></Button>
                     </Grid>
                 {/* </ClickAwayListener> */}
             </Popover>
@@ -300,11 +301,11 @@ const PostCard = (props) => {
                         <Button
                             onMouseEnter={!!user && handlePopoverOpen}
                             // onMouseLeave={handlePopoverClose}
-                            onClick={(e) => !!user ? handlePopoverOpen(e) : window.alert("Please sign in first")} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
+                            onClick={(e) => !!user ? handlePopoverOpen(e) : dispatch(showSignIn())} className={classes.weight} startIcon={<LikeIcon color={isLiked ? 'primary' : 'inherit'} />}>
                                 <Typography color={isLiked ? "primary" : "inherit"}>Like</Typography>
                             </Button>
-                        <Button onClick={() => !!user ? setShowComments(!showComments) : window.alert("Please sign in first")} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
-                        <Button onClick={() => !!user ? setShowShareDialog(!showShareDialog) : window.alert("Please sign in first")} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
+                        <Button onClick={() => !!user ? setShowComments(!showComments) : dispatch(showSignIn())} className={classes.weight} startIcon={<CommentIcon />}>Comment</Button>
+                        <Button onClick={() => !!user ? setShowShareDialog(!showShareDialog) : dispatch(showSignIn())} className={classes.weight} startIcon={<ShareIcon />}>Share</Button>
                     </Grid>
                 </CardActions>
                 {

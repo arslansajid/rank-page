@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
@@ -10,12 +10,17 @@ import LikeIcon from '@material-ui/icons/Whatshot';
 import RecommendedIcon from '@material-ui/icons/ThumbUpAlt';
 import CompetitionIcon from '@material-ui/icons/FitnessCenter';
 
-const Explore = () => {
+const Explore = (props) => {
     const classes = useStyles();
+
+    const searchHandler = (value) => {
+        props.history.push(`/search/${value}`)
+    }
+
     return (
         <>
             <Grid className="space-2">
-                <SearchInput whiteInput={true} place />
+                <SearchInput whiteInput={true} handleSearch={(value) => searchHandler(value)} />
             </Grid>
             <Link to="/categories">
                 <Card variant="outlined" className={classes.card}>
@@ -89,4 +94,4 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
-export default Explore;
+export default withRouter(Explore);

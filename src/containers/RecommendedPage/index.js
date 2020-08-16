@@ -9,20 +9,20 @@ import { getFans } from "./action"
 const RecommendedPage = () => {
     const classes = useStyles();
     const [fans, setFans] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [activeTab, setActiveTab] = useState(1);
 
     useEffect(() => {
-        getFans()
-            .then((res) => {
-                console.log("res", res)
-                setFans(res.data.data ? res.data.data.followers : []);
-                setIsLoading(false)
-            })
-            .catch((err) => {
-                console.log("err", err);
-                setIsLoading(false)
-            })
+        // getFans()
+        //     .then((res) => {
+        //         console.log("res", res)
+        //         setFans(res.data.data ? res.data.data.followers : []);
+        //         setIsLoading(false)
+        //     })
+        //     .catch((err) => {
+        //         console.log("err", err);
+        //         setIsLoading(false)
+        //     })
     }, [])
 
     const unFollowSuccessHanlder = (index) => { //removing from the list
@@ -42,9 +42,6 @@ const RecommendedPage = () => {
     } else {
         return (
             <>
-            
-            {activeTab === 1 && (
-                <>
                 <Paper elevation={0} className={classes.container}>
                     {fans.length > 0 ? fans.map((fan, index) => {
                         return (
@@ -54,29 +51,9 @@ const RecommendedPage = () => {
                         )
                     })
                         :
-                        <Typography variant="h5">No Fans Yet!</Typography>
+                        <Typography variant="h5">No Recommendations found...</Typography>
                     }
                 </Paper>
-                </>
-            )}
-
-                    {activeTab === 2 && (
-                        <>
-                            <Paper elevation={0} className={classes.container}>
-                                <Typography variant="h6" gutterBottom>Users</Typography>
-                                {fans.length > 0 ? fans.map((fan, index) => {
-                                    return (
-                                        <Grid key={index}>
-                                            <UserTile index={index} userFollow={fan.is_followed} userId={fan.id} name={fan.name} userName={fan.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
-                                        </Grid>
-                                    )
-                                })
-                                :
-                                <Typography variant="h6" gutterBottom>No Users found...</Typography>
-                            }
-                            </Paper>
-                        </>
-                    )}
             </>
         );
     }

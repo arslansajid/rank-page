@@ -64,7 +64,27 @@ const ProfileCover = (props) => {
 
     return (
         <>
-            <Paper elevation={0} className={classes.coverContainer}>
+            <Paper elevation={0} className={classes.coverContainer}
+                style={isUserDetail
+                    ?
+                    !!userData && userData.cover_image ? {
+                        backgroundImage: `url(${`${Config.BASE_APP_URL}${(user.cover_image)}`})`,
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover',
+                        minHeight: 200,
+                    }
+                    : {}
+                    :
+                    !!user && user.cover_image ? {
+                    backgroundImage: `url(${`${Config.BASE_APP_URL}${(user.cover_image)}`})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover',
+                    minHeight: 200,
+                } : {}
+            }
+            >
                 <Grid className={classes.mainContainer}>
                     <Grid container justify="space-between">
                         <div>
@@ -154,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: Colors.brandColor,
         background: 'linear-gradient(360deg, rgba(51, 51, 51, 0.81) 2.71%, rgba(255, 255, 255, 0) 97.71%, rgba(255, 255, 255, 0) 97.71%), url(.jpg)',
         borderRadius: 8,
+        overflow: 'hidden'
     },
     mainContainer: {
         minHeight: 200,

@@ -67,7 +67,7 @@ const ReportedUsers = () => {
                     {followers.length > 0 ? followers.map((follower, index) => {
                         return (
                             <Grid key={index}>
-                                <UserTile index={index} userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
+                                <UserTile index={index} userFollow={follower.is_follower} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                             </Grid>
                         )
                     })
@@ -85,7 +85,7 @@ const ReportedUsers = () => {
                                 {followers.length > 0 ? followers.map((follower, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile index={index} userFollow={follower.is_followed} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
+                                            <UserTile index={index} userFollow={follower.is_follower} userId={follower.id} name={follower.name} userName={follower.user_name} unFollowSuccessHanlder={() => unFollowSuccessHanlder()} />
                                         </Grid>
                                     )
                                 })

@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
 import BlockTile from "../../components/BlockTile";
 import {getReportedUsers} from "./action";
 
-const ReportedUsers = () => {
+const ReportedUsers = (props) => {
     const classes = useStyles();
-    const [reportedUsers, setReportedUsers] = useState([])
+    const { user } = props;
+    const [reportedUsers, setReportedUsers] = useState([]);
 
     useEffect(() => {
-        const data = {
-            user_id: '19',
+        if(!!user) {
+            const data = {
+                user_id: '19',
+            }
+            getReportedUsers(data)
+            .then((res) => {
+                console.log("res");
+                setReportedUsers(res.data.data ? res.data.data : [])
+            })
+            .catch((err) => 
+            console.log(err))
         }
-        getReportedUsers(data)
-        .then((res) => {
-            console.log("res");
-            setReportedUsers(res.data.data ? res.data.data : [])
-        })
-        .catch((err) => 
-        console.log(err))
-    }, [])
+    }, [user])
 
     return (
         <>
@@ -28,7 +32,7 @@ const ReportedUsers = () => {
                 {reportedUsers.length > 0 ? reportedUsers.map((item, index) => {
                     return (
                         <Grid key={index}>
-                            <BlockTile showButton={false} name={item.name} userName={item.user_name} />
+                            <BlockTile showButton={false} name={item.reported_user.name} userName={item.reported_user.user_name} userImage={item.reported_user.profile_image} />
                         </Grid>
                     )
                 })
@@ -58,4 +62,10 @@ const useStyles = makeStyles((theme) => ({
 })
 )
 
-export default ReportedUsers;
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
+
+export default connect(mapStateToProps)(ReportedUsers);

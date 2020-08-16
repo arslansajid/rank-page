@@ -39,7 +39,7 @@ const BlockedUsers = (props) => {
                 {blockedUsers.length > 0 ? blockedUsers.map((item, index) => {
                     return (
                         <Grid key={index}>
-                            <BlockTile index={index} userId={item.id} showButton={true} name={item.name} userName={item.user_name} unBlockSuccessHanlder={() => unBlockSuccessHanlder()} />
+                            <BlockTile index={index} userId={item.id} showButton={true} name={item.name} userName={item.user_name} userImage={item.profile_image} unBlockSuccessHanlder={() => unBlockSuccessHanlder()} />
                         </Grid>
                     )
                 })
@@ -53,7 +53,7 @@ const BlockedUsers = (props) => {
     
 const useStyles = makeStyles((theme) => ({
     container: {
-		minHeight: 100,
+		// minHeight: 100,
         background: Colors.white,
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 8,

@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
-import { UnBlockUser } from "./action"
+import { UnBlockUser } from "./action";
+import Config from "../../api/config";
 
 const BlockTile = (props) => {
     const classes = useStyles();
-    const {showButton, userId, name, userName, unBlockSuccessHanlder, index} = props;
+    const {showButton, userId, name, userName, userImage, unBlockSuccessHanlder, index} = props;
 
     const unBlockUserHandler = () => {
         const data = {
@@ -29,7 +30,8 @@ const BlockTile = (props) => {
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
                 <Link to={`/user-detail/${userId}/lists`}>
                     <div className={classes.row}>
-                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <Avatar className={classes.avatar} alt={'user-image'} src={!!userImage ? `${Config.BASE_APP_URL}${userImage}` : require("../../assets/images/user.jpg")} />
+                        {/* <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" /> */}
                         <div>
                             <Typography className={classes.bold}>
                                 {!!name ? name : "Arslan Sajid"}

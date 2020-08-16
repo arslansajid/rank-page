@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
@@ -6,22 +7,25 @@ import BlockTile from "../../components/BlockTile"
 import user from '../../reducers/UserReducer';
 import {getBlockedUsers} from "./action";
 
-const BlockedUsers = () => {
+const BlockedUsers = (props) => {
     const classes = useStyles();
     const [blockedUsers, setBlockedUsers] = useState([])
+    const { user } = props;
 
     useEffect(() => {
-        const data = {
-            user_id: '19',
+        if(!!user) {
+            const data = {
+                user_id: user.id,
+            }
+            getBlockedUsers(data)
+            .then((res) => {
+                console.log("res")
+                setBlockedUsers(res.data.data ? res.data.data : [])
+            })
+            .catch((err) => 
+            console.log(err))
         }
-        getBlockedUsers(data)
-        .then((res) => {
-            console.log("res")
-            setBlockedUsers(res.data.data ? res.data.data : [])
-        })
-        .catch((err) => 
-        console.log(err))
-    }, [])
+    }, [user])
 
 		return (
 			<>
@@ -58,5 +62,10 @@ const useStyles = makeStyles((theme) => ({
     }
     })
 )
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+    };
+}
 
-export default BlockedUsers;
+export default connect(mapStateToProps)(BlockedUsers);

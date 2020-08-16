@@ -202,7 +202,7 @@ const PostCard = (props) => {
                 horizontal: 'left',
                 }}
                 onClose={e => handlePopoverClose(e)}
-                // disableRestoreFocus
+                disableRestoreFocus
             >
                 {/* <ClickAwayListener onClickAway={handlePopoverClose}> */}
                     <Grid className={classes.reactContainer} component={Paper} elevation={1} container justify="space-between">

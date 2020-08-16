@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import Colors from '../../static/_colors';
 import Divider from '@material-ui/core/Divider';
+import ShareSocialLinks from '../../components/ShareSocialLinks'
 
 
 const Published = (props) => {
     const classes = useStyles();
-    const { createNewList } = props;
+    const { createNewList , listId} = props;
     const { errors, handleSubmit, control } = useForm();
     
 
@@ -22,10 +23,12 @@ const Published = (props) => {
         </Grid>
         <Grid item xs = {12} className={`${classes.textCenter} space-4`}>
           <Typography className={`${classes.label} space-4`}>Share to other social networks</Typography>
-          <img src = {require('../../assets/icons/socialMedia/facebook1.svg')} className = {classes.marginR}/>
+          {/* <img src = {require('../../assets/icons/socialMedia/facebook1.svg')} className = {classes.marginR}/>
           <img src = {require('../../assets/icons/socialMedia/twitter.svg')} className = {classes.marginR}/>
           <img src = {require('../../assets/icons/socialMedia/instagram1.svg')} className = {classes.marginR}/>
-          <img src = {require('../../assets/icons/socialMedia/email.svg')} className = {classes.marginR}/>
+          <img src = {require('../../assets/icons/socialMedia/email.svg')} className = {classes.marginR}/> */}
+          <ShareSocialLinks Link = {`https://rank-page.web.app/list-detail/${listId}`}/>
+
         </Grid>
 
         <Grid item xs = {6} className={classes.textCenter}>

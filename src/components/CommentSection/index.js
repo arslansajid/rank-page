@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {Typography, TextField, IconButton, Avatar, Grid} from "@material-ui/core";
 import Colors from "../../static/_colors";
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,6 +18,7 @@ import Config from "../../api/config";
               author={comment.user.user_name}
               authorImage={comment.user.profile_image}
               comment={comment.comment}
+              commentTime={moment(comment.created_at).format("hh:mm A")}
               isChildren={props.child}
               fetchComments={props.fetchComments}
             />

@@ -10,7 +10,7 @@ const Comment = (props) => {
     const classes = useStyles();
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [commentTextInput, setCommentTextInput] = useState('');
-    const {comment, author, isChildren, postId, commentId, fetchComments, authorImage} = props;
+    const {comment, commentTime, author, isChildren, postId, commentId, fetchComments, authorImage} = props;
 
     console.log("#########", comment)
 
@@ -42,7 +42,10 @@ const Comment = (props) => {
             </Grid>
             <Grid item lg={11} md={11} sm={11} xs={11}>
             <Grid className={classes.verticalCenter}>
-                <Typography gutterBottom variant='body1'>{/* !!user ? user.name : '' */ author } </Typography>
+                <Grid container justify="space-between">
+                    <Typography gutterBottom variant='body1'>{/* !!user ? user.name : '' */ author } </Typography>
+                    <Typography gutterBottom variant='body2'>{commentTime} </Typography>
+                </Grid>
                 <Typography variant='body2'>{/* !!user ? `@ ${user.user_name}` : '' */ comment }</Typography>
                 <Grid container>
                     <Typography className={classes.textButton}>Like</Typography>

@@ -7,7 +7,7 @@ import { UnBlockUser } from "./action"
 
 const BlockTile = (props) => {
     const classes = useStyles();
-    const {showButton, userId, name, userName} = props;
+    const {showButton, userId, name, userName, unBlockSuccessHanlder, index} = props;
 
     const unBlockUserHandler = () => {
         const data = {
@@ -16,6 +16,7 @@ const BlockTile = (props) => {
         UnBlockUser(data)
         .then((res) => {
             window.alert("Unblocked successfully")
+            unBlockSuccessHanlder(index);
         })
         .catch((err) => {
             console.log(err)

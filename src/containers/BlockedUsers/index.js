@@ -27,13 +27,19 @@ const BlockedUsers = (props) => {
         }
     }, [user])
 
+    const unBlockSuccessHanlder = (index) => { //removing from the list
+        const updatedBlockedUsers = blockedUsers.slice();
+        updatedBlockedUsers.splice(index, 1);
+        setBlockedUsers(updatedBlockedUsers);
+    }
+
 		return (
 			<>
             <Paper elevation={0} className={classes.container}>
                 {blockedUsers.length > 0 ? blockedUsers.map((item, index) => {
                     return (
                         <Grid key={index}>
-                            <BlockTile userId={item.id} showButton={true} name={item.name} userName={item.user_name} />
+                            <BlockTile index={index} userId={item.id} showButton={true} name={item.name} userName={item.user_name} unBlockSuccessHanlder={() => unBlockSuccessHanlder()} />
                         </Grid>
                     )
                 })

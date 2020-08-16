@@ -31,6 +31,11 @@ export const Menu = [
         route: '/newsfeed'
     },
     {
+        name: 'Explore',
+        icon: 'plus',
+        route: '/explore'
+    },
+    {
         name: 'Notifications',
         icon: 'bell',
         route: '/notifications'

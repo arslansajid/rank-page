@@ -19,6 +19,9 @@ const BlockedUsers = React.lazy(() => import('./containers/BlockedUsers'));
 const ReportedUsers = React.lazy(() => import('./containers/ReportedUsers'));
 const UserDetail = React.lazy(() => import('./containers/UserDetail'));
 const Explore = React.lazy(() => import('./containers/Explore'));
+const CategoriesPage = React.lazy(() => import('./containers/CategoriesPage'));
+const RecommendedPage = React.lazy(() => import('./containers/RecommendedPage'));
+const TrendingPage = React.lazy(() => import('./containers/TrendingPage'));
 const ListDetail = React.lazy(() => import('./containers/ListDetail'));
 const PageNotFound = React.lazy(() => import('./containers/PageNotFound'));
 
@@ -48,6 +51,9 @@ const Routes = () => {
         <Route exact path="/blocked-users" render={() => <BlockedUsers />} />
         <Route exact path="/user-detail/:id/:tab" render={() => <UserDetail />} />
         <Route exact path="/explore" render={() => <Explore />} />
+        <Route exact path="/categories" render={() => <CategoriesPage />} />
+        <Route exact path="/recommended" render={() => <RecommendedPage />} />
+        <Route exact path="/trending" render={() => <TrendingPage />} />
         <Route exact path="/list-detail/:postId" render={() => <ListDetail />} />
         <Route exact path='*' render={() => <PageNotFound />} />
       </Switch>

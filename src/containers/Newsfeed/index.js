@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { ButtonGroup, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ProfileCover from "../../components/Profile/Cover";
 import PostCard from "../../components/PostCard";
 import {getNewsFeed} from "./action";
 import LoadingSpinner from "../../components/Common/LoadingSpinner";

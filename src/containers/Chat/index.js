@@ -18,6 +18,8 @@ import {allConversations , sendMessage , messageListing} from './action'
 import Dialog from "../../components/Common/Dialog";
 import NewMessage from './newMessage'
 import moment from "moment";
+import Config from "../../api/config";
+
 
 const recepientMessages = [
     {body : 'Hello how are you'},
@@ -115,7 +117,10 @@ const Chat = () => {
       params.page = 1;
     messageListing(params)
     .then((res) =>{
-        setMessageListingData(res.data.data)
+        setMessageListingData(res.data.data);
+        setTimeout(() => {
+            scrollToBottom();
+        }, 500)
     })
     .catch((err) =>{
         // console.log('message listing error ' , err)
@@ -165,7 +170,7 @@ const Chat = () => {
                 <List key = {index} onClick={()=>fetchConversation(item.id)}>
                     <ListItem button key="RemySharp" className = {classes.activeItem}>
                         <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src={item.firebase_profile_image_url ?  item.firebase_profile_image_url : "https://material-ui.com/static/images/avatar/1.jpg"}/>
+                        <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />
                         </ListItemIcon>
                         <ListItemText>
                     <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>

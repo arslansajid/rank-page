@@ -312,6 +312,7 @@ sendIcon : {
     width : '0.95rem'
 },
 activeItem : {
+    borderBottom: '1px solid #e0e0e0',
     "&:hover": {
         borderRight : '2px solid #19A5D3'
     }

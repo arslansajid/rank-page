@@ -75,6 +75,7 @@ const Chat = () => {
   const [allListings , setAllListings] = useState(null)
   const [currentConversation , setCurrentConversation] = useState(null)
   const [messageListingData , setMessageListingData] = useState(null)
+  const [selectedChat , setSelectedChat] = useState(null)
 
   useEffect(() => {
     fetchAllConversation()
@@ -86,6 +87,7 @@ const Chat = () => {
         if(res.data.success){
         setAllListings(res.data.data)
         setCurrentConversation(res.data.data[0])
+        setSelectedChat(res.data.data[0].recipient)
         fetchConversation(res.data.data[0].id)
         setTimeout(() => {
             scrollToBottom();
@@ -111,7 +113,9 @@ const Chat = () => {
     })
   }
 
-  const fetchConversation = (id) => {
+  const fetchConversation = (id, item) => {
+    setSelectedChat(item);
+    !!item && setCurrentConversation(item)
       let params = {}
       params.conversation_id = id;
       params.page = 1;
@@ -159,22 +163,22 @@ const Chat = () => {
                         { currentConversation &&  currentConversation.recipient.name}
                     </Typography>
                     <Typography variant = 'body2' className = 'smallFont'>
-                        {currentConversation && currentConversation.recipient.user_name}
+                        {!!currentConversation && `@ ${currentConversation.recipient.user_name}`}
                     </Typography>
                 </Grid>
             </Grid>
  
-            <Grid item xs={4} className={classes.borderRight500}>
+            <Grid item xs={4} className={`${classes.borderRight500} ${classes.borderBottom500} ${classes.messageArea}`}>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
-                <List key = {index} onClick={()=>fetchConversation(item.id)}>
+                <List key = {index} onClick={()=>fetchConversation(item.id, item)}>
                     <ListItem button key="RemySharp" className = {classes.activeItem}>
                         <ListItemIcon>
                         <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />
                         </ListItemIcon>
                         <ListItemText>
-                    <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
-                            <Typography variant = 'body2' className ='smallFont'>{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
+                            <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
+                            <Typography variant = 'body2' className ='smallFont'>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
                         </ListItemText>
                     </ListItem>
                 </List>
@@ -183,7 +187,7 @@ const Chat = () => {
             : null }
             </Grid>
 
-            <Grid id="message-area" item xs={8}>
+            <Grid className={classes.borderTop500} id="message-area" item xs={8}>
                 <Grid className={classes.messageArea}>
                 <List id="messages">
 
@@ -201,7 +205,7 @@ const Chat = () => {
                                                 </ListItemText>
                                             </Grid>
 
-                                            <Grid item xs={12}>
+                                            {/* <Grid item xs={12}>
                                             <ListItemText align="left">
                                                 <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography>
                                             </ListItemText>
@@ -209,7 +213,7 @@ const Chat = () => {
                                             <Grid item xs={12}>
                                                 <ListItemText  align="left" secondary ={moment(item.created_at).format("h:mm:ss a")}>
                                                 </ListItemText>
-                                            </Grid>
+                                            </Grid> */}
                                         </Grid>
                                     </ListItem>
                              )
@@ -277,9 +281,16 @@ const useStyles = makeStyles({
   headBG: {
       backgroundColor: '#e0e0e0'
   },
+  borderTop500: {
+    borderTop: '1px solid #e0e0e0'
+},
   borderRight500: {
       borderRight: '1px solid #e0e0e0'
   },
+  borderBottom500: {
+    borderBottom: '1px solid #e0e0e0',
+    borderTop: '1px solid #e0e0e0',
+    },
   messageArea: {
     height: '70vh',
     overflowY: 'auto'

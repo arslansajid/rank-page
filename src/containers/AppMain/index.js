@@ -8,6 +8,7 @@ import { checkIfLoggedIn } from "./actions";
 import { userLogin } from "../../actions/LoginActions";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
 import ListCreation from "../../components/ListCreation";
+import PoolCreation from "../../components/PoolCreation";
 import SigninSignup from "../SigninSignup"
 
 const AppContainer = (props) => {
@@ -44,6 +45,7 @@ const AppContainer = (props) => {
             <>
             <SigninSignup />
             <ListCreation />
+            <PoolCreation />
             </>
         )
     }

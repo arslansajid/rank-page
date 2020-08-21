@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import UserProfile from "../UserProfile";
 import { userLogout } from "../../actions/LoginActions";
 import { showListDialog } from "../../actions/ListCreateDialogActions";
+import { showPoolDialog } from "../../actions/PoolCreateDialogActions";
 import Cookie from "js-cookie"
 import ListCreation from "../ListCreation"
 
@@ -27,7 +28,7 @@ const SidebarCard = (props) => {
             dispatch(showListDialog());
         }
         if(value === "Pool") {
-            dispatch(showListDialog());
+            dispatch(showPoolDialog());
         }
     }
 

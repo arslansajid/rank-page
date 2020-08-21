@@ -170,10 +170,10 @@ const Chat = () => {
             </Grid>
  
             <Grid item xs={4} className={`${classes.borderRight500} ${classes.borderBottom500} ${classes.messageArea}`}>
+            <List>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
-                <List key = {index} onClick={()=>fetchConversation(item.id, item)}>
-                    <ListItem button key="RemySharp" className = {classes.activeItem}>
+                    <ListItem key = {index} onClick={()=>fetchConversation(item.id, item)} button key="RemySharp" className = {classes.activeItem}>
                         <ListItemIcon>
                         <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />
                         </ListItemIcon>
@@ -182,10 +182,10 @@ const Chat = () => {
                             <Typography variant = 'body2' className ='smallFont'>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
                         </ListItemText>
                     </ListItem>
-                </List>
                     )
                 })
             : null }
+            </List>
             </Grid>
 
             <Grid className={classes.borderTop500} id="message-area" item xs={8}>

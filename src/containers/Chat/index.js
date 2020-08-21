@@ -85,7 +85,9 @@ const Chat = () => {
         setAllListings(res.data.data)
         setCurrentConversation(res.data.data[0])
         fetchConversation(res.data.data[0].id)
-        
+        setTimeout(() => {
+            scrollToBottom();
+        }, 500)
         }
     })
     .catch((err)=> {
@@ -99,7 +101,11 @@ const Chat = () => {
     sendMessage(params)
     .then((res) =>{
         setMessage('')
-        fetchConversation(currentConversation.id)
+        fetchConversation(currentConversation.id);
+        document.getElementById('message-area').scrollIntoView(false);
+        setTimeout(() => {
+            scrollToBottomSmooth();
+        }, 500)
     })
   }
 
@@ -115,6 +121,15 @@ const Chat = () => {
         // console.log('message listing error ' , err)
     })
   }
+
+  const scrollToBottomSmooth = () => {
+    document.getElementById('messages').scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+
+  const scrollToBottom = () => {
+    document.getElementById('messages').scrollIntoView({ block: 'end' });
+  }
+
   return (
       <div>
         <Grid container>
@@ -163,8 +178,9 @@ const Chat = () => {
             : null }
             </Grid>
 
-            <Grid item xs={8}>
-                <List className={classes.messageArea}>
+            <Grid id="message-area" item xs={8}>
+                <Grid className={classes.messageArea}>
+                <List id="messages">
 
                             {messageListingData && messageListingData.length > 0 ? messageListingData.map((item , index) =>{ 
                                 return(
@@ -195,6 +211,7 @@ const Chat = () => {
                         })
                             : null} 
                 </List>
+                </Grid>
                 <Divider />
                 <Grid container style={{ padding: "5px 20px" }} alignItems="center">
                     <Grid item xs={11}>

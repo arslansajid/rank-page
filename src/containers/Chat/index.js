@@ -19,6 +19,53 @@ import Dialog from "../../components/Common/Dialog";
 import NewMessage from './newMessage'
 import moment from "moment";
 
+const recepientMessages = [
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+    {body : 'Hello how are you'},
+    {body : 'Hello'},
+    {body : 'You there'},
+    {body : 'hello !!!!'},
+]
+
 const Chat = () => {
   const classes = useStyles();
   const [ message , setMessage] = useState('')
@@ -45,10 +92,6 @@ const Chat = () => {
         console.log('fetch all listings error' , err)
     })
   }
-
-  console.log('current convo' ,  messageListingData)
-
-
   const handleSendMessage = () => {
     let params = {}
     params.body = message;
@@ -57,8 +100,6 @@ const Chat = () => {
     .then((res) =>{
         setMessage('')
         fetchConversation(currentConversation.id)
-
-        // console.log('send message response here / /  / / / / / // // / //  // / / / /' , res.data.data.success)
     })
   }
 
@@ -68,7 +109,6 @@ const Chat = () => {
       params.page = 1;
     messageListing(params)
     .then((res) =>{
-        // console.log('message listing response ' , res.data.data)
         setMessageListingData(res.data.data)
     })
     .catch((err) =>{
@@ -132,11 +172,21 @@ const Chat = () => {
                                         <Grid container>
                                             <Grid item xs={12}>
                                             <ListItemText align="right">
-                                <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
+                                                <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
                                             </ListItemText>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <ListItemText  align="right" secondary ={moment(item.created_at).format("L")}>
+                                                <ListItemText  align="right" secondary ={moment(item.created_at).format("h:mm:ss a")}>
+                                                </ListItemText>
+                                            </Grid>
+
+                                            <Grid item xs={12}>
+                                            <ListItemText align="left">
+                                                <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography>
+                                            </ListItemText>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <ListItemText  align="left" secondary ={moment(item.created_at).format("h:mm:ss a")}>
                                                 </ListItemText>
                                             </Grid>
                                         </Grid>

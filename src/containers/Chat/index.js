@@ -79,6 +79,7 @@ const Chat = () => {
 
   useEffect(() => {
     fetchAllConversation()
+    console.log('currentConversation', currentConversation)
   } , [])
 
   const fetchAllConversation = () => {

@@ -2,7 +2,7 @@ import React , {useEffect , useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,13 +13,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
+import GalleryIcon from '@material-ui/icons/CropOriginal';
 import Colors from '../../static/_colors';
 import {allConversations , sendMessage , messageListing} from './action'
 import Dialog from "../../components/Common/Dialog";
 import NewMessage from './newMessage'
 import moment from "moment";
 import Config from "../../api/config";
-
 
 const recepientMessages = [
     {body : 'Hello how are you'},
@@ -75,7 +75,6 @@ const Chat = () => {
   const [allListings , setAllListings] = useState(null)
   const [currentConversation , setCurrentConversation] = useState(null)
   const [messageListingData , setMessageListingData] = useState(null)
-  const [selectedChat , setSelectedChat] = useState(null)
 
   useEffect(() => {
     fetchAllConversation()
@@ -87,9 +86,14 @@ const Chat = () => {
     .then((res) => {
         if(res.data.success){
         setAllListings(res.data.data)
-        setCurrentConversation(res.data.data[0])
-        setSelectedChat(res.data.data[0].recipient)
-        fetchConversation(res.data.data[0].id)
+        setCurrentConversation(res.data.data[0]);
+        fetchConversation(res.data.data[0].id);
+
+        //check for new message after every 5 secs
+        setInterval(function(){
+            fetchConversation(res.data.data[0].id)
+        }, 5000);
+
         setTimeout(() => {
             scrollToBottom();
         }, 500)
@@ -115,7 +119,6 @@ const Chat = () => {
   }
 
   const fetchConversation = (id, item) => {
-    setSelectedChat(item);
     !!item && setCurrentConversation(item)
       let params = {}
       params.conversation_id = id;
@@ -173,15 +176,26 @@ const Chat = () => {
             <List>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
-                    <ListItem key = {index} onClick={()=>fetchConversation(item.id, item)} button key="RemySharp" className = {classes.activeItem}>
-                        <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />
-                        </ListItemIcon>
-                        <ListItemText>
-                            <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
-                            <Typography variant = 'body2' className ='smallFont'>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
-                        </ListItemText>
-                    </ListItem>
+                        <Grid key = {index} onClick={()=>fetchConversation(item.id, item)} className = {!!currentConversation && currentConversation.recipient_id === item.recipient_id ? classes.selectedItem : classes.activeItem}>
+                        <ListItem>
+                            <ListItemIcon>
+                            <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />
+                            </ListItemIcon>
+                            <ListItemText>
+                                <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
+                                <Typography variant = 'body2' className ='smallFont'>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
+                            </ListItemText>
+                            <ListItemIcon className={classes.unreadCount}>
+                                <Grid className={`${classes.verticalCenter}`}>
+                                    <Typography color="inherit">3</Typography>
+                                </Grid>
+                            </ListItemIcon>
+                        </ListItem>
+                        <Grid container justify="space-between" className={classes.listingDate}>
+                            <Typography variant = 'body2' className ='smallFont'>Last message goes here...</Typography>
+                            <Typography variant = 'body2' className ='smallFont'>{moment(item.last_message).format("h:mm a")}</Typography>
+                        </Grid>
+                    </Grid>
                     )
                 })
             : null }
@@ -195,7 +209,10 @@ const Chat = () => {
                             {messageListingData && messageListingData.length > 0 ? messageListingData.map((item , index) =>{ 
                                 return(
                                     <ListItem key={index}>
-                                        <Grid container>
+                                        {
+                                            item.is_send
+                                            ?
+                                            <Grid container>
                                             <Grid item xs={12}>
                                             <ListItemText align="right">
                                                 <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
@@ -205,17 +222,22 @@ const Chat = () => {
                                                 <ListItemText  align="right" secondary ={moment(item.created_at).format("h:mm:ss a")}>
                                                 </ListItemText>
                                             </Grid>
-
-                                            {/* <Grid item xs={12}>
-                                            <ListItemText align="left">
-                                                <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography>
-                                            </ListItemText>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <ListItemText  align="left" secondary ={moment(item.created_at).format("h:mm:ss a")}>
+                                            :
+                                            <Grid container>
+                                                <Grid item xs={12}>
+                                                <ListItemText align="left">
+                                                    {/* <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography> */}
+                                                    <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
                                                 </ListItemText>
-                                            </Grid> */}
-                                        </Grid>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <ListItemText  align="left" secondary ={moment(item.created_at).format("h:mm:ss a")}>
+                                                    </ListItemText>
+                                                </Grid>
+                                            </Grid>
+                                        }
+                                        
                                     </ListItem>
                              )
                         })
@@ -224,7 +246,7 @@ const Chat = () => {
                 </Grid>
                 <Divider />
                 <Grid container style={{ padding: "5px 20px" }} alignItems="center">
-                    <Grid item xs={11}>
+                    <Grid item xs={10}>
                         <TextField id="outlined-basic-email" placeholder="Type Something" fullWidth  value = {message}
                          onChange={(e)=> {setMessage(e.target.value)}}
                          onKeyPress={(event) => {
@@ -232,6 +254,9 @@ const Chat = () => {
                               handleSendMessage();
                             }
                           }}/>
+                    </Grid>
+                    <Grid item xs={1} align="start">
+                        <GalleryIcon />
                     </Grid>
                     <Grid item xs={1} align="right">
                         <Fab onClick = {handleSendMessage} color="primary" aria-label="add" className = {classes.send}><SendIcon className = {classes.sendIcon} /></Fab>
@@ -259,8 +284,13 @@ const Chat = () => {
 
 export default Chat;
 
-const useStyles = makeStyles({
-  
+const useStyles = makeStyles((theme) => ({
+    verticalCenter: {
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%'
+    },
     messageBar : {
          margin : 0,
     },
@@ -303,6 +333,14 @@ const useStyles = makeStyles({
     borderRadius : 7,
     color : Colors.white,
 },
+unreadCount: {
+    background: Colors.brandColor,
+    color : Colors.white,
+    height : '1.75rem',
+    width : '1.75rem',
+    borderRadius: "50%",
+    minWidth: 20,
+},
 send : {
     height : '2.5rem',
     width : '2.5rem'
@@ -317,4 +355,15 @@ activeItem : {
         borderRight : '2px solid #19A5D3'
     }
 },
-});
+selectedItem: {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    borderBottom: '1px solid #e0e0e0',
+    borderRight: `3px solid ${theme.palette.primary.main}`,
+    "&:hover": {
+        borderRight : '2px solid #19A5D3'
+    }
+},
+listingDate: {
+    padding: "8px 16px"
+}
+}));

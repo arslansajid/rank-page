@@ -21,53 +21,6 @@ import NewMessage from './newMessage'
 import moment from "moment";
 import Config from "../../api/config";
 
-const recepientMessages = [
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-    {body : 'Hello how are you'},
-    {body : 'Hello'},
-    {body : 'You there'},
-    {body : 'hello !!!!'},
-]
-
 const Chat = () => {
   const classes = useStyles();
   const [ message , setMessage] = useState('')
@@ -75,10 +28,13 @@ const Chat = () => {
   const [allListings , setAllListings] = useState(null)
   const [currentConversation , setCurrentConversation] = useState(null)
   const [messageListingData , setMessageListingData] = useState(null)
+  let intervalCallHandler = null;
 
   useEffect(() => {
     fetchAllConversation()
     console.log('currentConversation', currentConversation)
+
+    return () => clearInterval(intervalCallHandler);
   } , [])
 
   const fetchAllConversation = () => {
@@ -90,7 +46,7 @@ const Chat = () => {
         fetchConversation(res.data.data[0].id);
 
         //check for new message after every 5 secs
-        setInterval(function(){
+        intervalCallHandler = setInterval(function(){
             fetchConversation(res.data.data[0].id)
         }, 5000);
 
@@ -136,11 +92,13 @@ const Chat = () => {
   }
 
   const scrollToBottomSmooth = () => {
-    document.getElementById('messages').scrollIntoView({ behavior: 'smooth', block: 'end' });
+    let messageList = document.getElementById('messages')
+    !!messageList && messageList.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
 
   const scrollToBottom = () => {
-    document.getElementById('messages').scrollIntoView({ block: 'end' });
+    let messageList = document.getElementById('messages')
+    !!messageList && messageList.scrollIntoView({ block: 'end' });
   }
 
   return (

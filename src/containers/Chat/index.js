@@ -20,6 +20,10 @@ import Dialog from "../../components/Common/Dialog";
 import NewMessage from './newMessage'
 import moment from "moment";
 import Config from "../../api/config";
+import Dropzone from "react-dropzone";
+
+/*For images -> .jpg, .jpeg, .png*/
+let imageTypes = `.jpg, .jpeg, .png`;
 
 const Chat = () => {
   const classes = useStyles();
@@ -28,6 +32,8 @@ const Chat = () => {
   const [allListings , setAllListings] = useState(null)
   const [currentConversation , setCurrentConversation] = useState(null)
   const [messageListingData , setMessageListingData] = useState(null)
+  const [selectedFile , setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState(null);
   let intervalCallHandler = null;
 
   useEffect(() => {
@@ -60,12 +66,19 @@ const Chat = () => {
     })
   }
   const handleSendMessage = () => {
-    let params = {}
-    params.body = message;
-    params.recipient_user_id = currentConversation.recipient_id;
-    sendMessage(params)
+    //1 for Image, 2 for Audio, 3 for Video, 4 for document
+
+    var fd = new FormData();
+    fd.append('body', message);
+    fd.append('recipient_user_id', currentConversation.recipient_id);
+    fd.append('file', selectedFile);
+    fd.append('file_type', !!selectedFile && 1);
+        
+    sendMessage(fd)
     .then((res) =>{
         setMessage('')
+        setSelectedFile(null)
+        setFileName(null)
         fetchConversation(currentConversation.id);
         document.getElementById('message-area').scrollIntoView(false);
         setTimeout(() => {
@@ -100,6 +113,27 @@ const Chat = () => {
     let messageList = document.getElementById('messages')
     !!messageList && messageList.scrollIntoView({ block: 'end' });
   }
+
+  const handleOnDrop = async (acceptedFiles, rejectedFiles) => {
+    if (rejectedFiles.length) {
+        // setFileName(rejectedFiles[0].name);
+        // setFileSize((rejectedFiles[0].size / (1024*1024)).toFixed(2));
+        // setImage(rejectedFiles[0]);
+        // setShowImageCanvas(false);
+        // setImageError(true);
+        // setImageErrorMessage(`Max file size upload limit is ${publicationType === 1 ? "1" : "2"} MB.`)
+    } else if (acceptedFiles.length) {
+        setFileName(acceptedFiles[0].name);
+        // setFileSize((acceptedFiles[0].size / (1024*1024)).toFixed(2));
+        // setImage(acceptedFiles[0]);
+        setSelectedFile(acceptedFiles[0])
+        // setShowImageCanvas(true);
+        // const base64Url = await filetoBase64(acceptedFiles[0]);
+        // setImageBase64(base64Url);
+        // setImageError(false)
+        // setImageErrorMessage(null)
+    }
+};
 
   return (
       <div>
@@ -143,11 +177,15 @@ const Chat = () => {
                                 <Typography variant = 'body2' className ='mediumFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
                                 <Typography variant = 'body2' className ='smallFont'>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
                             </ListItemText>
-                            <ListItemIcon className={classes.unreadCount}>
-                                <Grid className={`${classes.verticalCenter}`}>
-                                    <Typography color="inherit">3</Typography>
-                                </Grid>
-                            </ListItemIcon>
+                            {
+                                item && item.unread_count !== 0 && (
+                                    <ListItemIcon className={classes.unreadCount}>
+                                        <Grid className={`${classes.verticalCenter}`}>
+                                            <Typography color="inherit">{item.unread_count}</Typography>
+                                        </Grid>
+                                    </ListItemIcon>
+                                )
+                            }
                         </ListItem>
                         <Grid container justify="space-between" className={classes.listingDate}>
                             <Typography variant = 'body2' className ='smallFont'>Last message goes here...</Typography>
@@ -172,9 +210,16 @@ const Chat = () => {
                                             ?
                                             <Grid container>
                                             <Grid item xs={12}>
-                                            <ListItemText align="right">
-                                                <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
-                                            </ListItemText>
+                                                {!!item.body && item.body.length && (
+                                                    <ListItemText align="right">
+                                                        <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
+                                                    </ListItemText>
+                                                )}
+                                                {
+                                                    !!item.file && (
+                                                        <img className={classes.messageImageSend} src={`${Config.BASE_APP_URL}${item.file}`} />
+                                                    )
+                                                }
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <ListItemText  align="right" secondary ={moment(item.created_at).format("h:mm:ss a")}>
@@ -184,10 +229,17 @@ const Chat = () => {
                                             :
                                             <Grid container>
                                                 <Grid item xs={12}>
-                                                <ListItemText align="left">
-                                                    {/* <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography> */}
-                                                    <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
-                                                </ListItemText>
+                                                {!!item.body && item.body.length && (
+                                                    <ListItemText align="left">
+                                                        {/* <Typography variant = 'body2' className ={classes.messageBackground}>{recepientMessages[index].body}</Typography> */}
+                                                        <Typography variant = 'body2' className ={classes.messageBackground}>{item.body}</Typography>
+                                                    </ListItemText>
+                                                )}
+                                                {
+                                                    !!item.file && (
+                                                        <img className={classes.messageImageReceive} src={`${Config.BASE_APP_URL}${item.file}`} />
+                                                    )
+                                                }
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <ListItemText  align="left" secondary ={moment(item.created_at).format("h:mm:ss a")}>
@@ -214,7 +266,20 @@ const Chat = () => {
                           }}/>
                     </Grid>
                     <Grid item xs={1} align="start">
-                        <GalleryIcon />
+                    <Dropzone
+                            // maxSize={maxSize}
+                            accept={imageTypes}
+                            onDrop={handleOnDrop}
+                            multiple={false}>
+                            {({ getRootProps, getInputProps }) => (
+                                <div className={classes.uploadSectionDv}
+                                    style={{ display: 'inline', width: '100%' }} {...getRootProps()}>
+                                    <input {...getInputProps()} />
+                                    <GalleryIcon />
+                                </div>
+                            )}
+                        </Dropzone>
+                        {/* <GalleryIcon /> */}
                     </Grid>
                     <Grid item xs={1} align="right">
                         <Fab onClick = {handleSendMessage} color="primary" aria-label="add" className = {classes.send}><SendIcon className = {classes.sendIcon} /></Fab>
@@ -222,6 +287,9 @@ const Chat = () => {
                 </Grid>
             </Grid>
         </Grid>
+        {!!selectedFile && (
+            <Typography className={classes.imageSelectionText}>Image Selected ({fileName})</Typography>
+        )}
 
         {showNewMessageDialog && (
             <Dialog
@@ -323,5 +391,20 @@ selectedItem: {
 },
 listingDate: {
     padding: "8px 16px"
+},
+messageImageSend: {
+    width: 100,
+    height: 100,
+    objectFit: 'contain',
+    float: 'right'
+},
+messageImageReceive: {
+    width: 100,
+    height: 100,
+    objectFit: 'contain'
+},
+imageSelectionText: {
+    textAlign: 'center',
+    padding: "10px 0"
 }
 }));

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 // import axios from "axios";
+import { requestFirebaseNotificationPermission, onMessageListener } from '../../backend/utility'
 import axiosInstance from "../../api/api.config";
 import Cookie from "js-cookie";
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +16,14 @@ const AppContainer = (props) => {
     const classes = useStyles();
     const [isLoading, setIsLoading] = useState(true);
 
+    onMessageListener()
+    .then((payload) => {
+        console.log("############", payload)
+    })
+
     useEffect(() => {
+        requestNotifications();
+
         checkIfLoggedIn()
         .then((res) => {
             // console.log("res ###", res.data.data.user)
@@ -31,6 +39,18 @@ const AppContainer = (props) => {
             setIsLoading(false);
         })
     }, [])
+
+    const requestNotifications = () => {
+        requestFirebaseNotificationPermission()
+        .then((firebaseToken) => {
+            // eslint-disable-next-line no-console
+            console.log("############### firebaseToken", firebaseToken);
+        })
+        .catch((err) => {
+            console.log("############### err", err);
+            return err;
+        });
+    }
 
     if(isLoading) {
         return (

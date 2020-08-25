@@ -1,4 +1,4 @@
-import React , {useEffect , useState} from 'react';
+import React , {useEffect , useState, useRef} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -34,17 +34,16 @@ const Chat = () => {
   const [messageListingData , setMessageListingData] = useState(null)
   const [selectedFile , setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState(null);
-  const [intervalCall, setIntervalCall] = useState(null)
+  let intervalId = useRef(null)
 
     useEffect(() => {
         fetchAllConversation();
 
-        return () => clearInterval(intervalCall);
+        return () => clearInterval(intervalId.current);
     }, []);
 
-    let interval = "";
     const subscribe = (value) => {
-        interval = setInterval(() => {
+        intervalId.current = setInterval(() => {
             let params = {
                 conversation_id: value,
                 page: 1
@@ -53,8 +52,6 @@ const Chat = () => {
             .then((res) =>{
                 setMessageListingData(res.data.data);
             })
-
-            setIntervalCall(interval);
           }, 5000);
     }
 
@@ -131,7 +128,7 @@ const Chat = () => {
 
     const chatClickHandler = (item) => {
         setCurrentConversation(item)
-        clearInterval(intervalCall);
+        clearInterval(intervalId.current);
         subscribe(item.id);
     }
 

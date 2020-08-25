@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Colors from "../../static/_colors";
-import NotificationTile from "../../components/NotificationTile"
+import NotificationTile from "../../components/NotificationTile";
+import {getNotifications} from "./action"
 
 const Notification = () => {
     const classes = useStyles();
+    const [notifications, setNotifications] = useState([])
+
+    useEffect(() => {
+        getNotifications()
+        .then((res) => {
+            setNotifications(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            alert("Error fetching notifications!")
+        })
+    }, [])
+
 		return (
 			<>
             <Paper elevation={0} className={classes.container}>

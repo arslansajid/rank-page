@@ -34,14 +34,29 @@ const Chat = () => {
   const [messageListingData , setMessageListingData] = useState(null)
   const [selectedFile , setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState(null);
-  let intervalCallHandler = null;
+  const [intervalCall, setIntervalCall] = useState(null)
 
-  useEffect(() => {
-    fetchAllConversation()
-    console.log('currentConversation', currentConversation)
+    useEffect(() => {
+        fetchAllConversation();
 
-    return () => clearInterval(intervalCallHandler);
-  } , [])
+        return () => clearInterval(intervalCall);
+    }, []);
+
+    let interval = "";
+    const subscribe = (value) => {
+        interval = setInterval(() => {
+            let params = {
+                conversation_id: value,
+                page: 1
+            }
+            messageListing(params)
+            .then((res) =>{
+                setMessageListingData(res.data.data);
+            })
+
+            setIntervalCall(interval);
+          }, 5000);
+    }
 
   const fetchAllConversation = () => {
     allConversations()
@@ -49,16 +64,7 @@ const Chat = () => {
         if(res.data.success){
         setAllListings(res.data.data)
         setCurrentConversation(res.data.data[0]);
-        fetchConversation(res.data.data[0].id);
-
-        //check for new message after every 5 secs
-        intervalCallHandler = setInterval(function(){
-            fetchConversation(res.data.data[0].id)
-        }, 5000);
-
-        setTimeout(() => {
-            scrollToBottom();
-        }, 500)
+        fetchConversation(res.data.data[0].id, res.data.data[0]);
         }
     })
     .catch((err)=> {
@@ -79,7 +85,7 @@ const Chat = () => {
         setMessage('')
         setSelectedFile(null)
         setFileName(null)
-        fetchConversation(currentConversation.id);
+        fetchConversation(currentConversation.id, currentConversation);
         document.getElementById('message-area').scrollIntoView(false);
         setTimeout(() => {
             scrollToBottomSmooth();
@@ -88,20 +94,20 @@ const Chat = () => {
   }
 
   const fetchConversation = (id, item) => {
-    !!item && setCurrentConversation(item)
       let params = {}
       params.conversation_id = id;
       params.page = 1;
-    messageListing(params)
-    .then((res) =>{
-        setMessageListingData(res.data.data);
-        setTimeout(() => {
-            scrollToBottom();
+        messageListing(params)
+        .then((res) => {
+            setMessageListingData(res.data.data);
+            setTimeout(() => {
+                scrollToBottom();
         }, 500)
     })
     .catch((err) =>{
         // console.log('message listing error ' , err)
     })
+    chatClickHandler(item)
   }
 
   const scrollToBottomSmooth = () => {
@@ -117,23 +123,17 @@ const Chat = () => {
   const handleOnDrop = async (acceptedFiles, rejectedFiles) => {
     if (rejectedFiles.length) {
         // setFileName(rejectedFiles[0].name);
-        // setFileSize((rejectedFiles[0].size / (1024*1024)).toFixed(2));
-        // setImage(rejectedFiles[0]);
-        // setShowImageCanvas(false);
-        // setImageError(true);
-        // setImageErrorMessage(`Max file size upload limit is ${publicationType === 1 ? "1" : "2"} MB.`)
     } else if (acceptedFiles.length) {
         setFileName(acceptedFiles[0].name);
-        // setFileSize((acceptedFiles[0].size / (1024*1024)).toFixed(2));
-        // setImage(acceptedFiles[0]);
         setSelectedFile(acceptedFiles[0])
-        // setShowImageCanvas(true);
-        // const base64Url = await filetoBase64(acceptedFiles[0]);
-        // setImageBase64(base64Url);
-        // setImageError(false)
-        // setImageErrorMessage(null)
     }
 };
+
+    const chatClickHandler = (item) => {
+        setCurrentConversation(item)
+        clearInterval(intervalCall);
+        subscribe(item.id);
+    }
 
   return (
       <div>
@@ -168,7 +168,7 @@ const Chat = () => {
             <List>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
-                        <Grid key = {index} onClick={()=>fetchConversation(item.id, item)} className = {!!currentConversation && currentConversation.recipient_id === item.recipient_id ? classes.selectedItem : classes.activeItem}>
+                        <Grid key = {index} onClick={() => { fetchConversation(item.id, item) }} className = {!!currentConversation && currentConversation.recipient_id === item.recipient_id ? classes.selectedItem : classes.activeItem}>
                         <ListItem>
                             <ListItemIcon>
                             <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} />

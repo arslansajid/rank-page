@@ -17,3 +17,14 @@ export const checkIfLoggedIn = async () => {
       throw err.response;
     }
   };
+
+  export const UpdateFCMtoken = async (data) => {
+    try {
+      const res = await axiosInstance.post(
+        `${Config.API_END_POINT}/update_fcm_token` , data);
+      return res;
+    } catch (err) {
+      throw err.response;
+    }
+  };
+  

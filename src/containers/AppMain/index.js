@@ -5,7 +5,7 @@ import axiosInstance from "../../api/api.config";
 import Cookie from "js-cookie";
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { checkIfLoggedIn } from "./actions";
+import { checkIfLoggedIn, UpdateFCMtoken } from "./actions";
 import { userLogin } from "../../actions/LoginActions";
 import LoadingSpinner from "../../components/Common/LoadingSpinner"
 import ListCreation from "../../components/ListCreation";
@@ -45,6 +45,17 @@ const AppContainer = (props) => {
         .then((firebaseToken) => {
             // eslint-disable-next-line no-console
             console.log("############### firebaseToken", firebaseToken);
+            const data= {
+                fcm_web_token: firebaseToken,
+                fcm_mobile_token: null,
+            }
+            UpdateFCMtoken(data)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         })
         .catch((err) => {
             console.log("############### err", err);

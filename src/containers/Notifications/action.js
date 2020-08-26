@@ -5,7 +5,7 @@ import axiosInstance from '../../api/api.config';
   export const getNotifications = async (data) => {
     try {
       const res = await axiosInstance.post(
-        `${Config.API_END_POINT}/search`, data);
+        `${Config.API_END_POINT}/notifications`, data);
       return res;
     } catch (err) {
       throw err.response;

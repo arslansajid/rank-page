@@ -10,9 +10,12 @@ const Notification = () => {
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        getNotifications()
+        const data = {
+            page: 1
+        }
+        getNotifications(data)
         .then((res) => {
-            setNotifications(res.data)
+            setNotifications(res.data.data)
         })
         .catch((err) => {
             console.log(err)
@@ -25,24 +28,27 @@ const Notification = () => {
             <Paper elevation={0} className={classes.container}>
 
                 <Typography variant="h6" gutterBottom>Recent</Typography>
-                {[...Array(3)].map((news, index) => {
+                {!!notifications && notifications.length > 0 ? notifications.map((notification, index) => {
                     return (
                         <Grid key={index}>
-                            <NotificationTile notification={"has started following you!"} />
+                            <NotificationTile notification={notification.body} time={notification.created_at} />
                         </Grid>
                     )
-                })}
+                })
+            :
+            <Typography variant="h6" align="center" gutterBottom>No Notifications here...</Typography>
+            }
 
-                <div className={classes.seperator} />
+                {/* <div className={classes.seperator} />
 
                 <Typography variant="h6" gutterBottom>Earlier</Typography>
                 {[...Array(3)].map((news, index) => {
                     return (
                         <Grid key={index}>
-                            <NotificationTile notification={"has started following you!"} />
+                            <NotificationTile notification={"has started following you!"} time={new Date()} />
                         </Grid>
                     )
-                })}
+                })} */}
             </Paper>
             </>
 		);

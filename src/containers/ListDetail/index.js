@@ -13,21 +13,22 @@ const PostDetail = (props) => {
     const classes = useStyles();
     const [post, setPost] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
-    const { selectedPost, dispatch } = props;
+    const { selectedPost, dispatch, match } = props;
 
     useEffect(() => {
-        console.log('HAHAH', props)
         getListData();
-    }, [])
+    }, [match.params.postId])
 
     const getListData = () => {
+        setIsLoading(true)
         const data = {
-            post_id: props.match.params.postId ? props.match.params.postId : selectedPost.postId
+            post_id: match.params.postId ? match.params.postId : selectedPost.postId
         }
         getListById(data)
         .then((res) => {
             console.log("res", res)
             setPostData(res.data.data)
+            setIsLoading(false)
         })
         .catch((err) => {
             console.log("err", err)

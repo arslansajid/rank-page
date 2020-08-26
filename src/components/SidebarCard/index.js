@@ -10,10 +10,11 @@ import { showListDialog } from "../../actions/ListCreateDialogActions";
 import { showPoolDialog } from "../../actions/PoolCreateDialogActions";
 import Cookie from "js-cookie"
 import ListCreation from "../ListCreation"
+import TrendingCard from "../TrendingCard"
 
 const SidebarCard = (props) => {
     const classes = useStyles();
-    const { items, title, showSeeMoreLink, listCreateDialog, dispatch } = props;
+    const { items, title, showSeeMoreLink, seeMoreLinkUrl, trendingLists, listCreateDialog, dispatch } = props;
 
 
     const handleSignOut = (value) => {
@@ -41,13 +42,25 @@ const SidebarCard = (props) => {
                     </Typography>
                     {
                         showSeeMoreLink && (
-                            <Typography gutterBottom className={classes.seeMoreLinks}>
-                                See More
-                            </Typography>
+                            <Link to={seeMoreLinkUrl}>
+                                <Typography gutterBottom className={classes.seeMoreLinks}>
+                                    See More
+                                </Typography>
+                            </Link>
                         )
                     }
                 </Grid>
-                <Grid className={classes.cardContent}>
+                <Grid className={showSeeMoreLink ? classes.cardContentTrending : classes.cardContent}>
+                    {
+                        !!trendingLists && trendingLists.length && trendingLists.map((trendingItem, index) => {
+                            return (
+                                <TrendingCard
+                                    key={index}
+                                    trendingItem={trendingItem}
+                                />
+                            )
+                        })
+                    }
                     {
                         title === "Profile" && (
                             <UserProfile/>
@@ -113,6 +126,9 @@ const useStyles = makeStyles((theme) => ({
     },
     cardContent: {
         padding: theme.spacing(1, 0, 1, 0),
+    },
+    cardContentTrending: {
+        padding: theme.spacing(2),
     },
     sideIcon: {
         minWidth: 35,

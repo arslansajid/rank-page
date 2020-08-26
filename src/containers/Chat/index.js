@@ -78,7 +78,7 @@ const Chat = () => {
     fd.append('file_type', !!selectedFile && 1);
         
     sendMessage(fd)
-    .then((res) =>{
+    .then((res) => {
         setMessage('')
         setSelectedFile(null)
         setFileName(null)
@@ -88,9 +88,13 @@ const Chat = () => {
             scrollToBottomSmooth();
         }, 500)
     })
+    .catch((err) => {
+        alert("Message sending failed!")
+    })
   }
 
   const fetchConversation = (id, item) => {
+    setMessage('')
       let params = {}
       params.conversation_id = id;
       params.page = 1;

@@ -35,11 +35,27 @@ const Chat = () => {
   const [selectedFile , setSelectedFile] = useState(null);
   const [fileName, setFileName] = useState(null);
   let intervalId = useRef(null)
+  let chatListintervalId = useRef(null)
 
     useEffect(() => {
         fetchAllConversation();
 
-        return () => clearInterval(intervalId.current);
+        chatListintervalId.current = setInterval(() => {
+            allConversations()
+            .then((res) => {
+                if(res.data.success){
+                setAllListings(res.data.data)
+                }
+            })
+            .catch((err)=> {
+                console.log('fetch all listings error' , err)
+            })
+          }, 5000);
+
+        return () => {
+            clearInterval(intervalId.current);
+            clearInterval(chatListintervalId.current);
+        }
     }, []);
 
     const subscribe = (value) => {
@@ -76,6 +92,13 @@ const Chat = () => {
     fd.append('recipient_user_id', currentConversation.recipient_id);
     fd.append('file', selectedFile);
     fd.append('file_type', !!selectedFile && 1);
+
+    // const data = {
+    //     body: message,
+    //     recipient_user_id: currentConversation.recipient_id,
+    //     file: selectedFile,
+    //     file_type: 1,
+    // }
         
     sendMessage(fd)
     .then((res) => {

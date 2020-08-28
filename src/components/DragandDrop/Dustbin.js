@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Colors from '../../static/_colors';
 import RightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from '@material-ui/core/Avatar';
+import Config from "../../api/config";
 
 const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
     const classes = useStyles();
@@ -31,31 +32,27 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
         backgroundColor = 'transparent'
     }
 
+    console.log("###### lastDroppedItem", lastDroppedItem)
+
   return (
     <div ref={drop} className={isDragging ? classes.lightcontainer : classes.container} style={{ backgroundColor }}>
-      {/* {isActive
-        ? 'Release to drop'
-        : `This dustbin accepts: ${accept.join(', ')}`} */}
-
-      {/* {lastDroppedItem && (
-        <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-      )} */}
-
 
         <Grid container>
             <Grid className={classes.blueSection} item xs={2}>
                 {number}
             </Grid>
             <Grid item xs={10} className={classes.textSection}>
-                <Grid container alignItems="center" justify="space-between">
-                <Grid className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                    {lastDroppedItem && (
-                        `${lastDroppedItem.name}`
-                    )}
-                </Grid>
-                <RightIcon fontSize="large" className = {classes.iconColor} />
-                </Grid>
+                {!!lastDroppedItem && (
+                    <Grid container alignItems="center" justify="space-between">
+                        <Grid className={classes.row}>
+                            <Avatar className={classes.avatar} src={!!lastDroppedItem.image ? `${Config.BASE_APP_URL}${lastDroppedItem.image}` : require("../../assets/images/user.jpg")} />
+                            {lastDroppedItem && (
+                                `${lastDroppedItem.name}`
+                            )}
+                        </Grid>
+                    </Grid>
+                )}
+                
             </Grid>
         </Grid>
     </div>

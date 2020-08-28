@@ -5,8 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Colors from '../../static/_colors';
 import RightIcon from '@material-ui/icons/ChevronRight';
 import Avatar from '@material-ui/core/Avatar';
+import Config from "../../api/config";
 
-const Box = ({ name, type, isDropped, number }) => {
+const Box = ({ name, type, isDropped, number, image }) => {
     const classes = useStyles();
 
     const [{ opacity }, drag] = useDrag({
@@ -25,7 +26,7 @@ const Box = ({ name, type, isDropped, number }) => {
             <Grid item xs={10} className={classes.textSection}>
                 <Grid container alignItems="center" justify="space-between">
                 <Grid className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
+                    <Avatar className={classes.avatar} src={!!image && image ? `${Config.BASE_APP_URL}${image}` : require("../../assets/images/user.jpg")} />
                     {isDropped ?
                         <Typography className={classes.text}>{name}</Typography>
                         :

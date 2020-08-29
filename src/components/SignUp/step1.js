@@ -21,7 +21,7 @@ const SignUp = props => {
   const [message, setMessage] = useState('')
   const [userData, setUserData] = useState(values ? values : null);
   const [country, setCountry] = useState(userData && userData.country ? userData.country : '');
-  const [region, setRegion] = useState(userData && userData.region ? userData.region : '');
+  const [region, setRegion] = useState(userData && userData.state ? userData.state : '');
   const [dateError, setDateError] = useState(null);
 
   const ageValidation = (data) => {
@@ -52,16 +52,14 @@ const SignUp = props => {
     }
     else if (data.password.length < 6) {
       setPasswordError(true)
-      setMessage('Password should be greater than 6 characters')
+      setMessage('Password should be atleast 6 characters')
     }
     else if (!ageValidation(data)) {
       if (data.password !== data.password_confirmation) {
         setPasswordError(false)
       }
       setDateError('Only 16+ are allowed')
-
     }
-
   }
 
   const classes = useStyles();
@@ -112,7 +110,6 @@ const SignUp = props => {
               defaultValue={userData && userData.email ? userData.email : ''}
               label='Email Address*'
               className="text-field"
-              // required = {true}
             />
           </div>
           <div className="space-2">
@@ -124,10 +121,8 @@ const SignUp = props => {
               error={errors.date_of_birth ? true : false}
               control={control}
               placeholder="Age"
-              // defaultValue={''}
               defaultValue={userData && userData.date_of_birth ? userData.date_of_birth : ''}
               className="text-field"
-              // required = {true}
             />
           </div>
           {dateError ?
@@ -147,12 +142,10 @@ const SignUp = props => {
               control={control}
               error={errors.password ? true : false}
               placeholder="password"
-              // defaultValue={''}
               defaultValue={userData && userData.password ? userData.password : ''}
               className="text-field"
               label='Password*'
               required = {true}
-              // onChange = {() => console.log('password change called')}
             />
           </div>
           <div className="space-2">
@@ -163,11 +156,9 @@ const SignUp = props => {
               control={control}
               error={errors.password_confirmation ? true : false}
               placeholder="Confirm Password"
-              // defaultValue={''}
               defaultValue={userData && userData.password_confirmation ? userData.password_confirmation : ''}
               className="text-field"
               label='Confirm Password*'
-              // required = {true}
             />
           </div>
           {passwordError ?
@@ -183,52 +174,22 @@ const SignUp = props => {
           <div className="space-2">
             <Select
               name="gender"
-              // rules={{ required: 'This field is required' }}
               control={control}
-              // error={errors.gender ? true : false}
               placeholder="Select Gender"
               label='Gender'
               items={GenderItems}
               defaultValue={userData && userData.gender ? userData.gender : ''}
               className="text-field"
-              // required = {true}
             />
           </div>
 
-          {/* <div className="space-4">
-          <CountrySelect
-            type="text"
-            name="country"
-            rules={{required: 'This field is required'}}
-            error={errors.country ? true : false}
-            control={control}
-            placeholder="Country"
-            label='Country'
-            getCountry = {console.log('country here , ' , country)}
-            // handleChange = {(value) => setCountry(value)}
-            // defaultValue={''}
-            defaultValue={userData && userData.country ? userData.country : ''}
-            className="text-field"
-          />
-        </div> */}
-
           <div className="space-4">
-
-            {/* <ReactFlagsSelect 
-          onSelect={(label) => console.log(label)}
-          showSelectedLabel={true}
-          showOptionLabel={true}
-          // selectedSize={18}
-          selectLabel = {(label) => console.log(label)}
-          className="menu-flags" /> */}
-
             <InputLabel className='space-2 black'>Country</InputLabel>
             <CountryDropdown
               className={classes.selectBox}
               value={country}
               placeholder="Select Country"
               onChange={(country) => setCountry(country)} />
-              {/* onChange={(country) => console.log('country here' , country)} /> */}
           </div>
 
           {!!country && (
@@ -243,25 +204,6 @@ const SignUp = props => {
             </div>
           )}
 
-
-
-          {/* <div className="space-4">
-          <StateSelect
-            type="text"
-            name="state"
-            rules={{required: 'This field is required'}}
-            error={errors.state ? true : false}
-            control={control}
-            placeholder="State"
-            label='State'
-            region = {region}
-            handleChange = {(value) => setRegion(value)}
-            country = {country}
-            // defaultValue={''}
-            defaultValue={''}
-            className="text-field"
-          />
-        </div> */}
         </form>
       </div>
       <Grid className={classes.fixedBottom}>

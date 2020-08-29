@@ -65,12 +65,14 @@ const useStyles = makeStyles((theme) => ({
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 4,
+        minHeight: 51,
     },
     lightcontainer: {
         margin: '0 0.5em 0.5em 0',
         background: '#FAFAFA',
         border: '1px solid rgba(38, 38, 38, 0.12)',
         borderRadius: 4,
+        minHeight: 51,
         filter: 'contrast(0.5)',
     },
     blueSection: {
@@ -83,11 +85,13 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        minHeight: 51,
     },
     textSection: {
         textAlign: 'center',
         padding: '0.5em',
+        minHeight: 51,
     },
     row: {
         display: "flex",

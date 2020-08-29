@@ -31,7 +31,7 @@ const Notification = () => {
                 {!!notifications && notifications.length > 0 ? notifications.map((notification, index) => {
                     return (
                         <Grid key={index}>
-                            <NotificationTile notification={notification.body} time={notification.created_at} />
+                            <NotificationTile notification={notification} time={notification.created_at} />
                         </Grid>
                     )
                 })

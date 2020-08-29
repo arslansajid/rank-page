@@ -3,18 +3,28 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid } from '@material-ui/core';
 import moment from 'moment';
+import Config from "../../api/config";
+import { withRouter } from "react-router-dom";
 
 const NotificationTile = (props) => {
     const classes = useStyles();
-    const {notification, time} = props;
+    const {notification, time, history} = props;
+
+    const redirectToRespectivePage = () => {
+        let notificationType = notification.notification_type;
+        if(notificationType === 2) { //for list
+            history.push(`/list-detail/${notification.id}`)
+        }
+    }
+
     return (
         <>
-            <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
+            <Grid container alignItems="center" justify="space-between" className={classes.profileContainer} onClick={() => redirectToRespectivePage()}>
                 <Grid className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                    <Avatar className={classes.avatar} src={notification.user.profile_image ? `${Config.BASE_APP_URL}${notification.user.profile_image}` : require("../../assets/images/user.jpg")} />
                     <Typography>
-                    <span className={classes.bold}>@randomhandle </span>
-                        {notification}
+                    {/* <span className={classes.bold}>@randomhandle </span> */}
+                        @{notification.body}
                     </Typography>
                 </Grid>
                 <Typography>
@@ -57,4 +67,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(NotificationTile);
+export default withRouter(connect(mapStateToProps)(NotificationTile));

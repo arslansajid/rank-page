@@ -182,7 +182,6 @@ const EditProfile = (props) => {
 	}
 
 	const updateGender = (value) => {
-		// setGender(value)
 		setIsLoadingGender(true);
 		let user = {};
 		user.gender = gender;
@@ -243,8 +242,6 @@ const EditProfile = (props) => {
 			setDay(value)
 		}
 		else if(index === 'month'){
-			// let month =  parseInt(value)
-			// month = month+1;
 			setMonth(value)
 		}
 		else if (index === 'year') {
@@ -253,14 +250,19 @@ const EditProfile = (props) => {
 
 	}
 
+	const handleBioChange = (bio) => {
+		if(bio.length < 140){
+		setBio(bio)
+		setMessageBio('')
+		}
+	}
+
 	if (!!props.user) {
 		return (
 			<>
 				<Grid className={classes.main}>
 					<Paper elevation={0} className={classes.container}>
 						<InputLabel className='space-2'>Picture</InputLabel>
-						{/* <Avatar className={classes.avatar} alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" /> */}
-						{/* <ImagePicker image={[]} type = 'image' setImage={(value) => console.log(value)} /> */}
 						<ImagePicker selectedImage={!!user.profile_image && `${Config.BASE_APP_URL}${(user.profile_image)}`} image={[]} type='image' setImage={(value) => updateImage(value)} />
 
 					</Paper>
@@ -281,7 +283,6 @@ const EditProfile = (props) => {
 							variant='outlined'
 							fullWidth
 							value={userName}
-							// onChange={(e) => setUserName(e.target.value)}
 							onChange={(e) => { setUserName(e.target.value); setMessageName('') }}
 						/>
 						<Button disabled={isLoadingName} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateName}>
@@ -302,8 +303,7 @@ const EditProfile = (props) => {
 							rows={3}
 							fullWidth
 							value={bio}
-							// onChange={(e) => {setBio(e.target.value)}}
-							onChange={(e) => { setBio(e.target.value); setMessageBio('') }}
+							onChange={(e)=> {handleBioChange(e.target.value)}}
 						/>
 						<Button disabled={isLoadingBio} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateBio}>
 							<Typography>
@@ -321,9 +321,9 @@ const EditProfile = (props) => {
 										{getArray(31).map((val, index) => <option key={index} value={index + 1}>{index + 1}</option>)}
 									</select>
 								</Grid>
-								<Grid item xs={2}>
+								<Grid item xs={3}>
 									<select name="month" className={classes.select}  value = {JSON.stringify(parseInt(month))} onChange = {(e)=>handleDateChange(e.target.value , 'month')}>
-										{['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
+										{['' , 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(
 											(month, index) => <option key={index} value={index}>{month}</option>
 										)}
 									</select>
@@ -340,42 +340,27 @@ const EditProfile = (props) => {
 							</Typography>
 						</Button>
 						{messageDOB && <Typography className={classes.message}>{messageDOB}</Typography>}
-						{/* <TextField
-					className={`${classes.greyInput} space-4`}
-					type="date"
-					name="date_of_birth"
-					placeholder="Date"
-					value={userDOB}
-					margin='dense'
-					variant='outlined'
-					fullWidth
-					onChange={(e) => setUserDOB(e.target.value)}
-				/> */}
 
 					</Paper>
 
 					<Paper elevation={0} className={classes.container}>
 						<InputLabel className='space-4'>Gender</InputLabel>
 						<div className='space-4'>
-							{/* <Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(1)}> */}
 							<Button className={gender === 1 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => { setGender(1); setMessageGender('') }}>
 								<Typography>
 									male
 							</Typography>
 							</Button>
-							{/* <Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(2)}> */}
 							<Button className={gender === 2 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => { setGender(2); setMessageGender('') }}>
 								<Typography>
 									female
 							</Typography>
 							</Button>
-							{/* <Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(3)}> */}
 							<Button className={gender === 3 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => { setGender(3); setMessageGender('') }}>
 								<Typography>
 									other
 							</Typography>
 							</Button>
-							{/* <Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => setGender(4)}> */}
 							<Button className={gender === 4 ? classes.choiceButtonActive : classes.choiceButton} variant="contained" onClick={() => { setGender(4); setMessageGender('') }}>
 								<Typography>
 									prefer not to answer
@@ -388,25 +373,6 @@ const EditProfile = (props) => {
 					</Typography>
 						</Button>
 						{messageGender && <Typography className={classes.message}>{messageGender}</Typography>}
-						{/* <TextField
-					className={`${classes.greyInput} space-4`}
-					margin='dense'
-					variant='outlined'
-					value={gender}
-					select
-					fullWidth
-					onChange={(e) => setGender(e.target.value)}
-				>
-					{GenderItems.map((item, index) => (
-						<MenuItem key={index} value={item.label}>{item.label}</MenuItem>
-					))}
-				</TextField>
-				<Button  disabled={isLoadingGender} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateGender}>
-					<Typography>
-						Change
-					</Typography>
-				</Button>
-				{messageGender && <Typography className={classes.message}>{messageGender}</Typography>} */}
 					</Paper>
 
 					<Paper elevation={0} className={classes.container}>
@@ -417,7 +383,6 @@ const EditProfile = (props) => {
 							variant='outlined'
 							value={country}
 							select
-							// fullWidth
 							onChange={handleChange}
 						>
 							{countryData && countryData.length > 0 && countryData.map((option) => (
@@ -442,7 +407,6 @@ const EditProfile = (props) => {
 								country={country}
 								value={region}
 								placeholder="Select Region"
-								// onChange={(region) => setRegion(region)} />
 								onChange={(region) => { setRegion(region); setMessageRegion('') }} />
 							<Button disabled={isLoadingRegion} className={`${classes.submitButton} space-2`} variant="outlined" color="primary" onClick={updateRegion}>
 								<Typography>
@@ -529,7 +493,6 @@ const useStyles = makeStyles((theme) => ({
 		height: '42px',
 		padding: '0px 10px',
 		borderRadius: '5px',
-		// '-webkit-appearance': 'none'
 	},
 	choiceButton: {
 		minWidth: "20px",

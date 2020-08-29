@@ -46,7 +46,7 @@ const SignIn = (props) => {
                 <div className='space-2'>
                     <TextField
                         id='user-email'
-                        type='email'
+                        // type='email'
                         name='email'
                         rules={{ required: 'This field is required' }}
                         control={control}

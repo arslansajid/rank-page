@@ -85,10 +85,10 @@ const Search = (props) => {
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Users</Typography>
                                 {!!results.users && results.users.length >= 1 ?
-                                results.users.slice(0,5).map((user, index) => {
+                                results.users.map((user, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} />
+                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} userImage={user.profile_image} />
                                         </Grid>
                                     )
                                 })
@@ -103,7 +103,7 @@ const Search = (props) => {
                                 results.experts.map((expert, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userId={expert.id} name={expert.name} userName={expert.user_name} />
+                                            <UserTile userId={expert.id} name={expert.name} userName={expert.user_name} userImage={expert.profile_image} />
                                         </Grid>
                                     )
                                 })
@@ -114,7 +114,6 @@ const Search = (props) => {
 
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Categories</Typography>
-                                <Grid container spacing={2}>
                                     {!!results.categories && results.categories.length > 1 ?
                                     results.categories.map((category, index) => {
                                         return (
@@ -128,7 +127,6 @@ const Search = (props) => {
                                     :
                                     <Typography variant="h6" gutterBottom>No Categories found...</Typography>
                                 }
-                                </Grid>
                             </Paper>
 
                             <Paper elevation={0} className={classes.container}>
@@ -154,7 +152,7 @@ const Search = (props) => {
                                 {!!results.users && results.users.map((user, index) => {
                                     return (
                                         <Grid key={index}>
-                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} />
+                                            <UserTile userId={user.id} name={user.name} userName={user.user_name} userImage={user.profile_image} />
                                         </Grid>
                                     )
                                 })}

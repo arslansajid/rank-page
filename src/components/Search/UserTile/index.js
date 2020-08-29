@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography, Grid, Button } from '@material-ui/core';
-import { followUser, unfollowUser } from './actions'
+import { followUser, unfollowUser } from './actions';
+import Config from "../../../api/config";
 
 const SearchTile = (props) => {
     const classes = useStyles();
-    const { userId, name, userName, userFollow, unFollowSuccessHanlder, index } = props;
+    const { userId, name, userName, userImage, userFollow, unFollowSuccessHanlder, index } = props;
     const [followState, setFollowState] = useState(false);
 
     useEffect(() => {
@@ -54,7 +55,8 @@ const SearchTile = (props) => {
             <Grid container alignItems="center" justify="space-between" className={classes.profileContainer}>
                 <Link to={`/user-detail/${userId}/lists`}>
                     <div className={classes.row}>
-                        <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                        <Avatar className={classes.avatar} src={userImage ? `${Config.BASE_APP_URL}${userImage}` : require("../../../assets/images/user.jpg")} />
+                        {/* <Avatar className={classes.avatar} alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" /> */}
                         <div>
                             <Typography className={classes.bold}>
                                 {!!name ? name : "Arslan Sajid"}

@@ -169,16 +169,35 @@ const Chat = () => {
                 <Grid item xs={8} className={classes.borderRight500}></Grid>
             </Grid>
         </Grid>
+
+        <Grid container component={Paper} className = {classes.messageBarMobile}>
+                <Grid item xs={12} style = {{ display : 'inline-flex' , overflowX : 'scroll'}} className={classes.newMessageGridMobile}>
+                    <Grid style = {{ width : '25%' , marginRight : '10px'}} onClick={()=> {setShowNewMessageDialog(true)}}>
+                        <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} />
+                        <Typography variant = 'body2' className ='smallFont'>new message</Typography>
+                    </Grid>
+                {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
+                    return(
+                        <Grid style = {{ width : '25%' , marginRight : '10px'}} key = {index} onClick={() => { fetchConversation(item.id, item) }} className = {!!currentConversation && currentConversation.recipient_id === item.recipient_id ? classes.selectedItemMobile : classes.activeItemMobile}>
+                            <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} className = {classes.avatarMobile} />
+                            <Typography variant = 'body2' className ='smallFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
+                         </Grid>
+                    )
+                })
+            : null }
+             </Grid>
+        </Grid>
+
         <Grid container component={Paper} className={classes.chatSection} elevation={0}>
 
             <Grid container spacing={3} className = {classes.messageBar}>
-                <Grid item xs={4} className={classes.newMessageGrid} onClick={()=> {setShowNewMessageDialog(true)}}>
+                <Grid item sm={4} className={classes.newMessageGrid} onClick={()=> {setShowNewMessageDialog(true)}}>
                     <span>
                         <img src = {require('../../assets/icons/new-message-circle.svg')}  className={classes.userImage}/>
                         <Typography variat = 'h6' style = {{ display : 'inline' , marginLeft : '15px'}}>New Message</Typography>
                     </span>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item sm={8} >
                     <Typography variant = 'body1' className ='mediumFont'>
                         { currentConversation &&  currentConversation.recipient.name}
                     </Typography>
@@ -187,8 +206,9 @@ const Chat = () => {
                     </Typography>
                 </Grid>
             </Grid>
+
  
-            <Grid item xs={4} className={`${classes.borderRight500} ${classes.borderBottom500} ${classes.messageArea}`}>
+            <Grid item xs={4} className={`${classes.borderRight500} ${classes.borderBottom500} ${classes.messageArea} ${classes.hideMobile}`}>
             <List>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
@@ -222,7 +242,7 @@ const Chat = () => {
             </List>
             </Grid>
 
-            <Grid className={classes.borderTop500} id="message-area" item xs={8}>
+            <Grid className={classes.borderTop500} id="message-area" item xs={12} sm={8}>
                 <Grid className={classes.messageArea}>
                 <List id="messages">
 
@@ -343,10 +363,37 @@ const useStyles = makeStyles((theme) => ({
     },
     messageBar : {
          margin : 0,
+         [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          }
+    },
+    messageBarMobile : {
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+          },
+        //   height : '100px',
+        //   padding : '15px',
+        //   background : '#fff',
+        //   border: '1px solid rgba(38, 38, 38, 0.12)',
+    },
+    hideMobile : {
+        [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          }
     },
     newMessageGrid : {
         padding : 15 ,
         borderRight : '1px solid #ddd',
+    },
+    newMessageGridMobile : {
+        padding : '5px 15px',
+        // border: '1px solid #ddd',
+        // borderRadius : '20px',
+    },
+    avatarMobile : {
+        marginBottom : 5,
+        height : 60,
+        width : 60,
     },
     userImage : {
         verticalAlign : 'middle',
@@ -374,7 +421,11 @@ const useStyles = makeStyles((theme) => ({
     },
   messageArea: {
     height: '70vh',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    [theme.breakpoints.down('sm')]: {
+        height : '52vh',
+      }
+
   },
   messageBackground : {
     background: Colors.brandColor,
@@ -405,6 +456,12 @@ activeItem : {
         borderRight : '2px solid #19A5D3'
     }
 },
+activeItemMobile : {
+    // borderBottom: '1px solid #e0e0e0',
+    // "&:hover": {
+    //     borderRight : '2px solid #19A5D3'
+    // }
+},
 selectedItem: {
     backgroundColor: "rgba(0, 0, 0, 0.04)",
     borderBottom: '1px solid #e0e0e0',
@@ -412,6 +469,14 @@ selectedItem: {
     "&:hover": {
         borderRight : '2px solid #19A5D3'
     }
+},
+selectedItemMobile : {
+    // backgroundColor: "rgba(0, 0, 0, 0.04)",
+    // borderBottom: '1px solid #e0e0e0',
+    // borderRight: `3px solid ${theme.palette.primary.main}`,
+    // "&:hover": {
+    //     borderRight : '2px solid #19A5D3'
+    // }
 },
 listingDate: {
     padding: "8px 16px"

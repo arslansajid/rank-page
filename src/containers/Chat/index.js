@@ -38,6 +38,7 @@ const Chat = () => {
   let intervalId = useRef(null)
   let chatListintervalId = useRef(null)
 
+
     useEffect(() => {
         fetchAllConversation();
 
@@ -176,13 +177,13 @@ const Chat = () => {
                     <Grid style = {{ width : '25%' , marginRight : '10px'}} onClick={()=> {setShowNewMessageDialog(true)}}>
                         <AddIcon className = {classes.avatarMobile} />
                         {/* <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} className = {classes.avatarMobile} /> */}
-                        <Typography variant = 'body2' className ='smallFont'>new message</Typography>
+                        <Typography variant = 'body2' className ={`${classes.ellipsis} smallFont`}>new message</Typography>
                     </Grid>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
                     return(
                         <Grid style = {{ width : '25%' , marginRight : '10px'}} key = {index} onClick={() => { fetchConversation(item.id, item) }} className = {!!currentConversation && currentConversation.recipient_id === item.recipient_id ? classes.selectedItemMobile : classes.activeItemMobile}>
                             <Avatar alt="Remy Sharp" src={item.profile_image ? `${Config.BASE_APP_URL}${item.profile_image}` : require("../../assets/images/user.jpg")} className = {classes.avatarMobile} />
-                            <Typography variant = 'body2' className ='smallFont'>{item.recipient && item.recipient.name ? item.recipient.name : null}</Typography>
+                            <Typography  variant = 'body2' className ={`${classes.ellipsis} smallFont`}>@{item.recipient && item.recipient.user_name ? item.recipient.user_name : null }</Typography>
                          </Grid>
                     )
                 })
@@ -402,6 +403,11 @@ const useStyles = makeStyles((theme) => ({
     userImage : {
         verticalAlign : 'middle',
     },
+    ellipsis : {
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+    },
   table: {
     minWidth: 650,
   },
@@ -475,12 +481,7 @@ selectedItem: {
     }
 },
 selectedItemMobile : {
-    // backgroundColor: "rgba(0, 0, 0, 0.04)",
-    borderBottom: `1px solid ${Colors.brandColor}`
-    // borderRight: `3px solid ${theme.palette.primary.main}`,
-    // "&:hover": {
-    //     borderRight : '2px solid #19A5D3'
-    // }
+    borderBottom: `3px solid ${Colors.brandColor}`
 },
 listingDate: {
     padding: "8px 16px"

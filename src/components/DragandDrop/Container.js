@@ -137,7 +137,8 @@ const Container = (props) => {
                           {...provided.dragHandleProps}
                         >
                           <Dustbin
-                            number={id}
+                            // number={id}
+                            number={index + 1}
                             accept={accepts}
                             lastDroppedItem={lastDroppedItem}
                             onDrop={(item) => handleDrop(index, item)}

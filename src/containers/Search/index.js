@@ -114,6 +114,7 @@ const Search = (props) => {
 
                             <Paper elevation={0} className={classes.container}>
                                 <Typography variant="h6" gutterBottom>Categories</Typography>
+                                <Grid container spacing={1}>
                                     {!!results.categories && results.categories.length > 1 ?
                                     results.categories.map((category, index) => {
                                         return (
@@ -127,6 +128,7 @@ const Search = (props) => {
                                     :
                                     <Typography variant="h6" gutterBottom>No Categories found...</Typography>
                                 }
+                                </Grid>
                             </Paper>
 
                             <Paper elevation={0} className={classes.container}>

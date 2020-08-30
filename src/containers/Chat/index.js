@@ -21,6 +21,7 @@ import NewMessage from './newMessage'
 import moment from "moment";
 import Config from "../../api/config";
 import Dropzone from "react-dropzone";
+import AddIcon from '@material-ui/icons/AddCircleOutline';
 
 /*For images -> .jpg, .jpeg, .png*/
 let imageTypes = `.jpg, .jpeg, .png`;
@@ -170,10 +171,11 @@ const Chat = () => {
             </Grid>
         </Grid>
 
-        <Grid container component={Paper} className = {classes.messageBarMobile} style = {{marginBottom : 10}}>
+        <Grid container component={Paper} className = {classes.messageBarMobile}>
                 <Grid item xs={12} style = {{ display : 'inline-flex' , overflowX : 'scroll'}} className={classes.newMessageGridMobile}>
                     <Grid style = {{ width : '25%' , marginRight : '10px'}} onClick={()=> {setShowNewMessageDialog(true)}}>
-                        <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} className = {classes.avatarMobile} />
+                        <AddIcon className = {classes.avatarMobile} />
+                        {/* <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} className = {classes.avatarMobile} /> */}
                         <Typography variant = 'body2' className ='smallFont'>new message</Typography>
                     </Grid>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
@@ -368,6 +370,8 @@ const useStyles = makeStyles((theme) => ({
           }
     },
     messageBarMobile : {
+        marginBottom : 10,
+        
         [theme.breakpoints.up('sm')]: {
             display: 'none',
           },

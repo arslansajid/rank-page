@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import SidebarCard from "../SidebarCard";
 import SearchInput from "../Common/SearchInput";
@@ -18,7 +19,7 @@ const RightSidebar = (props) => {
         .catch((err) => {
             console.log("err", err)
         })
-    }, [])
+    }, [props.user])
 
     const searchHandler = (value) => {
         props.history.push(`/search/${value}`)
@@ -39,13 +40,6 @@ const RightSidebar = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     main: {
-        // background: Colors.white,
-        // height: '100%',
-        // padding: '2em',
-        // position: 'fixed',
-        // overflow: 'hidden scroll',
-
-
         background: Colors.white,
         padding: '2em',
         position: 'fixed',
@@ -56,4 +50,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default RightSidebar;
+export default connect(store => {
+    return {
+        user: store.user,
+    }
+})(RightSidebar)

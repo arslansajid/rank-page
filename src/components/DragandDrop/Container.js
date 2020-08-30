@@ -31,13 +31,15 @@ const Container = (props) => {
     const BOXES = listItems.map((item, index) => {
       return {
         name: item.title,
-        type: ItemTypes.LIST
+        image: item.image,
+        type: ItemTypes.LIST,
       }
     })
     const DUSTBINS = listItems.map((item, index) => {
       return {
         id: item.id,
         accepts: [ItemTypes.LIST],
+        image: item.image,
         lastDroppedItem: null
       }
     })
@@ -49,8 +51,7 @@ const Container = (props) => {
     return droppedBoxNames.indexOf(boxName) > -1
   }
 
-  const handleDrop = useCallback(
-    (index, item) => {
+  const handleDrop = useCallback((index, item) => {
       const { name } = item
       setDroppedBoxNames(
         update(droppedBoxNames, name ? { $push: [name] } : { $push: [] }),
@@ -67,6 +68,8 @@ const Container = (props) => {
     },
     [droppedBoxNames, dustbins],
   )
+
+  console.log("HAHAHHAHA", droppedBoxNames)
 
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -105,10 +108,11 @@ const Container = (props) => {
     <Grid container>
         <Grid item xs={6}>
             <div style={{ overflow: 'hidden', clear: 'both' }}>
-                {boxes.length > 0 && boxes.map(({ name, type }, index) => (
+                {boxes.length > 0 && boxes.map(({ name, type, image }, index) => (
                 <Box
                     number={index + 1}
                     name={name}
+                    image={image}
                     type={type}
                     isDropped={isDropped(name)}
                     key={index}

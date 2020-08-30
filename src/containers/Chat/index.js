@@ -170,10 +170,10 @@ const Chat = () => {
             </Grid>
         </Grid>
 
-        <Grid container component={Paper} className = {classes.messageBarMobile}>
+        <Grid container component={Paper} className = {classes.messageBarMobile} style = {{marginBottom : 10}}>
                 <Grid item xs={12} style = {{ display : 'inline-flex' , overflowX : 'scroll'}} className={classes.newMessageGridMobile}>
                     <Grid style = {{ width : '25%' , marginRight : '10px'}} onClick={()=> {setShowNewMessageDialog(true)}}>
-                        <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} />
+                        <Avatar alt="Remy Sharp" src={require("../../assets/icons/plus-circle-black.png")} className = {classes.avatarMobile} />
                         <Typography variant = 'body2' className ='smallFont'>new message</Typography>
                     </Grid>
                 {allListings && allListings.length > 0 ?  allListings.map((item , index) => {
@@ -472,7 +472,7 @@ selectedItem: {
 },
 selectedItemMobile : {
     // backgroundColor: "rgba(0, 0, 0, 0.04)",
-    // borderBottom: '1px solid #e0e0e0',
+    borderBottom: `1px solid ${Colors.brandColor}`
     // borderRight: `3px solid ${theme.palette.primary.main}`,
     // "&:hover": {
     //     borderRight : '2px solid #19A5D3'

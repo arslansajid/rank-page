@@ -71,7 +71,7 @@ const Lists = (props) => {
                 })
                 
                 :
-                null
+                (!isLoading && <h4 style = {{ textAlign : 'center'}}>No List Present</h4>)
             }
 
             <div className = {classes.addIcon} onClick= {handleListShow}>

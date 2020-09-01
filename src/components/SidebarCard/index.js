@@ -11,6 +11,7 @@ import { showPoolDialog } from "../../actions/PoolCreateDialogActions";
 import Cookie from "js-cookie"
 import ListCreation from "../ListCreation"
 import TrendingCard from "../TrendingCard"
+import axiosInstance from "../../api/api.config";
 
 const SidebarCard = (props) => {
     const classes = useStyles();
@@ -19,6 +20,7 @@ const SidebarCard = (props) => {
 
     const handleSignOut = (value) => {
         if (value === "Sign Out") {
+            axiosInstance.defaults.headers['Authorization'] = ``;
             Cookie.remove("rankpage_access_token");
             dispatch(userLogout());
         }

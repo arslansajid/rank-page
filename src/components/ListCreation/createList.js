@@ -8,7 +8,7 @@ import Select , { components }  from 'react-select'
 import InputLabel from '@material-ui/core/InputLabel';
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
-
+import Config from "../../api/config";
 
 const customStyles = {
   control: base => ({
@@ -22,7 +22,7 @@ const customStyles = {
 const CreateList = (props) => {
     const { createNew  , continueNext , getData} = props;
     const classes = useStyles();
-    const [listItems , setListItems] = useState(null)
+    const [listItems , setListItems] = useState([])
     const [selectedList  , setSelectedList] = useState(null)
     const [emptyList , setEmptyList] = useState(false);
     const [isloadingListItems , setIsLoadingListItems] = useState(true);

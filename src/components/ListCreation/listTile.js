@@ -7,6 +7,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 const ListTile = ({ name, type, number , deleteItemCallBack  , id , url}) => {
+
     const classes = useStyles();
 
   return (

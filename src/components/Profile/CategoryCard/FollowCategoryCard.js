@@ -10,7 +10,7 @@ import Colors from '../../../static/_colors';
 import {followCategory} from "./action";
 
 const CategoryCard = (props) => {
-  const { selectedList , category, showSubCategory, followCategoryCallback } = props;
+  const { selectedList , category, showSubCategory, followCategoryCallback, hideFollowIcon } = props;
   const classes = useStyles();
 
   const handleFollowCategory = (id) => {
@@ -46,7 +46,9 @@ const CategoryCard = (props) => {
         <MoreIcon onClick={() => handleMore()} className={classes.moreIcon} />
         <Typography>{category.count} Lists</Typography>
       </Grid>
-      <Grid onClick = {()=> handleFollowCategory(category.id)} className = {classes.plusIcon}><img className={"link"} src={require('../../../assets/icons/plus-circle-black.png')}/></Grid>
+      {!hideFollowIcon && (
+        <Grid onClick = {()=> handleFollowCategory(category.id)} className = {classes.plusIcon}><img className={"link"} src={require('../../../assets/icons/plus-circle-black.png')}/></Grid>
+      )}
     </Card>
   );
 }

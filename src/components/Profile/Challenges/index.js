@@ -60,7 +60,7 @@ const Challenges = (props) => {
                 )
             })
         :
-        "No Challenges Present"
+        "No Pools Present"
         }
         </>
     )

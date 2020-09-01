@@ -53,12 +53,6 @@ const SignUpStep2 = props => {
           let token = res.data.data.user.auth_token;
           Cookie.set('rankpage_access_token', `${token}`, { expires: 14 })
           props.dispatch(userLogin(res.data.data.user))
-          // if(user){
-          //   showCatergories();
-          // }
-          // // .then(()=>{
-          // //   showCatergories();
-          // // })
           showCatergories();
         }
         else if(res.data && !res.data.success && res.data.message === 'Email has already been taken'){

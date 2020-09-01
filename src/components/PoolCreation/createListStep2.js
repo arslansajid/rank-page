@@ -136,7 +136,7 @@ const CreateListStep2 = (props) => {
                 onClick={onContinue}
                 className = {classes.buttonPosition}
               >
-                <Typography> Continue </Typography>
+                <Typography className = 'bold'> Continue </Typography>
               </Button>
     </div>
   )

@@ -182,7 +182,7 @@ const CreateListStep3 = (props) => {
             onClick={handlePublish}
             className={classes.buttonPosition}
           >
-            <Typography> Publish </Typography>
+            <Typography className = 'bold'> Publish </Typography>
           </Button>
 
         </div>

@@ -51,7 +51,6 @@ const CreateList = (props) => {
       }
     }
 
-    console.log('loading options hereeeeee' , isloadingListItems)
     const handleSelectd = (value) => {
       setEmptyList(false)
       let List = [];
@@ -76,7 +75,8 @@ const CreateList = (props) => {
     const IconOption = props => (
       <Option {...props}>
         <img
-          src={props.data.image_url ? props.data.image_url : require('../../assets/images/user.jpg')}
+          // src={props.data.image_url ? props.data.image_url : require('../../assets/images/user.jpg')}
+          src={props.data.image ? `${Config.BASE_APP_URL}${props.data.image}` : require("../../assets/images/user.jpg")}
           style={{ width: 20 , height : 20 , borderRadius : '50%' ,  marginRight : 10 , alignItems : 'center'}}
           alt={props.data.title}
         />
@@ -89,7 +89,7 @@ const CreateList = (props) => {
         <div className = {classes.container}>
           {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
-              <ListTile key={index} url = {item.image_url} name = {item.title} number = {index} id = {item.id} deleteItemCallBack = {(id) => {updateSelectedItems(id)}}/>
+              <ListTile key={index} image = {item.image_url} name = {item.title} number = {index} id = {item.id} deleteItemCallBack = {(id) => {updateSelectedItems(id)}}/>
             )
           })
           : null }

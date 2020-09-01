@@ -43,7 +43,7 @@ const Pools = (props) => {
 
         {showCreateListStep2 && (
             <Dialog
-                title={"Create List"}
+                title={"Create Pool"}
                 open={showCreateListStep2}
                 message={
                     <CreateListStep2 
@@ -60,7 +60,7 @@ const Pools = (props) => {
 
             {showCreateListStep3 && (
             <Dialog
-                title={"Create List"}
+                title={"Create Pool"}
                 open={showCreateListStep3}
                 message={
                     <CreateListStep3 

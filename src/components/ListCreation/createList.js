@@ -25,10 +25,16 @@ const CreateList = (props) => {
     const [listItems , setListItems] = useState([])
     const [selectedList  , setSelectedList] = useState(null)
     const [emptyList , setEmptyList] = useState(false);
+    const [isloadingListItems , setIsLoadingListItems] = useState(true);
+
 
     useEffect(() =>{
       GetListItems()
-      .then(res => {setListItems(res.data.data.list_items)})
+      .then(res => {
+        setListItems(res.data.data.list_items)
+        setIsLoadingListItems(false)
+      })
+      
       // .catch((err) => { console.log('error api ', err)})
     } , [])
 
@@ -43,9 +49,9 @@ const CreateList = (props) => {
       else {
         setEmptyList(true)
       }
-
-
     }
+
+    console.log('loading options hereeeeee' , isloadingListItems)
     const handleSelectd = (value) => {
       setEmptyList(false)
       let List = [];
@@ -56,12 +62,22 @@ const CreateList = (props) => {
 
     }
 
+    const updateSelectedItems = (id) => {
+      let list = [...selectedList];
+      let newList = [];
+      list.map((item , index) => {
+        if(item.id !== id)
+        newList.push(item);
+      })
+      setSelectedList(newList);
+    }
+
     const { Option } = components;
     const IconOption = props => (
       <Option {...props}>
         <img
-          src={props.data.image ? `${Config.BASE_APP_URL}${props.data.image}` : require("../../assets/images/user.jpg")}
-          style={{ width: 20 , marginRight : 10 , alignItems : 'center', }}
+          src={props.data.image_url ? props.data.image_url : require('../../assets/images/user.jpg')}
+          style={{ width: 20 , height : 20 , borderRadius : '50%' ,  marginRight : 10 , alignItems : 'center'}}
           alt={props.data.title}
         />
         {props.data.title}
@@ -73,7 +89,7 @@ const CreateList = (props) => {
         <div className = {classes.container}>
           {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
-              <ListTile key={index} name = {item.title} image={item.image} number = {index}/>
+              <ListTile key={index} url = {item.image_url} name = {item.title} number = {index} id = {item.id} deleteItemCallBack = {(id) => {updateSelectedItems(id)}}/>
             )
           })
           : null }
@@ -81,15 +97,16 @@ const CreateList = (props) => {
              <Select
               closeMenuOnSelect={false}
               isMulti = {true}
+              isLoading = {isloadingListItems}
               placeholder = "Enter your new page"
               options={listItems}
-              components={{ Option: IconOption ,  DropdownIndicator:() => null, IndicatorSeparator:() => null}}
+              components={{ Option: IconOption , IndicatorSeparator:() => null}}
+              // DropdownIndicator:() => null,
               getOptionLabel={option => option.title}
               getOptionValue={option => option.id}
               styles={customStyles}
               onChange={handleSelectd}
               styles={colourStyles}
-              // menuPlacement="top"
             />
           </div>
           {emptyList && <InputLabel className = {classes.error}>Select pages to continue</InputLabel>}
@@ -97,7 +114,7 @@ const CreateList = (props) => {
             onClick={handleUpdateList}
             className = {classes.buttonPosition}
           >
-            <Typography> Continue </Typography>
+            <Typography className = 'bold'> Continue </Typography>
           </Button>
         </div>
         </>
@@ -108,7 +125,7 @@ const CreateList = (props) => {
 const useStyles = makeStyles((theme) => ({
     container : {
 
-      padding : '3rem 0',
+      padding : '5rem 0',
     },
     optionsMain : {
       border: '1px solid rgba(38, 38, 38, 0.12)',
@@ -147,7 +164,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     margin : '5px 0px',
     fontSize : '12px',
-  }
+  },
 })
 )
 

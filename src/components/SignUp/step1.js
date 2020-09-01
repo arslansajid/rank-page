@@ -97,7 +97,6 @@ const SignUp = props => {
               </Grid>
              </Grid> 
 
-
           </div>
           <div className="space-2">
             <TextField

@@ -97,7 +97,7 @@ const CreateList = (props) => {
             onClick={handleUpdateList}
             className = {classes.buttonPosition}
           >
-            <Typography> Continue </Typography>
+            <Typography className = 'bold'> Continue </Typography>
           </Button>
         </div>
         </>

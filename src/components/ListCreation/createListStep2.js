@@ -95,7 +95,7 @@ const CreateListStep2 = (props) => {
                 onChange={(e) => {setTitleError(false) ; setTitle(e.target.value)}}
                 className={'text-field space-4'}
               />
-              {titleError && <Typography className={classes.error}>Please Enter title first</Typography>}
+              {titleError && <Typography className={classes.error}>Please enter title first</Typography>}
             <Divider/>
             </div>
             
@@ -136,7 +136,7 @@ const CreateListStep2 = (props) => {
                 onClick={onContinue}
                 className = {classes.buttonPosition}
               >
-                <Typography> Continue </Typography>
+                <Typography className = 'bold'> Continue </Typography>
               </Button>
     </div>
   )
@@ -161,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
     },
     error : {
       color : Colors.red,
-      textAlign: 'center',
+      // textAlign: 'center',
       margin : '5px 0px',
       fontSize : '12px',
     }

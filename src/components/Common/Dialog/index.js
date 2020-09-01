@@ -30,7 +30,7 @@ const DialogForm = ({
                         {
                             cancelForm && (
                                 <IconButton onClick={applyForm} aria-label="delete">
-                                    <CloseIcon />
+                                    <CloseIcon className = 'black' />
                                 </IconButton>
                             )
                         }

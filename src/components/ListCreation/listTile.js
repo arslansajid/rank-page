@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Colors from '../../static/_colors';
 import Avatar from '@material-ui/core/Avatar';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Config from "../../api/config";
 
 
-const ListTile = ({ name, type, number , deleteItemCallBack  , id , url}) => {
+const ListTile = ({ name, type, number , deleteItemCallBack  , id , image}) => {
 
     const classes = useStyles();
 
@@ -19,8 +20,8 @@ const ListTile = ({ name, type, number , deleteItemCallBack  , id , url}) => {
             <Grid item xs={10} className={classes.textSection}>
                 <Grid container alignItems="center" justify="space-between">
                 <Grid className={classes.row}>
-                    <Avatar className={classes.avatar} alt="Remy Sharp" src={url ? url : require('../../assets/images/user.jpg')} />
-                      <Typography className={classes.text}>{name}</Typography>
+                    <Avatar className={classes.avatar} src={image ? `${Config.BASE_APP_URL}${image}` : require("../../assets/images/user.jpg")} />
+                    <Typography className={classes.text}>{name}</Typography>
                 </Grid>
                 {/* <DeleteIcon fontSize="default" onClick = {() => deleteItemCallBack(id)}/> */}
                 </Grid>

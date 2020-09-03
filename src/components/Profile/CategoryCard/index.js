@@ -12,6 +12,7 @@ const CategoryCard = (props) => {
   const classes = useStyles();
   
   const handleShowSubCategory = () => {
+    console.log('show subcategory function called' , category)
     selectedCategoryCallback(category.name)
     if(showSubCategory){
     showSubCategory(category.sub_categories)}
@@ -19,7 +20,7 @@ const CategoryCard = (props) => {
 
   return (
     
-    <Card className={isSelected ? classes.root: classes.rootFade} variant="outlined" onClick = {()=> followCategoryCallback(category.id)}>
+    <Card className={isSelected ? classes.root: classes.rootFade} variant="outlined" onClick = {()=> !! followCategoryCallback && followCategoryCallback(category.id)}>
       <CardContent>
         <Grid className={classes.verticalCenter}>
           <PoolIcon fontSize={"large"} />

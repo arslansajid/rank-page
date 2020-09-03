@@ -8,15 +8,49 @@ import Select , { components }  from 'react-select'
 import InputLabel from '@material-ui/core/InputLabel';
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
+import CreatableSelect from 'react-select/creatable';
 import Config from "../../api/config";
+const { ValueContainer, Placeholder } = components;
 
 const customStyles = {
   control: base => ({
     ...base,
     height: 44,
     minHeight: 42,
-  })
+  }),
+  valueContainer: base => ({
+    ...base,
+    fontSize: '15px',
+    top: '3.5px',
+    marginLeft: '4px',
+    overflow: 'visible',
+    // position : 'relative',
+  }),
+  // placeholder: base => ({
+  //   ...base,
+  //   position: 'absolute',
+  //   right : '0',
+  // }),
+  // input: base => ({
+  //   position : 'relative',
+  //   ...base,
+  // })
 };
+
+
+
+// const CustomValueContainer = ({ children, ...props }) => {
+//   return (
+//     <ValueContainer {...props}>
+//       <Placeholder {...props} isFocused={props.isFocused}>
+//         {props.selectProps.placeholder}
+//       </Placeholder>
+//       {React.Children.map(children, child =>
+//         child && child.type !== Placeholder ? child : null
+//       )}
+//     </ValueContainer>
+//   );
+// };
 
 
 const CreateList = (props) => {
@@ -37,6 +71,8 @@ const CreateList = (props) => {
       
       // .catch((err) => { console.log('error api ', err)})
     } , [])
+
+    // console.log('loader here' , isloadingListItems)
 
     const handleUpdateList = () => {
       if(selectedList && selectedList.length > 0) {
@@ -71,6 +107,21 @@ const CreateList = (props) => {
       setSelectedList(newList);
     }
 
+
+    // const handleChange = (newValue, actionMeta) => {
+    //   console.group('Value Changed');
+    //   console.log(newValue);
+    //   console.log(`action: ${actionMeta.action}`);
+    //   console.groupEnd();
+    // };
+    // const handleInputChange = (inputValue, actionMeta) => {
+    //   console.group('Input Changed');
+    //   console.log(inputValue);
+    //   console.log(`action: ${actionMeta.action}`);
+    //   console.groupEnd();
+    // };
+
+
     const { Option } = components;
     const IconOption = props => (
       <Option {...props}>
@@ -101,13 +152,35 @@ const CreateList = (props) => {
               placeholder = "Enter your new page"
               options={listItems}
               components={{ Option: IconOption , IndicatorSeparator:() => null}}
-              // DropdownIndicator:() => null,
               getOptionLabel={option => option.title}
               getOptionValue={option => option.id}
               styles={customStyles}
               onChange={handleSelectd}
               styles={colourStyles}
             />
+
+            {/* <CreatableSelect
+              isMulti = {true}
+              placeholder = "Enter your new page"
+              components={{ Option: IconOption , IndicatorSeparator:() => null}}
+              closeMenuOnSelect={false}
+              isLoading = {isloadingListItems}
+              onChange={handleChange}
+              options={listItems}
+              getOptionLabel={option => option.title}
+              getOptionValue={option => option.id}
+              styles={customStyles}
+              // onChange={handleSelectd}
+              styles={colourStyles}
+            /> */}
+
+            {/* <CreatableSelect
+              isMulti
+              onChange={handleChange}
+              options={listItems}
+              getOptionLabel={option => option.title}
+              getOptionValue={option => option.id}
+            /> */}
           </div>
           {emptyList && <InputLabel className = {classes.error}>Select pages to continue</InputLabel>}
           <Button
@@ -124,7 +197,6 @@ const CreateList = (props) => {
 
 const useStyles = makeStyles((theme) => ({
     container : {
-
       padding : '5rem 0',
     },
     optionsMain : {
@@ -165,6 +237,9 @@ const useStyles = makeStyles((theme) => ({
     margin : '5px 0px',
     fontSize : '12px',
   },
+  center : {
+    textAlign: 'center',
+  }
 })
 )
 

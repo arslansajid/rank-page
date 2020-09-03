@@ -8,6 +8,7 @@ import Select , { components }  from 'react-select'
 import InputLabel from '@material-ui/core/InputLabel';
 import {GetListItems}from './actions'
 import { colourStyles } from "../../styles/ReactSelect";
+import Config from "../../api/config";
 
 
 const customStyles = {
@@ -60,8 +61,8 @@ const CreateList = (props) => {
     const IconOption = props => (
       <Option {...props}>
         <img
-          src={'https://img.icons8.com/color/search/96'}
-          style={{ width: 20 , marginRight : 10 , alignItems : 'center', }}
+          src={props.data.image ? `${Config.BASE_APP_URL}${props.data.image}` : require("../../assets/images/user.jpg")}
+          style={{ width: 20 , height : 20 , borderRadius : '50%' ,  marginRight : 10 , alignItems : 'center'}}
           alt={props.data.title}
         />
         {props.data.title}
@@ -71,9 +72,9 @@ const CreateList = (props) => {
     return (
         <>
         <div className = {classes.container}>
-          {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
+        {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
-              <ListTile key={index} name = {item.title} number = {index}/>
+              <ListTile key={index} image = {item.image_url} name = {item.title} number = {index} id = {item.id}/>
             )
           })
           : null }

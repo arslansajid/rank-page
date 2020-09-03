@@ -9,7 +9,9 @@ export const colourStyles = {
         backgroundColor: Colors.brandColor,
         color: Colors.white,
         borderRadius : 5,
-        padding : 5,
+        padding : '2px 5px',
+        display : 'flex',
+        alignItems: 'center',
       };
     },
     multiValueLabel: (styles) => ({
@@ -22,6 +24,8 @@ export const colourStyles = {
       color: Colors.white,
       border : '2px solid #fff',
       borderRadius : '50%',
+      height : 20,
+      width : 20,
 
       ':hover': {
         backgroundColor: Colors.brandColor,

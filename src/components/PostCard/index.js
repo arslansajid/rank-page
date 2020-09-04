@@ -283,7 +283,7 @@ const PostCard = (props) => {
                                     pathname: `/list-detail/${post.id}`,
                                     'postId': post.id
                                 }}>
-                                <Button onClick={() => dispatch(setPostId(post.id))} variant="text" className={classes.showMoreText}>Click to Expand</Button>
+                                <Button /* onClick={() => dispatch(setPostId(post.id))} */ variant="text" className={classes.showMoreText}>Click to Expand</Button>
                             </Link> 
                         </Grid>
                     )

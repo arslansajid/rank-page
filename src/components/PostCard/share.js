@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import { sharePost } from "./action";
 import Select , { components }  from 'react-select'
 import { colourStyles } from "../../styles/ReactSelect";
+import ShareSocialLinks from '../ShareSocialLinks'
 import moment from "moment";
 import {getAllUsers} from "./action"
 
@@ -109,7 +110,7 @@ const ShareCard = (props) => {
           null
         }
         <Divider/>
-        <Grid item xs={12} className = 'space-4'>
+        <Grid item xs={12} className = {`${classes.center} space-4`}>
           <InputLabel className ={`${classes.label}`}>Add your comment</InputLabel>
             <TextField
                   className={classes.greyInput}
@@ -125,10 +126,7 @@ const ShareCard = (props) => {
 
         <Grid item xs = {12} className={`space-4`}>
           <Typography className={`${classes.label} space-2`}>Share to other social networks</Typography>
-          <img src = {require('../../assets/icons/socialMedia/facebook1.svg')} className = {classes.image}/>
-          <img src = {require('../../assets/icons/socialMedia/twitter.svg')} className = {classes.image}/>
-          <img src = {require('../../assets/icons/socialMedia/instagram1.svg')} className = {classes.image}/>
-          <img src = {require('../../assets/icons/socialMedia/email.svg')} className = {classes.image}/>
+          <ShareSocialLinks Link = {`https://rank-page.web.app/list-detail/${post.id ? post.id : null}`}/>
         </Grid>
 
       </Grid>
@@ -185,6 +183,9 @@ const useStyles = makeStyles((theme) => ({
       marginRight : 10,
       width : '2rem',
     },
+    center : {
+      alignItems : "center",
+    }
 })
 )
 

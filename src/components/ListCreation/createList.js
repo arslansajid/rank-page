@@ -37,20 +37,12 @@ const customStyles = {
   // })
 };
 
-
-
-// const CustomValueContainer = ({ children, ...props }) => {
-//   return (
-//     <ValueContainer {...props}>
-//       <Placeholder {...props} isFocused={props.isFocused}>
-//         {props.selectProps.placeholder}
-//       </Placeholder>
-//       {React.Children.map(children, child =>
-//         child && child.type !== Placeholder ? child : null
-//       )}
-//     </ValueContainer>
-//   );
-// };
+const colourOptions = [
+  { value : 'orange', label : 'orange' },
+  { value : 'red', label : 'red' },
+  { value : 'blue', label : 'blue' },
+  { value : 'yellow', label : 'yello' },
+]
 
 
 const CreateList = (props) => {
@@ -60,19 +52,22 @@ const CreateList = (props) => {
     const [selectedList  , setSelectedList] = useState(null)
     const [emptyList , setEmptyList] = useState(false);
     const [isloadingListItems , setIsLoadingListItems] = useState(true);
+    // const [newList , setNewList] = useState([])
 
 
     useEffect(() =>{
       GetListItems()
       .then(res => {
-        setListItems(res.data.data.list_items)
+        // setListItems(res.data.data.list_items)
+        let filterdList = res.data.data.list_items.map((item, index) => { return { value: item.id , label : item.title}})
+        // console.log('test list here' , testList)
+        setListItems(filterdList)
         setIsLoadingListItems(false)
       })
       
       // .catch((err) => { console.log('error api ', err)})
     } , [])
 
-    // console.log('loader here' , isloadingListItems)
 
     const handleUpdateList = () => {
       if(selectedList && selectedList.length > 0) {
@@ -87,6 +82,14 @@ const CreateList = (props) => {
       }
     }
 
+    // const validateItem = (list) => {
+    //   if(list && list.length > 0) {
+    //     list.map((item, index) => { 
+    //       if(item.)
+    //     })
+    //   }
+    // }
+
     const handleSelectd = (value) => {
       setEmptyList(false)
       let List = [];
@@ -94,7 +97,6 @@ const CreateList = (props) => {
         List.push(item)
       })
       setSelectedList(List)
-
     }
 
     const updateSelectedItems = (id) => {
@@ -108,20 +110,6 @@ const CreateList = (props) => {
     }
 
 
-    // const handleChange = (newValue, actionMeta) => {
-    //   console.group('Value Changed');
-    //   console.log(newValue);
-    //   console.log(`action: ${actionMeta.action}`);
-    //   console.groupEnd();
-    // };
-    // const handleInputChange = (inputValue, actionMeta) => {
-    //   console.group('Input Changed');
-    //   console.log(inputValue);
-    //   console.log(`action: ${actionMeta.action}`);
-    //   console.groupEnd();
-    // };
-
-
     const { Option } = components;
     const IconOption = props => (
       <Option {...props}>
@@ -129,9 +117,9 @@ const CreateList = (props) => {
           // src={props.data.image_url ? props.data.image_url : require('../../assets/images/user.jpg')}
           src={props.data.image ? `${Config.BASE_APP_URL}${props.data.image}` : require("../../assets/images/user.jpg")}
           style={{ width: 20 , height : 20 , borderRadius : '50%' ,  marginRight : 10 , alignItems : 'center'}}
-          alt={props.data.title}
+          alt={props.data.label}
         />
-        {props.data.title}
+        {props.data.label}
       </Option>
     );
 
@@ -140,12 +128,12 @@ const CreateList = (props) => {
         <div className = {classes.container}>
           {selectedList && selectedList.length > 0 ?  selectedList.map((item , index) => {
             return(
-              <ListTile key={index} image = {item.image_url} name = {item.title} number = {index} id = {item.id} deleteItemCallBack = {(id) => {updateSelectedItems(id)}}/>
+              <ListTile key={index} image = {item.image_url} name = {item.label} number = {index} id = {item.value} deleteItemCallBack = {(id) => {updateSelectedItems(id)}}/>
             )
           })
           : null }
           <div className='space-2'>
-             <Select
+             {/* <Select
               closeMenuOnSelect={false}
               isMulti = {true}
               isLoading = {isloadingListItems}
@@ -157,30 +145,24 @@ const CreateList = (props) => {
               styles={customStyles}
               onChange={handleSelectd}
               styles={colourStyles}
-            />
+            /> */}
 
-            {/* <CreatableSelect
+            <CreatableSelect
               isMulti = {true}
               placeholder = "Enter your new page"
               components={{ Option: IconOption , IndicatorSeparator:() => null}}
               closeMenuOnSelect={false}
               isLoading = {isloadingListItems}
-              onChange={handleChange}
+              // onChange={handleChange}
               options={listItems}
-              getOptionLabel={option => option.title}
-              getOptionValue={option => option.id}
-              styles={customStyles}
-              // onChange={handleSelectd}
+              // getOptionLabel={option => option.title}
+              // getOptionValue={option => option.id}
+              // styles={customStyles}
+              // onInputChange={handleInputChange}
+              onChange={(e) => handleSelectd(e)}
               styles={colourStyles}
-            /> */}
-
-            {/* <CreatableSelect
-              isMulti
-              onChange={handleChange}
-              options={listItems}
-              getOptionLabel={option => option.title}
-              getOptionValue={option => option.id}
-            /> */}
+              // filterOption={customFilter}
+            />
           </div>
           {emptyList && <InputLabel className = {classes.error}>Select pages to continue</InputLabel>}
           <Button

@@ -59,7 +59,9 @@ const CreateListStep3 = (props) => {
 
       let params = { ...listItems };
       if (params.list_items && params.list_items.length > 0) {
-        let ids = params.list_items.map((item, index) => { return (item.id) })
+        let ids = params.list_items.map((item, index) => { 
+          return (item.value)
+        })
         params.list_item_ids = ids.join();
       }
       params.list_items = [];

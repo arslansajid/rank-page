@@ -32,8 +32,6 @@ const Dustbin = ({ accept, lastDroppedItem, onDrop, number, isDragging }) => {
         backgroundColor = 'transparent'
     }
 
-    console.log("###### lastDroppedItem", lastDroppedItem)
-
   return (
     <div ref={drop} className={isDragging ? classes.lightcontainer : classes.container} style={{ backgroundColor }}>
 

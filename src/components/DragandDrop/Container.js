@@ -1,15 +1,17 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { NativeTypes } from 'react-dnd-html5-backend'
+import { withRouter } from 'react-router-dom'
 import Dustbin from './Dustbin'
 import Box from './Box'
 import { ItemTypes } from './ItemTypes'
 import update from 'immutability-helper';
 import { Typography, Grid, colors } from "@material-ui/core";
-import { setPostOrder } from "../../actions/SelectedPostAction";
+import { setPostOrder, setPostId } from "../../actions/SelectedPostAction";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {connect} from "react-redux"
+import { makeStyles } from '@material-ui/core/styles';
 
 const Container = (props) => {
+  const classes = useStyles();
   const {listItems} = props;
   const [dustbins, setDustbins] = useState([
     { id: 1, accepts: [ItemTypes.LIST], lastDroppedItem: null },
@@ -26,12 +28,19 @@ const Container = (props) => {
     { name: 'Banana', type: ItemTypes.LIST },
   ])
   const [droppedBoxNames, setDroppedBoxNames] = useState([])
+  const isMobile = window.innerWidth < 500;
+  console.log("isMobile", isMobile)
 
   useEffect(() => {
+    //setting post id in store
+    if(!!props.match.params.postId) {
+      props.dispatch(setPostId(props.match.params.postId));
+    }
     const BOXES = listItems.map((item, index) => {
       return {
         name: item.title,
         image: item.image,
+        id: item.id,
         type: ItemTypes.LIST,
       }
     })
@@ -52,6 +61,7 @@ const Container = (props) => {
   }
 
   const handleDrop = useCallback((index, item) => {
+    window.alert("on drop")
       const { name } = item
       setDroppedBoxNames(
         update(droppedBoxNames, name ? { $push: [name] } : { $push: [] }),
@@ -67,9 +77,28 @@ const Container = (props) => {
       )
     },
     [droppedBoxNames, dustbins],
+    console.log("########", dustbins),
+    // updateOrderInStore(dustbins)
   )
 
-  console.log("HAHAHHAHA", droppedBoxNames)
+  useEffect(() => {
+    if(!isMobile) {
+      updateOrderInStore(dustbins);
+    }
+  }, [dustbins])
+
+  const updateOrderInStore = (items) => {
+    let reorderString = "";
+    items.forEach((item, index) => {
+      if(!!item.lastDroppedItem) {
+        reorderString = reorderString + item.id;
+        if(!!dustbins[index + 1] && dustbins[index + 1].lastDroppedItem) {
+          reorderString = reorderString + ","
+        }
+      }
+    })
+    props.dispatch(setPostOrder(reorderString))
+  }
 
   const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -105,7 +134,7 @@ const Container = (props) => {
 
   return (
     <>
-    <Grid container>
+    <Grid className={classes.web} container>
         <Grid item xs={6}>
             <div style={{ overflow: 'hidden', clear: 'both' }}>
                 {boxes.length > 0 && boxes.map(({ name, type, image }, index) => (
@@ -156,9 +185,61 @@ const Container = (props) => {
           </DragDropContext>
         </Grid>
     </Grid>
+
+    {/* for mobiles only */}
+    <Grid className={classes.mobile} container>
+      <Grid item xs={12}>
+          <DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {boxes.length > 0 && boxes.map(({ name, type, image }, index)=> (
+                    <Draggable key={index} draggableId={String(index)} index={index}>
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <Box
+                            number={index + 1}
+                            name={name}
+                            image={image}
+                            type={type}
+                            isDropped={isDropped(name)}
+                            key={index}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </Grid>
+    </Grid>
     </>
   )
 }
+
+const useStyles = makeStyles((theme) => ({
+  web: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    }
+  },
+  mobile: {
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+    }
+  }
+}))
 
 function mapStateToProps(state) {
 	return {
@@ -166,4 +247,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(Container);
+export default withRouter(connect(mapStateToProps)(Container));

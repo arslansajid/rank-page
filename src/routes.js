@@ -5,6 +5,8 @@ import LoadingSpinner from './components/Common/LoadingSpinner';
 // Configure routes
 const Home = React.lazy(() => import('./containers/Home'));
 const About = React.lazy(() => import('./containers/About'));
+const ContactUs = React.lazy(() => import('./containers/ContactUs'));
+const TermAndConditions = React.lazy(() => import('./containers/TermAndConditions'));
 const SignUp = React.lazy(() => import('./components/SignUp'));
 const Search = React.lazy(() => import('./containers/Search'));
 const Profile = React.lazy(() => import('./containers/Profile'));
@@ -37,6 +39,8 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" render={() => <Newsfeed />} />
         <Route exact path="/about" render={() => <About />} />
+        <Route exact path="/contact" render={() => <ContactUs />} />
+        <Route exact path="/termandconditions" render={() => <TermAndConditions />} />
         <Route exact path="/SignUp" render={() => <SignUp />} />
         <Route exact path="/search/:query" render={() => <Search />} />
         <Route exact path="/profile/:tab" render={() => <Profile />} />

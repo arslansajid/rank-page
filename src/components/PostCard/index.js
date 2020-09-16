@@ -251,7 +251,12 @@ const PostCard = (props) => {
                     </Grid>
                 </Link>
                 <Grid className={classes.cardProfileSection}>
+                <Link to={{
+                    pathname: `/list-detail/${post.id}`,
+                    'postId': post.id
+                }}>
                     <Typography variant='h6' className={`${classes.heading} space-2`}>{!!post.title && post.title} </Typography>
+                </Link>
                     <Typography variant='body2' className='smallFont'>• {moment(post.updated_at).format("DD MMM YYYY")} at {moment(post.updated_at).format("hh:mm A")}</Typography>
                 </Grid>
                 {

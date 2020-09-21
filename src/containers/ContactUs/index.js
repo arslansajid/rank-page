@@ -10,69 +10,76 @@ import { connect } from 'react-redux';
 import { userLogin } from "../../actions/LoginActions";
 
 const SignIn = (props) => {
-    const {showSignUp , showRecoveryModal, closeSignIn} = props;
-    const [isLoading, setIsLoading] = React.useState(false);
-    const { errors, handleSubmit, control } = useForm();
-    const [value , setValue] = useState(null)
+    // const {showSignUp , showRecoveryModal, closeSignIn} = props;
+    // const [isLoading, setIsLoading] = React.useState(false);
+    // const { errors, handleSubmit, control } = useForm();
+    // const [value , setValue] = useState(null)
 
-    const onSubmit = (data) => {
-      console.log('data here' , data)
-    }
+    // const onSubmit = (data) => {
+    //   console.log('data here' , data)
+    // }
 
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
-
-                  <div className='space-2'>
-                    <TextField
-                        id='name'
-                        name='name'
-                        rules={{ required: 'This field is required' }}
-                        control={control}
-                        error={errors.name ? true : false}
-                        placeholder='Name'
-                        defaultValue={''}
-                        className='text-field'
-                    />
-                </div>
-                <div className='space-2'>
-                    <TextField
-                        id='email'
-                        type='email'
-                        name='email'
-                        rules={{ required: 'This field is required' }}
-                        control={control}
-                        error={errors.email ? true : false}
-                        placeholder='Email'
-                        defaultValue={''}
-                        className='text-field'
-                    />
-                </div>
-
-                <div className='space-4'>
-                    <TextField
-                        name='message'
-                        rules={{ required: 'This field is required' }}
-                        control={control}
-                        error={errors.message ? true : false}
-                        placeholder='Message'
-                        defaultValue={''}
-                        className='text-field'
-                        rows={3}
-                        multiline={true}
-                    />
-                </div>
-                <div className='space-4'>
-                    <Button type="submit" disabled={isLoading} className={classes.submitButton} variant="contained" color="primary">
-                        <Typography className={classes.submitButtonText}>
-                            Submit
-                        </Typography>
-                    </Button>
-                </div>
-
-            </form>
+            <h2 style = {{ fontWeight : 'normal'}}>Contact us at</h2>
+            <a href="mailto:email@email.com">
+                email@email.com
+            </a>
         </div>
+
+
+            // {/* <form key={'form'} onSubmit={handleSubmit(onSubmit)}>
+
+            //       <div className='space-2'>
+            //         <TextField
+            //             id='name'
+            //             name='name'
+            //             rules={{ required: 'This field is required' }}
+            //             control={control}
+            //             error={errors.name ? true : false}
+            //             placeholder='Name'
+            //             defaultValue={''}
+            //             className='text-field'
+            //         />
+            //     </div>
+            //     <div className='space-2'>
+            //         <TextField
+            //             id='email'
+            //             type='email'
+            //             name='email'
+            //             rules={{ required: 'This field is required' }}
+            //             control={control}
+            //             error={errors.email ? true : false}
+            //             placeholder='Email'
+            //             defaultValue={''}
+            //             className='text-field'
+            //         />
+            //     </div>
+
+            //     <div className='space-4'>
+            //         <TextField
+            //             name='message'
+            //             rules={{ required: 'This field is required' }}
+            //             control={control}
+            //             error={errors.message ? true : false}
+            //             placeholder='Message'
+            //             defaultValue={''}
+            //             className='text-field'
+            //             rows={3}
+            //             multiline={true}
+            //         />
+            //     </div>
+            //     <div className='space-4'>
+            //         <Button type="submit" disabled={isLoading} className={classes.submitButton} variant="contained" color="primary">
+            //             <Typography className={classes.submitButtonText}>
+            //                 Submit
+            //             </Typography>
+            //         </Button>
+            //     </div>
+
+            // </form> */}
+
     )
 };
 

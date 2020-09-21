@@ -13,7 +13,9 @@ const FooterLinks = () => {
             <Link to='/termandconditions'>
                 <Typography className={classes.textLink} variant='body1'>Terms</Typography>
             </Link>
+            <Link to ='/privacypolicy'>
             <Typography className={classes.textLink} variant='body1'>Privacy Policy</Typography>
+            </Link>
             <a href ='https://www.privacypolicies.com/live/12e249b4-c6a5-4f2d-bbc0-1dcfa9cb1e30'>
                 <Typography className={classes.textLink} variant='body1'>Cookies</Typography>
             </a>

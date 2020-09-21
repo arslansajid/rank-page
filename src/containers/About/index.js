@@ -8,7 +8,7 @@ class About extends Component {
 		return (
 			<div id="home">
 				<Container>
-					<h2 className="text-center">Content coming soon .... </h2>
+					<h2 className="text-center">Rankpage about us </h2>
 				</Container>
 			</div>
 		);

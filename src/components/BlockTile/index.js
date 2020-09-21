@@ -16,12 +16,12 @@ const BlockTile = (props) => {
         }
         UnBlockUser(data)
         .then((res) => {
-            window.alert("Unblocked successfully")
+            // window.alert("Unblocked successfully")
             unBlockSuccessHanlder && unBlockSuccessHanlder(index);
         })
         .catch((err) => {
             console.log(err)
-            window.alert("ERROR while unblock")
+            // window.alert("ERROR while unblock")
         })
     }
 

@@ -39,7 +39,7 @@ const ProfileCover = (props) => {
         followUser(data)
             .then((res) => {
                 console.log("res", res)
-                window.alert(res.data.message)
+                // window.alert(res.data.message)
                 toggleFollowState();
             })
             .catch((err) => {
@@ -54,7 +54,7 @@ const ProfileCover = (props) => {
         unfollowUser(data)
         .then((res) => {
             console.log('res', res)
-            window.alert(res.data.message);
+            // window.alert(res.data.message);
             toggleFollowState();
         })
         .catch((err) => {

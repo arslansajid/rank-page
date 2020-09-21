@@ -62,7 +62,7 @@ const ShareCard = (props) => {
         sharePost(data)
         .then((res) => {
             console.log("res", res)
-            window.alert(res.data.message);
+            // window.alert(res.data.message);
             close();
         })
         .catch((err) => {

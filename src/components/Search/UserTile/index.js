@@ -26,7 +26,7 @@ const SearchTile = (props) => {
         followUser(data)
             .then((res) => {
                 console.log("res", res)
-                window.alert(res.data.message)
+                // window.alert(res.data.message)
                 toggleFollowState();
             })
             .catch((err) => {
@@ -41,7 +41,7 @@ const SearchTile = (props) => {
         unfollowUser(data)
             .then((res) => {
                 console.log('res', res)
-                window.alert(res.data.message);
+                // window.alert(res.data.message);
                 unFollowSuccessHanlder && unFollowSuccessHanlder(index);
                 toggleFollowState();
             })

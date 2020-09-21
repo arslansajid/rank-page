@@ -57,7 +57,7 @@ const Comment = (props) => {
         likeComment(data)
         .then((res) => {
             console.log('res', res)
-            window.alert(res.data.message)
+            // window.alert(res.data.message)
             // setLikeMessage(res.data.data.like_string)
             setIsLiked(res.data.message.includes("unliked") ? false : true);
         })

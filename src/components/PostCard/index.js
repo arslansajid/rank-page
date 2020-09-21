@@ -102,7 +102,7 @@ const PostCard = (props) => {
         blockUser(data)
         .then((res) => {
             console.log('res', res)
-            window.alert("User blocked");
+            // window.alert("User blocked");
             handleClose();
         })
         .catch((err) => {
@@ -117,7 +117,7 @@ const PostCard = (props) => {
         reportUser(data)
         .then((res) => {
             console.log('res', res)
-            window.alert(res.data.message);
+            // window.alert(res.data.message);
             handleClose();
         })
         .catch((err) => {
@@ -132,7 +132,7 @@ const PostCard = (props) => {
         unfollowUser(data)
         .then((res) => {
             console.log('res', res)
-            window.alert(res.data.message);
+            // window.alert(res.data.message);
             handleClose();
             toggleFollowState();
         })
@@ -148,7 +148,7 @@ const PostCard = (props) => {
         followUser(data)
         .then((res) => {
             console.log("res", res)
-            window.alert(res.data.message)
+            // window.alert(res.data.message)
             handleClose();
             toggleFollowState();
         })

@@ -20,10 +20,10 @@ const CategoryCard = (props) => {
     followCategory(data)
     .then((res) => {
       console.log('response here' , res.data)
-      window.alert(res.data.message)
+      // window.alert(res.data.message)
     })
     .catch((err) =>{
-      window.alert("Error while following category")
+      // window.alert("Error while following category")
     })
   }
 

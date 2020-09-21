@@ -61,7 +61,7 @@ const Container = (props) => {
   }
 
   const handleDrop = useCallback((index, item) => {
-    window.alert("on drop")
+    // window.alert("on drop")
       const { name } = item
       setDroppedBoxNames(
         update(droppedBoxNames, name ? { $push: [name] } : { $push: [] }),

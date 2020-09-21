@@ -45,7 +45,7 @@ const Header = (props) => {
         reArrangeList(data)
         .then((res) => {
             console.log('res', res)
-            window.alert(res.data.message);
+            // window.alert(res.data.message);
         })
         .catch((err) => {
             console.log('err', err)
